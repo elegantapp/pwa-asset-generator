@@ -1,0 +1,63 @@
+{
+  "name": "pwa-asset-generator",
+  "version": "1.0.0",
+  "description": "PWA asset generator based on Puppeteer. Automatically generates icons and splash screens based on Web App Manifest specs and Apple Human Interface Guidelines. Updates manifest.json and index.html files with the generated images.",
+  "main": "cli.js",
+  "bin": {
+    "pwa-asset-generator": "./cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettify": "prettier --config .prettierrc \"**/**.js\" --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onderceylan/pwa-asset-generator.git"
+  },
+  "keywords": [
+    "pwa",
+    "icon",
+    "icons",
+    "launch-image",
+    "ios",
+    "android",
+    "splashscreen",
+    "splash-screen",
+    "image-generation",
+    "image",
+    "manifest"
+  ],
+  "author": "Önder Ceylan <onderceylan@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/onderceylan/pwa-asset-generator/issues"
+  },
+  "homepage": "https://github.com/onderceylan/pwa-asset-generator#readme",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "cheerio": "^1.0.0-rc.3",
+    "file-url": "^3.0.0",
+    "lodash.isequal": "^4.5.0",
+    "lodash.uniqwith": "^4.5.0",
+    "meow": "^5.0.0",
+    "puppeteer": "^1.19.0"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^3.0.3",
+    "lint-staged": "^9.2.1",
+    "prettier": "^1.18.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/**.{js}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
