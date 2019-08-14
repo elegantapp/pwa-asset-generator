@@ -4,10 +4,11 @@
   "description": "PWA asset generator based on Puppeteer. Automatically generates icons and splash screens based on Web App Manifest specs and Apple Human Interface Guidelines. Updates manifest.json and index.html files with the generated images.",
   "main": "cli.js",
   "bin": {
-    "pwa-asset-generator": "./cli.js"
+    "pwa-asset-generator": "cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "commit": "git-cz",
     "lint": "eslint \"**/**.js\"",
     "lint:fix": "npm run lint -- --fix"
   },
@@ -47,6 +48,7 @@
     "puppeteer": "^1.19.0"
   },
   "devDependencies": {
+    "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.0.0",
@@ -57,7 +59,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook"
     }
   },
   "lint-staged": {
@@ -65,5 +68,10 @@
       "eslint --fix",
       "git add"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
