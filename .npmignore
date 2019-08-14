@@ -1,4 +1,5 @@
-static/logo.png
+static/*
+!static/.gitkeep
 .editorconfig
 .eslintrc
 .gitattributes
