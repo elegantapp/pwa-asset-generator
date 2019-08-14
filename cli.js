@@ -68,13 +68,18 @@ const cli = meow(
   },
 );
 
-const [source, output] = cli.input;
+const source = cli.input[0];
+let output = cli.input[1];
 const options = cli.flags;
 const logger = preLogger('cli');
 
 if (!source) {
   logger.error('Please specify a URL or file path as a source');
   process.exit(1);
+}
+
+if (!output) {
+  output = process.cwd();
 }
 
 (async () => {

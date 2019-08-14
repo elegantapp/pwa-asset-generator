@@ -67,13 +67,15 @@ const addMetaTagsToIndexPage = async (htmlContent, indexHtmlFilePath) => {
     throw Error(`Cannot write to index html file ${indexHtmlFilePath}`);
   }
 
-  const warn = '<!-- AUTO GENERATED VIA PWA-ASSET-GENERATOR -->';
-
   const indexHtmlFile = await file.readFile(indexHtmlFilePath);
   const $ = cheerio.load(indexHtmlFile);
-  $('head').append(`\
-${warn}
-${htmlContent}`);
+
+  // TODO: Find a way to remove tags without leaving newlines behind
+  $(
+    'link[rel="apple-touch-startup-image"], link[rel="apple-touch-icon"], meta[name="apple-mobile-web-app-capable"]',
+  ).remove();
+
+  $('head').append(`${htmlContent}`);
 
   return file.writeFile(indexHtmlFilePath, $.html());
 };
