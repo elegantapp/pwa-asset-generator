@@ -1,0 +1,9 @@
+static/logo.png
+.editorconfig
+.eslintrc
+.gitattributes
+.gitignore
+.npmrc
+.prettierrc
+.travis.yml
+*.test.js
