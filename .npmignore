@@ -6,4 +6,5 @@ static/logo.png
 .npmrc
 .prettierrc
 .travis.yml
+.releaserc
 *.test.js
