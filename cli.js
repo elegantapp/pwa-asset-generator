@@ -115,7 +115,7 @@ if (!source) {
       logger.success(
         'Below is the splash screen content for your index.html file. You can copy/paste it manually',
       );
-      process.stdout.write(htmlContent + '\n');
+      process.stdout.write('\n' + htmlContent + '\n');
     }
   } catch (e) {
     logger.error(e);
