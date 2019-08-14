@@ -7,7 +7,7 @@
     "pwa-asset-generator": "cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run lint && jest",
     "commit": "git-cz",
     "lint": "eslint \"**/**.js\"",
     "lint:fix": "npm run lint -- --fix"
@@ -53,9 +53,13 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.15.1",
     "eslint-plugin-prettier": "^3.1.0",
+    "execa": "^2.0.3",
     "husky": "^3.0.3",
-    "lint-staged": "^9.2.1"
+    "jest": "^24.8.0",
+    "lint-staged": "^9.2.1",
+    "prettier": "^1.18.2"
   },
   "husky": {
     "hooks": {
