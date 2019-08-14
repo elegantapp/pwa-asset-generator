@@ -14,6 +14,9 @@
     "type": "git",
     "url": "git+https://github.com/onderceylan/pwa-asset-generator.git"
   },
+  "engines": {
+    "node": ">=8.3.0"
+  },
   "keywords": [
     "pwa",
     "icon",
