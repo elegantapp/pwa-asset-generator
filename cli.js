@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-'use strict';
 
 const meow = require('meow');
 const puppets = require('./puppets');
@@ -99,7 +98,7 @@ if (!source) {
         'Below is the icons content for your manifest.json file. You can copy/paste it manually',
       );
       process.stdout.write(
-        '\n' + JSON.stringify(manifestJsonContent, null, 2) + '\n\n',
+        `\n${JSON.stringify(manifestJsonContent, null, 2)}\n\n`,
       );
     }
 
@@ -115,7 +114,7 @@ if (!source) {
       logger.success(
         'Below is the splash screen content for your index.html file. You can copy/paste it manually',
       );
-      process.stdout.write('\n' + htmlContent + '\n');
+      process.stdout.write(`\n${htmlContent}\n`);
     }
   } catch (e) {
     logger.error(e);

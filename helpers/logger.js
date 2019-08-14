@@ -1,5 +1,3 @@
-'use strict';
-
 const chalk = require('chalk');
 
 const logger = prefix => {
@@ -11,6 +9,7 @@ const logger = prefix => {
     return prefix ? chalk.gray(prefix) : null;
   };
 
+  /* eslint-disable no-console */
   const log = (...args) => {
     console.log(getTime(), getPrefix(), ...args);
   };
@@ -30,6 +29,7 @@ const logger = prefix => {
   const success = (...args) => {
     console.log(getTime(), getPrefix(), chalk.green(...args), '🙌');
   };
+  /* eslint-enable no-console */
 
   return {
     log,

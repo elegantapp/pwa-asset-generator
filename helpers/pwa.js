@@ -1,5 +1,3 @@
-'use strict';
-
 const cheerio = require('cheerio');
 const constants = require('../config/constants');
 const file = require('../helpers/file');

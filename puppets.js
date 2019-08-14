@@ -1,5 +1,3 @@
-'use strict';
-
 const puppeteer = require('puppeteer');
 const packageJson = require('./package.json');
 const constants = require('./config/constants');
@@ -19,6 +17,7 @@ const getAppleSplashScreenData = async browser => {
   await page.goto(constants.APPLE_HIG_SPLASH_SCR_SPECS_URL, {
     waitUntil: 'networkidle0',
   });
+
   logger.log('Waiting for the data table to be loaded');
 
   try {
@@ -198,13 +197,13 @@ const getSplashScreenMetaData = async options => {
   return splashScreenUniformMetaData;
 };
 
-const saveImages = async (images, source, output, options) => {
+const saveImages = async (imageList, source, output, options) => {
   const logger = preLogger(saveImages.name);
   logger.log('Initialising puppeteer to take screenshots', '🤖');
 
   const address = await url.getAddress(source, options);
 
-  return images.map(async ({ name, width, height, scaleFactor }) => {
+  return imageList.map(async ({ name, width, height, scaleFactor }) => {
     const browser = await puppeteer.launch({
       headless: true,
       defaultViewport: {
@@ -252,9 +251,7 @@ const generateImages = async (source, output, options) => {
   // Increase MaxListeners and suppress MaxListenersExceededWarning
   process.setMaxListeners(0);
 
-  return await Promise.all(
-    await saveImages(allImages, source, output, options),
-  );
+  return Promise.all(await saveImages(allImages, source, output, options));
 };
 
 module.exports = {

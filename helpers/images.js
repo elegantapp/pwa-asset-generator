@@ -1,5 +1,3 @@
-'use strict';
-
 const uniqWith = require('lodash.uniqwith');
 const isEqual = require('lodash.isequal');
 const constants = require('../config/constants');

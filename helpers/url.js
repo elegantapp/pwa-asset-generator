@@ -1,5 +1,3 @@
-'use strict';
-
 const url = require('url');
 const dns = require('dns');
 const file = require('./file');
@@ -29,9 +27,9 @@ const isUrlExists = source => {
 const getAddress = async (source, options) => {
   const logger = preLogger(getAddress.name);
 
-  const useShell = async (isUrl = false) => {
+  const useShell = async (isSourceUrl = false) => {
     try {
-      await file.saveHtmlShell(source, options, isUrl);
+      await file.saveHtmlShell(source, options, isSourceUrl);
     } catch (e) {
       throw Error('Failed saving html shell');
     }
@@ -49,7 +47,7 @@ const getAddress = async (source, options) => {
 
     if (file.isImageFile(source)) {
       logger.log('Saving html shell with provided image url');
-      return await useShell(true);
+      return useShell(true);
     }
 
     logger.log('Providing url source as navigation address');
@@ -62,13 +60,15 @@ const getAddress = async (source, options) => {
 
   if (file.isImageFile(source)) {
     logger.log('Saving html shell with provided image source');
-    return await useShell();
+    return useShell();
   }
 
   if (file.isHtmlFile(source)) {
     logger.log('Providing html file path as navigation address');
     return file.getFileUrlOfPath(source);
   }
+
+  return source;
 };
 
 module.exports = {
