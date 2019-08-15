@@ -23,12 +23,14 @@ const cli = meow(
     -q --quality                Image quality: 0...100 (Only for JPEG)  [default: 100]
     -h --splash-only            Only generate splash screens  [default: false]
     -c --icon-only              Only generate icons  [default: false]
+    -l --landscape-only         Only generate landscape splash screens  [default: false]
+    -r --portrait-only          Only generate portrait splash screens  [default: false]
     
   Examples
     $ pwa-asset-generator logo.html .
-    $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png . -t jpeg -q 90
+    $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png . -t jpeg -q 90 --splash-only --portrait-only
     $ pwa-asset-generator logo.svg ./assets --scrape false --icon-only
-    $ pwa-asset-generator https://cdn.freebiesupply.com/logos/large/2x/amazon-icon-logo-png-transparent.png -p "10%" -b "linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%)"
+    $ pwa-asset-generator https://cdn.freebiesupply.com/logos/large/2x/amazon-icon-logo-png-transparent.png -p "15%" -b "linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%)"
 
   Flag examples
     --background="rgba(255, 255, 255, .5)"
@@ -39,8 +41,10 @@ const cli = meow(
     --index=./src/index.html
     --type=jpeg
     --quality=80
-    --splash-only=true
-    --icon-only=true
+    --splash-only
+    --icon-only
+    --landscape-only
+    --portrait-only
 `,
   {
     flags: {
@@ -92,27 +96,51 @@ const cli = meow(
         alias: 'c',
         default: false,
       },
+      landscapeOnly: {
+        type: 'boolean',
+        alias: 'l',
+        default: false,
+      },
+      portraitOnly: {
+        type: 'boolean',
+        alias: 'r',
+        default: false,
+      },
     },
   },
 );
 
 const source = cli.input[0];
 let output = cli.input[1];
-const options = cli.flags;
+let options = cli.flags;
 const logger = preLogger('cli');
+
+const normalizeOnlyFlagPairs = (flag1Key, flag2Key, opts) => {
+  const stripOnly = key => key.replace('Only', '');
+  if (opts[flag1Key] && opts[flag2Key]) {
+    logger.warn(
+      `Hmm, you want to _only_ generate both ${stripOnly(
+        flag1Key,
+      )} and ${stripOnly(
+        flag2Key,
+      )} set. Ignoring --x-only settings as this is default behavior`,
+    );
+    return {
+      ...opts,
+      [flag1Key]: false,
+      [flag2Key]: false,
+    };
+  }
+  return opts;
+};
 
 if (!source) {
   logger.error('Please specify a URL or file path as a source');
   process.exit(1);
 }
 
-if (options.splashOnly && options.iconOnly) {
-  logger.warn(
-    `Hmm, you wan't to _only_ generate both splash and icon set. Ignoring --x-only settings as this is default behavior`,
-  );
-  options.splashOnly = false;
-  options.iconOnly = false;
-}
+options = normalizeOnlyFlagPairs('splashOnly', 'iconOnly', options);
+options = normalizeOnlyFlagPairs('landscapeOnly', 'portraitOnly', options);
 
 if (!output) {
   output = process.cwd();
