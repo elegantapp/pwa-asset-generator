@@ -243,8 +243,10 @@ const saveImages = async (imageList, source, output, options) => {
 const generateImages = async (source, output, options) => {
   const splashScreenMetaData = await getSplashScreenMetaData(options);
   const allImages = [
-    ...images.getSplashScreenImages(splashScreenMetaData),
-    ...images.getIconImages(),
+    ...(!options.iconOnly
+      ? images.getSplashScreenImages(splashScreenMetaData)
+      : []),
+    ...(!options.splashOnly ? images.getIconImages() : []),
   ];
 
   if (!(await file.pathExists(output, file.WRITE_ACCESS))) {

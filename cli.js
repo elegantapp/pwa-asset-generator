@@ -21,12 +21,14 @@ const cli = meow(
     -i --index                  Index html file path to automatically put splash screen meta tags in
     -t --type                   Image type: png|jpeg  [default: png]
     -q --quality                Image quality: 0...100 (Only for JPEG)  [default: 100]
+    -h --splash-only            Only generate splash screens  [default: false]
+    -c --icon-only              Only generate icons  [default: false]
     
   Examples
     $ pwa-asset-generator logo.html .
-    $ pwa-asset-generator http://your-cdn-server.com/assets/logo.png . -t jpeg -q 90
-    $ pwa-asset-generator logo.svg ./assets --scrape false
-    $ pwa-asset-generator https://cdn.freebiesupply.com/logos/large/2x/amazon-icon-logo-png-transparent.png ./assets -p "20%" -b "linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%)"
+    $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png . -t jpeg -q 90
+    $ pwa-asset-generator logo.svg ./assets --scrape false --icon-only
+    $ pwa-asset-generator https://cdn.freebiesupply.com/logos/large/2x/amazon-icon-logo-png-transparent.png -p "10%" -b "linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%)"
 
   Flag examples
     --background="rgba(255, 255, 255, .5)"
@@ -37,6 +39,8 @@ const cli = meow(
     --index=./src/index.html
     --type=jpeg
     --quality=80
+    --splash-only=true
+    --icon-only=true
 `,
   {
     flags: {
@@ -78,6 +82,16 @@ const cli = meow(
         alias: 'q',
         default: 100,
       },
+      splashOnly: {
+        type: 'boolean',
+        alias: 'h',
+        default: false,
+      },
+      iconOnly: {
+        type: 'boolean',
+        alias: 'c',
+        default: false,
+      },
     },
   },
 );
@@ -90,6 +104,14 @@ const logger = preLogger('cli');
 if (!source) {
   logger.error('Please specify a URL or file path as a source');
   process.exit(1);
+}
+
+if (options.splashOnly && options.iconOnly) {
+  logger.warn(
+    `Hmm, you wan't to _only_ generate both splash and icon set. Ignoring --x-only settings as this is default behavior`,
+  );
+  options.splashOnly = false;
+  options.iconOnly = false;
 }
 
 if (!output) {
@@ -109,7 +131,7 @@ if (!output) {
       logger.success(
         `Icons are saved to Web App Manifest file ${options.manifest}`,
       );
-    } else {
+    } else if (!options.splashOnly) {
       logger.warn(
         'Web App Manifest file is not specified, printing out the content to console instead',
       );
