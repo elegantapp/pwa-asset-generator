@@ -244,7 +244,7 @@ const generateImages = async (source, output, options) => {
   const splashScreenMetaData = await getSplashScreenMetaData(options);
   const allImages = [
     ...(!options.iconOnly
-      ? images.getSplashScreenImages(splashScreenMetaData)
+      ? images.getSplashScreenImages(splashScreenMetaData, options)
       : []),
     ...(!options.splashOnly ? images.getIconImages() : []),
   ];

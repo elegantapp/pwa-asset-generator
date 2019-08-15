@@ -30,24 +30,30 @@ const getIconImages = () => {
   );
 };
 
-const getSplashScreenImages = uniformSplashScreenData => {
+const getSplashScreenImages = (uniformSplashScreenData, options) => {
   return uniqWith(
-    uniformSplashScreenData.reduce((acc, curr) => {
-      return acc.concat([
-        mapToImageFileObj(
-          constants.APPLE_SPLASH_FILENAME_PREFIX,
-          curr.portrait.width,
-          curr.portrait.height,
-          curr.scaleFactor,
-        ),
-        mapToImageFileObj(
-          'apple-splash',
-          curr.landscape.width,
-          curr.landscape.height,
-          curr.scaleFactor,
-        ),
-      ]);
-    }, []),
+    uniformSplashScreenData
+      .reduce((acc, curr) => {
+        return acc.concat([
+          !options.landscapeOnly
+            ? mapToImageFileObj(
+                constants.APPLE_SPLASH_FILENAME_PREFIX,
+                curr.portrait.width,
+                curr.portrait.height,
+                curr.scaleFactor,
+              )
+            : null,
+          !options.portraitOnly
+            ? mapToImageFileObj(
+                constants.APPLE_SPLASH_FILENAME_PREFIX,
+                curr.landscape.width,
+                curr.landscape.height,
+                curr.scaleFactor,
+              )
+            : null,
+        ]);
+      }, [])
+      .filter(el => el !== null),
     isEqual,
   );
 };
