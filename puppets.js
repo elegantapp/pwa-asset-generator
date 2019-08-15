@@ -241,6 +241,7 @@ const saveImages = async (imageList, source, output, options) => {
 };
 
 const generateImages = async (source, output, options) => {
+  const logger = preLogger(generateImages.name);
   const splashScreenMetaData = await getSplashScreenMetaData(options);
   const allImages = [
     ...(!options.iconOnly
@@ -250,7 +251,10 @@ const generateImages = async (source, output, options) => {
   ];
 
   if (!(await file.pathExists(output, file.WRITE_ACCESS))) {
-    throw Error(`Make sure output folder ${output} exists and writable`);
+    logger.warn(
+      `Looks like folder ${output} doesn't exist. Created one for you`,
+    );
+    await file.makeDir(output);
   }
 
   // Increase MaxListeners and suppress MaxListenersExceededWarning
