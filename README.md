@@ -56,7 +56,9 @@ $ pwa-asset-generator --help
     -s --scrape                 Scraping Apple Human Interface Guidelines to fetch splash screen specs  [default: true]
     -m --manifest               Web app manifest file path to automatically update manifest file with the generated images
     -i --index                  Index html file path to automatically put splash screen meta tags in
-    
+    -t --type                   Image type: png|jpeg  [default: png]
+    -q --quality                Image quality: 0...100 (Only for JPEG)  [default: 100]
+
   Examples
     $ pwa-asset-generator logo.html .
     $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png .
