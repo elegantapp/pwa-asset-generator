@@ -2,6 +2,8 @@
 
 > PWA asset generator based on Puppeteer. Automatically generates icons and splash screens based on Web App Manifest specs and Apple Human Interface guidelines. Updates manifest.json and index.html files with the generated images.
 
+![Demo](https://github.com/onderceylan/pwa-asset-generator/blob/master/static/demo.gif)
+
 ## Motivation
 
 When you build a PWA with a goal of providing native-like experiences on multiple platforms and stores, you need to meet with the criteria of those platforms and stores with your PWA assets; icon sizes and splash screens. Such criteria are;
@@ -67,7 +69,7 @@ $ pwa-asset-generator --help
     $ pwa-asset-generator logo.html .
     $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png . -t jpeg -q 90 --splash-only --portrait-only
     $ pwa-asset-generator logo.svg ./assets --scrape false --icon-only
-    $ pwa-asset-generator https://cdn.freebiesupply.com/logos/large/2x/amazon-icon-logo-png-transparent.png -p "15%" -b "linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%)"
+    $ pwa-asset-generator https://github.com/onderceylan/pwa-asset-generator/blob/master/static/logo.png -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
 
   Flag examples
     --background="rgba(255, 255, 255, .5)"
