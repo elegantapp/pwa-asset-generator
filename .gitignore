@@ -1,5 +1,7 @@
 # Automatically generated files by app
-static
+static/*
+!static/demo.gif
+!static/logo.png
 temp
 
 # Logs
