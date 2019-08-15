@@ -38,12 +38,12 @@ const getShellHtmlFilePath = () => {
   return `${getAppDir()}/static/shell.html`;
 };
 
-const getDefaultImageSavePath = (imageName, ext = '.png') => {
-  return path.join(process.cwd(), imageName + ext);
+const getDefaultImageSavePath = (imageName, ext) => {
+  return path.join(process.cwd(), `${imageName}.${ext}`);
 };
 
-const getImageSavePath = (imageName, outputFolder, ext = '.png') => {
-  return path.join(outputFolder, imageName + ext);
+const getImageSavePath = (imageName, outputFolder, ext) => {
+  return path.join(outputFolder, `${imageName}.${ext}`);
 };
 
 const getFileUrlOfPath = source => {

@@ -213,9 +213,11 @@ const saveImages = async (imageList, source, output, options) => {
       args: constants.PUPPETEER_LAUNCH_ARGS,
     });
 
+    const { type, quality } = options;
+
     const path = output
-      ? file.getImageSavePath(name, output)
-      : file.getDefaultImageSavePath(name);
+      ? file.getImageSavePath(name, output, type)
+      : file.getDefaultImageSavePath(name, type);
 
     try {
       const page = await browser.newPage();
@@ -223,7 +225,8 @@ const saveImages = async (imageList, source, output, options) => {
       await page.screenshot({
         path,
         omitBackground: !options.opaque,
-        type: 'png',
+        type: options.type,
+        ...(type !== 'png' ? { quality } : {}),
       });
 
       logger.success(`Saved image ${name}`);

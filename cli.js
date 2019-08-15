@@ -13,16 +13,18 @@ const cli = meow(
     The assets will be saved to the folder where the command is executed if no output-folder provided.
     
   Options
-    -b --background             Page background to use when image source is provided  [default: transparent]
+    -b --background             Page background to use when image source is provided: css value  [default: transparent]
     -o --opaque                 Making screenshots to be saved with a background color  [default: true]
-    -p --padding                Padding to use when image source provided  [default: "10%"]
+    -p --padding                Padding to use when image source provided: css value  [default: "10%"]
     -s --scrape                 Scraping Apple Human Interface Guidelines to fetch splash screen specs  [default: true]
     -m --manifest               Web app manifest file path to automatically update manifest file with the generated images
     -i --index                  Index html file path to automatically put splash screen meta tags in
+    -t --type                   Image type: png|jpeg  [default: png]
+    -q --quality                Image quality: 0...100 (Only for JPEG)  [default: 100]
     
   Examples
     $ pwa-asset-generator logo.html .
-    $ pwa-asset-generator http://your-cdn-server.com/assets/logo.png .
+    $ pwa-asset-generator http://your-cdn-server.com/assets/logo.png . -t jpeg -q 90
     $ pwa-asset-generator logo.svg ./assets --scrape false
     $ pwa-asset-generator https://cdn.freebiesupply.com/logos/large/2x/amazon-icon-logo-png-transparent.png ./assets -p "20%" -b "linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%)"
 
@@ -33,6 +35,8 @@ const cli = meow(
     --scrape=false
     --manifest=./src/manifest.json
     --index=./src/index.html
+    --type=jpeg
+    --quality=80
 `,
   {
     flags: {
@@ -63,6 +67,16 @@ const cli = meow(
         type: 'string',
         alias: 'p',
         default: '10%',
+      },
+      type: {
+        type: 'string',
+        alias: 't',
+        default: 'png',
+      },
+      quality: {
+        type: 'number',
+        alias: 'q',
+        default: 100,
       },
     },
   },
