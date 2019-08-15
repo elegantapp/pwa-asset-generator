@@ -59,9 +59,9 @@ $ pwa-asset-generator --help
     
   Examples
     $ pwa-asset-generator logo.html .
-    $ pwa-asset-generator http://your-cdn-server.com/assets/logo.png .
+    $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png .
     $ pwa-asset-generator logo.svg ./assets --scrape false
-    $ pwa-asset-generator https://cdn.freebiesupply.com/logos/large/2x/amazon-icon-logo-png-transparent.png ./assets -p "20%" -b "linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%)"
+    $ pwa-asset-generator https://cdn.freebiesupply.com/logos/large/2x/amazon-icon-logo-png-transparent.png -p "15%" -b "linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%)"
 
   Flag examples
     --background="rgba(255, 255, 255, .5)"
