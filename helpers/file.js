@@ -65,6 +65,18 @@ const pathExists = (filePath, mode) => {
   });
 };
 
+const makeDir = folderPath => {
+  return new Promise((resolve, reject) => {
+    fs.mkdir(folderPath, { recursive: true }, err => {
+      if (err) {
+        return reject(err);
+      }
+
+      return resolve();
+    });
+  });
+};
+
 const readFile = (filePath, options) => {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, options, (err, data) => {
@@ -134,6 +146,7 @@ module.exports = {
   getExtension,
   readFile,
   writeFile,
+  makeDir,
   READ_ACCESS: fs.constants.R_OK,
   WRITE_ACCESS: fs.constants.W_OK,
 };

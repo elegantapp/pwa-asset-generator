@@ -1,4 +1,5 @@
 const execa = require('execa');
+const file = require('./helpers/file');
 
 test('throws error when input is not provided', async () => {
   try {
@@ -8,14 +9,16 @@ test('throws error when input is not provided', async () => {
   }
 });
 
-test('throws error when wrong output is provided', async () => {
-  try {
-    await execa.sync('./cli.js', ['./static/logo.png', 'unknown_folder']);
-  } catch (e) {
-    expect(e.stderr).toContain(
-      'Make sure output folder unknown_folder exists and writable',
-    );
-  }
+test('creates an output folder when output path does not exist', async () => {
+  jest.setTimeout(30000);
+  const tempFolderName = 'temp';
+  await execa.sync('./cli.js', [
+    './static/logo.png',
+    tempFolderName,
+    '-s=false',
+    '--icon-only',
+  ]);
+  expect(await file.pathExists(tempFolderName)).toBe(true);
 });
 
 test('creates images', async () => {
@@ -23,6 +26,7 @@ test('creates images', async () => {
   let flags = `
     --background="rgba(255, 255, 255, .5)"
     --scrape=false
+    --icon-only
     `;
 
   flags = flags
