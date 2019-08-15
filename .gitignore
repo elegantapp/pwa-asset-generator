@@ -97,3 +97,6 @@ typings/
 # Editors
 .idea/
 .vscode/
+
+# MacOS
+.DS_Store
