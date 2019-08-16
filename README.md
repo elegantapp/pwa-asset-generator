@@ -1,4 +1,5 @@
-# pwa-asset-generator [![Build Status](https://travis-ci.com/onderceylan/pwa-asset-generator.svg?branch=master)](https://travis-ci.com/onderceylan/pwa-asset-generator.svg?branch=master) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+# pwa-asset-generator 
+[![Build Status](https://travis-ci.com/onderceylan/pwa-asset-generator.svg?branch=master)](https://travis-ci.com/onderceylan/pwa-asset-generator) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Twitter Follow](https://img.shields.io/twitter/follow/onderceylan)](https://twitter.com/onderceylan/)
 
 > PWA asset generator based on Puppeteer. Automatically generates icons and splash screens based on Web App Manifest specs and Apple Human Interface guidelines. Updates manifest.json and index.html files with the generated images.
 
@@ -27,7 +28,7 @@ PWA Asset Generator automates the image generation in a creative way. Having Pup
 * Uses Chrome browser as it's a canvas of your fav image editor. It uses a shell HTML file as an artboard and centers your logo before taking screenshots for each resolution.
 * You can provide your source in multiple formats; a local image file, a local html file, a remote image or html file. 
     * When it's an image source, it is centered over the background color option you provide.
-    * When it's an html source, you can go as creative as you like; position your logo, add css filters to your image, use drop shadows, use typography and etc. Your html file is rendered on Chrome before taking screenshots for each resolution.
+    * When it's an html source, you can go as creative as you like; position your logo, use SVG filters, use variable fonts, use gradient backgrounds, use typography and etc. Your html file is rendered on Chrome before taking screenshots for each resolution.
 * Updates your manifest.json and index.html files automatically for declaring generated image assets.    
 
 ## Install
@@ -69,7 +70,7 @@ $ pwa-asset-generator --help
     $ pwa-asset-generator logo.html .
     $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png . -t jpeg -q 90 --splash-only --portrait-only
     $ pwa-asset-generator logo.svg ./assets --scrape false --icon-only
-    $ pwa-asset-generator https://github.com/onderceylan/pwa-asset-generator/blob/master/static/logo.png -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
+    $ pwa-asset-generator https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/demo.gif -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
 
   Flag examples
     --background="rgba(255, 255, 255, .5)"
