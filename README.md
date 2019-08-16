@@ -2,7 +2,7 @@
 
 > PWA asset generator based on Puppeteer. Automatically generates icons and splash screens based on Web App Manifest specs and Apple Human Interface guidelines. Updates manifest.json and index.html files with the generated images.
 
-![Demo](https://github.com/onderceylan/pwa-asset-generator/blob/master/static/demo.gif)
+![Usage demonstration](https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/demo.gif)
 
 ## Motivation
 
