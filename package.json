@@ -22,8 +22,9 @@
   },
   "keywords": [
     "pwa",
+    "puppeteer",
+    "chromium",
     "icon",
-    "icons",
     "launch-image",
     "ios",
     "android",
@@ -31,7 +32,9 @@
     "splash-screen",
     "image-generation",
     "image",
-    "manifest"
+    "manifest",
+    "mobile",
+    "pwa-assets"
   ],
   "author": "Önder Ceylan <onderceylan@gmail.com>",
   "license": "MIT",
