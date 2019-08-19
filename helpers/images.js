@@ -7,13 +7,21 @@ const mapToSqImageFileObj = (fileNamePrefix, size) => ({
   width: size,
   height: size,
   scaleFactor: null,
+  orientation: null,
 });
 
-const mapToImageFileObj = (fileNamePrefix, width, height, scaleFactor) => ({
+const mapToImageFileObj = (
+  fileNamePrefix,
+  width,
+  height,
+  scaleFactor,
+  orientation,
+) => ({
   name: `${fileNamePrefix}-${width}-${height}`,
   width,
   height,
   scaleFactor,
+  orientation,
 });
 
 const getIconImages = () => {
@@ -41,6 +49,7 @@ const getSplashScreenImages = (uniformSplashScreenData, options) => {
                 curr.portrait.width,
                 curr.portrait.height,
                 curr.scaleFactor,
+                'portrait',
               )
             : null,
           !options.portraitOnly
@@ -49,6 +58,7 @@ const getSplashScreenImages = (uniformSplashScreenData, options) => {
                 curr.landscape.width,
                 curr.landscape.height,
                 curr.scaleFactor,
+                'landscape',
               )
             : null,
         ]);

@@ -32,6 +32,7 @@ module.exports = {
   APPLE_ICON_FILENAME_PREFIX: 'apple-icon',
   APPLE_SPLASH_FILENAME_PREFIX: 'apple-splash',
   MANIFEST_ICON_FILENAME_PREFIX: 'manifest-icon',
+  APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR: 'table tbody tr',
   WAIT_FOR_SELECTOR_TIMEOUT: 1000,
 
   SHELL_HTML_FOR_LOGO: (imgPath, backgroundColor = 'transparent', padding) => `\
@@ -64,13 +65,38 @@ module.exports = {
 <link rel="apple-touch-icon" sizes="${size}x${size}" href="${url}">
 `,
 
-  APPLE_LAUNCH_SCREEN_META_HTML: (width, height, url, scaleFactor) => `\
-<link rel="apple-touch-startup-image" href="${url}" media="(device-width: ${width /
-    scaleFactor}px) and (device-height: ${height /
-    scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor})">
-`,
+  APPLE_LAUNCH_SCREEN_META_HTML: (
+    width,
+    height,
+    url,
+    scaleFactor,
+    orientation,
+  ) => {
+    /* eslint-disable */
+    if (orientation === 'portrait') {
+      return `\
+<link rel="apple-touch-startup-image"
+    href="${url}"
+    media="(device-width: ${width / scaleFactor}px) and (device-height: ${height / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})">
+`;
+    }
+
+    // As weird as it gets, Apple expects same device width and height values from portrait orientation, for landscape
+    return `\
+<link rel="apple-touch-startup-image"
+    href="${url}"
+    media="(device-width: ${height / scaleFactor}px) and (device-height: ${width / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})">
+`;
+    /* eslint-enable */
+  },
 
   APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA: [
+    {
+      device: '12.9" iPad Pro',
+      portrait: { width: 2048, height: 2732 },
+      landscape: { width: 2732, height: 2048 },
+      scaleFactor: 2,
+    },
     {
       device: '11" iPad Pro',
       portrait: { width: 1668, height: 2388 },
