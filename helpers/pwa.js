@@ -28,8 +28,14 @@ const generateAppleLaunchImageHtml = savedImages => {
     .filter(image =>
       image.name.startsWith(constants.APPLE_SPLASH_FILENAME_PREFIX),
     )
-    .map(({ width, height, path, scaleFactor }) =>
-      constants.APPLE_LAUNCH_SCREEN_META_HTML(width, height, path, scaleFactor),
+    .map(({ width, height, path, scaleFactor, orientation }) =>
+      constants.APPLE_LAUNCH_SCREEN_META_HTML(
+        width,
+        height,
+        path,
+        scaleFactor,
+        orientation,
+      ),
     )
     .join('');
 };

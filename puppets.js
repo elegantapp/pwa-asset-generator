@@ -31,10 +31,10 @@ const getAppleSplashScreenData = async browser => {
     throw e;
   }
 
-  const splashScreenData = await page.evaluate(() => {
-    const scrapeSplashScreenDataFromHIGPage = () =>
-      Array.from(document.querySelectorAll('table tr:not(:first-child)')).map(
-        tr => {
+  const splashScreenData = await page.evaluate(
+    ({ selector }) => {
+      const scrapeSplashScreenDataFromHIGPage = () =>
+        Array.from(document.querySelectorAll(selector)).map(tr => {
           return Array.from(tr.querySelectorAll('td')).reduce(
             (acc, curr, index) => {
               const appleLaunchScreenTableColumnOrder = [
@@ -70,10 +70,11 @@ const getAppleSplashScreenData = async browser => {
               landscape: { width: 0, height: 0 },
             },
           );
-        },
-      );
-    return scrapeSplashScreenDataFromHIGPage();
-  });
+        });
+      return scrapeSplashScreenDataFromHIGPage();
+    },
+    { selector: constants.APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR },
+  );
 
   if (splashScreenData == null) {
     const err = `Failed scraping the data on web page ${constants.APPLE_HIG_SPLASH_SCR_SPECS_URL}`;
@@ -82,7 +83,6 @@ const getAppleSplashScreenData = async browser => {
   }
 
   logger.log('Retrieved splash screen data');
-  // logger.trace(splashScreenData);
   return splashScreenData;
 };
 
@@ -107,10 +107,10 @@ const getDeviceScaleFactorData = async browser => {
     throw Error(err);
   }
 
-  const scaleFactorData = await page.evaluate(() => {
-    const scrapeScaleFactorDataFromHIGPage = () =>
-      Array.from(document.querySelectorAll('table tr:not(:first-child)')).map(
-        tr => {
+  const scaleFactorData = await page.evaluate(
+    ({ selector }) => {
+      const scrapeScaleFactorDataFromHIGPage = () =>
+        Array.from(document.querySelectorAll(selector)).map(tr => {
           return Array.from(tr.querySelectorAll('td')).reduce(
             (acc, curr, index) => {
               const appleScaleFactorTableColumnOrder = [
@@ -139,10 +139,11 @@ const getDeviceScaleFactorData = async browser => {
             },
             { device: '', scaleFactor: 1 },
           );
-        },
-      );
-    return scrapeScaleFactorDataFromHIGPage();
-  });
+        });
+      return scrapeScaleFactorDataFromHIGPage();
+    },
+    { selector: constants.APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR },
+  );
 
   if (scaleFactorData == null) {
     const err = `Failed scraping the data on web page ${constants.APPLE_HIG_DEVICE_SCALE_FACTOR_SPECS_URL}`;
@@ -203,41 +204,43 @@ const saveImages = async (imageList, source, output, options) => {
 
   const address = await url.getAddress(source, options);
 
-  return imageList.map(async ({ name, width, height, scaleFactor }) => {
-    const browser = await puppeteer.launch({
-      headless: true,
-      defaultViewport: {
-        width,
-        height,
-      },
-      args: constants.PUPPETEER_LAUNCH_ARGS,
-    });
-
-    const { type, quality } = options;
-
-    const path = output
-      ? file.getImageSavePath(name, output, type)
-      : file.getDefaultImageSavePath(name, type);
-
-    try {
-      const page = await browser.newPage();
-      await page.goto(address);
-      await page.screenshot({
-        path,
-        omitBackground: !options.opaque,
-        type: options.type,
-        ...(type !== 'png' ? { quality } : {}),
+  return imageList.map(
+    async ({ name, width, height, scaleFactor, orientation }) => {
+      const browser = await puppeteer.launch({
+        headless: true,
+        defaultViewport: {
+          width,
+          height,
+        },
+        args: constants.PUPPETEER_LAUNCH_ARGS,
       });
 
-      logger.success(`Saved image ${name}`);
-      return { name, width, height, scaleFactor, path };
-    } catch (e) {
-      logger.error(e.message);
-      throw Error(`Failed to save image ${name}`);
-    } finally {
-      await browser.close();
-    }
-  });
+      const { type, quality } = options;
+
+      const path = output
+        ? file.getImageSavePath(name, output, type)
+        : file.getDefaultImageSavePath(name, type);
+
+      try {
+        const page = await browser.newPage();
+        await page.goto(address);
+        await page.screenshot({
+          path,
+          omitBackground: !options.opaque,
+          type: options.type,
+          ...(type !== 'png' ? { quality } : {}),
+        });
+
+        logger.success(`Saved image ${name}`);
+        return { name, width, height, scaleFactor, path, orientation };
+      } catch (e) {
+        logger.error(e.message);
+        throw Error(`Failed to save image ${name}`);
+      } finally {
+        await browser.close();
+      }
+    },
+  );
 };
 
 const generateImages = async (source, output, options) => {
