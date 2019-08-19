@@ -76,7 +76,7 @@ const getAppleSplashScreenData = async browser => {
     { selector: constants.APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR },
   );
 
-  if (splashScreenData == null) {
+  if (!splashScreenData.length) {
     const err = `Failed scraping the data on web page ${constants.APPLE_HIG_SPLASH_SCR_SPECS_URL}`;
     logger.error(err);
     throw Error(err);
@@ -145,7 +145,7 @@ const getDeviceScaleFactorData = async browser => {
     { selector: constants.APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR },
   );
 
-  if (scaleFactorData == null) {
+  if (!scaleFactorData.length) {
     const err = `Failed scraping the data on web page ${constants.APPLE_HIG_DEVICE_SCALE_FACTOR_SPECS_URL}`;
     logger.error(err);
     throw Error(err);
