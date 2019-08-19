@@ -1,5 +1,5 @@
 # pwa-asset-generator 
-[![Build Status](https://travis-ci.com/onderceylan/pwa-asset-generator.svg?branch=master)](https://travis-ci.com/onderceylan/pwa-asset-generator) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Twitter Follow](https://img.shields.io/twitter/follow/onderceylan)](https://twitter.com/onderceylan/)
+[![Build Status](https://travis-ci.com/onderceylan/pwa-asset-generator.svg?branch=master)](https://travis-ci.com/onderceylan/pwa-asset-generator) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 > PWA asset generator based on Puppeteer. Automatically generates icons and splash screens based on Web App Manifest specs and Apple Human Interface guidelines. Updates manifest.json and index.html files with the generated images.
 
