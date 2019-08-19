@@ -7,6 +7,8 @@ const preLogger = require('./helpers/logger');
 
 const cli = meow(
   `
+$ pwa-asset-generator --help
+
   Usage
     $ pwa-asset-generator [source] [output-folder]
     
