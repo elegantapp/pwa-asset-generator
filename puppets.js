@@ -217,9 +217,7 @@ const saveImages = async (imageList, source, output, options) => {
 
       const { type, quality } = options;
 
-      const path = output
-        ? file.getImageSavePath(name, output, type)
-        : file.getDefaultImageSavePath(name, type);
+      const path = file.getImageSavePath(name, output, type);
 
       try {
         const page = await browser.newPage();
