@@ -145,7 +145,7 @@ options = normalizeOnlyFlagPairs('splashOnly', 'iconOnly', options);
 options = normalizeOnlyFlagPairs('landscapeOnly', 'portraitOnly', options);
 
 if (!output) {
-  output = process.cwd();
+  output = '.';
 }
 
 (async () => {
