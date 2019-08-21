@@ -38,16 +38,19 @@ const getShellHtmlFilePath = () => {
   return `${getAppDir()}/static/shell.html`;
 };
 
-const getDefaultImageSavePath = (imageName, ext) => {
-  return path.join(process.cwd(), `${imageName}.${ext}`);
-};
-
 const getImageSavePath = (imageName, outputFolder, ext) => {
   return path.join(outputFolder, `${imageName}.${ext}`);
 };
 
 const getFileUrlOfPath = source => {
   return fileUrl(source);
+};
+
+const getRelativeFilePath = (referenceFilePath, filePath) => {
+  return path.relative(
+    path.dirname(path.resolve(referenceFilePath)),
+    path.resolve(filePath),
+  );
 };
 
 const pathExists = (filePath, mode) => {
@@ -139,9 +142,9 @@ module.exports = {
   isImageFile,
   getShellHtmlFilePath,
   getImageSavePath,
-  getDefaultImageSavePath,
   getFileUrlOfPath,
   pathExists,
+  getRelativeFilePath,
   getAppDir,
   getExtension,
   readFile,
