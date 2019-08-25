@@ -2,28 +2,35 @@ const cheerio = require('cheerio');
 const constants = require('../config/constants');
 const file = require('../helpers/file');
 
-const generateIconsContentForManifest = savedImages => {
+const generateIconsContentForManifest = (savedImages, manifestJsonPath) => {
   return savedImages
     .filter(image =>
       image.name.startsWith(constants.MANIFEST_ICON_FILENAME_PREFIX),
     )
-    .map(({ path: src, width, height }) => ({
-      src,
+    .map(({ path, width, height }) => ({
+      src: manifestJsonPath
+        ? file.getRelativeFilePath(manifestJsonPath, path)
+        : path,
       sizes: `${width}x${height}`,
-      type: `image/${file.getExtension(src)}`,
+      type: `image/${file.getExtension(path)}`,
     }));
 };
 
-const generateAppleTouchIconHtml = savedImages => {
+const generateAppleTouchIconHtml = (savedImages, indexHtmlPath) => {
   return savedImages
     .filter(image =>
       image.name.startsWith(constants.APPLE_ICON_FILENAME_PREFIX),
     )
-    .map(({ width, path }) => constants.APPLE_TOUCH_ICON_META_HTML(width, path))
+    .map(({ width, path }) =>
+      constants.APPLE_TOUCH_ICON_META_HTML(
+        width,
+        indexHtmlPath ? file.getRelativeFilePath(indexHtmlPath, path) : path,
+      ),
+    )
     .join('');
 };
 
-const generateAppleLaunchImageHtml = savedImages => {
+const generateAppleLaunchImageHtml = (savedImages, indexHtmlPath) => {
   return savedImages
     .filter(image =>
       image.name.startsWith(constants.APPLE_SPLASH_FILENAME_PREFIX),
@@ -32,7 +39,7 @@ const generateAppleLaunchImageHtml = savedImages => {
       constants.APPLE_LAUNCH_SCREEN_META_HTML(
         width,
         height,
-        path,
+        indexHtmlPath ? file.getRelativeFilePath(indexHtmlPath, path) : path,
         scaleFactor,
         orientation,
       ),
@@ -40,11 +47,11 @@ const generateAppleLaunchImageHtml = savedImages => {
     .join('');
 };
 
-const generateHtmlForIndexPage = savedImages => {
+const generateHtmlForIndexPage = (savedImages, indexHtmlPath) => {
   return `\
-${generateAppleTouchIconHtml(savedImages)}
+${generateAppleTouchIconHtml(savedImages, indexHtmlPath)}
 <meta name="apple-mobile-web-app-capable" content="yes">
-${generateAppleLaunchImageHtml(savedImages)}`;
+${generateAppleLaunchImageHtml(savedImages, indexHtmlPath)}`;
 };
 
 const addIconsToManifest = async (manifestContent, manifestJsonFilePath) => {

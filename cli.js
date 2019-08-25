@@ -145,7 +145,7 @@ options = normalizeOnlyFlagPairs('splashOnly', 'iconOnly', options);
 options = normalizeOnlyFlagPairs('landscapeOnly', 'portraitOnly', options);
 
 if (!output) {
-  output = process.cwd();
+  output = '.';
 }
 
 (async () => {
@@ -153,39 +153,47 @@ if (!output) {
     const savedImages = await puppets.generateImages(source, output, options);
     const manifestJsonContent = pwa.generateIconsContentForManifest(
       savedImages,
+      options.manifest,
     );
-    const htmlContent = pwa.generateHtmlForIndexPage(savedImages);
+    const htmlContent = pwa.generateHtmlForIndexPage(
+      savedImages,
+      options.index,
+    );
 
-    if (options.manifest) {
-      await pwa.addIconsToManifest(manifestJsonContent, options.manifest);
-      logger.success(
-        `Icons are saved to Web App Manifest file ${options.manifest}`,
-      );
-    } else if (!options.splashOnly) {
-      logger.warn(
-        'Web App Manifest file is not specified, printing out the content to console instead',
-      );
-      logger.success(
-        'Below is the icons content for your manifest.json file. You can copy/paste it manually',
-      );
-      process.stdout.write(
-        `\n${JSON.stringify(manifestJsonContent, null, 2)}\n\n`,
-      );
+    if (!options.splashOnly) {
+      if (options.manifest) {
+        await pwa.addIconsToManifest(manifestJsonContent, options.manifest);
+        logger.success(
+          `Icons are saved to Web App Manifest file ${options.manifest}`,
+        );
+      } else if (!options.splashOnly) {
+        logger.warn(
+          'Web App Manifest file is not specified, printing out the content to console instead',
+        );
+        logger.success(
+          'Below is the icons content for your manifest.json file. You can copy/paste it manually',
+        );
+        process.stdout.write(
+          `\n${JSON.stringify(manifestJsonContent, null, 2)}\n\n`,
+        );
+      }
     }
 
-    if (options.index) {
-      await pwa.addMetaTagsToIndexPage(htmlContent, options.index);
-      logger.success(
-        `Splash screen meta tags are saved to index html file ${options.index}`,
-      );
-    } else {
-      logger.warn(
-        'Index html file is not specified, printing out the content to console instead',
-      );
-      logger.success(
-        'Below is the splash screen content for your index.html file. You can copy/paste it manually',
-      );
-      process.stdout.write(`\n${htmlContent}\n`);
+    if (!options.iconOnly) {
+      if (options.index) {
+        await pwa.addMetaTagsToIndexPage(htmlContent, options.index);
+        logger.success(
+          `Splash screen meta tags are saved to index html file ${options.index}`,
+        );
+      } else {
+        logger.warn(
+          'Index html file is not specified, printing out the content to console instead',
+        );
+        logger.success(
+          'Below is the splash screen content for your index.html file. You can copy/paste it manually',
+        );
+        process.stdout.write(`\n${htmlContent}\n`);
+      }
     }
   } catch (e) {
     logger.error(e);

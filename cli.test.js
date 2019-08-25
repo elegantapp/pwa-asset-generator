@@ -1,6 +1,8 @@
 const execa = require('execa');
 const file = require('./helpers/file');
 
+const timeout = 60000;
+
 test('throws error when input is not provided', async () => {
   try {
     await execa.sync('./cli.js', []);
@@ -10,7 +12,7 @@ test('throws error when input is not provided', async () => {
 });
 
 test('creates an output folder when output path does not exist', async () => {
-  jest.setTimeout(30000);
+  jest.setTimeout(timeout);
   const tempFolderName = 'temp';
   await execa.sync('./cli.js', [
     './static/logo.png',
@@ -21,30 +23,74 @@ test('creates an output folder when output path does not exist', async () => {
   expect(await file.pathExists(tempFolderName)).toBe(true);
 });
 
-test('creates images', async () => {
-  jest.setTimeout(30000);
-  let flags = `
-    --background="rgba(255, 255, 255, .5)"
-    --scrape=false
-    --icon-only
-    `;
+test('generates icons only', async () => {
+  jest.setTimeout(timeout);
 
-  flags = flags
-    .trim()
-    .replace(/(?<==)"|(?<!\\)"$/gm, '')
-    .replace(/\\"/g, '"')
-    .split('\n');
-
-  const { stdout } = await execa('./cli.js', [
-    './static/logo.png',
-    './static',
-    ...flags,
-  ]);
-
-  expect(stdout).toContain(
-    'Below is the icons content for your manifest.json file. You can copy/paste it manually',
+  const { stdout } = await execa(
+    './cli.js',
+    ['./static/logo.png', './temp', '-s=false', '--icon-only'],
+    { env: { PAG_NO_TRACE: '1' } },
   );
-  expect(stdout).toContain(
-    'Below is the splash screen content for your index.html file. You can copy/paste it manually',
+
+  expect(stdout).toMatchSnapshot();
+});
+
+test('generates splash screens only', async () => {
+  jest.setTimeout(timeout);
+
+  const { stdout } = await execa(
+    './cli.js',
+    ['./static/logo.png', './temp', '-s=false', '--splash-only'],
+    { env: { PAG_NO_TRACE: '1' } },
   );
+
+  expect(stdout).toMatchSnapshot();
+});
+
+test('generates portrait splash screens only', async () => {
+  jest.setTimeout(timeout);
+
+  const { stdout } = await execa(
+    './cli.js',
+    [
+      './static/logo.png',
+      './temp',
+      '-s=false',
+      '--splash-only',
+      '--portrait-only',
+    ],
+    { env: { PAG_NO_TRACE: '1' } },
+  );
+
+  expect(stdout).toMatchSnapshot();
+});
+
+test('generates landscape splash screens only', async () => {
+  jest.setTimeout(timeout);
+
+  const { stdout } = await execa(
+    './cli.js',
+    [
+      './static/logo.png',
+      './temp',
+      '-s=false',
+      '--splash-only',
+      '--landscape-only',
+    ],
+    { env: { PAG_NO_TRACE: '1' } },
+  );
+
+  expect(stdout).toMatchSnapshot();
+});
+
+test('generates icons and splash screens when both only flags exist', async () => {
+  jest.setTimeout(timeout);
+
+  const { stdout } = await execa(
+    './cli.js',
+    ['./static/logo.png', './temp', '-s=false', '--splash-only', '--icon-only'],
+    { env: { PAG_NO_TRACE: '1' } },
+  );
+
+  expect(stdout).toMatchSnapshot();
 });

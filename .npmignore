@@ -1,6 +1,7 @@
 static/*
 !static/.gitkeep
 temp/*
+__snapshots__/*
 .editorconfig
 .eslintrc
 .gitattributes
