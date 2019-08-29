@@ -212,6 +212,7 @@ const saveImages = async (imageList, source, output, options) => {
           width,
           height,
         },
+        timeout: 60000,
         args: constants.PUPPETEER_LAUNCH_ARGS,
       });
 
