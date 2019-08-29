@@ -8,6 +8,8 @@
   },
   "scripts": {
     "test": "npm run lint && jest",
+    "jest": "jest",
+    "jest:update": "jest -u",
     "commit": "git-cz",
     "lint": "eslint \"**/**.js\"",
     "lint:fix": "npm run lint -- --fix",

@@ -35,9 +35,9 @@ All other commit types will trigger no new release.
 
 ## Testing
 
-The project uses [jest](https://jestjs.io) for unit and integration testing. You can utilize jest's handy [snapshot testing](https://jestjs.io/docs/en/snapshot-testing) feature while testing feature integration specifically, please see [cli.test.js](https://github.com/onderceylan/pwa-asset-generator/blob/master/cli.test.js) file and [snapshots](https://github.com/onderceylan/pwa-asset-generator/tree/master/__snapshots__) folder for examples. Please apply code changes alongside with unit tests.
+The project uses [jest](https://jestjs.io) for unit and integration testing. You can utilize jest's handy [snapshot testing](https://jestjs.io/docs/en/snapshot-testing) feature while testing feature integration specifically, please see [cli.test.js](https://github.com/onderceylan/pwa-asset-generator/blob/master/cli.test.js) file and [snapshots](https://github.com/onderceylan/pwa-asset-generator/tree/master/__snapshots__) folder for examples. You can update the snapshots with `npm run jest:update` command when needed.
 
-Tests run with `npm test` command.
+Please apply any of your code changes alongside with unit tests. Tests run with `npm run jest` command.
 
 ## Continuous integration
 

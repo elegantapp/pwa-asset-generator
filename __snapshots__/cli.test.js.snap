@@ -99,6 +99,14 @@ exports[`generates icons only 1`] = `
     \\"type\\": \\"image/png\\"
   }
 ]
+
+
+<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"temp/apple-icon-180.png\\">
+<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"temp/apple-icon-167.png\\">
+<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"temp/apple-icon-152.png\\">
+<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"temp/apple-icon-120.png\\">
+
+<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
 "
 `;
 

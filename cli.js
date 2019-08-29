@@ -179,21 +179,19 @@ if (!output) {
       }
     }
 
-    if (!options.iconOnly) {
-      if (options.index) {
-        await pwa.addMetaTagsToIndexPage(htmlContent, options.index);
-        logger.success(
-          `Splash screen meta tags are saved to index html file ${options.index}`,
-        );
-      } else {
-        logger.warn(
-          'Index html file is not specified, printing out the content to console instead',
-        );
-        logger.success(
-          'Below is the splash screen content for your index.html file. You can copy/paste it manually',
-        );
-        process.stdout.write(`\n${htmlContent}\n`);
-      }
+    if (options.index) {
+      await pwa.addMetaTagsToIndexPage(htmlContent, options.index);
+      logger.success(
+        `iOS meta tags are saved to index html file ${options.index}`,
+      );
+    } else {
+      logger.warn(
+        'Index html file is not specified, printing out the content to console instead',
+      );
+      logger.success(
+        'Below is the iOS meta tags content for your index.html file. You can copy/paste it manually',
+      );
+      process.stdout.write(`\n${htmlContent}\n`);
     }
   } catch (e) {
     logger.error(e);
