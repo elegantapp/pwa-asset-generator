@@ -184,12 +184,12 @@ const getSplashScreenMetaData = async options => {
       splashScreenData,
       scaleFactorData,
     );
-    logger.success('Loaded splash screen metadata');
+    logger.success('Loaded metadata for iOS platform');
   } catch (e) {
     splashScreenUniformMetaData =
       constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA;
     logger.warn(
-      `Failed to fetch latest specs from Apple Human Interface Guidelines. Using static fallback data from v${packageJson.version}`,
+      `Failed to fetch latest specs from Apple Human Interface guidelines. Using static fallback data from v${packageJson.version}`,
     );
   } finally {
     browser.close();
