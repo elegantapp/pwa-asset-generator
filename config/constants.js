@@ -34,6 +34,7 @@ module.exports = {
   MANIFEST_ICON_FILENAME_PREFIX: 'manifest-icon',
   APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR: 'table tbody tr',
   WAIT_FOR_SELECTOR_TIMEOUT: 1000,
+  BROWSER_SHELL_TIMEOUT: 60000,
 
   SHELL_HTML_FOR_LOGO: (imgPath, backgroundColor = 'transparent', padding) => `\
 <!DOCTYPE html>
