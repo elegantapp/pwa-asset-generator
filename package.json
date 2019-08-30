@@ -51,7 +51,8 @@
     "lodash.isequal": "^4.5.0",
     "lodash.uniqwith": "^4.5.0",
     "meow": "^5.0.0",
-    "puppeteer": "^1.19.0"
+    "puppeteer": "^1.19.0",
+    "slash": "^3.0.0"
   },
   "devDependencies": {
     "@jedmao/semantic-release-npm-github-config": "^1.0.6",

@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const slash = require('slash');
 const crypto = require('crypto');
 const fileUrl = require('file-url');
 const constants = require('../config/constants');
@@ -124,6 +125,10 @@ const addHashPostfixToImages = savedImages => {
   );
 };
 
+const convertBackslashPathToSlashPath = backSlashPath => {
+  return slash(backSlashPath);
+};
+
 const saveHtmlShell = (imagePath, options, isUrl) => {
   const imageUrl = isUrl ? imagePath : getFileUrlOfPath(imagePath);
   const htmlContent = constants.SHELL_HTML_FOR_LOGO(
@@ -137,6 +142,7 @@ const saveHtmlShell = (imagePath, options, isUrl) => {
 
 module.exports = {
   addHashPostfixToImages,
+  convertBackslashPathToSlashPath,
   saveHtmlShell,
   isHtmlFile,
   isImageFile,

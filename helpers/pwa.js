@@ -9,8 +9,10 @@ const generateIconsContentForManifest = (savedImages, manifestJsonPath) => {
     )
     .map(({ path, width, height }) => ({
       src: manifestJsonPath
-        ? file.getRelativeFilePath(manifestJsonPath, path)
-        : path,
+        ? file.convertBackslashPathToSlashPath(
+            file.getRelativeFilePath(manifestJsonPath, path),
+          )
+        : file.convertBackslashPathToSlashPath(path),
       sizes: `${width}x${height}`,
       type: `image/${file.getExtension(path)}`,
     }));
@@ -24,7 +26,11 @@ const generateAppleTouchIconHtml = (savedImages, indexHtmlPath) => {
     .map(({ width, path }) =>
       constants.APPLE_TOUCH_ICON_META_HTML(
         width,
-        indexHtmlPath ? file.getRelativeFilePath(indexHtmlPath, path) : path,
+        indexHtmlPath
+          ? file.convertBackslashPathToSlashPath(
+              file.getRelativeFilePath(indexHtmlPath, path),
+            )
+          : file.convertBackslashPathToSlashPath(path),
       ),
     )
     .join('');
@@ -39,7 +45,11 @@ const generateAppleLaunchImageHtml = (savedImages, indexHtmlPath) => {
       constants.APPLE_LAUNCH_SCREEN_META_HTML(
         width,
         height,
-        indexHtmlPath ? file.getRelativeFilePath(indexHtmlPath, path) : path,
+        indexHtmlPath
+          ? file.convertBackslashPathToSlashPath(
+              file.getRelativeFilePath(indexHtmlPath, path),
+            )
+          : file.convertBackslashPathToSlashPath(path),
         scaleFactor,
         orientation,
       ),
