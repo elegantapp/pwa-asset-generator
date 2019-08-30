@@ -21,7 +21,7 @@ Creating icon and splash screen images for all the platforms, maintaining sizes 
 
 ## Features
 
-PWA Asset Generator automates the image generation in a creative way. PWA Asset Generator automates the image generation in a creative way. Having [Puppeteer](https://pptr.dev) in its core enables lots of possibilities. 
+PWA Asset Generator automates the image generation in a creative way. Having [Puppeteer](https://pptr.dev) in its core enables lots of possibilities. 
 
 * Generates both icons and splash screens with optional `--icon-only` `--splash-only` `--landscape-only` and `--portrait-only` flags ✨
 
