@@ -129,6 +129,15 @@ const convertBackslashPathToSlashPath = backSlashPath => {
   return slash(backSlashPath);
 };
 
+const getRelativeImagePath = (outputFilePath, imagePath) => {
+  if (outputFilePath) {
+    return convertBackslashPathToSlashPath(
+      getRelativeFilePath(outputFilePath, imagePath),
+    );
+  }
+  return convertBackslashPathToSlashPath(imagePath);
+};
+
 const saveHtmlShell = (imagePath, options, isUrl) => {
   const imageUrl = isUrl ? imagePath : getFileUrlOfPath(imagePath);
   const htmlContent = constants.SHELL_HTML_FOR_LOGO(
@@ -143,6 +152,7 @@ const saveHtmlShell = (imagePath, options, isUrl) => {
 module.exports = {
   addHashPostfixToImages,
   convertBackslashPathToSlashPath,
+  getRelativeImagePath,
   saveHtmlShell,
   isHtmlFile,
   isImageFile,
