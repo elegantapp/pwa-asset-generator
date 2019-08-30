@@ -2,6 +2,10 @@
 
 Thank you for considering contribution for `pwa-asset-generator`. Before jumping into code, please go through this guide carefully for a successful contribution.
 
+## Code of conduct
+
+First of all, please read [__Code of Conduct__](https://github.com/onderceylan/pwa-asset-generator/blob/master/CODE_OF_CONDUCT.md) carefully. Once you start contributing, you agree on all terms in code of conduct without any exception.
+
 ## Where to start
 
 You can contribute to this project in many aspects. Some are; reporting bugs, submitting feature requests, improving documentation, adding new test scenarios, implementation of bug fixes, implementation of feature requests and etc. A good issue candidate for you to start with, is an issue with `good first issue` or `help wanted` labels. For all other issues, please contact one of the core contributers before working on them to prevent duplicate work.
