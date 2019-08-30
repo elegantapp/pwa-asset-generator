@@ -24,11 +24,17 @@ Creating icon and splash screen images for all the platforms, maintaining sizes 
 PWA Asset Generator automates the image generation in a creative way. PWA Asset Generator automates the image generation in a creative way. Having [Puppeteer](https://pptr.dev) in its core enables lots of possibilities. 
 
 * Generates both icons and splash screens with optional `--icon-only` `--splash-only` `--landscape-only` and `--portrait-only` flags ✨
+
 * Updates your `manifest.json` and `index.html` files automatically for declaring generated image assets 🙌
+
 * Scrapes latest specs from Apple Human Interface guidelines website via Puppeteer to make your PWA ready for all/recent iOS devices out there 🤖
+
     * Supports offline mode and uses static spec data when things go wrong with scraping 📴
+
 * Uses Chrome browser as it’s a canvas of your fav image editor. It uses a shell HTML file as an artboard and centers your logo before taking screenshots for each resolution via Puppeteer 🤖
+
 * You can provide your source in multiple formats; a local image file, a local HTML file, a remote image or HTML file 🙌
+
     * When it’s an image source, it is centered over the background option you provide 🌅
     * When it’s an HTML source, you can go as creative as you like; position your logo, use SVG filters, use variable fonts, use gradient backgrounds, use typography and etc. Your html file is rendered on Chrome before taking screenshots for each resolution 🎨 
 
