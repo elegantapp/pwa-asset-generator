@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 const meow = require('meow');
-const puppets = require('./puppets');
-const pwa = require('./helpers/pwa');
 const preLogger = require('./helpers/logger');
+const main = require('./main');
 
+const logger = preLogger('cli');
 const cli = meow(
   `
 $ pwa-asset-generator --help
@@ -112,87 +112,9 @@ $ pwa-asset-generator --help
   },
 );
 
-const source = cli.input[0];
-let output = cli.input[1];
-let options = cli.flags;
-const logger = preLogger('cli');
-
-const normalizeOnlyFlagPairs = (flag1Key, flag2Key, opts) => {
-  const stripOnly = key => key.replace('Only', '');
-  if (opts[flag1Key] && opts[flag2Key]) {
-    logger.warn(
-      `Hmm, you want to _only_ generate both ${stripOnly(
-        flag1Key,
-      )} and ${stripOnly(
-        flag2Key,
-      )} set. Ignoring --x-only settings as this is default behavior`,
-    );
-    return {
-      ...opts,
-      [flag1Key]: false,
-      [flag2Key]: false,
-    };
-  }
-  return opts;
-};
-
-if (!source) {
-  logger.error('Please specify a URL or file path as a source');
-  process.exit(1);
-}
-
-options = normalizeOnlyFlagPairs('splashOnly', 'iconOnly', options);
-options = normalizeOnlyFlagPairs('landscapeOnly', 'portraitOnly', options);
-
-if (!output) {
-  output = '.';
-}
-
 (async () => {
   try {
-    const savedImages = await puppets.generateImages(source, output, options);
-    const manifestJsonContent = pwa.generateIconsContentForManifest(
-      savedImages,
-      options.manifest,
-    );
-    const htmlContent = pwa.generateHtmlForIndexPage(
-      savedImages,
-      options.index,
-    );
-
-    if (!options.splashOnly) {
-      if (options.manifest) {
-        await pwa.addIconsToManifest(manifestJsonContent, options.manifest);
-        logger.success(
-          `Icons are saved to Web App Manifest file ${options.manifest}`,
-        );
-      } else if (!options.splashOnly) {
-        logger.warn(
-          'Web App Manifest file is not specified, printing out the content to console instead',
-        );
-        logger.success(
-          'Below is the icons content for your manifest.json file. You can copy/paste it manually',
-        );
-        process.stdout.write(
-          `\n${JSON.stringify(manifestJsonContent, null, 2)}\n\n`,
-        );
-      }
-    }
-
-    if (options.index) {
-      await pwa.addMetaTagsToIndexPage(htmlContent, options.index);
-      logger.success(
-        `iOS meta tags are saved to index html file ${options.index}`,
-      );
-    } else {
-      logger.warn(
-        'Index html file is not specified, printing out the content to console instead',
-      );
-      logger.success(
-        'Below is the iOS meta tags content for your index.html file. You can copy/paste it manually',
-      );
-      process.stdout.write(`\n${htmlContent}\n`);
-    }
+    await main.generateImages(cli.input[0], cli.input[1], cli.flags, logger);
   } catch (e) {
     logger.error(e);
     process.exit(1);
