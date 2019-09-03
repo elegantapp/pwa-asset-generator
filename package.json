@@ -55,6 +55,7 @@
     "slash": "^3.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
     "@jedmao/semantic-release-npm-github-config": "^1.0.6",
     "@types/jest": "^24.0.18",
     "cz-conventional-changelog": "^3.0.2",
@@ -74,7 +75,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
