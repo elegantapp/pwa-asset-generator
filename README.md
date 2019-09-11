@@ -66,15 +66,16 @@ $ pwa-asset-generator --help
     -b --background             Page background to use when image source is provided: css value  [default: transparent]
     -o --opaque                 Making screenshots to be saved with a background color  [default: true]
     -p --padding                Padding to use when image source provided: css value  [default: "10%"]
-    -s --scrape                 Scraping Apple Human Interface Guidelines to fetch splash screen specs  [default: true]
-    -m --manifest               Web app manifest file path to automatically update manifest file with the generated images
-    -i --index                  Index html file path to automatically put splash screen meta tags in
+    -s --scrape                 Scraping Apple Human Interface guidelines to fetch splash screen specs  [default: true]
+    -m --manifest               Web app manifest file path to automatically update manifest file with the generated icons
+    -i --index                  Index html file path to automatically put splash screen and icon meta tags in
     -t --type                   Image type: png|jpeg  [default: png]
     -q --quality                Image quality: 0...100 (Only for JPEG)  [default: 100]
     -h --splash-only            Only generate splash screens  [default: false]
     -c --icon-only              Only generate icons  [default: false]
     -l --landscape-only         Only generate landscape splash screens  [default: false]
     -r --portrait-only          Only generate portrait splash screens  [default: false]
+    -g --log                    Logs the steps of the library process  [default: true]
     
   Examples
     $ pwa-asset-generator logo.html .
@@ -95,6 +96,26 @@ $ pwa-asset-generator --help
     --icon-only
     --landscape-only
     --portrait-only
+    --log=false
+```
+
+### Module
+
+```javascript
+const pwaAssetGenerator = require('pwa-asset-generator');
+
+(async () => {
+  const { savedImages, htmlContent, manifestJsonContent } = await pwaAssetGenerator.generateImages(
+    'https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png',
+    './temp',
+    {
+      scrape: false,
+      background: "linear-gradient(to right, #fa709a 0%, #fee140 100%)",
+      splashOnly: true,
+      portraitOnly: true,
+      log: false
+    });
+})();
 ```
 
 ## Troubleshooting

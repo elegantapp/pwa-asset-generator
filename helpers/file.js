@@ -32,7 +32,13 @@ const isHtmlFile = file => {
 };
 
 const getAppDir = () => {
-  return path.dirname(require.main.filename);
+  let appPath;
+  try {
+    appPath = require.resolve('pwa-asset-generator');
+  } catch (e) {
+    appPath = require.main.filename;
+  }
+  return path.dirname(appPath);
 };
 
 const getShellHtmlFilePath = () => {

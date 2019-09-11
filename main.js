@@ -3,14 +3,15 @@ const puppets = require('./puppets');
 const flags = require('./helpers/flags');
 const preLogger = require('./helpers/logger');
 
-const generateImages = async (source, _output, _options, loggerInjection) => {
-  const logger = loggerInjection || preLogger(generateImages.name);
+const generateImages = async (source, _output, _options, loggerFn) => {
+  const logger = loggerFn || preLogger(generateImages.name, _options);
 
   if (!source) {
     throw Error('Please specify a URL or file path as a source');
   }
 
   const options = {
+    ...flags.getDefaultOptions(),
     ..._options,
     ...flags.normalizeOnlyFlagPairs('splashOnly', 'iconOnly', _options, logger),
     ...flags.normalizeOnlyFlagPairs(
@@ -43,9 +44,7 @@ const generateImages = async (source, _output, _options, loggerInjection) => {
       logger.success(
         'Below is the icons content for your manifest.json file. You can copy/paste it manually',
       );
-      process.stdout.write(
-        `\n${JSON.stringify(manifestJsonContent, null, 2)}\n\n`,
-      );
+      logger.raw(`\n${JSON.stringify(manifestJsonContent, null, 2)}\n\n`);
     }
   }
 
@@ -61,10 +60,10 @@ const generateImages = async (source, _output, _options, loggerInjection) => {
     logger.success(
       'Below is the iOS meta tags content for your index.html file. You can copy/paste it manually',
     );
-    process.stdout.write(`\n${htmlContent}\n`);
+    logger.raw(`\n${htmlContent}\n`);
   }
 
-  return savedImages;
+  return { savedImages, htmlContent, manifestJsonContent };
 };
 
 module.exports = {
