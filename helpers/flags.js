@@ -1,3 +1,5 @@
+const constants = require('../config/constants');
+
 const normalizeOnlyFlagPairs = (flag1Key, flag2Key, opts, logger) => {
   const stripOnly = key => key.replace('Only', '');
   if (opts[flag1Key] && opts[flag2Key]) {
@@ -23,7 +25,18 @@ const normalizeOutput = output => {
   return output;
 };
 
+const getDefaultOptions = () => {
+  const { FLAGS: flags } = constants;
+
+  return Object.keys(flags)
+    .filter(flagKey => flags[flagKey].hasOwnProperty('default'))
+    .reduce((acc, curr) => {
+      return { ...acc, [curr]: flags[curr].default };
+    }, {});
+};
+
 module.exports = {
   normalizeOnlyFlagPairs,
   normalizeOutput,
+  getDefaultOptions,
 };

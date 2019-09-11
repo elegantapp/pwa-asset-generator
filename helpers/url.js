@@ -25,12 +25,13 @@ const isUrlExists = source => {
 };
 
 const getAddress = async (source, options) => {
-  const logger = preLogger(getAddress.name);
+  const logger = preLogger(getAddress.name, options);
 
   const useShell = async (isSourceUrl = false) => {
     try {
       await file.saveHtmlShell(source, options, isSourceUrl);
     } catch (e) {
+      logger.error(e);
       throw Error('Failed saving html shell');
     }
 

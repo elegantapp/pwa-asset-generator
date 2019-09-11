@@ -3,8 +3,8 @@
 const meow = require('meow');
 const preLogger = require('./helpers/logger');
 const main = require('./main');
+const { FLAGS: flags } = require('./config/constants');
 
-const logger = preLogger('cli');
 const cli = meow(
   `
 $ pwa-asset-generator --help
@@ -18,15 +18,16 @@ $ pwa-asset-generator --help
     -b --background             Page background to use when image source is provided: css value  [default: transparent]
     -o --opaque                 Making screenshots to be saved with a background color  [default: true]
     -p --padding                Padding to use when image source provided: css value  [default: "10%"]
-    -s --scrape                 Scraping Apple Human Interface Guidelines to fetch splash screen specs  [default: true]
-    -m --manifest               Web app manifest file path to automatically update manifest file with the generated images
-    -i --index                  Index html file path to automatically put splash screen meta tags in
+    -s --scrape                 Scraping Apple Human Interface guidelines to fetch splash screen specs  [default: true]
+    -m --manifest               Web app manifest file path to automatically update manifest file with the generated icons
+    -i --index                  Index html file path to automatically put splash screen and icon meta tags in
     -t --type                   Image type: png|jpeg  [default: png]
     -q --quality                Image quality: 0...100 (Only for JPEG)  [default: 100]
     -h --splash-only            Only generate splash screens  [default: false]
     -c --icon-only              Only generate icons  [default: false]
     -l --landscape-only         Only generate landscape splash screens  [default: false]
     -r --portrait-only          Only generate portrait splash screens  [default: false]
+    -g --log                    Logs the steps of the library process  [default: true]
     
   Examples
     $ pwa-asset-generator logo.html .
@@ -47,70 +48,13 @@ $ pwa-asset-generator --help
     --icon-only
     --landscape-only
     --portrait-only
+    --log=false
 `,
   {
-    flags: {
-      background: {
-        type: 'string',
-        alias: 'b',
-        default: 'transparent',
-      },
-      manifest: {
-        type: 'string',
-        alias: 'm',
-      },
-      index: {
-        type: 'string',
-        alias: 'i',
-      },
-      opaque: {
-        type: 'boolean',
-        alias: 'o',
-        default: true,
-      },
-      scrape: {
-        type: 'boolean',
-        alias: 's',
-        default: true,
-      },
-      padding: {
-        type: 'string',
-        alias: 'p',
-        default: '10%',
-      },
-      type: {
-        type: 'string',
-        alias: 't',
-        default: 'png',
-      },
-      quality: {
-        type: 'number',
-        alias: 'q',
-        default: 100,
-      },
-      splashOnly: {
-        type: 'boolean',
-        alias: 'h',
-        default: false,
-      },
-      iconOnly: {
-        type: 'boolean',
-        alias: 'c',
-        default: false,
-      },
-      landscapeOnly: {
-        type: 'boolean',
-        alias: 'l',
-        default: false,
-      },
-      portraitOnly: {
-        type: 'boolean',
-        alias: 'r',
-        default: false,
-      },
-    },
+    flags,
   },
 );
+const logger = preLogger('cli', cli.flags);
 
 (async () => {
   try {
