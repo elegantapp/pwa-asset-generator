@@ -1,4 +1,74 @@
 module.exports = {
+  FLAGS: {
+    background: {
+      type: 'string',
+      alias: 'b',
+      default: 'transparent',
+    },
+    manifest: {
+      type: 'string',
+      alias: 'm',
+    },
+    index: {
+      type: 'string',
+      alias: 'i',
+    },
+    path: {
+      type: 'string',
+      alias: 'a',
+    },
+    opaque: {
+      type: 'boolean',
+      alias: 'o',
+      default: true,
+    },
+    scrape: {
+      type: 'boolean',
+      alias: 's',
+      default: true,
+    },
+    padding: {
+      type: 'string',
+      alias: 'p',
+      default: '10%',
+    },
+    type: {
+      type: 'string',
+      alias: 't',
+      default: 'png',
+    },
+    quality: {
+      type: 'number',
+      alias: 'q',
+      default: 100,
+    },
+    splashOnly: {
+      type: 'boolean',
+      alias: 'h',
+      default: false,
+    },
+    iconOnly: {
+      type: 'boolean',
+      alias: 'c',
+      default: false,
+    },
+    landscapeOnly: {
+      type: 'boolean',
+      alias: 'l',
+      default: false,
+    },
+    portraitOnly: {
+      type: 'boolean',
+      alias: 'r',
+      default: false,
+    },
+    log: {
+      type: 'boolean',
+      alias: 'g',
+      default: true,
+    },
+  },
+
   PUPPETEER_LAUNCH_ARGS: [
     '--log-level=3', // Fatal only
     '--no-default-browser-check',

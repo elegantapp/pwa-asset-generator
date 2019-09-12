@@ -29,7 +29,7 @@ test('generates icons only', async () => {
   const { stdout } = await execa(
     './cli.js',
     ['./static/logo.png', './temp', '-s=false', '--icon-only'],
-    { env: { PAG_NO_TRACE: '1' } },
+    { env: { PAG_TEST_MODE: '1' } },
   );
 
   expect(stdout).toMatchSnapshot();
@@ -41,7 +41,7 @@ test('generates splash screens only', async () => {
   const { stdout } = await execa(
     './cli.js',
     ['./static/logo.png', './temp', '-s=false', '--splash-only'],
-    { env: { PAG_NO_TRACE: '1' } },
+    { env: { PAG_TEST_MODE: '1' } },
   );
 
   expect(stdout).toMatchSnapshot();
@@ -59,7 +59,7 @@ test('generates portrait splash screens only', async () => {
       '--splash-only',
       '--portrait-only',
     ],
-    { env: { PAG_NO_TRACE: '1' } },
+    { env: { PAG_TEST_MODE: '1' } },
   );
 
   expect(stdout).toMatchSnapshot();
@@ -77,7 +77,7 @@ test('generates landscape splash screens only', async () => {
       '--splash-only',
       '--landscape-only',
     ],
-    { env: { PAG_NO_TRACE: '1' } },
+    { env: { PAG_TEST_MODE: '1' } },
   );
 
   expect(stdout).toMatchSnapshot();
@@ -89,7 +89,19 @@ test('generates icons and splash screens when both only flags exist', async () =
   const { stdout } = await execa(
     './cli.js',
     ['./static/logo.png', './temp', '-s=false', '--splash-only', '--icon-only'],
-    { env: { PAG_NO_TRACE: '1' } },
+    { env: { PAG_TEST_MODE: '1' } },
+  );
+
+  expect(stdout).toMatchSnapshot();
+});
+
+test('generates icons and splash screens with path prefix', async () => {
+  jest.setTimeout(timeout);
+
+  const { stdout } = await execa(
+    './cli.js',
+    ['./static/logo.png', './temp', '-s=false', '--path=%PUBLIC_URL%'],
+    { env: { PAG_TEST_MODE: '1' } },
   );
 
   expect(stdout).toMatchSnapshot();

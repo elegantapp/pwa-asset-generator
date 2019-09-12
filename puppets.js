@@ -6,8 +6,8 @@ const file = require('./helpers/file');
 const images = require('./helpers/images');
 const preLogger = require('./helpers/logger');
 
-const getAppleSplashScreenData = async browser => {
-  const logger = preLogger(getAppleSplashScreenData.name);
+const getAppleSplashScreenData = async (browser, options) => {
+  const logger = preLogger(getAppleSplashScreenData.name, options);
   const page = await browser.newPage();
   await page.setUserAgent(constants.EMULATED_USER_AGENT);
   logger.log(
@@ -86,8 +86,8 @@ const getAppleSplashScreenData = async browser => {
   return splashScreenData;
 };
 
-const getDeviceScaleFactorData = async browser => {
-  const logger = preLogger(getDeviceScaleFactorData.name);
+const getDeviceScaleFactorData = async (browser, options) => {
+  const logger = preLogger(getDeviceScaleFactorData.name, options);
   const page = await browser.newPage();
   await page.setUserAgent(constants.EMULATED_USER_AGENT);
   logger.log(
@@ -156,7 +156,7 @@ const getDeviceScaleFactorData = async browser => {
 };
 
 const getSplashScreenMetaData = async options => {
-  const logger = preLogger(getSplashScreenMetaData.name);
+  const logger = preLogger(getSplashScreenMetaData.name, options);
 
   if (!options.scrape) {
     logger.log(
@@ -178,8 +178,8 @@ const getSplashScreenMetaData = async options => {
   let splashScreenUniformMetaData;
 
   try {
-    const splashScreenData = await getAppleSplashScreenData(browser);
-    const scaleFactorData = await getDeviceScaleFactorData(browser);
+    const splashScreenData = await getAppleSplashScreenData(browser, options);
+    const scaleFactorData = await getDeviceScaleFactorData(browser, options);
     splashScreenUniformMetaData = images.getSplashScreenScaleFactorUnionData(
       splashScreenData,
       scaleFactorData,
@@ -199,7 +199,7 @@ const getSplashScreenMetaData = async options => {
 };
 
 const saveImages = async (imageList, source, output, options) => {
-  const logger = preLogger(saveImages.name);
+  const logger = preLogger(saveImages.name, options);
   logger.log('Initialising puppeteer to take screenshots', '🤖');
 
   const address = await url.getAddress(source, options);
@@ -243,7 +243,7 @@ const saveImages = async (imageList, source, output, options) => {
 };
 
 const generateImages = async (source, output, options) => {
-  const logger = preLogger(generateImages.name);
+  const logger = preLogger(generateImages.name, options);
   const splashScreenMetaData = await getSplashScreenMetaData(options);
   const allImages = [
     ...(!options.iconOnly
