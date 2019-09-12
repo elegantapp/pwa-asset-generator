@@ -14,7 +14,11 @@ const generateIconsContentForManifest = (savedImages, manifestJsonPath) => {
     }));
 };
 
-const generateAppleTouchIconHtml = (savedImages, indexHtmlPath) => {
+const generateAppleTouchIconHtml = (
+  savedImages,
+  indexHtmlPath,
+  pathPrefix = '',
+) => {
   return savedImages
     .filter(image =>
       image.name.startsWith(constants.APPLE_ICON_FILENAME_PREFIX),
@@ -22,13 +26,17 @@ const generateAppleTouchIconHtml = (savedImages, indexHtmlPath) => {
     .map(({ width, path }) =>
       constants.APPLE_TOUCH_ICON_META_HTML(
         width,
-        file.getRelativeImagePath(indexHtmlPath, path),
+        pathPrefix + file.getRelativeImagePath(indexHtmlPath, path),
       ),
     )
     .join('');
 };
 
-const generateAppleLaunchImageHtml = (savedImages, indexHtmlPath) => {
+const generateAppleLaunchImageHtml = (
+  savedImages,
+  indexHtmlPath,
+  pathPrefix = '',
+) => {
   return savedImages
     .filter(image =>
       image.name.startsWith(constants.APPLE_SPLASH_FILENAME_PREFIX),
@@ -37,7 +45,7 @@ const generateAppleLaunchImageHtml = (savedImages, indexHtmlPath) => {
       constants.APPLE_LAUNCH_SCREEN_META_HTML(
         width,
         height,
-        file.getRelativeImagePath(indexHtmlPath, path),
+        pathPrefix + file.getRelativeImagePath(indexHtmlPath, path),
         scaleFactor,
         orientation,
       ),
@@ -45,11 +53,19 @@ const generateAppleLaunchImageHtml = (savedImages, indexHtmlPath) => {
     .join('');
 };
 
-const generateHtmlForIndexPage = (savedImages, indexHtmlPath) => {
+const getPathPrefix = pathPrefix => {
+  if (pathPrefix) {
+    return `${pathPrefix}/`;
+  }
+  return '';
+};
+
+const generateHtmlForIndexPage = (savedImages, indexHtmlPath, pathPrefix) => {
+  const prependPath = getPathPrefix(pathPrefix);
   return `\
-${generateAppleTouchIconHtml(savedImages, indexHtmlPath)}
+${generateAppleTouchIconHtml(savedImages, indexHtmlPath, prependPath)}
 <meta name="apple-mobile-web-app-capable" content="yes">
-${generateAppleLaunchImageHtml(savedImages, indexHtmlPath)}`;
+${generateAppleLaunchImageHtml(savedImages, indexHtmlPath, prependPath)}`;
 };
 
 const addIconsToManifest = async (manifestContent, manifestJsonFilePath) => {

@@ -29,7 +29,11 @@ const generateImages = async (source, _output, _options, loggerFn) => {
     savedImages,
     options.manifest,
   );
-  const htmlContent = pwa.generateHtmlForIndexPage(savedImages, options.index);
+  const htmlContent = pwa.generateHtmlForIndexPage(
+    savedImages,
+    options.index,
+    options.path,
+  );
 
   if (!options.splashOnly) {
     if (options.manifest) {
