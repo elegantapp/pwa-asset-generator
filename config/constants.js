@@ -13,6 +13,10 @@ module.exports = {
       type: 'string',
       alias: 'i',
     },
+    path: {
+      type: 'string',
+      alias: 'a',
+    },
     opaque: {
       type: 'boolean',
       alias: 'o',

@@ -43,6 +43,13 @@ declare namespace PwaAssetGenerator {
     readonly index?: string;
 
     /**
+     Path prefix to prepend for href links generated for meta tags
+
+     @example %PUBLIC_URL%
+     */
+    readonly path?: string;
+
+    /**
      Image type
 
      @default png
