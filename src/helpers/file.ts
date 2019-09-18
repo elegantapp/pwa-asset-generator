@@ -1,9 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const slash = require('slash');
-const crypto = require('crypto');
-const fileUrl = require('file-url');
-const constants = require('../config/constants');
+import fs from 'fs';
+import path from 'path';
+import slash from 'slash';
+import crypto from 'crypto';
+import constants from '../config/constants';
 
 const getExtension = file => {
   return path.extname(file).replace('.', '');
@@ -38,7 +37,7 @@ const getAppDir = () => {
   } catch (e) {
     appPath = require.main.filename;
   }
-  return path.dirname(appPath);
+  return path.join(path.dirname(appPath), '..');
 };
 
 const getShellHtmlFilePath = () => {
@@ -47,6 +46,18 @@ const getShellHtmlFilePath = () => {
 
 const getImageSavePath = (imageName, outputFolder, ext) => {
   return path.join(outputFolder, `${imageName}.${ext}`);
+};
+
+const fileUrl = filePath => {
+  let pathName = filePath;
+  pathName = pathName.replace(/\\/g, '/');
+
+  // Windows drive letter must be prefixed with a slash
+  if (pathName[0] !== '/') {
+    pathName = `/${pathName}`;
+  }
+
+  return encodeURI(`file://${pathName}`).replace(/[?#]/g, encodeURIComponent);
 };
 
 const getFileUrlOfPath = source => {
@@ -60,7 +71,7 @@ const getRelativeFilePath = (referenceFilePath, filePath) => {
   );
 };
 
-const pathExists = (filePath, mode) => {
+const pathExists = (filePath, mode?) => {
   return new Promise((resolve, reject) => {
     try {
       fs.access(filePath, mode, err => {
@@ -87,7 +98,7 @@ const makeDir = folderPath => {
   });
 };
 
-const readFile = (filePath, options) => {
+const readFile = (filePath, options?) => {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, options, (err, data) => {
       if (err) {
@@ -99,7 +110,7 @@ const readFile = (filePath, options) => {
   });
 };
 
-const writeFile = (filePath, data, options) => {
+const writeFile = (filePath, data, options?) => {
   return new Promise((resolve, reject) => {
     fs.writeFile(filePath, data, options, err => {
       if (err) {
@@ -155,7 +166,7 @@ const saveHtmlShell = (imagePath, options, isUrl) => {
   return writeFile(getShellHtmlFilePath(), htmlContent);
 };
 
-module.exports = {
+export default {
   addHashPostfixToImages,
   convertBackslashPathToSlashPath,
   getRelativeImagePath,

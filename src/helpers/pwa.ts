@@ -1,6 +1,6 @@
-const cheerio = require('cheerio');
-const constants = require('../config/constants');
-const file = require('../helpers/file');
+import cheerio from 'cheerio';
+import constants from '../config/constants';
+import file from './file';
 
 const generateIconsContentForManifest = (savedImages, manifestJsonPath) => {
   return savedImages
@@ -73,7 +73,9 @@ const addIconsToManifest = async (manifestContent, manifestJsonFilePath) => {
     throw Error(`Cannot write to manifest json file ${manifestJsonFilePath}`);
   }
 
-  const manifestJson = JSON.parse(await file.readFile(manifestJsonFilePath));
+  const manifestJson = JSON.parse((await file.readFile(
+    manifestJsonFilePath,
+  )) as string);
   const newManifestContent = {
     ...manifestJson,
     icons: [
@@ -83,6 +85,7 @@ const addIconsToManifest = async (manifestContent, manifestJsonFilePath) => {
       ...manifestContent,
     ],
   };
+
   return file.writeFile(
     manifestJsonFilePath,
     JSON.stringify(newManifestContent, null, 2),
@@ -107,7 +110,7 @@ const addMetaTagsToIndexPage = async (htmlContent, indexHtmlFilePath) => {
   return file.writeFile(indexHtmlFilePath, $.html());
 };
 
-module.exports = {
+export default {
   addIconsToManifest,
   addMetaTagsToIndexPage,
   generateHtmlForIndexPage,

@@ -1,9 +1,7 @@
-#!/usr/bin/env node
-
-const meow = require('meow');
-const preLogger = require('./helpers/logger');
-const main = require('./main');
-const { FLAGS: flags } = require('./config/constants');
+import meow from 'meow';
+import preLogger from './helpers/logger';
+import main from './main';
+import constants from './config/constants';
 
 const cli = meow(
   `
@@ -53,7 +51,7 @@ $ pwa-asset-generator --help
     --log false
 `,
   {
-    flags,
+    flags: constants.FLAGS,
   },
 );
 const logger = preLogger('cli', cli.flags);

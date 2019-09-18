@@ -1,4 +1,4 @@
-const chalk = require('chalk');
+import chalk from 'chalk';
 
 const testMode = !!+process.env.PAG_TEST_MODE;
 
@@ -11,7 +11,7 @@ const logger = (prefix, options) => {
   };
 
   const getPrefix = () => {
-    return prefix ? chalk.gray(prefix) : null;
+    return prefix ? chalk.gray(prefix) : '';
   };
 
   /* eslint-disable no-console */
@@ -55,4 +55,4 @@ const logger = (prefix, options) => {
   };
 };
 
-module.exports = logger;
+export default logger;

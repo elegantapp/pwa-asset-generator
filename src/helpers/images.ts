@@ -1,6 +1,6 @@
-const uniqWith = require('lodash.uniqwith');
-const isEqual = require('lodash.isequal');
-const constants = require('../config/constants');
+import uniqWith from 'lodash.uniqwith';
+import isEqual from 'lodash.isequal';
+import constants from '../config/constants';
 
 const mapToSqImageFileObj = (fileNamePrefix, size) => ({
   name: `${fileNamePrefix}-${size}`,
@@ -79,7 +79,7 @@ const getSplashScreenScaleFactorUnionData = (
   }));
 };
 
-module.exports = {
+export default {
   getIconImages,
   getSplashScreenImages,
   getSplashScreenScaleFactorUnionData,

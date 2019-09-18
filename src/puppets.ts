@@ -1,10 +1,9 @@
-const puppeteer = require('puppeteer');
-const packageJson = require('./package.json');
-const constants = require('./config/constants');
-const url = require('./helpers/url');
-const file = require('./helpers/file');
-const images = require('./helpers/images');
-const preLogger = require('./helpers/logger');
+import puppeteer from 'puppeteer';
+import constants from './config/constants';
+import url from './helpers/url';
+import file from './helpers/file';
+import images from './helpers/images';
+import preLogger from './helpers/logger';
 
 const getAppleSplashScreenData = async (browser, options) => {
   const logger = preLogger(getAppleSplashScreenData.name, options);
@@ -36,7 +35,7 @@ const getAppleSplashScreenData = async (browser, options) => {
       const scrapeSplashScreenDataFromHIGPage = () =>
         Array.from(document.querySelectorAll(selector)).map(tr => {
           return Array.from(tr.querySelectorAll('td')).reduce(
-            (acc, curr, index) => {
+            (acc, curr: HTMLElement, index) => {
               const appleLaunchScreenTableColumnOrder = [
                 'device',
                 'portrait',
@@ -112,7 +111,7 @@ const getDeviceScaleFactorData = async (browser, options) => {
       const scrapeScaleFactorDataFromHIGPage = () =>
         Array.from(document.querySelectorAll(selector)).map(tr => {
           return Array.from(tr.querySelectorAll('td')).reduce(
-            (acc, curr, index) => {
+            (acc, curr: HTMLElement, index) => {
               const appleScaleFactorTableColumnOrder = [
                 'device',
                 'scaleFactor',
@@ -159,9 +158,7 @@ const getSplashScreenMetaData = async options => {
   const logger = preLogger(getSplashScreenMetaData.name, options);
 
   if (!options.scrape) {
-    logger.log(
-      `Skipped scraping - using static data from v${packageJson.version}`,
-    );
+    logger.log(`Skipped scraping - using static data`);
     return constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA;
   }
 
@@ -189,7 +186,7 @@ const getSplashScreenMetaData = async options => {
     splashScreenUniformMetaData =
       constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA;
     logger.warn(
-      `Failed to fetch latest specs from Apple Human Interface guidelines. Using static fallback data from v${packageJson.version}`,
+      `Failed to fetch latest specs from Apple Human Interface guidelines - using static fallback data`,
     );
   } finally {
     browser.close();
@@ -265,7 +262,7 @@ const generateImages = async (source, output, options) => {
   return Promise.all(await saveImages(allImages, source, output, options));
 };
 
-module.exports = {
+export default {
   getSplashScreenMetaData,
   saveImages,
   generateImages,

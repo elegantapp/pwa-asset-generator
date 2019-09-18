@@ -1,7 +1,7 @@
-const url = require('url');
-const dns = require('dns');
-const file = require('./file');
-const preLogger = require('./logger');
+import url from 'url';
+import dns from 'dns';
+import file from './file';
+import preLogger from './logger';
 
 const isUrl = val => {
   const parsedUrl = url.parse(val);
@@ -72,8 +72,4 @@ const getAddress = async (source, options) => {
   return source;
 };
 
-module.exports = {
-  isUrl,
-  isUrlExists,
-  getAddress,
-};
+export default { isUrl, isUrlExists, getAddress };

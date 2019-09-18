@@ -1,4 +1,4 @@
-const constants = require('../config/constants');
+import constants from '../config/constants';
 
 const normalizeOnlyFlagPairs = (flag1Key, flag2Key, opts, logger) => {
   const stripOnly = key => key.replace('Only', '');
@@ -35,8 +35,4 @@ const getDefaultOptions = () => {
     }, {});
 };
 
-module.exports = {
-  normalizeOnlyFlagPairs,
-  normalizeOutput,
-  getDefaultOptions,
-};
+export default { normalizeOnlyFlagPairs, normalizeOutput, getDefaultOptions };

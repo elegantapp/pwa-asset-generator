@@ -2,17 +2,18 @@
   "name": "pwa-asset-generator",
   "version": "1.2.0",
   "description": "PWA asset generator based on Puppeteer. Automatically generates icons and splash screens guided by Web App Manifest specs and Apple Human Interface guidelines. Updates manifest.json and index.html files with the generated images.",
-  "main": "main.js",
+  "main": "dist/main.js",
   "types": "index.d.ts",
   "bin": {
-    "pwa-asset-generator": "cli.js"
+    "pwa-asset-generator": "bin/cli"
   },
   "scripts": {
-    "test": "npm run lint && jest",
-    "jest": "jest",
-    "jest:update": "jest -u",
+    "test": "jest",
+    "test:update": "jest -u",
     "commit": "git-cz",
-    "lint": "eslint \"**/**.js\"",
+    "build": "tsc",
+    "start": "tsc -w",
+    "lint": "eslint \"src/**/**.ts\"",
     "lint:fix": "npm run lint -- --fix",
     "semantic-release": "semantic-release"
   },
@@ -21,7 +22,7 @@
     "url": "https://github.com/onderceylan/pwa-asset-generator.git"
   },
   "engines": {
-    "node": ">=8.3.0"
+    "node": ">=6.4.0"
   },
   "keywords": [
     "pwa",
@@ -48,7 +49,6 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "cheerio": "^1.0.0-rc.3",
-    "file-url": "^3.0.0",
     "lodash.isequal": "^4.5.0",
     "lodash.uniqwith": "^4.5.0",
     "meow": "^5.0.0",
@@ -60,6 +60,8 @@
     "@commitlint/config-conventional": "^8.1.0",
     "@jedmao/semantic-release-npm-github-config": "^1.0.6",
     "@types/jest": "^24.0.18",
+    "@typescript-eslint/eslint-plugin": "^2.2.0",
+    "@typescript-eslint/parser": "^2.2.0",
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
@@ -72,7 +74,9 @@
     "jest": "^24.8.0",
     "lint-staged": "^9.2.1",
     "prettier": "^1.18.2",
-    "semantic-release": "^15.13.21"
+    "semantic-release": "^15.13.21",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.3"
   },
   "husky": {
     "hooks": {

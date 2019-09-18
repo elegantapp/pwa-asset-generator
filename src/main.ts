@@ -1,7 +1,7 @@
-const pwa = require('./helpers/pwa');
-const puppets = require('./puppets');
-const flags = require('./helpers/flags');
-const preLogger = require('./helpers/logger');
+import pwa from './helpers/pwa';
+import puppets from './puppets';
+import flags from './helpers/flags';
+import preLogger from './helpers/logger';
 
 const generateImages = async (source, _output, _options, loggerFn) => {
   const logger = loggerFn || preLogger(generateImages.name, _options);
@@ -70,6 +70,6 @@ const generateImages = async (source, _output, _options, loggerFn) => {
   return { savedImages, htmlContent, manifestJsonContent };
 };
 
-module.exports = {
+export default {
   generateImages,
 };
