@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         node: [8, 10, 12]
-        os: [ubuntu-latest, macOS-latest, windows-2016]
+        os: [ubuntu-latest, macOS-latest]
 
     steps:
       - uses: actions/checkout@v1
@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
+          registry-url: https://registry.npmjs.org
       - name: install
         run: npm install
       - name: test
