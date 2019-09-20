@@ -1,0 +1,31 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - actions-migration
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: lts/*
+      - run: npm install
+      - run: npm test
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: lts/*
+          registry-url: https://registry.npmjs.org/
+      - run: npx semantic-release --dry-run
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
