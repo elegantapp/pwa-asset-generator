@@ -1,22 +1,28 @@
 import uniqWith from 'lodash.uniqwith';
 import isEqual from 'lodash.isequal';
 import constants from '../config/constants';
+import { Image, Orientation } from '../models/image';
+import {
+  DeviceFactorSpec,
+  LaunchScreenSpec,
+  SplashScreenSpec,
+} from '../models/spec';
+import { Options } from '../models/options';
 
-const mapToSqImageFileObj = (fileNamePrefix, size) => ({
+const mapToSqImageFileObj = (fileNamePrefix: string, size: number): Image => ({
   name: `${fileNamePrefix}-${size}`,
   width: size,
   height: size,
-  scaleFactor: null,
   orientation: null,
 });
 
 const mapToImageFileObj = (
-  fileNamePrefix,
-  width,
-  height,
-  scaleFactor,
-  orientation,
-) => ({
+  fileNamePrefix: string,
+  width: number,
+  height: number,
+  scaleFactor: number,
+  orientation: Orientation,
+): Image => ({
   name: `${fileNamePrefix}-${width}-${height}`,
   width,
   height,
@@ -24,7 +30,7 @@ const mapToImageFileObj = (
   orientation,
 });
 
-const getIconImages = () => {
+const getIconImages = (): Image[] => {
   return uniqWith(
     [
       ...constants.APPLE_ICON_SIZES.map(size =>
@@ -38,45 +44,62 @@ const getIconImages = () => {
   );
 };
 
-const getSplashScreenImages = (uniformSplashScreenData, options) => {
+const getSplashScreenImages = (
+  uniformSplashScreenData: SplashScreenSpec[],
+  options: Options,
+): Image[] => {
   return uniqWith(
-    uniformSplashScreenData
-      .reduce((acc, curr) => {
-        return acc.concat([
-          !options.landscapeOnly
-            ? mapToImageFileObj(
-                constants.APPLE_SPLASH_FILENAME_PREFIX,
-                curr.portrait.width,
-                curr.portrait.height,
-                curr.scaleFactor,
-                'portrait',
-              )
-            : null,
-          !options.portraitOnly
-            ? mapToImageFileObj(
-                constants.APPLE_SPLASH_FILENAME_PREFIX,
-                curr.landscape.width,
-                curr.landscape.height,
-                curr.scaleFactor,
-                'landscape',
-              )
-            : null,
-        ]);
-      }, [])
-      .filter(el => el !== null),
+    uniformSplashScreenData.reduce((acc: Image[], curr: SplashScreenSpec) => {
+      let images: Image[] = acc;
+      if (!options.landscapeOnly) {
+        images = [
+          ...images,
+          mapToImageFileObj(
+            constants.APPLE_SPLASH_FILENAME_PREFIX,
+            curr.portrait.width,
+            curr.portrait.height,
+            curr.scaleFactor,
+            'portrait',
+          ),
+        ];
+      }
+      if (!options.portraitOnly) {
+        images = [
+          ...images,
+          mapToImageFileObj(
+            constants.APPLE_SPLASH_FILENAME_PREFIX,
+            curr.landscape.width,
+            curr.landscape.height,
+            curr.scaleFactor,
+            'landscape',
+          ),
+        ];
+      }
+      return images;
+    }, []),
     isEqual,
   );
 };
 
 const getSplashScreenScaleFactorUnionData = (
-  splashScreenData,
-  deviceScaleFactorData,
-) => {
-  return splashScreenData.map(ss => ({
-    ...ss,
-    scaleFactor: deviceScaleFactorData.find(dsf => dsf.device === ss.device)
-      .scaleFactor,
-  }));
+  launchScreenSpecs: LaunchScreenSpec[],
+  deviceFactorSpecs: DeviceFactorSpec[],
+): SplashScreenSpec[] => {
+  return launchScreenSpecs.map((launchScreenSpec: LaunchScreenSpec) => {
+    const matchedDevice = deviceFactorSpecs.find(
+      (deviceFactorSpec: DeviceFactorSpec) =>
+        deviceFactorSpec.device === launchScreenSpec.device,
+    );
+
+    if (matchedDevice) {
+      return {
+        ...launchScreenSpec,
+        scaleFactor: matchedDevice.scaleFactor,
+      } as SplashScreenSpec;
+    }
+
+    return launchScreenSpec as SplashScreenSpec;
+  });
 };
 
 export default {

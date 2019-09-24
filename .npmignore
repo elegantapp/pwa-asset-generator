@@ -12,6 +12,12 @@ __snapshots__/*
 *.test.js
 *.js.map
 src/*
+dist/models/*.js
+
+# Declaration files
+*.d.ts
+!dist/main.d.ts
+!dist/models/*.d.ts
 
 # Config files
 .github

@@ -1,7 +1,14 @@
 import constants from '../config/constants';
+import { CLIOptions, Options } from '../models/options';
+import { LoggerFunction } from '../models/logger';
 
-const normalizeOnlyFlagPairs = (flag1Key, flag2Key, opts, logger) => {
-  const stripOnly = key => key.replace('Only', '');
+const normalizeOnlyFlagPairs = (
+  flag1Key: keyof Options,
+  flag2Key: keyof Options,
+  opts: CLIOptions,
+  logger: LoggerFunction,
+): Partial<Options> => {
+  const stripOnly = (key: string): string => key.replace('Only', '');
   if (opts[flag1Key] && opts[flag2Key]) {
     logger.warn(
       `Hmm, you want to _only_ generate both ${stripOnly(
@@ -18,21 +25,34 @@ const normalizeOnlyFlagPairs = (flag1Key, flag2Key, opts, logger) => {
   return {};
 };
 
-const normalizeOutput = output => {
+const normalizeOutput = (output: string): string => {
   if (!output) {
     return '.';
   }
   return output;
 };
 
-const getDefaultOptions = () => {
-  const { FLAGS: flags } = constants;
+const getDefaultOptions = (): Options => {
+  const flags = constants.FLAGS as Record<
+    keyof Options,
+    { type: string; alias: string; default?: string | number | boolean }
+  >;
 
+  // TODO: replace Object.keys typecasting when it can be derived as a type
+  // https://github.com/microsoft/TypeScript/pull/12253#issuecomment-263132208
   return Object.keys(flags)
-    .filter(flagKey => flags[flagKey].hasOwnProperty('default'))
-    .reduce((acc, curr) => {
-      return { ...acc, [curr]: flags[curr].default };
-    }, {});
+    .filter(flagKey =>
+      flags[flagKey as keyof Options].hasOwnProperty('default'),
+    )
+    .reduce(
+      (acc: Options, curr: string | keyof Options) => {
+        return {
+          ...acc,
+          [curr]: flags[curr as keyof Options].default,
+        };
+      },
+      {} as Options,
+    );
 };
 
 export default { normalizeOnlyFlagPairs, normalizeOutput, getDefaultOptions };

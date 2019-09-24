@@ -1,11 +1,22 @@
-import puppeteer from 'puppeteer';
+import puppeteer, { Browser } from 'puppeteer';
 import constants from './config/constants';
 import url from './helpers/url';
 import file from './helpers/file';
 import images from './helpers/images';
 import preLogger from './helpers/logger';
+import { Options } from './models/options';
+import {
+  DeviceFactorSpec,
+  Dimension,
+  LaunchScreenSpec,
+  SplashScreenSpec,
+} from './models/spec';
+import { Image, SavedImage } from './models/image';
 
-const getAppleSplashScreenData = async (browser, options) => {
+const getAppleSplashScreenData = async (
+  browser: Browser,
+  options: Options,
+): Promise<LaunchScreenSpec[]> => {
   const logger = preLogger(getAppleSplashScreenData.name, options);
   const page = await browser.newPage();
   await page.setUserAgent(constants.EMULATED_USER_AGENT);
@@ -32,10 +43,10 @@ const getAppleSplashScreenData = async (browser, options) => {
 
   const splashScreenData = await page.evaluate(
     ({ selector }) => {
-      const scrapeSplashScreenDataFromHIGPage = () =>
+      const scrapeSplashScreenDataFromHIGPage = (): LaunchScreenSpec[] =>
         Array.from(document.querySelectorAll(selector)).map(tr => {
           return Array.from(tr.querySelectorAll('td')).reduce(
-            (acc, curr: HTMLElement, index) => {
+            (acc, curr, index) => {
               const appleLaunchScreenTableColumnOrder = [
                 'device',
                 'portrait',
@@ -44,23 +55,34 @@ const getAppleSplashScreenData = async (browser, options) => {
               const dimensionRegex = new RegExp(/(\d*)[^\d]+(\d*)[^\d]+/gm);
 
               const keyToUpdate = appleLaunchScreenTableColumnOrder[index];
-              const execDimensionRegex = val => {
+              const execDimensionRegex = (
+                val: string,
+              ): RegExpExecArray | null => {
                 return dimensionRegex.exec(val);
               };
 
-              const getDimensions = val => {
+              const getDimensions = (val: string): Dimension => {
                 const regexMatch = execDimensionRegex(val);
 
+                if (regexMatch && regexMatch.length) {
+                  return {
+                    width: parseInt(regexMatch[1], 10),
+                    height: parseInt(regexMatch[2], 10),
+                  };
+                }
+
                 return {
-                  width: parseInt(regexMatch[1], 10),
-                  height: parseInt(regexMatch[2], 10),
+                  width: 1,
+                  height: 1,
                 };
               };
 
               return {
                 ...acc,
                 [keyToUpdate]:
-                  index > 0 ? getDimensions(curr.innerText) : curr.innerText,
+                  index > 0
+                    ? getDimensions((curr as HTMLElement).innerText)
+                    : (curr as HTMLElement).innerText,
               };
             },
             {
@@ -68,7 +90,7 @@ const getAppleSplashScreenData = async (browser, options) => {
               portrait: { width: 0, height: 0 },
               landscape: { width: 0, height: 0 },
             },
-          );
+          ) as LaunchScreenSpec;
         });
       return scrapeSplashScreenDataFromHIGPage();
     },
@@ -85,7 +107,10 @@ const getAppleSplashScreenData = async (browser, options) => {
   return splashScreenData;
 };
 
-const getDeviceScaleFactorData = async (browser, options) => {
+const getDeviceScaleFactorData = async (
+  browser: Browser,
+  options: Options,
+): Promise<DeviceFactorSpec[]> => {
   const logger = preLogger(getDeviceScaleFactorData.name, options);
   const page = await browser.newPage();
   await page.setUserAgent(constants.EMULATED_USER_AGENT);
@@ -108,36 +133,43 @@ const getDeviceScaleFactorData = async (browser, options) => {
 
   const scaleFactorData = await page.evaluate(
     ({ selector }) => {
-      const scrapeScaleFactorDataFromHIGPage = () =>
+      const scrapeScaleFactorDataFromHIGPage = (): DeviceFactorSpec[] =>
         Array.from(document.querySelectorAll(selector)).map(tr => {
           return Array.from(tr.querySelectorAll('td')).reduce(
-            (acc, curr: HTMLElement, index) => {
+            (acc, curr, index) => {
               const appleScaleFactorTableColumnOrder = [
                 'device',
                 'scaleFactor',
               ];
               const scaleFactorRegex = new RegExp(/[^\d]+(\d*)[^\d]+/gm);
 
-              const execScaleFactorRegex = val => {
+              const execScaleFactorRegex = (
+                val: string,
+              ): RegExpExecArray | null => {
                 return scaleFactorRegex.exec(val);
               };
 
               const keyToUpdate = appleScaleFactorTableColumnOrder[index];
 
-              const getScaleFactor = val => {
+              const getScaleFactor = (val: string): number => {
                 const regexMatch = execScaleFactorRegex(val);
 
-                return parseInt(regexMatch[1], 10);
+                if (regexMatch && regexMatch.length) {
+                  return parseInt(regexMatch[1], 10);
+                }
+                return 1;
               };
 
               return {
                 ...acc,
                 [keyToUpdate]:
-                  index > 0 ? getScaleFactor(curr.innerText) : curr.innerText,
+                  index > 0
+                    ? getScaleFactor((curr as HTMLElement).innerText)
+                    : (curr as HTMLElement).innerText,
               };
             },
             { device: '', scaleFactor: 1 },
-          );
+          ) as DeviceFactorSpec;
         });
       return scrapeScaleFactorDataFromHIGPage();
     },
@@ -154,7 +186,9 @@ const getDeviceScaleFactorData = async (browser, options) => {
   return scaleFactorData;
 };
 
-const getSplashScreenMetaData = async options => {
+const getSplashScreenMetaData = async (
+  options: Options,
+): Promise<SplashScreenSpec[]> => {
   const logger = preLogger(getSplashScreenMetaData.name, options);
 
   if (!options.scrape) {
@@ -185,6 +219,7 @@ const getSplashScreenMetaData = async options => {
   } catch (e) {
     splashScreenUniformMetaData =
       constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA;
+    logger.error(e);
     logger.warn(
       `Failed to fetch latest specs from Apple Human Interface guidelines - using static fallback data`,
     );
@@ -195,14 +230,19 @@ const getSplashScreenMetaData = async options => {
   return splashScreenUniformMetaData;
 };
 
-const saveImages = async (imageList, source, output, options) => {
+const saveImages = async (
+  imageList: Image[],
+  source: string,
+  output: string,
+  options: Options,
+): Promise<SavedImage[]> => {
   const logger = preLogger(saveImages.name, options);
   logger.log('Initialising puppeteer to take screenshots', '🤖');
 
   const address = await url.getAddress(source, options);
 
-  return imageList.map(
-    async ({ name, width, height, scaleFactor, orientation }) => {
+  return Promise.all(
+    imageList.map(async ({ name, width, height, scaleFactor, orientation }) => {
       const browser = await puppeteer.launch({
         headless: true,
         defaultViewport: {
@@ -235,11 +275,15 @@ const saveImages = async (imageList, source, output, options) => {
       } finally {
         await browser.close();
       }
-    },
+    }),
   );
 };
 
-const generateImages = async (source, output, options) => {
+const generateImages = async (
+  source: string,
+  output: string,
+  options: Options,
+): Promise<SavedImage[]> => {
   const logger = preLogger(generateImages.name, options);
   const splashScreenMetaData = await getSplashScreenMetaData(options);
   const allImages = [
@@ -259,7 +303,7 @@ const generateImages = async (source, output, options) => {
   // Increase MaxListeners and suppress MaxListenersExceededWarning
   process.setMaxListeners(0);
 
-  return Promise.all(await saveImages(allImages, source, output, options));
+  return saveImages(allImages, source, output, options);
 };
 
 export default {

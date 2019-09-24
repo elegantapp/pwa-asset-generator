@@ -1,8 +1,13 @@
 import cheerio from 'cheerio';
 import constants from '../config/constants';
 import file from './file';
+import { SavedImage } from '../models/image';
+import { ManifestJsonIcon } from '../models/result';
 
-const generateIconsContentForManifest = (savedImages, manifestJsonPath) => {
+const generateIconsContentForManifest = (
+  savedImages: SavedImage[],
+  manifestJsonPath = '',
+): ManifestJsonIcon[] => {
   return savedImages
     .filter(image =>
       image.name.startsWith(constants.MANIFEST_ICON_FILENAME_PREFIX),
@@ -15,10 +20,10 @@ const generateIconsContentForManifest = (savedImages, manifestJsonPath) => {
 };
 
 const generateAppleTouchIconHtml = (
-  savedImages,
-  indexHtmlPath,
+  savedImages: SavedImage[],
+  indexHtmlPath: string,
   pathPrefix = '',
-) => {
+): string => {
   return savedImages
     .filter(image =>
       image.name.startsWith(constants.APPLE_ICON_FILENAME_PREFIX),
@@ -33,10 +38,10 @@ const generateAppleTouchIconHtml = (
 };
 
 const generateAppleLaunchImageHtml = (
-  savedImages,
-  indexHtmlPath,
+  savedImages: SavedImage[],
+  indexHtmlPath: string,
   pathPrefix = '',
-) => {
+): string => {
   return savedImages
     .filter(image =>
       image.name.startsWith(constants.APPLE_SPLASH_FILENAME_PREFIX),
@@ -46,21 +51,25 @@ const generateAppleLaunchImageHtml = (
         width,
         height,
         pathPrefix + file.getRelativeImagePath(indexHtmlPath, path),
-        scaleFactor,
+        scaleFactor as number,
         orientation,
       ),
     )
     .join('');
 };
 
-const getPathPrefix = pathPrefix => {
+const getPathPrefix = (pathPrefix: string): string => {
   if (pathPrefix) {
     return `${pathPrefix}/`;
   }
   return '';
 };
 
-const generateHtmlForIndexPage = (savedImages, indexHtmlPath, pathPrefix) => {
+const generateHtmlForIndexPage = (
+  savedImages: SavedImage[],
+  indexHtmlPath = '',
+  pathPrefix = '',
+): string => {
   const prependPath = getPathPrefix(pathPrefix);
   return `\
 ${generateAppleTouchIconHtml(savedImages, indexHtmlPath, prependPath)}
@@ -68,7 +77,10 @@ ${generateAppleTouchIconHtml(savedImages, indexHtmlPath, prependPath)}
 ${generateAppleLaunchImageHtml(savedImages, indexHtmlPath, prependPath)}`;
 };
 
-const addIconsToManifest = async (manifestContent, manifestJsonFilePath) => {
+const addIconsToManifest = async (
+  manifestContent: ManifestJsonIcon[],
+  manifestJsonFilePath: string,
+): Promise<void> => {
   if (!(await file.pathExists(manifestJsonFilePath, file.WRITE_ACCESS))) {
     throw Error(`Cannot write to manifest json file ${manifestJsonFilePath}`);
   }
@@ -76,11 +88,13 @@ const addIconsToManifest = async (manifestContent, manifestJsonFilePath) => {
   const manifestJson = JSON.parse((await file.readFile(
     manifestJsonFilePath,
   )) as string);
+
   const newManifestContent = {
     ...manifestJson,
     icons: [
       ...manifestJson.icons.filter(
-        icon => !manifestContent.some(man => man.sizes === icon.sizes),
+        (icon: ManifestJsonIcon) =>
+          !manifestContent.some(man => man.sizes === icon.sizes),
       ),
       ...manifestContent,
     ],
@@ -92,7 +106,10 @@ const addIconsToManifest = async (manifestContent, manifestJsonFilePath) => {
   );
 };
 
-const addMetaTagsToIndexPage = async (htmlContent, indexHtmlFilePath) => {
+const addMetaTagsToIndexPage = async (
+  htmlContent: string,
+  indexHtmlFilePath: string,
+): Promise<void> => {
   if (!(await file.pathExists(indexHtmlFilePath, file.WRITE_ACCESS))) {
     throw Error(`Cannot write to index html file ${indexHtmlFilePath}`);
   }

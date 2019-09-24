@@ -1,6 +1,6 @@
 import meow from 'meow';
 import preLogger from './helpers/logger';
-import main from './main';
+import { generateImages } from './main';
 import constants from './config/constants';
 
 const cli = meow(
@@ -51,14 +51,18 @@ $ pwa-asset-generator --help
     --log false
 `,
   {
+    // TODO: remove when inferred meow types are corrected
+    // Default vars can be number and boolean too but declared to be string in type defs
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     flags: constants.FLAGS,
   },
 );
 const logger = preLogger('cli', cli.flags);
 
-(async () => {
+(async (): Promise<void> => {
   try {
-    await main.generateImages(cli.input[0], cli.input[1], cli.flags, logger);
+    await generateImages(cli.input[0], cli.input[1], cli.flags, logger);
   } catch (e) {
     logger.error(e);
     process.exit(1);
