@@ -29,10 +29,11 @@ $ pwa-asset-generator --help
     -g --log                    Logs the steps of the library process  [default: true]
     
   Examples
-    $ pwa-asset-generator logo.html .
-    $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png . -t jpeg -q 90 --splash-only --portrait-only
+    $ pwa-asset-generator logo.html
+    $ pwa-asset-generator logo.svg -i ./index.html -m ./manifest.json
+    $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png ./ -t jpeg -q 90 --splash-only --portrait-only
     $ pwa-asset-generator logo.svg ./assets --scrape false --icon-only --path "%PUBLIC_URL%"
-    $ pwa-asset-generator https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
+    $ pwa-asset-generator https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png ./temp -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
 
   Flag examples
     --background "rgba(255, 255, 255, .5)"
