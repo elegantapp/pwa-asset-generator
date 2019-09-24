@@ -82,7 +82,7 @@ const pathExists = (
   filePath: string,
   mode?: number | undefined,
 ): Promise<boolean> => {
-  return new Promise((resolve: Function, reject: Function): void => {
+  return new Promise((resolve, reject): void => {
     try {
       fs.access(filePath, mode, err => {
         if (err) {
@@ -97,7 +97,7 @@ const pathExists = (
 };
 
 const makeDir = (folderPath: string): Promise<string> => {
-  return new Promise((resolve: Function, reject: Function): void => {
+  return new Promise((resolve, reject): void => {
     fs.mkdir(folderPath, { recursive: true }, err => {
       if (err) {
         return reject(err);
@@ -111,8 +111,8 @@ const makeDir = (folderPath: string): Promise<string> => {
 const readFile = (
   filePath: string,
   options?: { encoding?: null; flag?: string } | undefined | null,
-): Promise<string> => {
-  return new Promise((resolve: Function, reject: Function): void => {
+): Promise<Buffer | string> => {
+  return new Promise((resolve, reject): void => {
     fs.readFile(filePath, options, (err, data) => {
       if (err) {
         return reject(err);
@@ -124,7 +124,7 @@ const readFile = (
 };
 
 const writeFile = (filePath: string, data: string): Promise<void> => {
-  return new Promise((resolve: Function, reject: Function): void => {
+  return new Promise((resolve, reject): void => {
     fs.writeFile(filePath, data, (err: NodeJS.ErrnoException | null) => {
       if (err) {
         return reject();

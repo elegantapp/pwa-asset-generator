@@ -11,7 +11,7 @@ const isUrl = (val: string): boolean => {
 
 // TODO: Find a better way to check url existence
 const isUrlExists = (source: string): Promise<boolean> => {
-  return new Promise((resolve: Function, reject: Function): void => {
+  return new Promise((resolve, reject): void => {
     try {
       dns.resolve(url.parse(source).hostname as string, err => {
         if (err) {
