@@ -8,15 +8,15 @@ First of all, please read [__Code of Conduct__](https://github.com/onderceylan/p
 
 ## Where to start
 
-You can contribute to this project in many aspects. Some are; reporting bugs, submitting feature requests, improving documentation, adding new test scenarios, implementation of bug fixes, implementation of feature requests and etc. A good issue candidate for you to start with, is an issue with `good first issue` or `help wanted` labels. For all other issues, please contact one of the core contributers before working on them to prevent duplicate work.
+You can contribute to this project in many aspects. Some are; reporting bugs, submitting feature requests, improving documentation, adding new test scenarios, implementation of bug fixes, implementation of feature requests and etc. A good issue candidate for you to start with, is an issue with `good first issue` or `help wanted` labels. For all other issues, please contact one of the core contributors before working on them to prevent duplicate work.
 
-Please note that if any of the issues has an assignee or is `In Progress` within projects, it means it's assigned to a specific contributer and it's in progress already. You can see the milestones and roadmap under [projects](https://github.com/onderceylan/pwa-asset-generator/projects) section.
+Please note that if any of the issues has an assignee or is `In Progress` within projects, it means it's assigned to a specific contributor and it's in progress already. You can see the milestones and road map under [projects](https://github.com/onderceylan/pwa-asset-generator/projects) section.
 
 ## Code style
 
 * This project uses an opinionated code style via [prettier](https://github.com/prettier/prettier).
 * Every time you commit, eslint prettier plugin fixes any formatting issues via git commit hooks to keep the code style consistent across the project. Please do not disable commit hooks while committing.
-* To enable git hooks, please run `npm install` before commiting any change.
+* To enable commit message linting via git hooks, please run `npm install` before committing any change.
 
 ## Commit messages and continuous deployment
 
@@ -37,12 +37,26 @@ You can read more about it on [commitizen](https://github.com/commitizen/cz-cli)
 
 All other commit types will trigger no new release.
 
+## Working with TypeScript
+
+Project is written with TypeScript language, meaning that an additional compilation step is required.
+
+### Development
+
+You can run TypeScript compiler - tsc in watch mode by executing `npm start`. Once you run `npm start` for the first time, tsc will create compiled JS files in /dist folder and it will watch for all TS files in /src folder, updating corresponding JS files when there's a change. 
+
+To functionally test cli over compiled cli.js code in /dist folder, you can execute the binary located in `bin` folder via your command line. Simply execute `./bin/cli [args]` in your command line to test cli functionality in development. 
+
+### Build
+
+Run `npm run build` to compile TypeScript source to JavaScript. JS files will be created in `/dist` folder and this is the folder being published on npm during automated deployment.
+
 ## Testing
 
 * The project uses [jest](https://jestjs.io) for unit and integration testing. 
-* Tests run with `npm run jest` command.
-* You can utilize jest's handy [snapshot testing](https://jestjs.io/docs/en/snapshot-testing) feature while testing feature integration specifically, please see [cli.test.js](https://github.com/onderceylan/pwa-asset-generator/blob/master/cli.test.js) file and [snapshots](https://github.com/onderceylan/pwa-asset-generator/tree/master/__snapshots__) folder for examples. 
-* You can update the snapshots with `npm run jest:update` command when needed.
+* Tests run with `npm test` command.
+* You can utilize jest's handy [snapshot testing](https://jestjs.io/docs/en/snapshot-testing) feature while testing feature integration specifically, please see [cli.test.ts](https://github.com/onderceylan/pwa-asset-generator/blob/master/src/cli.test.ts) file and [snapshots](https://github.com/onderceylan/pwa-asset-generator/tree/master/src/__snapshots__) folder for examples. 
+* You can update the snapshots with `npm run test:update` command when needed.
 
 > Please apply any of your code changes alongside with unit tests. 
 

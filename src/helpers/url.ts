@@ -1,18 +1,19 @@
-const url = require('url');
-const dns = require('dns');
-const file = require('./file');
-const preLogger = require('./logger');
+import url, { Url } from 'url';
+import dns from 'dns';
+import file from './file';
+import preLogger from './logger';
+import { Options } from '../models/options';
 
-const isUrl = val => {
-  const parsedUrl = url.parse(val);
-  return ['http:', 'https:'].includes(parsedUrl.protocol);
+const isUrl = (val: string): boolean => {
+  const parsedUrl: Url = url.parse(val);
+  return ['http:', 'https:'].includes(parsedUrl.protocol as string);
 };
 
 // TODO: Find a better way to check url existence
-const isUrlExists = source => {
-  return new Promise((resolve, reject) => {
+const isUrlExists = (source: string): Promise<boolean> => {
+  return new Promise((resolve, reject): void => {
     try {
-      dns.resolve(url.parse(source).hostname, err => {
+      dns.resolve(url.parse(source).hostname as string, err => {
         if (err) {
           return resolve(false);
         }
@@ -24,10 +25,13 @@ const isUrlExists = source => {
   });
 };
 
-const getAddress = async (source, options) => {
+const getAddress = async (
+  source: string,
+  options: Options,
+): Promise<string> => {
   const logger = preLogger(getAddress.name, options);
 
-  const useShell = async (isSourceUrl = false) => {
+  const useShell = async (isSourceUrl = false): Promise<string> => {
     try {
       await file.saveHtmlShell(source, options, isSourceUrl);
     } catch (e) {
@@ -72,8 +76,4 @@ const getAddress = async (source, options) => {
   return source;
 };
 
-module.exports = {
-  isUrl,
-  isUrlExists,
-  getAddress,
-};
+export default { isUrl, isUrlExists, getAddress };

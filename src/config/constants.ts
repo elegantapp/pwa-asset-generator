@@ -1,4 +1,6 @@
-module.exports = {
+import { Orientation } from '../models/image';
+
+export default {
   FLAGS: {
     background: {
       type: 'string',
@@ -106,7 +108,11 @@ module.exports = {
   WAIT_FOR_SELECTOR_TIMEOUT: 1000,
   BROWSER_SHELL_TIMEOUT: 60000,
 
-  SHELL_HTML_FOR_LOGO: (imgPath, backgroundColor = 'transparent', padding) => `\
+  SHELL_HTML_FOR_LOGO: (
+    imgPath: string,
+    backgroundColor = 'transparent',
+    padding: string,
+  ): string => `\
 <!DOCTYPE html>
 <html>
 <head>
@@ -132,17 +138,17 @@ module.exports = {
 </body>
 </html>`,
 
-  APPLE_TOUCH_ICON_META_HTML: (size, url) => `\
+  APPLE_TOUCH_ICON_META_HTML: (size: number, url: string): string => `\
 <link rel="apple-touch-icon" sizes="${size}x${size}" href="${url}">
 `,
 
   APPLE_LAUNCH_SCREEN_META_HTML: (
-    width,
-    height,
-    url,
-    scaleFactor,
-    orientation,
-  ) => {
+    width: number,
+    height: number,
+    url: string,
+    scaleFactor: number,
+    orientation: Orientation,
+  ): string => {
     /* eslint-disable */
     if (orientation === 'portrait') {
       return `\

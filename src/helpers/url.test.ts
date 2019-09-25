@@ -1,4 +1,4 @@
-const url = require('./url');
+import url from './url';
 
 const exampleUrl =
   'https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png';

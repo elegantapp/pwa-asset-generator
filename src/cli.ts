@@ -1,9 +1,7 @@
-#!/usr/bin/env node
-
-const meow = require('meow');
-const preLogger = require('./helpers/logger');
-const main = require('./main');
-const { FLAGS: flags } = require('./config/constants');
+import meow from 'meow';
+import preLogger from './helpers/logger';
+import { generateImages } from './main';
+import constants from './config/constants';
 
 const cli = meow(
   `
@@ -31,10 +29,11 @@ $ pwa-asset-generator --help
     -g --log                    Logs the steps of the library process  [default: true]
     
   Examples
-    $ pwa-asset-generator logo.html .
-    $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png . -t jpeg -q 90 --splash-only --portrait-only
+    $ pwa-asset-generator logo.html
+    $ pwa-asset-generator logo.svg -i ./index.html -m ./manifest.json
+    $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png ./ -t jpeg -q 90 --splash-only --portrait-only
     $ pwa-asset-generator logo.svg ./assets --scrape false --icon-only --path "%PUBLIC_URL%"
-    $ pwa-asset-generator https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
+    $ pwa-asset-generator https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png ./temp -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
 
   Flag examples
     --background "rgba(255, 255, 255, .5)"
@@ -53,14 +52,18 @@ $ pwa-asset-generator --help
     --log false
 `,
   {
-    flags,
+    // TODO: remove when inferred meow types are corrected
+    // Default vars can be number and boolean too but declared to be string in type defs
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    flags: constants.FLAGS,
   },
 );
 const logger = preLogger('cli', cli.flags);
 
-(async () => {
+(async (): Promise<void> => {
   try {
-    await main.generateImages(cli.input[0], cli.input[1], cli.flags, logger);
+    await generateImages(cli.input[0], cli.input[1], cli.flags, logger);
   } catch (e) {
     logger.error(e);
     process.exit(1);

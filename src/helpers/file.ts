@@ -1,15 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-const slash = require('slash');
-const crypto = require('crypto');
-const fileUrl = require('file-url');
-const constants = require('../config/constants');
+import fs from 'fs';
+import path from 'path';
+import slash from 'slash';
+import constants from '../config/constants';
+import { Extension, Options } from '../models/options';
 
-const getExtension = file => {
+const getExtension = (file: string): string => {
   return path.extname(file).replace('.', '');
 };
 
-const isImageFile = file => {
+const isImageFile = (file: string): boolean => {
   return [
     'apng',
     'bmp',
@@ -27,41 +26,63 @@ const isImageFile = file => {
   ].includes(getExtension(file));
 };
 
-const isHtmlFile = file => {
+const isHtmlFile = (file: string): boolean => {
   return ['html', 'htm'].includes(getExtension(file));
 };
 
-const getAppDir = () => {
+const getAppDir = (): string => {
   let appPath;
   try {
     appPath = require.resolve('pwa-asset-generator');
   } catch (e) {
-    appPath = require.main.filename;
+    appPath = (require.main as NodeModule).filename;
   }
-  return path.dirname(appPath);
+  return path.join(path.dirname(appPath), '..');
 };
 
-const getShellHtmlFilePath = () => {
+const getShellHtmlFilePath = (): string => {
   return `${getAppDir()}/static/shell.html`;
 };
 
-const getImageSavePath = (imageName, outputFolder, ext) => {
+const getImageSavePath = (
+  imageName: string,
+  outputFolder: string,
+  ext: Extension,
+): string => {
   return path.join(outputFolder, `${imageName}.${ext}`);
 };
 
-const getFileUrlOfPath = source => {
+const fileUrl = (filePath: string): string => {
+  let pathName = filePath;
+  pathName = pathName.replace(/\\/g, '/');
+
+  // Windows drive letter must be prefixed with a slash
+  if (pathName[0] !== '/') {
+    pathName = `/${pathName}`;
+  }
+
+  return encodeURI(`file://${pathName}`).replace(/[?#]/g, encodeURIComponent);
+};
+
+const getFileUrlOfPath = (source: string): string => {
   return fileUrl(source);
 };
 
-const getRelativeFilePath = (referenceFilePath, filePath) => {
+const getRelativeFilePath = (
+  referenceFilePath: string,
+  filePath: string,
+): string => {
   return path.relative(
     path.dirname(path.resolve(referenceFilePath)),
     path.resolve(filePath),
   );
 };
 
-const pathExists = (filePath, mode) => {
-  return new Promise((resolve, reject) => {
+const pathExists = (
+  filePath: string,
+  mode?: number | undefined,
+): Promise<boolean> => {
+  return new Promise((resolve, reject): void => {
     try {
       fs.access(filePath, mode, err => {
         if (err) {
@@ -75,8 +96,8 @@ const pathExists = (filePath, mode) => {
   });
 };
 
-const makeDir = folderPath => {
-  return new Promise((resolve, reject) => {
+const makeDir = (folderPath: string): Promise<string> => {
+  return new Promise((resolve, reject): void => {
     fs.mkdir(folderPath, { recursive: true }, err => {
       if (err) {
         return reject(err);
@@ -87,8 +108,11 @@ const makeDir = folderPath => {
   });
 };
 
-const readFile = (filePath, options) => {
-  return new Promise((resolve, reject) => {
+const readFile = (
+  filePath: string,
+  options?: { encoding?: null; flag?: string } | undefined | null,
+): Promise<Buffer | string> => {
+  return new Promise((resolve, reject): void => {
     fs.readFile(filePath, options, (err, data) => {
       if (err) {
         return reject(err);
@@ -99,9 +123,9 @@ const readFile = (filePath, options) => {
   });
 };
 
-const writeFile = (filePath, data, options) => {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(filePath, data, options, err => {
+const writeFile = (filePath: string, data: string): Promise<void> => {
+  return new Promise((resolve, reject): void => {
+    fs.writeFile(filePath, data, (err: NodeJS.ErrnoException | null) => {
       if (err) {
         return reject();
       }
@@ -110,32 +134,14 @@ const writeFile = (filePath, data, options) => {
   });
 };
 
-const addHashPostfixToImages = savedImages => {
-  return Promise.all(
-    savedImages.map(image => {
-      return new Promise((resolve, reject) => {
-        const splitPath = image.path.split('.');
-        fs.createReadStream(image.path)
-          .pipe(crypto.createHash('sha1').setEncoding('hex'))
-          .on('finish', () => {
-            const hash = this.read();
-            fs.rename(
-              image.path,
-              `${splitPath[0]}.${hash}.${splitPath[1]}`,
-              resolve,
-            );
-          })
-          .on('error', reject);
-      });
-    }),
-  );
-};
-
-const convertBackslashPathToSlashPath = backSlashPath => {
+const convertBackslashPathToSlashPath = (backSlashPath: string): string => {
   return slash(backSlashPath);
 };
 
-const getRelativeImagePath = (outputFilePath, imagePath) => {
+const getRelativeImagePath = (
+  outputFilePath: string,
+  imagePath: string,
+): string => {
   if (outputFilePath) {
     return convertBackslashPathToSlashPath(
       getRelativeFilePath(outputFilePath, imagePath),
@@ -144,7 +150,11 @@ const getRelativeImagePath = (outputFilePath, imagePath) => {
   return convertBackslashPathToSlashPath(imagePath);
 };
 
-const saveHtmlShell = (imagePath, options, isUrl) => {
+const saveHtmlShell = (
+  imagePath: string,
+  options: Options,
+  isUrl: boolean,
+): Promise<void> => {
   const imageUrl = isUrl ? imagePath : getFileUrlOfPath(imagePath);
   const htmlContent = constants.SHELL_HTML_FOR_LOGO(
     imageUrl,
@@ -155,8 +165,7 @@ const saveHtmlShell = (imagePath, options, isUrl) => {
   return writeFile(getShellHtmlFilePath(), htmlContent);
 };
 
-module.exports = {
-  addHashPostfixToImages,
+export default {
   convertBackslashPathToSlashPath,
   getRelativeImagePath,
   saveHtmlShell,

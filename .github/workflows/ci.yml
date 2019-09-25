@@ -22,5 +22,9 @@ jobs:
           registry-url: https://registry.npmjs.org
       - name: install
         run: npm install
+      - name: lint
+        run: npm run lint
+      - name: build
+        run: npm run build
       - name: test
         run: npm test

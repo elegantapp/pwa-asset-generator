@@ -3,6 +3,7 @@ static/*
 !static/demo.gif
 !static/logo.png
 temp
+dist
 
 # Logs
 logs

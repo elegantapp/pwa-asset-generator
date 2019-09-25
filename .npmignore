@@ -1,7 +1,29 @@
+# Editors
+.idea
+
+# Generated files
 static/*
 !static/.gitkeep
 temp/*
 __snapshots__/*
+*.tgz
+
+# Source files
+*.test.js
+*.js.map
+src/*
+dist/models/*.js
+
+# Declaration files
+*.d.ts
+!dist/main.d.ts
+!dist/models/*.d.ts
+
+# Config files
+.github
+commitlint.config.js
+jest.config.js
+tsconfig.json
 .editorconfig
 .eslintrc
 .gitattributes
@@ -10,6 +32,7 @@ __snapshots__/*
 .prettierrc
 .travis.yml
 .releaserc
-.idea
-.github
-*.test.js
+
+# Documentation
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
