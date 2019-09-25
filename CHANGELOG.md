@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/onderceylan/pwa-asset-generator/compare/v1.2.0...v1.3.0) (2019-09-25)
+
+
+### Features
+
+* **core:** migrated to TypeScript and reduced node dep to 6.4.0 ([cfc1657](https://github.com/onderceylan/pwa-asset-generator/commit/cfc1657)), closes [#6](https://github.com/onderceylan/pwa-asset-generator/issues/6)
+
 # [1.2.0](https://github.com/onderceylan/pwa-asset-generator/compare/v1.1.7...v1.2.0) (2019-09-12)
 
 
