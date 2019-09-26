@@ -65,7 +65,7 @@ const fileUrl = (filePath: string): string => {
 };
 
 const getFileUrlOfPath = (source: string): string => {
-  return fileUrl(source);
+  return fileUrl(path.resolve(source));
 };
 
 const getRelativeFilePath = (
