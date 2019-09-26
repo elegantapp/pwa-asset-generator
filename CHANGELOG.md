@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/onderceylan/pwa-asset-generator/compare/v1.3.0...v1.3.1) (2019-09-26)
+
+
+### Bug Fixes
+
+* **file:** fixed relative path to input file that is not resolving ([19cc7c4](https://github.com/onderceylan/pwa-asset-generator/commit/19cc7c4)), closes [#45](https://github.com/onderceylan/pwa-asset-generator/issues/45)
+
 # [1.3.0](https://github.com/onderceylan/pwa-asset-generator/compare/v1.2.0...v1.3.0) (2019-09-25)
 
 
