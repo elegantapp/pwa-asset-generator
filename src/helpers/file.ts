@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import slash from 'slash';
+import { lookup } from 'mime-types';
 import constants from '../config/constants';
 import { Extension, Options } from '../models/options';
 
@@ -110,7 +111,7 @@ const makeDir = (folderPath: string): Promise<string> => {
 
 const readFile = (
   filePath: string,
-  options?: { encoding?: null; flag?: string } | undefined | null,
+  options?: { encoding?: 'base64' | null; flag?: string } | undefined | null,
 ): Promise<Buffer | string> => {
   return new Promise((resolve, reject): void => {
     fs.readFile(filePath, options, (err, data) => {
@@ -121,6 +122,13 @@ const readFile = (
       return resolve(data);
     });
   });
+};
+
+const readFileSync = (
+  filePath: string,
+  options?: { encoding?: 'base64' | null; flag?: string } | undefined | null,
+): string => {
+  return fs.readFileSync(filePath, options) as string;
 };
 
 const writeFile = (filePath: string, data: string): Promise<void> => {
@@ -150,27 +158,33 @@ const getRelativeImagePath = (
   return convertBackslashPathToSlashPath(imagePath);
 };
 
-const saveHtmlShell = (
+const getImageBase64Url = (imagePath: string): string => {
+  return `data:${lookup(imagePath)};base64,${readFileSync(imagePath, {
+    encoding: 'base64',
+  })}`;
+};
+
+const getHtmlShell = (
   imagePath: string,
   options: Options,
   isUrl: boolean,
-): Promise<void> => {
-  const imageUrl = isUrl ? imagePath : getFileUrlOfPath(imagePath);
-  const htmlContent = constants.SHELL_HTML_FOR_LOGO(
+): string => {
+  const imageUrl = isUrl ? imagePath : getImageBase64Url(imagePath);
+
+  return `${constants.SHELL_HTML_FOR_LOGO(
     imageUrl,
     options.background,
     options.padding,
-  );
-
-  return writeFile(getShellHtmlFilePath(), htmlContent);
+  )}`;
 };
 
 export default {
   convertBackslashPathToSlashPath,
   getRelativeImagePath,
-  saveHtmlShell,
+  getHtmlShell,
   isHtmlFile,
   isImageFile,
+  getImageBase64Url,
   getShellHtmlFilePath,
   getImageSavePath,
   getFileUrlOfPath,
@@ -179,6 +193,7 @@ export default {
   getAppDir,
   getExtension,
   readFile,
+  readFileSync,
   writeFile,
   makeDir,
   READ_ACCESS: fs.constants.R_OK,

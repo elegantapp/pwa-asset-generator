@@ -31,18 +31,6 @@ const getAddress = async (
 ): Promise<string> => {
   const logger = preLogger(getAddress.name, options);
 
-  const useShell = async (isSourceUrl = false): Promise<string> => {
-    try {
-      await file.saveHtmlShell(source, options, isSourceUrl);
-    } catch (e) {
-      logger.error(e);
-      throw Error('Failed saving html shell');
-    }
-
-    logger.log('Providing shell html path as navigation address');
-    return file.getFileUrlOfPath(file.getShellHtmlFilePath());
-  };
-
   if (isUrl(source)) {
     if (!(await isUrlExists(source))) {
       throw Error(
@@ -50,22 +38,8 @@ const getAddress = async (
       );
     }
 
-    if (file.isImageFile(source)) {
-      logger.log('Saving html shell with provided image url');
-      return useShell(true);
-    }
-
     logger.log('Providing url source as navigation address');
     return source;
-  }
-
-  if (!(await file.pathExists(source, file.READ_ACCESS))) {
-    throw Error(`Cannot find path ${source}. Please check if file exists`);
-  }
-
-  if (file.isImageFile(source)) {
-    logger.log('Saving html shell with provided image source');
-    return useShell();
   }
 
   if (file.isHtmlFile(source)) {
@@ -76,4 +50,34 @@ const getAddress = async (
   return source;
 };
 
-export default { isUrl, isUrlExists, getAddress };
+const getShellHtml = async (
+  source: string,
+  options: Options,
+): Promise<string> => {
+  const logger = preLogger(getShellHtml.name, options);
+
+  const useShell = async (isSourceUrl = false): Promise<string> => {
+    logger.log('Providing shell html as page content');
+    return file.getHtmlShell(source, options, isSourceUrl);
+  };
+
+  if (isUrl(source)) {
+    if (!(await isUrlExists(source))) {
+      throw Error(
+        `Cannot resolve ${source}. Please check your internet connection`,
+      );
+    }
+
+    logger.log('Saving html shell with provided image url');
+    return useShell(true);
+  }
+
+  if (!(await file.pathExists(source, file.READ_ACCESS))) {
+    throw Error(`Cannot find path ${source}. Please check if file exists`);
+  }
+
+  logger.log('Saving html shell with provided image source');
+  return useShell();
+};
+
+export default { isUrl, isUrlExists, getAddress, getShellHtml };
