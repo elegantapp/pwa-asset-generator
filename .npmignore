@@ -3,7 +3,6 @@
 
 # Generated files
 static/*
-!static/.gitkeep
 temp/*
 __snapshots__/*
 *.tgz

@@ -230,16 +230,26 @@ const getSplashScreenMetaData = async (
   return splashScreenUniformMetaData;
 };
 
+const canNavigateTo = (source: string): boolean =>
+  (url.isUrl(source) && !file.isImageFile(source)) || file.isHtmlFile(source);
+
 const saveImages = async (
   imageList: Image[],
   source: string,
   output: string,
   options: Options,
 ): Promise<SavedImage[]> => {
+  let address: string;
+  let shellHtml: string;
+
   const logger = preLogger(saveImages.name, options);
   logger.log('Initialising puppeteer to take screenshots', '🤖');
 
-  const address = await url.getAddress(source, options);
+  if (canNavigateTo(source)) {
+    address = await url.getAddress(source, options);
+  } else {
+    shellHtml = await url.getShellHtml(source, options);
+  }
 
   return Promise.all(
     imageList.map(async ({ name, width, height, scaleFactor, orientation }) => {
@@ -259,7 +269,13 @@ const saveImages = async (
 
       try {
         const page = await browser.newPage();
-        await page.goto(address);
+
+        if (address) {
+          await page.goto(address);
+        } else {
+          await page.setContent(shellHtml);
+        }
+
         await page.screenshot({
           path,
           omitBackground: !options.opaque,

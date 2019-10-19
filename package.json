@@ -52,6 +52,7 @@
     "lodash.isequal": "4.5.0",
     "lodash.uniqwith": "4.5.0",
     "meow": "5.0.0",
+    "mime-types": "2.1.24",
     "puppeteer": "1.19.0",
     "slash": "3.0.0",
     "tslib": "1.10.0"
@@ -65,6 +66,7 @@
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.uniqwith": "^4.5.6",
     "@types/meow": "^5.0.0",
+    "@types/mime-types": "^2.1.0",
     "@types/puppeteer": "^1.19.1",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
