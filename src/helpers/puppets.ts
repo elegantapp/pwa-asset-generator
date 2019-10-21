@@ -1,17 +1,18 @@
-import puppeteer, { Browser } from 'puppeteer';
-import constants from './config/constants';
-import url from './helpers/url';
-import file from './helpers/file';
-import images from './helpers/images';
-import preLogger from './helpers/logger';
-import { Options } from './models/options';
+import { Browser } from 'puppeteer-core';
+import constants from '../config/constants';
+import url from './url';
+import file from './file';
+import images from './images';
+import browserHelper from './browser';
+import preLogger from './logger';
+import { Options } from '../models/options';
 import {
   DeviceFactorSpec,
   Dimension,
   LaunchScreenSpec,
   SplashScreenSpec,
-} from './models/spec';
-import { Image, SavedImage } from './models/image';
+} from '../models/spec';
+import { Image, SavedImage } from '../models/image';
 
 const getAppleSplashScreenData = async (
   browser: Browser,
@@ -200,12 +201,8 @@ const getSplashScreenMetaData = async (
     'Initialising puppeteer to load latest splash screen metadata',
     '🤖',
   );
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: constants.PUPPETEER_LAUNCH_ARGS,
-    timeout: 1000,
-  });
 
+  const browser = await browserHelper.getBrowserInstance({ timeout: 1000 });
   let splashScreenUniformMetaData;
 
   try {
@@ -224,7 +221,7 @@ const getSplashScreenMetaData = async (
       `Failed to fetch latest specs from Apple Human Interface guidelines - using static fallback data`,
     );
   } finally {
-    browser.close();
+    await browser.close();
   }
 
   return splashScreenUniformMetaData;
@@ -253,14 +250,12 @@ const saveImages = async (
 
   return Promise.all(
     imageList.map(async ({ name, width, height, scaleFactor, orientation }) => {
-      const browser = await puppeteer.launch({
-        headless: true,
+      const browser = await browserHelper.getBrowserInstance({
         defaultViewport: {
           width,
           height,
         },
         timeout: constants.BROWSER_SHELL_TIMEOUT,
-        args: constants.PUPPETEER_LAUNCH_ARGS,
       });
 
       const { type, quality } = options;

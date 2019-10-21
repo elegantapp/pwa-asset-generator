@@ -24,7 +24,8 @@
   "rules": {
     "no-prototype-builtins": "off",
     "import/no-extraneous-dependencies": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "global-require": "off"
   },
   "settings": {
     "import/resolver": {
