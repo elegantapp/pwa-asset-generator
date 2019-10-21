@@ -110,12 +110,16 @@ const getSystemBrowserInstance = async (
 const getBrowserInstance = async (
   launchArgs?: LaunchOptions,
 ): Promise<Browser> => {
-  const chrome = await launchSystemBrowser();
-  if (chrome && chrome.port > 0) {
-    return getSystemBrowserInstance(chrome, launchArgs);
+  let browser: Browser;
+
+  try {
+    const chrome = await launchSystemBrowser();
+    browser = await getSystemBrowserInstance(chrome, launchArgs);
+  } catch (e) {
+    browser = await getLocalBrowserInstance(launchArgs);
   }
 
-  return getLocalBrowserInstance(launchArgs);
+  return browser;
 };
 
 export default {
