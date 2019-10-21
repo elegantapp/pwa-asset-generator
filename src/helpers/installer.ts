@@ -4,12 +4,27 @@ import preLogger from './logger';
 
 let browserFetcher: BrowserFetcher;
 
+// Override current environment proxy settings with npm configuration, if any.
+const NPM_HTTPS_PROXY =
+  process.env.npm_config_https_proxy || process.env.npm_config_proxy;
+const NPM_HTTP_PROXY =
+  process.env.npm_config_http_proxy || process.env.npm_config_proxy;
+const NPM_NO_PROXY = process.env.npm_config_no_proxy;
+
+if (NPM_HTTPS_PROXY) process.env.HTTPS_PROXY = NPM_HTTPS_PROXY;
+if (NPM_HTTP_PROXY) process.env.HTTP_PROXY = NPM_HTTP_PROXY;
+if (NPM_NO_PROXY) process.env.NO_PROXY = NPM_NO_PROXY;
+
 const getBrowserFetcher = (): BrowserFetcher => {
+  const downloadHost =
+    process.env.PUPPETEER_DOWNLOAD_HOST ||
+    process.env.npm_config_puppeteer_download_host ||
+    process.env.npm_package_config_puppeteer_download_host;
   if (browserFetcher) {
     return browserFetcher;
   }
 
-  browserFetcher = puppeteer.createBrowserFetcher();
+  browserFetcher = puppeteer.createBrowserFetcher({ host: downloadHost });
   return browserFetcher;
 };
 
