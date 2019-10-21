@@ -12,6 +12,7 @@ __snapshots__/*
 *.js.map
 src/*
 dist/models/*.js
+bin/install
 
 # Declaration files
 *.d.ts

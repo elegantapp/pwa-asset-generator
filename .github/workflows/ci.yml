@@ -26,5 +26,7 @@ jobs:
         run: npm run lint
       - name: build
         run: npm run build
+      - name: install chromium
+        run: npm run chromium
       - name: test
         run: npm test
