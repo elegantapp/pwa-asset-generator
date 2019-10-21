@@ -2,7 +2,7 @@
 import execa from 'execa';
 import file from './helpers/file';
 
-const TEST_TIMEOUT_IN_MILLIS = 90000;
+const TEST_TIMEOUT_IN_MILLIS = 120000;
 
 test('throws error when input is not provided', async () => {
   try {
