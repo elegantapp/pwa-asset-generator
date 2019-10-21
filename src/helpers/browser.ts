@@ -11,6 +11,9 @@ import {
 import { get } from 'http';
 import constants from '../config/constants';
 import installer from './installer';
+import preLogger from './logger';
+
+const logger = preLogger('browser');
 
 interface BrowserVersionInfo {
   Browser: string;
@@ -102,7 +105,9 @@ const getSystemBrowserInstance = async (
     browserWSEndpoint: chromeVersionInfo.webSocketDebuggerUrl,
   });
 
-  browser.on('disconnected', () => chrome.kill());
+  browser.on('disconnected', () => {
+    chrome.kill().catch(e => logger.error(e.message));
+  });
 
   return browser;
 };
