@@ -69,6 +69,11 @@ export default {
       alias: 'g',
       default: true,
     },
+    singleQuotes: {
+      type: 'boolean',
+      alias: 'u',
+      default: false,
+    },
   },
 
   PUPPETEER_LAUNCH_ARGS: [

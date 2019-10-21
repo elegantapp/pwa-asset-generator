@@ -100,6 +100,13 @@ export interface Options {
    @default true
    */
   readonly log: boolean;
+
+  /**
+   Generates HTML tags with single quotes
+
+   @default false
+   */
+  readonly singleQuotes: boolean;
 }
 
 export type CLIOptions = Partial<Options>;
