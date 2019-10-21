@@ -1,5 +1,5 @@
 import pwa from './helpers/pwa';
-import puppets from './puppets';
+import puppets from './helpers/puppets';
 import flags from './helpers/flags';
 import preLogger from './helpers/logger';
 import { CLIOptions, Options } from './models/options';
