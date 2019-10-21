@@ -11,6 +11,7 @@
     "test": "jest",
     "test:update": "jest -u",
     "commit": "git-cz",
+    "chromium": "PAG_TEST_MODE=1 node bin/install",
     "build": "tsc",
     "start": "tsc -w",
     "lint": "eslint \"src/**/**.ts\"",

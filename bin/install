@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+
+const installer = require('../dist/helpers/installer');
+installer.default.installPreferredBrowserRevision().then(info => console.log('Installed chromium rev', info));
