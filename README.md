@@ -68,7 +68,7 @@ $ pwa-asset-generator --help
     -p --padding                Padding to use when image source provided: css value  [default: "10%"]
     -s --scrape                 Scraping Apple Human Interface guidelines to fetch splash screen specs  [default: true]
     -m --manifest               Web app manifest file path to automatically update manifest file with the generated icons
-    -i --index                  Index html file path to automatically put splash screen and icon meta tags in
+    -i --index                  Index HTML file path to automatically put splash screen and icon meta tags in
     -a --path                   Path prefix to prepend for href links generated for meta tags
     -t --type                   Image type: png|jpeg  [default: png]
     -q --quality                Image quality: 0...100 (Only for JPEG)  [default: 100]
@@ -76,6 +76,7 @@ $ pwa-asset-generator --help
     -c --icon-only              Only generate icons  [default: false]
     -l --landscape-only         Only generate landscape splash screens  [default: false]
     -r --portrait-only          Only generate portrait splash screens  [default: false]
+    -u --single-quotes          Generate HTML meta tags with single quotes  [default: false]
     -g --log                    Logs the steps of the library process  [default: true]
     
   Examples
@@ -99,6 +100,7 @@ $ pwa-asset-generator --help
     --icon-only
     --landscape-only
     --portrait-only
+    --single-quotes
     --log false
 ```
 

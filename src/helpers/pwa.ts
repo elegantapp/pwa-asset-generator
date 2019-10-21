@@ -69,12 +69,19 @@ const generateHtmlForIndexPage = (
   savedImages: SavedImage[],
   indexHtmlPath = '',
   pathPrefix = '',
+  singleQuotes: boolean,
 ): string => {
   const prependPath = getPathPrefix(pathPrefix);
-  return `\
+  const html = `\
 ${generateAppleTouchIconHtml(savedImages, indexHtmlPath, prependPath)}
 <meta name="apple-mobile-web-app-capable" content="yes">
 ${generateAppleLaunchImageHtml(savedImages, indexHtmlPath, prependPath)}`;
+
+  if (singleQuotes) {
+    return html.replace(/"/gm, "'");
+  }
+
+  return html;
 };
 
 const addIconsToManifest = async (

@@ -80,6 +80,7 @@ async function generateImages(
     savedImages,
     modOptions.index,
     modOptions.path,
+    modOptions.singleQuotes,
   );
 
   if (!modOptions.splashOnly) {
