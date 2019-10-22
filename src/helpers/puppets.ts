@@ -301,7 +301,7 @@ const generateImages = async (
     ...(!options.iconOnly
       ? images.getSplashScreenImages(splashScreenMetaData, options)
       : []),
-    ...(!options.splashOnly ? images.getIconImages() : []),
+    ...(!options.splashOnly ? images.getIconImages(options) : []),
   ];
 
   if (!(await file.pathExists(output, file.WRITE_ACCESS))) {

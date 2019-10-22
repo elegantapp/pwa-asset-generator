@@ -30,18 +30,25 @@ const mapToImageFileObj = (
   orientation,
 });
 
-const getIconImages = (): Image[] => {
-  return uniqWith(
-    [
-      ...constants.APPLE_ICON_SIZES.map(size =>
-        mapToSqImageFileObj(constants.APPLE_ICON_FILENAME_PREFIX, size),
+const getIconImages = (options: Options): Image[] => {
+  let icons = [
+    ...constants.APPLE_ICON_SIZES.map(size =>
+      mapToSqImageFileObj(constants.APPLE_ICON_FILENAME_PREFIX, size),
+    ),
+    ...constants.MANIFEST_ICON_SIZES.map(size =>
+      mapToSqImageFileObj(constants.MANIFEST_ICON_FILENAME_PREFIX, size),
+    ),
+  ];
+
+  if (options.favicon) {
+    icons = [
+      ...icons,
+      ...constants.FAVICON_SIZES.map(size =>
+        mapToSqImageFileObj(constants.FAVICON_FILENAME_PREFIX, size),
       ),
-      ...constants.MANIFEST_ICON_SIZES.map(size =>
-        mapToSqImageFileObj(constants.MANIFEST_ICON_FILENAME_PREFIX, size),
-      ),
-    ],
-    isEqual,
-  );
+    ];
+  }
+  return uniqWith(icons, isEqual);
 };
 
 const getSplashScreenImages = (

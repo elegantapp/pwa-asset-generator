@@ -1,8 +1,10 @@
 import cheerio from 'cheerio';
+import { lookup } from 'mime-types';
 import constants from '../config/constants';
 import file from './file';
 import { SavedImage } from '../models/image';
 import { ManifestJsonIcon } from '../models/result';
+import { Options } from '../models/options';
 
 const generateIconsContentForManifest = (
   savedImages: SavedImage[],
@@ -32,6 +34,23 @@ const generateAppleTouchIconHtml = (
       constants.APPLE_TOUCH_ICON_META_HTML(
         width,
         pathPrefix + file.getRelativeImagePath(indexHtmlPath, path),
+      ),
+    )
+    .join('');
+};
+
+const generateFaviconHtml = (
+  savedImages: SavedImage[],
+  indexHtmlPath: string,
+  pathPrefix = '',
+): string => {
+  return savedImages
+    .filter(image => image.name.startsWith(constants.FAVICON_FILENAME_PREFIX))
+    .map(({ width, path }) =>
+      constants.FAVICON_META_HTML(
+        width,
+        pathPrefix + file.getRelativeImagePath(indexHtmlPath, path),
+        lookup(path) as string,
       ),
     )
     .join('');
@@ -67,17 +86,24 @@ const getPathPrefix = (pathPrefix: string): string => {
 
 const generateHtmlForIndexPage = (
   savedImages: SavedImage[],
-  indexHtmlPath = '',
-  pathPrefix = '',
-  singleQuotes: boolean,
+  options: Options,
 ): string => {
+  const indexHtmlPath = options.index || '';
+  const pathPrefix = options.path || '';
   const prependPath = getPathPrefix(pathPrefix);
-  const html = `\
+  let html = '';
+
+  if (options.favicon) {
+    html += `${generateFaviconHtml(savedImages, indexHtmlPath, prependPath)}
+`;
+  }
+
+  html += `\
 ${generateAppleTouchIconHtml(savedImages, indexHtmlPath, prependPath)}
 <meta name="apple-mobile-web-app-capable" content="yes">
 ${generateAppleLaunchImageHtml(savedImages, indexHtmlPath, prependPath)}`;
 
-  if (singleQuotes) {
+  if (options.singleQuotes) {
     return html.replace(/"/gm, "'");
   }
 
