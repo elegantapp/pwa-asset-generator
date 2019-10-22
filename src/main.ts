@@ -1,4 +1,4 @@
-import pwa from './helpers/pwa';
+import meta from './helpers/meta';
 import puppets from './helpers/puppets';
 import flags from './helpers/flags';
 import preLogger from './helpers/logger';
@@ -72,20 +72,15 @@ async function generateImages(
   const output = flags.normalizeOutput(outputFolderPath);
 
   const savedImages = await puppets.generateImages(source, output, modOptions);
-  const manifestJsonContent = pwa.generateIconsContentForManifest(
+  const manifestJsonContent = meta.generateIconsContentForManifest(
     savedImages,
     modOptions.manifest,
   );
-  const htmlContent = pwa.generateHtmlForIndexPage(
-    savedImages,
-    modOptions.index,
-    modOptions.path,
-    modOptions.singleQuotes,
-  );
+  const htmlContent = meta.generateHtmlForIndexPage(savedImages, modOptions);
 
   if (!modOptions.splashOnly) {
     if (modOptions.manifest) {
-      await pwa.addIconsToManifest(manifestJsonContent, modOptions.manifest);
+      await meta.addIconsToManifest(manifestJsonContent, modOptions.manifest);
       logger.success(
         `Icons are saved to Web App Manifest file ${modOptions.manifest}`,
       );
@@ -101,7 +96,7 @@ async function generateImages(
   }
 
   if (modOptions.index) {
-    await pwa.addMetaTagsToIndexPage(htmlContent, modOptions.index);
+    await meta.addMetaTagsToIndexPage(htmlContent, modOptions.index);
     logger.success(
       `iOS meta tags are saved to index html file ${modOptions.index}`,
     );

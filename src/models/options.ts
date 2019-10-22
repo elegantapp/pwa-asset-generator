@@ -107,6 +107,13 @@ export interface Options {
    @default false
    */
   readonly singleQuotes: boolean;
+
+  /**
+   Generates favicon images and HTML meta tags
+
+   @default false
+   */
+  readonly favicon: boolean;
 }
 
 export type CLIOptions = Partial<Options>;

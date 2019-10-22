@@ -24,6 +24,7 @@ $ pwa-asset-generator --help
     -q --quality                Image quality: 0...100 (Only for JPEG)  [default: 100]
     -h --splash-only            Only generate splash screens  [default: false]
     -c --icon-only              Only generate icons  [default: false]
+    -f --favicon                Generate favicon  [default: false]
     -l --landscape-only         Only generate landscape splash screens  [default: false]
     -r --portrait-only          Only generate portrait splash screens  [default: false]
     -u --single-quotes          Generate HTML meta tags with single quotes  [default: false]
@@ -34,6 +35,7 @@ $ pwa-asset-generator --help
     $ pwa-asset-generator logo.svg -i ./index.html -m ./manifest.json
     $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png ./ -t jpeg -q 90 --splash-only --portrait-only
     $ pwa-asset-generator logo.svg ./assets --scrape false --icon-only --path "%PUBLIC_URL%"
+    $ pwa-asset-generator logo.svg ./assets --icon-only --favicon
     $ pwa-asset-generator https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png ./temp -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
 
   Flag examples
@@ -48,6 +50,7 @@ $ pwa-asset-generator --help
     --quality 80
     --splash-only
     --icon-only
+    --favicon
     --landscape-only
     --portrait-only
     --single-quotes

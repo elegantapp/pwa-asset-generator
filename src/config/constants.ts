@@ -74,6 +74,11 @@ export default {
       alias: 'u',
       default: false,
     },
+    favicon: {
+      type: 'boolean',
+      alias: 'f',
+      default: false,
+    },
   },
 
   PUPPETEER_LAUNCH_ARGS: [
@@ -114,12 +119,19 @@ export default {
   // Windows platform specs: https://docs.microsoft.com/en-us/microsoft-edge/progressive-web-apps/get-started
   MANIFEST_ICON_SIZES: [192, 512],
 
+  FAVICON_SIZES: [196],
+
+  FAVICON_FILENAME_PREFIX: 'favicon',
   APPLE_ICON_FILENAME_PREFIX: 'apple-icon',
   APPLE_SPLASH_FILENAME_PREFIX: 'apple-splash',
   MANIFEST_ICON_FILENAME_PREFIX: 'manifest-icon',
   APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR: 'table tbody tr',
   WAIT_FOR_SELECTOR_TIMEOUT: 1000,
   BROWSER_SHELL_TIMEOUT: 60000,
+
+  FAVICON_META_HTML: (size: number, url: string, mimeType: string): string => `\
+<link rel="icon" type="${mimeType}" sizes="${size}x${size}" href="${url}">
+`,
 
   SHELL_HTML_FOR_LOGO: (
     imgPath: string,
