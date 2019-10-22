@@ -1,5 +1,5 @@
 # pwa-asset-generator 
-[![npm](https://img.shields.io/npm/v/pwa-asset-generator?color=brightgreen)](https://www.npmjs.com/package/pwa-asset-generator) [![node](https://img.shields.io/node/v/pwa-asset-generator)]((https://www.npmjs.com/package/pwa-asset-generator)) [![Build Status](https://github.com/onderceylan/pwa-asset-generator/workflows/CI/badge.svg)](https://github.com/onderceylan/pwa-asset-generator/actions) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-brightgreen.svg)](https://github.com/semantic-release/semantic-release)
+[![npm](https://img.shields.io/npm/v/pwa-asset-generator?color=brightgreen)](https://www.npmjs.com/package/pwa-asset-generator) [![node](https://img.shields.io/node/v/pwa-asset-generator)](https://www.npmjs.com/package/pwa-asset-generator) [![Build Status](https://github.com/onderceylan/pwa-asset-generator/workflows/CI/badge.svg)](https://github.com/onderceylan/pwa-asset-generator/actions?workflow=CI) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-brightgreen.svg)](https://github.com/semantic-release/semantic-release)
 
 > PWA asset generator based on Puppeteer. Automatically generates icons and splash screens guided by Web App Manifest specs and Apple Human Interface guidelines. Updates manifest.json and index.html files with the generated images.
 
@@ -36,7 +36,9 @@ PWA Asset Generator automates the image generation in a creative way. Having [Pu
 * You can provide your source in multiple formats; a local image file, a local HTML file, a remote image or HTML file 🙌
 
     * When it’s an image source, it is centered over the background option you provide 🌅
-    * When it’s an HTML source, you can go as creative as you like; position your logo, use SVG filters, use variable fonts, use gradient backgrounds, use typography and etc. Your html file is rendered on Chrome before taking screenshots for each resolution 🎨 
+    * When it’s an HTML source, you can go as creative as you like; position your logo, use SVG filters, use variable fonts, use gradient backgrounds, use typography and etc. Your html file is rendered on Chrome before taking screenshots for each resolution 🎨
+    
+* It uses [puppeteer-core](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteer-vs-puppeteer-core) instead of puppeteer and only installs Chromium if it doesn't exist on the system. Saves waste of ~100mb of disk space and many seconds from the world for each user 🌎 
 
 ## Install
 
