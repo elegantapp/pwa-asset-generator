@@ -102,9 +102,12 @@ const getSystemBrowserInstance = async (
     browserWSEndpoint: chromeVersionInfo.webSocketDebuggerUrl,
   });
 
-  browser.on('disconnected', () => {
-    // Silently try killing chrome
-    chrome.kill().catch();
+  browser.on('disconnected', async () => {
+    try {
+      await chrome.kill();
+    } catch (e) {
+      // Silently try killing chrome
+    }
   });
 
   return browser;

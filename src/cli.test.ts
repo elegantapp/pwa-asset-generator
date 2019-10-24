@@ -2,8 +2,6 @@
 import execa from 'execa';
 import file from './helpers/file';
 
-const TEST_TIMEOUT_IN_MILLIS = 120000;
-
 test('throws error when input is not provided', async () => {
   try {
     await execa.sync('./bin/cli', []);
@@ -13,7 +11,6 @@ test('throws error when input is not provided', async () => {
 });
 
 test('creates an output folder when output path does not exist', async () => {
-  jest.setTimeout(TEST_TIMEOUT_IN_MILLIS);
   const tempFolderName = './temp';
 
   await execa.sync('./bin/cli', [
@@ -26,8 +23,6 @@ test('creates an output folder when output path does not exist', async () => {
 });
 
 test('generates icons only', async () => {
-  jest.setTimeout(TEST_TIMEOUT_IN_MILLIS);
-
   const { stdout } = await execa(
     './bin/cli',
     ['./static/logo.png', './temp', '-s=false', '--icon-only'],
@@ -38,8 +33,6 @@ test('generates icons only', async () => {
 });
 
 test('generates splash screens only', async () => {
-  jest.setTimeout(TEST_TIMEOUT_IN_MILLIS);
-
   const { stdout } = await execa(
     './bin/cli',
     ['./static/logo.png', './temp', '-s=false', '--splash-only'],
@@ -50,8 +43,6 @@ test('generates splash screens only', async () => {
 });
 
 test('generates portrait splash screens only', async () => {
-  jest.setTimeout(TEST_TIMEOUT_IN_MILLIS);
-
   const { stdout } = await execa(
     './bin/cli',
     [
@@ -68,8 +59,6 @@ test('generates portrait splash screens only', async () => {
 });
 
 test('generates landscape splash screens only', async () => {
-  jest.setTimeout(TEST_TIMEOUT_IN_MILLIS);
-
   const { stdout } = await execa(
     './bin/cli',
     [
@@ -86,8 +75,6 @@ test('generates landscape splash screens only', async () => {
 });
 
 test('generates icons and splash screens when both only flags exist', async () => {
-  jest.setTimeout(TEST_TIMEOUT_IN_MILLIS);
-
   const { stdout } = await execa(
     './bin/cli',
     ['./static/logo.png', './temp', '-s=false', '--splash-only', '--icon-only'],
@@ -98,8 +85,6 @@ test('generates icons and splash screens when both only flags exist', async () =
 });
 
 test('generates icons and splash screens with path prefix', async () => {
-  jest.setTimeout(TEST_TIMEOUT_IN_MILLIS);
-
   const { stdout } = await execa(
     './bin/cli',
     ['./static/logo.png', './temp', '-s=false', '--path=%PUBLIC_URL%'],
