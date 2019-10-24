@@ -38,7 +38,9 @@ PWA Asset Generator automates the image generation in a creative way. Having [Pu
     * When it’s an image source, it is centered over the background option you provide 🌅
     * When it’s an HTML source, you can go as creative as you like; position your logo, use SVG filters, use variable fonts, use gradient backgrounds, use typography and etc. Your html file is rendered on Chrome before taking screenshots for each resolution 🎨
     
-* It uses [puppeteer-core](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteer-vs-puppeteer-core) instead of puppeteer and only installs Chromium if it doesn't exist on the system. Saves waste of ~100mb of disk space and many seconds from the world for each user 🌎 
+* It uses [puppeteer-core](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteer-vs-puppeteer-core) instead of puppeteer and only installs Chromium if it doesn't exist on the system. Saves waste of ~110-150mb of disk space and many seconds from the world per each user 🌎
+
+* Supports dark mode splash screens on iOS! So, you can provide both light 🌕 and dark 🌚 splash screen images to differentiate your apps look & feel based on user preference 🌙
 
 ## Install
 
@@ -76,9 +78,10 @@ $ pwa-asset-generator --help
     -q --quality                Image quality: 0...100 (Only for JPEG)  [default: 100]
     -h --splash-only            Only generate splash screens  [default: false]
     -c --icon-only              Only generate icons  [default: false]
-    -f --favicon                Generate favicon  [default: false]
+    -f --favicon                Generate favicon image and HTML meta tag  [default: false]
     -l --landscape-only         Only generate landscape splash screens  [default: false]
     -r --portrait-only          Only generate portrait splash screens  [default: false]
+    -d --dark-mode              Generate iOS splash screen meta with (prefers-color-scheme: dark) media attr  [default: false]
     -u --single-quotes          Generate HTML meta tags with single quotes  [default: false]
     -g --log                    Logs the steps of the library process  [default: true]
     
@@ -88,6 +91,8 @@ $ pwa-asset-generator --help
     $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png ./ -t jpeg -q 90 --splash-only --portrait-only
     $ pwa-asset-generator logo.svg ./assets --scrape false --icon-only --path "%PUBLIC_URL%"
     $ pwa-asset-generator logo.svg ./assets --icon-only --favicon
+    $ pwa-asset-generator logo.svg ./assets --dark-mode --background dimgrey --splash-only --type jpeg --quality 80
+    $ pwa-asset-generator logo.svg ./assets --padding "calc(50vh - 5%) calc(50vw - 10%)"
     $ pwa-asset-generator https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png ./temp -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
 
   Flag examples
@@ -105,6 +110,7 @@ $ pwa-asset-generator --help
     --favicon
     --landscape-only
     --portrait-only
+    --dark-mode
     --single-quotes
     --log false
 ```
@@ -115,7 +121,7 @@ $ pwa-asset-generator --help
 const pwaAssetGenerator = require('pwa-asset-generator');
 
 (async () => {
-  const { savedImages, htmlContent, manifestJsonContent } = await pwaAssetGenerator.generateImages(
+  const { savedImages, htmlMeta, manifestJsonContent } = await pwaAssetGenerator.generateImages(
     'https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png',
     './temp',
     {
@@ -130,4 +136,16 @@ const pwaAssetGenerator = require('pwa-asset-generator');
 
 ## Troubleshooting
 
+### "No usable sandbox!" error on Linux
 In case of getting "No usable sandbox!" error on Linux, you need to enable [system sandboxing](https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#setting-up-chrome-linux-sandbox).
+
+### How to make an image smaller or larger relative to the background?
+The default value for the padding surrounding the image is 10%. But it's just a css padding value that you can configure and override yourself with **-p --padding** option.
+
+1. You can use a more advanced padding value based on your taste and goal;
+
+    **Larger logo:** `--padding "calc(50vh - 20%) calc(50vw - 40%)"`
+
+    **Smaller logo:** `--padding "calc(50vh - 5%) calc(50vw - 10%)"`
+
+2. You can create your own html input file which uses css media queries and provides different padding options based on breakpoints: https://material.io/design/layout/responsive-layout-grid.html#breakpoints

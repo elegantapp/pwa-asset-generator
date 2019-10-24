@@ -68,7 +68,7 @@ const getShellHtml = async (
       );
     }
 
-    logger.log('Saving html shell with provided image url');
+    logger.log('Generating shell html with provided image url');
     return useShell(true);
   }
 
@@ -76,7 +76,7 @@ const getShellHtml = async (
     throw Error(`Cannot find path ${source}. Please check if file exists`);
   }
 
-  logger.log('Saving html shell with provided image source');
+  logger.log('Generating shell html with provided image source');
   return useShell();
 };
 

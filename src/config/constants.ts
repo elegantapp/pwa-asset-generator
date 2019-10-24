@@ -1,4 +1,30 @@
 import { Orientation } from '../models/image';
+import { HTMLMetaNames, HTMLMetaSelector } from '../models/meta';
+
+const HTML_META_ORDERED_SELECTOR_LIST: HTMLMetaSelector[] = [
+  {
+    name: HTMLMetaNames.favicon,
+    selector: 'link[rel="icon"]',
+  },
+  {
+    name: HTMLMetaNames.appleTouchIcon,
+    selector: 'link[rel="apple-touch-icon"]',
+  },
+  {
+    name: HTMLMetaNames.appleMobileWebAppCapable,
+    selector: 'meta[name="apple-mobile-web-app-capable"]',
+  },
+  {
+    name: HTMLMetaNames.appleLaunchImage,
+    selector:
+      'link[rel="apple-touch-startup-image"]:not([media^="(prefers-color-scheme: dark)"])',
+  },
+  {
+    name: HTMLMetaNames.appleLaunchImageDarkMode,
+    selector:
+      'link[rel="apple-touch-startup-image"][media^="(prefers-color-scheme: dark)"]',
+  },
+];
 
 export default {
   FLAGS: {
@@ -79,6 +105,11 @@ export default {
       alias: 'f',
       default: false,
     },
+    darkMode: {
+      type: 'boolean',
+      alias: 'd',
+      default: false,
+    },
   },
 
   PUPPETEER_LAUNCH_ARGS: [
@@ -121,16 +152,19 @@ export default {
 
   FAVICON_SIZES: [196],
 
+  HTML_META_ORDERED_SELECTOR_LIST,
+
   FAVICON_FILENAME_PREFIX: 'favicon',
   APPLE_ICON_FILENAME_PREFIX: 'apple-icon',
   APPLE_SPLASH_FILENAME_PREFIX: 'apple-splash',
+  APPLE_SPLASH_FILENAME_DARK_MODE_POSTFIX: '-dark',
   MANIFEST_ICON_FILENAME_PREFIX: 'manifest-icon',
   APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR: 'table tbody tr',
   WAIT_FOR_SELECTOR_TIMEOUT: 1000,
   BROWSER_SHELL_TIMEOUT: 60000,
 
-  FAVICON_META_HTML: (size: number, url: string, mimeType: string): string => `\
-<link rel="icon" type="${mimeType}" sizes="${size}x${size}" href="${url}">
+  FAVICON_META_HTML: (size: number, url: string, mimeType: string): string =>
+    `<link rel="icon" type="${mimeType}" sizes="${size}x${size}" href="${url}">
 `,
 
   SHELL_HTML_FOR_LOGO: (
@@ -163,8 +197,8 @@ export default {
 </body>
 </html>`,
 
-  APPLE_TOUCH_ICON_META_HTML: (size: number, url: string): string => `\
-<link rel="apple-touch-icon" sizes="${size}x${size}" href="${url}">
+  APPLE_TOUCH_ICON_META_HTML: (size: number, url: string): string =>
+    `<link rel="apple-touch-icon" sizes="${size}x${size}" href="${url}">
 `,
 
   APPLE_LAUNCH_SCREEN_META_HTML: (
@@ -173,13 +207,14 @@ export default {
     url: string,
     scaleFactor: number,
     orientation: Orientation,
+    darkMode: boolean,
   ): string => {
     /* eslint-disable */
     if (orientation === 'portrait') {
       return `\
 <link rel="apple-touch-startup-image"
     href="${url}"
-    media="(device-width: ${width / scaleFactor}px) and (device-height: ${height / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})">
+    media="${darkMode ? '(prefers-color-scheme: dark) and ' : ''}(device-width: ${width / scaleFactor}px) and (device-height: ${height / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})">
 `;
     }
 
@@ -187,7 +222,7 @@ export default {
     return `\
 <link rel="apple-touch-startup-image"
     href="${url}"
-    media="(device-width: ${height / scaleFactor}px) and (device-height: ${width / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})">
+    media="${darkMode ? '(prefers-color-scheme: dark) and ' : ''}(device-width: ${height / scaleFactor}px) and (device-height: ${width / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})">
 `;
     /* eslint-enable */
   },

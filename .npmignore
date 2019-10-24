@@ -12,6 +12,7 @@ __snapshots__/*
 *.js.map
 src/*
 dist/models/*.js
+!dist/models/meta.js
 bin/install
 
 # Declaration files

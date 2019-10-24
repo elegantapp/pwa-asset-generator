@@ -109,11 +109,18 @@ export interface Options {
   readonly singleQuotes: boolean;
 
   /**
-   Generates favicon images and HTML meta tags
+   Generate favicon images and HTML meta tags
 
    @default false
    */
   readonly favicon: boolean;
+
+  /**
+   Generate iOS splash screen meta with (prefers-color-scheme: dark) media attr
+
+   @default false
+   */
+  readonly darkMode: boolean;
 }
 
 export type CLIOptions = Partial<Options>;
