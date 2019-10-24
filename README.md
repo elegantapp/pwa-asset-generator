@@ -136,9 +136,6 @@ const pwaAssetGenerator = require('pwa-asset-generator');
 
 ## Troubleshooting
 
-### "No usable sandbox!" error on Linux
-In case of getting "No usable sandbox!" error on Linux, you need to enable [system sandboxing](https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#setting-up-chrome-linux-sandbox).
-
 ### How to make an image smaller or larger relative to the background?
 The default value for the padding surrounding the image is 10%. But it's just a css padding value that you can configure and override yourself with **-p --padding** option.
 
@@ -149,3 +146,14 @@ The default value for the padding surrounding the image is 10%. But it's just a 
     **Smaller logo:** `--padding "calc(50vh - 5%) calc(50vw - 10%)"`
 
 2. You can create your own html input file which uses css media queries and provides different padding options based on breakpoints: https://material.io/design/layout/responsive-layout-grid.html#breakpoints
+
+### "No usable sandbox!" error on Linux
+In case of getting "No usable sandbox!" error on Linux, you need to enable [system sandboxing](https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#setting-up-chrome-linux-sandbox).
+
+### Process could not be terminated error on Windows
+When downloaded chromium and used the revision with puppeteer-core, puppeteer sometimes throws the following error.
+```
+ERROR: The process with PID 12345 (child process of PID 1234) could not be terminated.
+Reason: There is no running instance of the task.
+``` 
+This is a [known bug](https://github.com/GoogleChrome/puppeteer/issues/1047) on puppeteer and for now you can just ignore it.
