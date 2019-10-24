@@ -24,6 +24,7 @@ bin/install
 .github
 commitlint.config.js
 jest.config.js
+jest.setup.js
 tsconfig.json
 .editorconfig
 .eslintrc

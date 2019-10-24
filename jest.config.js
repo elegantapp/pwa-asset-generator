@@ -4,4 +4,5 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest',
   },
   testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(test).[jt]s?(x)'],
+  setupFilesAfterEnv: ['./jest.setup.js'],
 };

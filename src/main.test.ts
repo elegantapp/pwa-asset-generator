@@ -1,10 +1,6 @@
 import { generateImages } from './main';
 
-const TEST_TIMEOUT_IN_MILLIS = 120000;
-
 test('generates icons and splash screens when called via function', async () => {
-  jest.setTimeout(TEST_TIMEOUT_IN_MILLIS);
-
   const result = await generateImages('./static/logo.png', './temp', {
     scrape: false,
     iconOnly: true,
@@ -17,8 +13,6 @@ test('generates icons and splash screens when called via function', async () => 
 });
 
 test('generates favicon html as part of htmlMeta', async () => {
-  jest.setTimeout(TEST_TIMEOUT_IN_MILLIS);
-
   const result = await generateImages('./static/logo.png', './temp', {
     scrape: false,
     iconOnly: true,
@@ -30,8 +24,6 @@ test('generates favicon html as part of htmlMeta', async () => {
 });
 
 test('generates dark mode splash screen html as part of htmlMeta', async () => {
-  jest.setTimeout(TEST_TIMEOUT_IN_MILLIS);
-
   const result = await generateImages('./static/logo.png', './temp', {
     scrape: false,
     splashOnly: true,
