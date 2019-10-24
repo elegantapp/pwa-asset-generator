@@ -1,4 +1,5 @@
 import { Browser } from 'puppeteer-core';
+import { LaunchedChrome } from 'chrome-launcher';
 import constants from '../config/constants';
 import url from './url';
 import file from './file';
@@ -13,6 +14,18 @@ import {
   SplashScreenSpec,
 } from '../models/spec';
 import { Image, SavedImage } from '../models/image';
+
+const killBrowser = async (
+  browser: Browser,
+  chrome: LaunchedChrome | undefined,
+): Promise<void> => {
+  if (chrome) {
+    await browser.disconnect();
+    await chrome.kill();
+  } else {
+    await browser.close();
+  }
+};
 
 const getAppleSplashScreenData = async (
   browser: Browser,
@@ -202,7 +215,9 @@ const getSplashScreenMetaData = async (
     '🤖',
   );
 
-  const browser = await browserHelper.getBrowserInstance({ timeout: 1000 });
+  const { browser, chrome } = await browserHelper.getBrowserInstance({
+    timeout: 5000,
+  });
   let splashScreenUniformMetaData;
 
   try {
@@ -220,9 +235,9 @@ const getSplashScreenMetaData = async (
     logger.warn(
       `Failed to fetch latest specs from Apple Human Interface guidelines - using static fallback data`,
     );
-  } finally {
-    await browser.close();
   }
+
+  await killBrowser(browser, chrome);
 
   return splashScreenUniformMetaData;
 };
@@ -248,45 +263,52 @@ const saveImages = async (
     shellHtml = await url.getShellHtml(source, options);
   }
 
-  return Promise.all(
-    imageList.map(async ({ name, width, height, scaleFactor, orientation }) => {
-      const browser = await browserHelper.getBrowserInstance({
-        defaultViewport: {
-          width,
-          height,
-        },
-        timeout: constants.BROWSER_SHELL_TIMEOUT,
-      });
-
-      const { type, quality } = options;
-
-      const path = file.getImageSavePath(name, output, type);
-
-      try {
-        const page = await browser.newPage();
-
-        if (address) {
-          await page.goto(address);
-        } else {
-          await page.setContent(shellHtml);
-        }
-
-        await page.screenshot({
-          path,
-          omitBackground: !options.opaque,
-          type: options.type,
-          ...(type !== 'png' ? { quality } : {}),
+  return (
+    imageList
+      .map(async ({ name, width, height, scaleFactor, orientation }) => {
+        const { browser, chrome } = await browserHelper.getBrowserInstance({
+          defaultViewport: {
+            width,
+            height,
+          },
+          timeout: constants.BROWSER_SHELL_TIMEOUT,
         });
 
-        logger.success(`Saved image ${name}`);
-        return { name, width, height, scaleFactor, path, orientation };
-      } catch (e) {
-        logger.error(e.message);
-        throw Error(`Failed to save image ${name}`);
-      } finally {
-        await browser.close();
-      }
-    }),
+        const { type, quality } = options;
+        const path = file.getImageSavePath(name, output, type);
+
+        try {
+          const page = await browser.newPage();
+
+          if (address) {
+            await page.goto(address);
+          } else {
+            await page.setContent(shellHtml);
+          }
+
+          await page.screenshot({
+            path,
+            omitBackground: !options.opaque,
+            type: options.type,
+            ...(type !== 'png' ? { quality } : {}),
+          });
+
+          logger.success(`Saved image ${name}`);
+          await killBrowser(browser, chrome);
+
+          return { name, width, height, scaleFactor, path, orientation };
+        } catch (e) {
+          await killBrowser(browser, chrome);
+          logger.error(e.message);
+          throw Error(`Failed to save image ${name}`);
+        }
+      })
+      // Resolving array of promises in sequential manner to kill chrome instances properly
+      .reduce(
+        (acc, promise: Promise<SavedImage>) =>
+          acc.then(result => promise.then(Array.prototype.concat.bind(result))),
+        Promise.resolve([] as SavedImage[]),
+      )
   );
 };
 

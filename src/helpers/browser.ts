@@ -63,7 +63,7 @@ const getLocalBrowserInstance = async (
   });
 };
 
-const launchSystemBrowser = async (): Promise<LaunchedChrome> => {
+const launchSystemBrowser = (): Promise<LaunchedChrome> => {
   const launchOptions: ChromeLauncherOptions = {
     chromeFlags: constants.PUPPETEER_LAUNCH_ARGS,
     logLevel: 'silent',
@@ -97,35 +97,31 @@ const getSystemBrowserInstance = async (
 ): Promise<Browser> => {
   const chromeVersionInfo = await getLaunchedChromeVersionInfo(chrome);
 
-  const browser = await puppeteer.connect({
+  return puppeteer.connect({
     ...launchArgs,
     browserWSEndpoint: chromeVersionInfo.webSocketDebuggerUrl,
   });
-
-  browser.on('disconnected', async () => {
-    try {
-      await chrome.kill();
-    } catch (e) {
-      // Silently try killing chrome
-    }
-  });
-
-  return browser;
 };
 
 const getBrowserInstance = async (
   launchArgs?: LaunchOptions,
-): Promise<Browser> => {
+): Promise<{ chrome: LaunchedChrome | undefined; browser: Browser }> => {
   let browser: Browser;
+  let chrome: LaunchedChrome | undefined;
+  const LAUNCHER_NOT_INSTALLED_ERROR_CODE = 'ERR_LAUNCHER_NOT_INSTALLED';
 
   try {
-    const chrome = await launchSystemBrowser();
+    chrome = await launchSystemBrowser();
     browser = await getSystemBrowserInstance(chrome, launchArgs);
   } catch (e) {
-    browser = await getLocalBrowserInstance(launchArgs);
+    if (e.code === LAUNCHER_NOT_INSTALLED_ERROR_CODE) {
+      browser = await getLocalBrowserInstance(launchArgs);
+    } else {
+      throw e;
+    }
   }
 
-  return browser;
+  return { browser, chrome };
 };
 
 export default {
