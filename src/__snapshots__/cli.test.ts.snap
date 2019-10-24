@@ -17,12 +17,14 @@ exports[`generates icons and splash screens when both only flags exist 1`] = `
 
 
 
+
 <link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"temp/apple-icon-180.png\\">
 <link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"temp/apple-icon-167.png\\">
 <link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"temp/apple-icon-152.png\\">
 <link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"temp/apple-icon-120.png\\">
 
 <meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
+
 <link rel=\\"apple-touch-startup-image\\"
     href=\\"temp/apple-splash-2048-2732.png\\"
     media=\\"(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
@@ -104,12 +106,14 @@ exports[`generates icons and splash screens with path prefix 1`] = `
 
 
 
+
 <link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"%PUBLIC_URL%/temp/apple-icon-180.png\\">
 <link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"%PUBLIC_URL%/temp/apple-icon-167.png\\">
 <link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"%PUBLIC_URL%/temp/apple-icon-152.png\\">
 <link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"%PUBLIC_URL%/temp/apple-icon-120.png\\">
 
 <meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
+
 <link rel=\\"apple-touch-startup-image\\"
     href=\\"%PUBLIC_URL%/temp/apple-splash-2048-2732.png\\"
     media=\\"(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
@@ -191,6 +195,7 @@ exports[`generates icons only 1`] = `
 
 
 
+
 <link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"temp/apple-icon-180.png\\">
 <link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"temp/apple-icon-167.png\\">
 <link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"temp/apple-icon-152.png\\">
@@ -205,6 +210,7 @@ exports[`generates landscape splash screens only 1`] = `
 "
 
 <meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
+
 <link rel=\\"apple-touch-startup-image\\"
     href=\\"temp/apple-splash-2732-2048.png\\"
     media=\\"(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
@@ -243,6 +249,7 @@ exports[`generates portrait splash screens only 1`] = `
 "
 
 <meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
+
 <link rel=\\"apple-touch-startup-image\\"
     href=\\"temp/apple-splash-2048-2732.png\\"
     media=\\"(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
@@ -281,6 +288,7 @@ exports[`generates splash screens only 1`] = `
 "
 
 <meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
+
 <link rel=\\"apple-touch-startup-image\\"
     href=\\"temp/apple-splash-2048-2732.png\\"
     media=\\"(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">

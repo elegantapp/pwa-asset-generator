@@ -55,14 +55,21 @@ const getSplashScreenImages = (
   uniformSplashScreenData: SplashScreenSpec[],
   options: Options,
 ): Image[] => {
+  let appleSplashFilenamePrefix = constants.APPLE_SPLASH_FILENAME_PREFIX;
+  if (options.darkMode) {
+    appleSplashFilenamePrefix +=
+      constants.APPLE_SPLASH_FILENAME_DARK_MODE_POSTFIX;
+  }
+
   return uniqWith(
     uniformSplashScreenData.reduce((acc: Image[], curr: SplashScreenSpec) => {
       let images: Image[] = acc;
+
       if (!options.landscapeOnly) {
         images = [
           ...images,
           mapToImageFileObj(
-            constants.APPLE_SPLASH_FILENAME_PREFIX,
+            appleSplashFilenamePrefix,
             curr.portrait.width,
             curr.portrait.height,
             curr.scaleFactor,
@@ -74,7 +81,7 @@ const getSplashScreenImages = (
         images = [
           ...images,
           mapToImageFileObj(
-            constants.APPLE_SPLASH_FILENAME_PREFIX,
+            appleSplashFilenamePrefix,
             curr.landscape.width,
             curr.landscape.height,
             curr.scaleFactor,

@@ -20,7 +20,7 @@ import { LoggerFunction } from './models/logger';
  import pwaAssetGenerator = require('pwa-asset-generator');
 
  (async () => {
-		const { savedImages, htmlContent, manifestJsonContent } = await pwaAssetGenerator.generateImages(
+		const { savedImages, htmlMeta, manifestJsonContent } = await pwaAssetGenerator.generateImages(
 		  'https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png',
 		  './temp',
 		   {
@@ -76,7 +76,7 @@ async function generateImages(
     savedImages,
     modOptions.manifest,
   );
-  const htmlContent = meta.generateHtmlForIndexPage(savedImages, modOptions);
+  const htmlMeta = meta.generateHtmlForIndexPage(savedImages, modOptions);
 
   if (!modOptions.splashOnly) {
     if (modOptions.manifest) {
@@ -96,7 +96,7 @@ async function generateImages(
   }
 
   if (modOptions.index) {
-    await meta.addMetaTagsToIndexPage(htmlContent, modOptions.index);
+    await meta.addMetaTagsToIndexPage(htmlMeta, modOptions.index);
     logger.success(
       `iOS meta tags are saved to index html file ${modOptions.index}`,
     );
@@ -107,10 +107,10 @@ async function generateImages(
     logger.success(
       'Below is the iOS meta tags content for your index.html file. You can copy/paste it manually',
     );
-    logger.raw(`\n${htmlContent}\n`);
+    logger.raw(`\n${meta.formatMetaTags(htmlMeta)}\n`);
   }
 
-  return { savedImages, htmlContent, manifestJsonContent };
+  return { savedImages, htmlMeta, manifestJsonContent };
 }
 
 export { generateImages };

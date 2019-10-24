@@ -1,4 +1,5 @@
 import { SavedImage } from './image';
+import { HTMLMeta } from './meta';
 
 export interface ManifestJsonIcon {
   /**
@@ -50,21 +51,21 @@ export interface Result {
    @example
    ```javascript
    [{
-       name: 'apple-splash-1136-640',
-       width: 1136,
-       height: 640,
-       scaleFactor: 2,
-       path: 'temp/apple-splash-1136-640.png',
-       orientation: 'landscape'
-     },
+     name: 'apple-splash-1136-640',
+     width: 1136,
+     height: 640,
+     scaleFactor: 2,
+     path: 'temp/apple-splash-1136-640.png',
+     orientation: 'landscape'
+   },
    {
-       name: 'apple-icon-180',
-       width: 180,
-       height: 180,
-       scaleFactor: null,
-       path: 'temp/apple-icon-180.png',
-       orientation: null
-     }]
+     name: 'apple-icon-180',
+     width: 180,
+     height: 180,
+     scaleFactor: null,
+     path: 'temp/apple-icon-180.png',
+     orientation: null
+   }]
    ```
    */
   savedImages: SavedImage[];
@@ -73,14 +74,17 @@ export interface Result {
    Meta tags to be added to index.html file
 
    @example
-   ```html
-   <link rel="apple-touch-icon" sizes="180x180" href="temp/apple-icon-180.png">
-   <link rel="apple-touch-icon" sizes="167x167" href="temp/apple-icon-167.png">
-   <link rel="apple-touch-icon" sizes="152x152" href="temp/apple-icon-152.png">
-   <link rel="apple-touch-icon" sizes="120x120" href="temp/apple-icon-120.png">
+   ```javascript
+   {
+     favicon: '<link rel="icon" type="image/png" sizes="196x196" href="temp/favicon-196.png">\n',
+     appleTouchIcon: '<link rel="apple-touch-icon" sizes="180x180" href="temp/apple-icon-180.png">\n';
+     appleMobileWebAppCapable: '<meta name="apple-mobile-web-app-capable" content="yes">\n';
+     appleLaunchImage: '<link rel="apple-touch-startup-image"\n    href="temp/apple-splash-2048-2732.png"\n    media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">\n';
+     appleLaunchImageDarkMode: '<link rel="apple-touch-startup-image"\n    href="temp/apple-splash-dark-2048-2732.png"\n    media="(prefers-color-scheme: dark) and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">\n'
+   }
    ```
    */
-  htmlContent: string;
+  htmlMeta: HTMLMeta;
 
   /**
    Icons to be added to manifest.json's icons property
@@ -88,15 +92,15 @@ export interface Result {
    @example
    ```json
    [{
-      "src": "assets/pwa/manifest-icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-     },
+     "src": "assets/pwa/manifest-icon-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+   },
    {
-      "src": "assets/pwa/manifest-icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-     }]
+     "src": "assets/pwa/manifest-icon-512.png",
+     "sizes": "512x512",
+     "type": "image/png"
+   }]
    ```
    */
   manifestJsonContent: ManifestJsonIcon[];

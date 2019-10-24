@@ -5,6 +5,7 @@ import file from './file';
 import { SavedImage } from '../models/image';
 import { ManifestJsonIcon } from '../models/result';
 import { Options } from '../models/options';
+import { HTMLMeta, HTMLMetaNames, HTMLMetaSelector } from '../models/meta';
 
 const generateIconsContentForManifest = (
   savedImages: SavedImage[],
@@ -60,6 +61,7 @@ const generateAppleLaunchImageHtml = (
   savedImages: SavedImage[],
   indexHtmlPath: string,
   pathPrefix = '',
+  darkMode: boolean,
 ): string => {
   return savedImages
     .filter(image =>
@@ -72,6 +74,7 @@ const generateAppleLaunchImageHtml = (
         pathPrefix + file.getRelativeImagePath(indexHtmlPath, path),
         scaleFactor as number,
         orientation,
+        darkMode,
       ),
     )
     .join('');
@@ -87,27 +90,60 @@ const getPathPrefix = (pathPrefix: string): string => {
 const generateHtmlForIndexPage = (
   savedImages: SavedImage[],
   options: Options,
-): string => {
+): HTMLMeta => {
   const indexHtmlPath = options.index || '';
   const pathPrefix = options.path || '';
   const prependPath = getPathPrefix(pathPrefix);
-  let html = '';
+  const htmlMeta: HTMLMeta = {
+    [HTMLMetaNames.appleMobileWebAppCapable]: `<meta name="apple-mobile-web-app-capable" content="yes">
+`,
+  };
 
-  if (options.favicon) {
-    html += `${generateFaviconHtml(savedImages, indexHtmlPath, prependPath)}
-`;
+  if (!options.splashOnly) {
+    if (options.favicon) {
+      htmlMeta.favicon = `${generateFaviconHtml(
+        savedImages,
+        indexHtmlPath,
+        prependPath,
+      )}`;
+    }
+
+    htmlMeta.appleTouchIcon = `${generateAppleTouchIconHtml(
+      savedImages,
+      indexHtmlPath,
+      prependPath,
+    )}`;
   }
 
-  html += `\
-${generateAppleTouchIconHtml(savedImages, indexHtmlPath, prependPath)}
-<meta name="apple-mobile-web-app-capable" content="yes">
-${generateAppleLaunchImageHtml(savedImages, indexHtmlPath, prependPath)}`;
+  if (!options.iconOnly) {
+    if (options.darkMode) {
+      htmlMeta.appleLaunchImageDarkMode = `${generateAppleLaunchImageHtml(
+        savedImages,
+        indexHtmlPath,
+        prependPath,
+        true,
+      )}`;
+    } else {
+      htmlMeta.appleLaunchImage = `${generateAppleLaunchImageHtml(
+        savedImages,
+        indexHtmlPath,
+        prependPath,
+        false,
+      )}`;
+    }
+  }
 
   if (options.singleQuotes) {
-    return html.replace(/"/gm, "'");
+    Object.keys(htmlMeta).forEach((metaKey: string) => {
+      const metaContent = htmlMeta[metaKey as keyof HTMLMeta];
+      if (metaContent) {
+        metaContent.replace(/"/gm, "'");
+      }
+    });
+    return htmlMeta;
   }
 
-  return html;
+  return htmlMeta;
 };
 
 const addIconsToManifest = async (
@@ -139,8 +175,22 @@ const addIconsToManifest = async (
   );
 };
 
+const formatMetaTags = (htmlMeta: HTMLMeta): string => {
+  return constants.HTML_META_ORDERED_SELECTOR_LIST.reduce(
+    (acc: string, meta: HTMLMetaSelector) => {
+      if (htmlMeta.hasOwnProperty(meta.name)) {
+        return `\
+${acc}
+${htmlMeta[meta.name]}`;
+      }
+      return acc;
+    },
+    '',
+  );
+};
+
 const addMetaTagsToIndexPage = async (
-  htmlContent: string,
+  htmlMeta: HTMLMeta,
   indexHtmlFilePath: string,
 ): Promise<void> => {
   if (!(await file.pathExists(indexHtmlFilePath, file.WRITE_ACCESS))) {
@@ -150,17 +200,50 @@ const addMetaTagsToIndexPage = async (
   const indexHtmlFile = await file.readFile(indexHtmlFilePath);
   const $ = cheerio.load(indexHtmlFile);
 
-  // TODO: Find a way to remove tags without leaving newlines behind
-  $(
-    'link[rel="apple-touch-startup-image"], link[rel="apple-touch-icon"], meta[name="apple-mobile-web-app-capable"]',
-  ).remove();
+  const HEAD_SELECTOR = 'head';
+  const hasElement = (selector: string): boolean => {
+    return $(selector).length > 0;
+  };
 
-  $('head').append(`${htmlContent}`);
+  const hasDarkModeElement = (): boolean => {
+    const darkModeMeta = constants.HTML_META_ORDERED_SELECTOR_LIST.find(
+      (m: HTMLMetaSelector) =>
+        m.name === HTMLMetaNames.appleLaunchImageDarkMode,
+    );
+    if (darkModeMeta) {
+      return $(darkModeMeta.selector).length > 0;
+    }
+    return false;
+  };
+
+  // TODO: Find a way to remove tags without leaving newlines behind
+  constants.HTML_META_ORDERED_SELECTOR_LIST.forEach(
+    (meta: HTMLMetaSelector) => {
+      if (htmlMeta.hasOwnProperty(meta.name) && htmlMeta[meta.name] !== '') {
+        const content = `${htmlMeta[meta.name]}`;
+
+        if (hasElement(meta.selector)) {
+          $(meta.selector).remove();
+        }
+
+        // Because meta tags with dark mode media attr has to be declared after the regular splash screen meta tags
+        if (
+          meta.name === HTMLMetaNames.appleLaunchImage &&
+          hasDarkModeElement()
+        ) {
+          $(HEAD_SELECTOR).prepend(`\n${content}`);
+        } else {
+          $(HEAD_SELECTOR).append(`${content}\n`);
+        }
+      }
+    },
+  );
 
   return file.writeFile(indexHtmlFilePath, $.html());
 };
 
 export default {
+  formatMetaTags,
   addIconsToManifest,
   addMetaTagsToIndexPage,
   generateHtmlForIndexPage,
