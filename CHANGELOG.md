@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/onderceylan/pwa-asset-generator/compare/v1.3.1...v2.0.0) (2019-10-25)
+
+
+### Bug Fixes
+
+* **browser:** added error handling for chrome-launcher ([c6ed23a](https://github.com/onderceylan/pwa-asset-generator/commit/c6ed23a06e6e9cdbeeb8aba4837fa28f138c7bee)), closes [#50](https://github.com/onderceylan/pwa-asset-generator/issues/50)
+* **package:** suppressed security warning by changing pkg v strategy ([9987e39](https://github.com/onderceylan/pwa-asset-generator/commit/9987e395888260e245c06a5f1c1f2d7a736854d5)), closes [#53](https://github.com/onderceylan/pwa-asset-generator/issues/53)
+
+
+### Features
+
+* **file:** avoided saving a shell html file ([b96d545](https://github.com/onderceylan/pwa-asset-generator/commit/b96d5453cbcaa950f21864f3b1cd494726f3cbc9)), closes [#52](https://github.com/onderceylan/pwa-asset-generator/issues/52)
+* **icon:** added optional favicon generation ([699686a](https://github.com/onderceylan/pwa-asset-generator/commit/699686a39df2502a8ebd18ecc4d8b6b96a199196)), closes [#47](https://github.com/onderceylan/pwa-asset-generator/issues/47)
+* **main:** added dark mode support for iOS ([f4aca1c](https://github.com/onderceylan/pwa-asset-generator/commit/f4aca1c3ec9768596b97e405485b2c446e89c40d)), closes [#51](https://github.com/onderceylan/pwa-asset-generator/issues/51)
+* **pptr:** switched over puppeteer-core to avoid chromium install ([05edb2e](https://github.com/onderceylan/pwa-asset-generator/commit/05edb2ee19c68b700963c513766c10deff11334c)), closes [#50](https://github.com/onderceylan/pwa-asset-generator/issues/50)
+* **pwa:** added single quotes option for generated HTML tags ([351a3cc](https://github.com/onderceylan/pwa-asset-generator/commit/351a3cc92d292d9ec5215fae1d120933e4357808)), closes [#49](https://github.com/onderceylan/pwa-asset-generator/issues/49)
+
+
+### BREAKING CHANGES
+
+* **main:** generateImages method from the module API now returns HTMLMeta object with the
+chunks of HTML content, instead of one big HTML string
+
 ## [1.3.1](https://github.com/onderceylan/pwa-asset-generator/compare/v1.3.0...v1.3.1) (2019-09-26)
 
 
