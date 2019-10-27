@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/onderceylan/pwa-asset-generator/compare/v2.0.0...v2.0.1) (2019-10-27)
+
+
+### Bug Fixes
+
+* **browser:** avoid SPOF for chrome launcher ([f5ca991](https://github.com/onderceylan/pwa-asset-generator/commit/f5ca9917ae965c6508e15e52e7efcf9dae1f402a)), closes [#56](https://github.com/onderceylan/pwa-asset-generator/issues/56)
+
 # [2.0.0](https://github.com/onderceylan/pwa-asset-generator/compare/v1.3.1...v2.0.0) (2019-10-25)
 
 
