@@ -21,6 +21,8 @@ interface BrowserVersionInfo {
   'Webkit-Version': string;
 }
 
+let isSystemBrowserAvailable: boolean;
+
 const isPreferredBrowserRevisionInstalled = (): boolean => {
   const revisionInfo = installer.getPreferredBrowserRevisionInfo();
   return revisionInfo.local;
@@ -66,6 +68,7 @@ const getLocalBrowserInstance = async (
 const launchSystemBrowser = (): Promise<LaunchedChrome> => {
   const launchOptions: ChromeLauncherOptions = {
     chromeFlags: constants.PUPPETEER_LAUNCH_ARGS,
+    maxConnectionRetries: constants.CHROME_LAUNCHER_MAX_CONN_RETRIES,
     logLevel: 'silent',
   };
 
@@ -108,17 +111,19 @@ const getBrowserInstance = async (
 ): Promise<{ chrome: LaunchedChrome | undefined; browser: Browser }> => {
   let browser: Browser;
   let chrome: LaunchedChrome | undefined;
-  const LAUNCHER_NOT_INSTALLED_ERROR_CODE = 'ERR_LAUNCHER_NOT_INSTALLED';
+
+  if (isSystemBrowserAvailable !== undefined && !isSystemBrowserAvailable) {
+    browser = await getLocalBrowserInstance(launchArgs);
+    return { browser, chrome };
+  }
 
   try {
     chrome = await launchSystemBrowser();
     browser = await getSystemBrowserInstance(chrome, launchArgs);
+    isSystemBrowserAvailable = true;
   } catch (e) {
-    if (e.code === LAUNCHER_NOT_INSTALLED_ERROR_CODE) {
-      browser = await getLocalBrowserInstance(launchArgs);
-    } else {
-      throw e;
-    }
+    browser = await getLocalBrowserInstance(launchArgs);
+    isSystemBrowserAvailable = false;
   }
 
   return { browser, chrome };
