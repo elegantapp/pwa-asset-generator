@@ -112,8 +112,6 @@ export default {
     },
   },
 
-  CHROME_LAUNCHER_MAX_CONN_RETRIES: 5,
-
   PUPPETEER_LAUNCH_ARGS: [
     '--log-level=3', // Fatal only
     '--no-default-browser-check',
@@ -137,7 +135,6 @@ export default {
     '--mute-audio',
     '--no-first-run',
     '--headless',
-    '--no-sandbox',
   ],
   EMULATED_USER_AGENT:
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3641.0 Safari/537.36',
