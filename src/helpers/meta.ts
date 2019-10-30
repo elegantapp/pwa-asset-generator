@@ -198,7 +198,7 @@ const addMetaTagsToIndexPage = async (
   }
 
   const indexHtmlFile = await file.readFile(indexHtmlFilePath);
-  const $ = cheerio.load(indexHtmlFile);
+  const $ = cheerio.load(indexHtmlFile, { decodeEntities: false });
 
   const HEAD_SELECTOR = 'head';
   const hasElement = (selector: string): boolean => {
