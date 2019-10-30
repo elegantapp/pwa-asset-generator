@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/onderceylan/pwa-asset-generator/compare/v2.0.1...v2.0.2) (2019-10-30)
+
+
+### Bug Fixes
+
+* **meta:** added disable decoding entities option to cheerio ([1e984eb](https://github.com/onderceylan/pwa-asset-generator/commit/1e984ebd976f080130f8d6209602f86cd904e5bb)), closes [#60](https://github.com/onderceylan/pwa-asset-generator/issues/60)
+
 ## [2.0.1](https://github.com/onderceylan/pwa-asset-generator/compare/v2.0.0...v2.0.1) (2019-10-27)
 
 
