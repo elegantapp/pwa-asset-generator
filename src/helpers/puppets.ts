@@ -118,6 +118,7 @@ const getAppleSplashScreenData = async (
   }
 
   logger.log('Retrieved splash screen data');
+  await page.close();
   return splashScreenData;
 };
 
@@ -197,11 +198,13 @@ const getDeviceScaleFactorData = async (
   }
 
   logger.log('Retrieved scale factor data');
+  await page.close();
   return scaleFactorData;
 };
 
 const getSplashScreenMetaData = async (
   options: Options,
+  browser: Browser,
 ): Promise<SplashScreenSpec[]> => {
   const logger = preLogger(getSplashScreenMetaData.name, options);
 
@@ -215,9 +218,6 @@ const getSplashScreenMetaData = async (
     '🤖',
   );
 
-  const { browser, chrome } = await browserHelper.getBrowserInstance({
-    timeout: 5000,
-  });
   let splashScreenUniformMetaData;
 
   try {
@@ -237,8 +237,6 @@ const getSplashScreenMetaData = async (
     );
   }
 
-  await killBrowser(browser, chrome);
-
   return splashScreenUniformMetaData;
 };
 
@@ -250,6 +248,7 @@ const saveImages = async (
   source: string,
   output: string,
   options: Options,
+  browser: Browser,
 ): Promise<SavedImage[]> => {
   let address: string;
   let shellHtml: string;
@@ -263,52 +262,39 @@ const saveImages = async (
     shellHtml = await url.getShellHtml(source, options);
   }
 
-  return (
-    imageList
-      .map(async ({ name, width, height, scaleFactor, orientation }) => {
-        const { browser, chrome } = await browserHelper.getBrowserInstance({
-          defaultViewport: {
-            width,
-            height,
-          },
-          timeout: constants.BROWSER_SHELL_TIMEOUT,
+  return Promise.all(
+    imageList.map(async ({ name, width, height, scaleFactor, orientation }) => {
+      const { type, quality } = options;
+      const path = file.getImageSavePath(name, output, type);
+
+      try {
+        const page = await browser.newPage();
+        await page.setViewport({ width, height });
+
+        if (address) {
+          await page.goto(address);
+        } else {
+          await page.setContent(shellHtml);
+        }
+
+        await page.screenshot({
+          path,
+          omitBackground: !options.opaque,
+          type: options.type,
+          ...(type !== 'png' ? { quality } : {}),
         });
 
-        const { type, quality } = options;
-        const path = file.getImageSavePath(name, output, type);
+        await page.close();
 
-        try {
-          const page = await browser.newPage();
+        logger.success(`Saved image ${name}`);
 
-          if (address) {
-            await page.goto(address);
-          } else {
-            await page.setContent(shellHtml);
-          }
-
-          await page.screenshot({
-            path,
-            omitBackground: !options.opaque,
-            type: options.type,
-            ...(type !== 'png' ? { quality } : {}),
-          });
-
-          logger.success(`Saved image ${name}`);
-          await killBrowser(browser, chrome);
-
-          return { name, width, height, scaleFactor, path, orientation };
-        } catch (e) {
-          await killBrowser(browser, chrome);
-          logger.error(e.message);
-          throw Error(`Failed to save image ${name}`);
-        }
-      })
-      // Resolving array of promises in sequential manner to kill chrome instances properly
-      .reduce(
-        (acc, promise: Promise<SavedImage>) =>
-          acc.then(result => promise.then(Array.prototype.concat.bind(result))),
-        Promise.resolve([] as SavedImage[]),
-      )
+        return { name, width, height, scaleFactor, path, orientation };
+      } catch (e) {
+        logger.error(e.message);
+        console.error(e);
+        throw Error(`Failed to save image ${name}`);
+      }
+    }),
   );
 };
 
@@ -318,7 +304,10 @@ const generateImages = async (
   options: Options,
 ): Promise<SavedImage[]> => {
   const logger = preLogger(generateImages.name, options);
-  const splashScreenMetaData = await getSplashScreenMetaData(options);
+  const { browser, chrome } = await browserHelper.getBrowserInstance({
+    timeout: constants.BROWSER_TIMEOUT,
+  });
+  const splashScreenMetaData = await getSplashScreenMetaData(options, browser);
   const allImages = [
     ...(!options.iconOnly
       ? images.getSplashScreenImages(splashScreenMetaData, options)
@@ -336,7 +325,16 @@ const generateImages = async (
   // Increase MaxListeners and suppress MaxListenersExceededWarning
   process.setMaxListeners(0);
 
-  return saveImages(allImages, source, output, options);
+  const savedImages = await saveImages(
+    allImages,
+    source,
+    output,
+    options,
+    browser,
+  );
+
+  await killBrowser(browser, chrome);
+  return savedImages;
 };
 
 export default {

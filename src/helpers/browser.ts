@@ -67,6 +67,8 @@ const launchSystemBrowser = (): Promise<LaunchedChrome> => {
   const launchOptions: ChromeLauncherOptions = {
     chromeFlags: constants.PUPPETEER_LAUNCH_ARGS,
     logLevel: 'silent',
+    port: constants.CHROME_LAUNCHER_DEBUG_PORT,
+    maxConnectionRetries: constants.CHROME_LAUNCHER_MAX_CONN_RETRIES,
   };
 
   return launch(launchOptions);
@@ -114,11 +116,15 @@ const getBrowserInstance = async (
     chrome = await launchSystemBrowser();
     browser = await getSystemBrowserInstance(chrome, launchArgs);
   } catch (e) {
-    if (e.code === LAUNCHER_NOT_INSTALLED_ERROR_CODE) {
-      browser = await getLocalBrowserInstance(launchArgs);
-    } else {
-      throw e;
+    // Kill chrome instance if it's not possible to connect to its debuggable instance
+    if (
+      e.code !== LAUNCHER_NOT_INSTALLED_ERROR_CODE &&
+      chrome &&
+      chrome.pid > 0
+    ) {
+      process.kill(chrome.pid);
     }
+    browser = await getLocalBrowserInstance(launchArgs);
   }
 
   return { browser, chrome };

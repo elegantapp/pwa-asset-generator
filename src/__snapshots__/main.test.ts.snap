@@ -319,7 +319,304 @@ Object {
 }
 `;
 
-exports[`generates icons and splash screens when called via function 1`] = `
+exports[`generates icons and splash screens when both only flags exist 1`] = `
+Object {
+  "htmlMeta": Object {
+    "appleLaunchImage": "<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2048-2732.png\\"
+    media=\\"(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2732-2048.png\\"
+    media=\\"(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1668-2388.png\\"
+    media=\\"(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2388-1668.png\\"
+    media=\\"(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1668-2224.png\\"
+    media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2224-1668.png\\"
+    media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1536-2048.png\\"
+    media=\\"(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2048-1536.png\\"
+    media=\\"(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1242-2688.png\\"
+    media=\\"(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2688-1242.png\\"
+    media=\\"(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1125-2436.png\\"
+    media=\\"(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2436-1125.png\\"
+    media=\\"(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-828-1792.png\\"
+    media=\\"(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1792-828.png\\"
+    media=\\"(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1242-2208.png\\"
+    media=\\"(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2208-1242.png\\"
+    media=\\"(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-750-1334.png\\"
+    media=\\"(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1334-750.png\\"
+    media=\\"(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-640-1136.png\\"
+    media=\\"(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1136-640.png\\"
+    media=\\"(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+",
+    "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
+",
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"temp/apple-icon-180.png\\">
+<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"temp/apple-icon-167.png\\">
+<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"temp/apple-icon-152.png\\">
+<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"temp/apple-icon-120.png\\">
+",
+  },
+  "manifestJsonContent": Array [
+    Object {
+      "sizes": "192x192",
+      "src": "temp/manifest-icon-192.png",
+      "type": "image/png",
+    },
+    Object {
+      "sizes": "512x512",
+      "src": "temp/manifest-icon-512.png",
+      "type": "image/png",
+    },
+  ],
+  "savedImages": Array [
+    Object {
+      "height": 2732,
+      "name": "apple-splash-2048-2732",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-2048-2732.png",
+      "scaleFactor": 2,
+      "width": 2048,
+    },
+    Object {
+      "height": 2048,
+      "name": "apple-splash-2732-2048",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2732-2048.png",
+      "scaleFactor": 2,
+      "width": 2732,
+    },
+    Object {
+      "height": 2388,
+      "name": "apple-splash-1668-2388",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1668-2388.png",
+      "scaleFactor": 2,
+      "width": 1668,
+    },
+    Object {
+      "height": 1668,
+      "name": "apple-splash-2388-1668",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2388-1668.png",
+      "scaleFactor": 2,
+      "width": 2388,
+    },
+    Object {
+      "height": 2224,
+      "name": "apple-splash-1668-2224",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1668-2224.png",
+      "scaleFactor": 2,
+      "width": 1668,
+    },
+    Object {
+      "height": 1668,
+      "name": "apple-splash-2224-1668",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2224-1668.png",
+      "scaleFactor": 2,
+      "width": 2224,
+    },
+    Object {
+      "height": 2048,
+      "name": "apple-splash-1536-2048",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1536-2048.png",
+      "scaleFactor": 2,
+      "width": 1536,
+    },
+    Object {
+      "height": 1536,
+      "name": "apple-splash-2048-1536",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2048-1536.png",
+      "scaleFactor": 2,
+      "width": 2048,
+    },
+    Object {
+      "height": 2688,
+      "name": "apple-splash-1242-2688",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1242-2688.png",
+      "scaleFactor": 3,
+      "width": 1242,
+    },
+    Object {
+      "height": 1242,
+      "name": "apple-splash-2688-1242",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2688-1242.png",
+      "scaleFactor": 3,
+      "width": 2688,
+    },
+    Object {
+      "height": 2436,
+      "name": "apple-splash-1125-2436",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1125-2436.png",
+      "scaleFactor": 3,
+      "width": 1125,
+    },
+    Object {
+      "height": 1125,
+      "name": "apple-splash-2436-1125",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2436-1125.png",
+      "scaleFactor": 3,
+      "width": 2436,
+    },
+    Object {
+      "height": 1792,
+      "name": "apple-splash-828-1792",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-828-1792.png",
+      "scaleFactor": 2,
+      "width": 828,
+    },
+    Object {
+      "height": 828,
+      "name": "apple-splash-1792-828",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-1792-828.png",
+      "scaleFactor": 2,
+      "width": 1792,
+    },
+    Object {
+      "height": 2208,
+      "name": "apple-splash-1242-2208",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1242-2208.png",
+      "scaleFactor": 3,
+      "width": 1242,
+    },
+    Object {
+      "height": 1242,
+      "name": "apple-splash-2208-1242",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2208-1242.png",
+      "scaleFactor": 3,
+      "width": 2208,
+    },
+    Object {
+      "height": 1334,
+      "name": "apple-splash-750-1334",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-750-1334.png",
+      "scaleFactor": 2,
+      "width": 750,
+    },
+    Object {
+      "height": 750,
+      "name": "apple-splash-1334-750",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-1334-750.png",
+      "scaleFactor": 2,
+      "width": 1334,
+    },
+    Object {
+      "height": 1136,
+      "name": "apple-splash-640-1136",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-640-1136.png",
+      "scaleFactor": 2,
+      "width": 640,
+    },
+    Object {
+      "height": 640,
+      "name": "apple-splash-1136-640",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-1136-640.png",
+      "scaleFactor": 2,
+      "width": 1136,
+    },
+    Object {
+      "height": 180,
+      "name": "apple-icon-180",
+      "orientation": null,
+      "path": "temp/apple-icon-180.png",
+      "scaleFactor": undefined,
+      "width": 180,
+    },
+    Object {
+      "height": 167,
+      "name": "apple-icon-167",
+      "orientation": null,
+      "path": "temp/apple-icon-167.png",
+      "scaleFactor": undefined,
+      "width": 167,
+    },
+    Object {
+      "height": 152,
+      "name": "apple-icon-152",
+      "orientation": null,
+      "path": "temp/apple-icon-152.png",
+      "scaleFactor": undefined,
+      "width": 152,
+    },
+    Object {
+      "height": 120,
+      "name": "apple-icon-120",
+      "orientation": null,
+      "path": "temp/apple-icon-120.png",
+      "scaleFactor": undefined,
+      "width": 120,
+    },
+    Object {
+      "height": 192,
+      "name": "manifest-icon-192",
+      "orientation": null,
+      "path": "temp/manifest-icon-192.png",
+      "scaleFactor": undefined,
+      "width": 192,
+    },
+    Object {
+      "height": 512,
+      "name": "manifest-icon-512",
+      "orientation": null,
+      "path": "temp/manifest-icon-512.png",
+      "scaleFactor": undefined,
+      "width": 512,
+    },
+  ],
+}
+`;
+
+exports[`generates icons and splash screens with path prefix 1`] = `
 Object {
   "htmlMeta": Object {
     "appleLaunchImage": "<link rel=\\"apple-touch-startup-image\\"
@@ -611,6 +908,561 @@ Object {
       "path": "temp/manifest-icon-512.png",
       "scaleFactor": undefined,
       "width": 512,
+    },
+  ],
+}
+`;
+
+exports[`generates icons only 1`] = `
+Object {
+  "htmlMeta": Object {
+    "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
+",
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"temp/apple-icon-180.png\\">
+<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"temp/apple-icon-167.png\\">
+<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"temp/apple-icon-152.png\\">
+<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"temp/apple-icon-120.png\\">
+",
+  },
+  "manifestJsonContent": Array [
+    Object {
+      "sizes": "192x192",
+      "src": "temp/manifest-icon-192.png",
+      "type": "image/png",
+    },
+    Object {
+      "sizes": "512x512",
+      "src": "temp/manifest-icon-512.png",
+      "type": "image/png",
+    },
+  ],
+  "savedImages": Array [
+    Object {
+      "height": 180,
+      "name": "apple-icon-180",
+      "orientation": null,
+      "path": "temp/apple-icon-180.png",
+      "scaleFactor": undefined,
+      "width": 180,
+    },
+    Object {
+      "height": 167,
+      "name": "apple-icon-167",
+      "orientation": null,
+      "path": "temp/apple-icon-167.png",
+      "scaleFactor": undefined,
+      "width": 167,
+    },
+    Object {
+      "height": 152,
+      "name": "apple-icon-152",
+      "orientation": null,
+      "path": "temp/apple-icon-152.png",
+      "scaleFactor": undefined,
+      "width": 152,
+    },
+    Object {
+      "height": 120,
+      "name": "apple-icon-120",
+      "orientation": null,
+      "path": "temp/apple-icon-120.png",
+      "scaleFactor": undefined,
+      "width": 120,
+    },
+    Object {
+      "height": 192,
+      "name": "manifest-icon-192",
+      "orientation": null,
+      "path": "temp/manifest-icon-192.png",
+      "scaleFactor": undefined,
+      "width": 192,
+    },
+    Object {
+      "height": 512,
+      "name": "manifest-icon-512",
+      "orientation": null,
+      "path": "temp/manifest-icon-512.png",
+      "scaleFactor": undefined,
+      "width": 512,
+    },
+  ],
+}
+`;
+
+exports[`generates landscape splash screens only 1`] = `
+Object {
+  "htmlMeta": Object {
+    "appleLaunchImage": "<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2732-2048.png\\"
+    media=\\"(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2388-1668.png\\"
+    media=\\"(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2224-1668.png\\"
+    media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2048-1536.png\\"
+    media=\\"(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2688-1242.png\\"
+    media=\\"(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2436-1125.png\\"
+    media=\\"(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1792-828.png\\"
+    media=\\"(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2208-1242.png\\"
+    media=\\"(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1334-750.png\\"
+    media=\\"(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1136-640.png\\"
+    media=\\"(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+",
+    "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
+",
+  },
+  "manifestJsonContent": Array [],
+  "savedImages": Array [
+    Object {
+      "height": 2048,
+      "name": "apple-splash-2732-2048",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2732-2048.png",
+      "scaleFactor": 2,
+      "width": 2732,
+    },
+    Object {
+      "height": 1668,
+      "name": "apple-splash-2388-1668",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2388-1668.png",
+      "scaleFactor": 2,
+      "width": 2388,
+    },
+    Object {
+      "height": 1668,
+      "name": "apple-splash-2224-1668",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2224-1668.png",
+      "scaleFactor": 2,
+      "width": 2224,
+    },
+    Object {
+      "height": 1536,
+      "name": "apple-splash-2048-1536",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2048-1536.png",
+      "scaleFactor": 2,
+      "width": 2048,
+    },
+    Object {
+      "height": 1242,
+      "name": "apple-splash-2688-1242",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2688-1242.png",
+      "scaleFactor": 3,
+      "width": 2688,
+    },
+    Object {
+      "height": 1125,
+      "name": "apple-splash-2436-1125",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2436-1125.png",
+      "scaleFactor": 3,
+      "width": 2436,
+    },
+    Object {
+      "height": 828,
+      "name": "apple-splash-1792-828",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-1792-828.png",
+      "scaleFactor": 2,
+      "width": 1792,
+    },
+    Object {
+      "height": 1242,
+      "name": "apple-splash-2208-1242",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2208-1242.png",
+      "scaleFactor": 3,
+      "width": 2208,
+    },
+    Object {
+      "height": 750,
+      "name": "apple-splash-1334-750",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-1334-750.png",
+      "scaleFactor": 2,
+      "width": 1334,
+    },
+    Object {
+      "height": 640,
+      "name": "apple-splash-1136-640",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-1136-640.png",
+      "scaleFactor": 2,
+      "width": 1136,
+    },
+  ],
+}
+`;
+
+exports[`generates portrait splash screens only 1`] = `
+Object {
+  "htmlMeta": Object {
+    "appleLaunchImage": "<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2048-2732.png\\"
+    media=\\"(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1668-2388.png\\"
+    media=\\"(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1668-2224.png\\"
+    media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1536-2048.png\\"
+    media=\\"(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1242-2688.png\\"
+    media=\\"(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1125-2436.png\\"
+    media=\\"(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-828-1792.png\\"
+    media=\\"(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1242-2208.png\\"
+    media=\\"(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-750-1334.png\\"
+    media=\\"(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-640-1136.png\\"
+    media=\\"(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+",
+    "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
+",
+  },
+  "manifestJsonContent": Array [],
+  "savedImages": Array [
+    Object {
+      "height": 2732,
+      "name": "apple-splash-2048-2732",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-2048-2732.png",
+      "scaleFactor": 2,
+      "width": 2048,
+    },
+    Object {
+      "height": 2388,
+      "name": "apple-splash-1668-2388",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1668-2388.png",
+      "scaleFactor": 2,
+      "width": 1668,
+    },
+    Object {
+      "height": 2224,
+      "name": "apple-splash-1668-2224",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1668-2224.png",
+      "scaleFactor": 2,
+      "width": 1668,
+    },
+    Object {
+      "height": 2048,
+      "name": "apple-splash-1536-2048",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1536-2048.png",
+      "scaleFactor": 2,
+      "width": 1536,
+    },
+    Object {
+      "height": 2688,
+      "name": "apple-splash-1242-2688",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1242-2688.png",
+      "scaleFactor": 3,
+      "width": 1242,
+    },
+    Object {
+      "height": 2436,
+      "name": "apple-splash-1125-2436",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1125-2436.png",
+      "scaleFactor": 3,
+      "width": 1125,
+    },
+    Object {
+      "height": 1792,
+      "name": "apple-splash-828-1792",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-828-1792.png",
+      "scaleFactor": 2,
+      "width": 828,
+    },
+    Object {
+      "height": 2208,
+      "name": "apple-splash-1242-2208",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1242-2208.png",
+      "scaleFactor": 3,
+      "width": 1242,
+    },
+    Object {
+      "height": 1334,
+      "name": "apple-splash-750-1334",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-750-1334.png",
+      "scaleFactor": 2,
+      "width": 750,
+    },
+    Object {
+      "height": 1136,
+      "name": "apple-splash-640-1136",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-640-1136.png",
+      "scaleFactor": 2,
+      "width": 640,
+    },
+  ],
+}
+`;
+
+exports[`generates splash screens only 1`] = `
+Object {
+  "htmlMeta": Object {
+    "appleLaunchImage": "<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2048-2732.png\\"
+    media=\\"(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2732-2048.png\\"
+    media=\\"(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1668-2388.png\\"
+    media=\\"(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2388-1668.png\\"
+    media=\\"(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1668-2224.png\\"
+    media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2224-1668.png\\"
+    media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1536-2048.png\\"
+    media=\\"(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2048-1536.png\\"
+    media=\\"(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1242-2688.png\\"
+    media=\\"(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2688-1242.png\\"
+    media=\\"(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1125-2436.png\\"
+    media=\\"(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2436-1125.png\\"
+    media=\\"(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-828-1792.png\\"
+    media=\\"(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1792-828.png\\"
+    media=\\"(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1242-2208.png\\"
+    media=\\"(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-2208-1242.png\\"
+    media=\\"(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-750-1334.png\\"
+    media=\\"(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1334-750.png\\"
+    media=\\"(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-640-1136.png\\"
+    media=\\"(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\"
+    href=\\"temp/apple-splash-1136-640.png\\"
+    media=\\"(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+",
+    "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
+",
+  },
+  "manifestJsonContent": Array [],
+  "savedImages": Array [
+    Object {
+      "height": 2732,
+      "name": "apple-splash-2048-2732",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-2048-2732.png",
+      "scaleFactor": 2,
+      "width": 2048,
+    },
+    Object {
+      "height": 2048,
+      "name": "apple-splash-2732-2048",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2732-2048.png",
+      "scaleFactor": 2,
+      "width": 2732,
+    },
+    Object {
+      "height": 2388,
+      "name": "apple-splash-1668-2388",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1668-2388.png",
+      "scaleFactor": 2,
+      "width": 1668,
+    },
+    Object {
+      "height": 1668,
+      "name": "apple-splash-2388-1668",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2388-1668.png",
+      "scaleFactor": 2,
+      "width": 2388,
+    },
+    Object {
+      "height": 2224,
+      "name": "apple-splash-1668-2224",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1668-2224.png",
+      "scaleFactor": 2,
+      "width": 1668,
+    },
+    Object {
+      "height": 1668,
+      "name": "apple-splash-2224-1668",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2224-1668.png",
+      "scaleFactor": 2,
+      "width": 2224,
+    },
+    Object {
+      "height": 2048,
+      "name": "apple-splash-1536-2048",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1536-2048.png",
+      "scaleFactor": 2,
+      "width": 1536,
+    },
+    Object {
+      "height": 1536,
+      "name": "apple-splash-2048-1536",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2048-1536.png",
+      "scaleFactor": 2,
+      "width": 2048,
+    },
+    Object {
+      "height": 2688,
+      "name": "apple-splash-1242-2688",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1242-2688.png",
+      "scaleFactor": 3,
+      "width": 1242,
+    },
+    Object {
+      "height": 1242,
+      "name": "apple-splash-2688-1242",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2688-1242.png",
+      "scaleFactor": 3,
+      "width": 2688,
+    },
+    Object {
+      "height": 2436,
+      "name": "apple-splash-1125-2436",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1125-2436.png",
+      "scaleFactor": 3,
+      "width": 1125,
+    },
+    Object {
+      "height": 1125,
+      "name": "apple-splash-2436-1125",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2436-1125.png",
+      "scaleFactor": 3,
+      "width": 2436,
+    },
+    Object {
+      "height": 1792,
+      "name": "apple-splash-828-1792",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-828-1792.png",
+      "scaleFactor": 2,
+      "width": 828,
+    },
+    Object {
+      "height": 828,
+      "name": "apple-splash-1792-828",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-1792-828.png",
+      "scaleFactor": 2,
+      "width": 1792,
+    },
+    Object {
+      "height": 2208,
+      "name": "apple-splash-1242-2208",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1242-2208.png",
+      "scaleFactor": 3,
+      "width": 1242,
+    },
+    Object {
+      "height": 1242,
+      "name": "apple-splash-2208-1242",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2208-1242.png",
+      "scaleFactor": 3,
+      "width": 2208,
+    },
+    Object {
+      "height": 1334,
+      "name": "apple-splash-750-1334",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-750-1334.png",
+      "scaleFactor": 2,
+      "width": 750,
+    },
+    Object {
+      "height": 750,
+      "name": "apple-splash-1334-750",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-1334-750.png",
+      "scaleFactor": 2,
+      "width": 1334,
+    },
+    Object {
+      "height": 1136,
+      "name": "apple-splash-640-1136",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-640-1136.png",
+      "scaleFactor": 2,
+      "width": 640,
+    },
+    Object {
+      "height": 640,
+      "name": "apple-splash-1136-640",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-1136-640.png",
+      "scaleFactor": 2,
+      "width": 1136,
     },
   ],
 }
