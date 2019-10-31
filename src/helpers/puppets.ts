@@ -1,5 +1,4 @@
 import { Browser } from 'puppeteer-core';
-import { LaunchedChrome } from 'chrome-launcher';
 import constants from '../config/constants';
 import url from './url';
 import file from './file';
@@ -7,25 +6,8 @@ import images from './images';
 import browserHelper from './browser';
 import preLogger from './logger';
 import { Options } from '../models/options';
-import {
-  DeviceFactorSpec,
-  Dimension,
-  LaunchScreenSpec,
-  SplashScreenSpec,
-} from '../models/spec';
+import { DeviceFactorSpec, Dimension, LaunchScreenSpec, SplashScreenSpec } from '../models/spec';
 import { Image, SavedImage } from '../models/image';
-
-const killBrowser = async (
-  browser: Browser,
-  chrome: LaunchedChrome | undefined,
-): Promise<void> => {
-  if (chrome) {
-    await browser.disconnect();
-    await chrome.kill();
-  } else {
-    await browser.close();
-  }
-};
 
 const getAppleSplashScreenData = async (
   browser: Browser,
@@ -333,7 +315,12 @@ const generateImages = async (
     browser,
   );
 
-  await killBrowser(browser, chrome);
+  try {
+    await browserHelper.killBrowser(browser, chrome);
+  } catch (e) {
+    // Silently try killing browser instance
+  }
+
   return savedImages;
 };
 

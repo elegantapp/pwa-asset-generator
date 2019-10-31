@@ -79,7 +79,7 @@ const onProgress = (downloadedBytes: number, totalBytes: number): void => {
 
 const installPreferredBrowserRevision = async (): Promise<RevisionInfo> => {
   logger.warn(
-    `Chromium is not found on your system, gonna have to download r${revision} for you once`,
+    `Chromium is not found in module folder, gonna have to download r${revision} for you once`,
   );
 
   const installedRevision = await getBrowserFetcher().download(
