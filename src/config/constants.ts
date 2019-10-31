@@ -116,26 +116,23 @@ export default {
     '--log-level=3', // Fatal only
     '--no-default-browser-check',
     '--disable-infobars',
-    '--disable-web-security',
-    '--disable-site-isolation-trials',
     '--no-experiments',
     '--ignore-gpu-blacklist',
-    '--ignore-certificate-errors',
-    '--ignore-certificate-errors-spki-list',
     '--disable-gpu',
     '--disable-default-apps',
     '--enable-features=NetworkService',
-    '--disable-setuid-sandbox',
     '--disable-features=TranslateUI',
     '--disable-extensions',
     '--disable-background-networking',
     '--disable-sync',
     '--metrics-recording-only',
-    '--disable-default-apps',
     '--mute-audio',
     '--no-first-run',
     '--headless',
   ],
+
+  CHROME_LAUNCHER_DEBUG_PORT: 9222,
+  CHROME_LAUNCHER_MAX_CONN_RETRIES: 10,
   EMULATED_USER_AGENT:
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3641.0 Safari/537.36',
   APPLE_HIG_SPLASH_SCR_SPECS_URL:
@@ -161,7 +158,7 @@ export default {
   MANIFEST_ICON_FILENAME_PREFIX: 'manifest-icon',
   APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR: 'table tbody tr',
   WAIT_FOR_SELECTOR_TIMEOUT: 1000,
-  BROWSER_SHELL_TIMEOUT: 60000,
+  BROWSER_TIMEOUT: 10000,
 
   FAVICON_META_HTML: (size: number, url: string, mimeType: string): string =>
     `<link rel="icon" type="${mimeType}" sizes="${size}x${size}" href="${url}">
