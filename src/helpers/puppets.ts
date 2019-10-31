@@ -6,7 +6,12 @@ import images from './images';
 import browserHelper from './browser';
 import preLogger from './logger';
 import { Options } from '../models/options';
-import { DeviceFactorSpec, Dimension, LaunchScreenSpec, SplashScreenSpec } from '../models/spec';
+import {
+  DeviceFactorSpec,
+  Dimension,
+  LaunchScreenSpec,
+  SplashScreenSpec,
+} from '../models/spec';
 import { Image, SavedImage } from '../models/image';
 
 const getAppleSplashScreenData = async (
@@ -273,7 +278,6 @@ const saveImages = async (
         return { name, width, height, scaleFactor, path, orientation };
       } catch (e) {
         logger.error(e.message);
-        console.error(e);
         throw Error(`Failed to save image ${name}`);
       }
     }),
