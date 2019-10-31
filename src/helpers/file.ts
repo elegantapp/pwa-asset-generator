@@ -31,6 +31,10 @@ const isHtmlFile = (file: string): boolean => {
   return ['html', 'htm'].includes(getExtension(file));
 };
 
+const convertBackslashPathToSlashPath = (backSlashPath: string): string => {
+  return slash(backSlashPath);
+};
+
 const getAppDir = (): string => {
   let appPath;
   try {
@@ -50,7 +54,9 @@ const getImageSavePath = (
   outputFolder: string,
   ext: Extension,
 ): string => {
-  return path.join(outputFolder, `${imageName}.${ext}`);
+  return convertBackslashPathToSlashPath(
+    path.join(outputFolder, `${imageName}.${ext}`),
+  );
 };
 
 const fileUrl = (filePath: string): string => {
@@ -140,10 +146,6 @@ const writeFile = (filePath: string, data: string): Promise<void> => {
       return resolve();
     });
   });
-};
-
-const convertBackslashPathToSlashPath = (backSlashPath: string): string => {
-  return slash(backSlashPath);
 };
 
 const getRelativeImagePath = (
