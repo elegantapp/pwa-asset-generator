@@ -8,7 +8,9 @@ import {
   LaunchedChrome,
   Options as ChromeLauncherOptions,
 } from 'chrome-launcher';
+import find from 'find-process';
 import { get } from 'http';
+import preLogger from './logger';
 import constants from '../config/constants';
 import installer from './installer';
 
@@ -108,28 +110,55 @@ const getSystemBrowserInstance = async (
 const getBrowserInstance = async (
   launchArgs?: LaunchOptions,
 ): Promise<{ chrome: LaunchedChrome | undefined; browser: Browser }> => {
+  const LAUNCHER_CONNECTION_REFUSED_ERROR_CODE = 'ECONNREFUSED';
+  const LAUNCHER_NOT_INSTALLED_ERROR_CODE = 'ERR_LAUNCHER_NOT_INSTALLED';
+  const logger = preLogger(getBrowserInstance.name);
+
   let browser: Browser;
   let chrome: LaunchedChrome | undefined;
-  const LAUNCHER_NOT_INSTALLED_ERROR_CODE = 'ERR_LAUNCHER_NOT_INSTALLED';
 
   try {
     chrome = await launchSystemBrowser();
     browser = await getSystemBrowserInstance(chrome, launchArgs);
   } catch (e) {
-    // Kill chrome instance if it's not possible to connect to its debuggable instance
-    if (
-      e.code !== LAUNCHER_NOT_INSTALLED_ERROR_CODE &&
-      chrome &&
-      chrome.pid > 0
-    ) {
-      process.kill(chrome.pid);
+    // Kill chrome instance manually in case of connection error
+    if (e.code === LAUNCHER_CONNECTION_REFUSED_ERROR_CODE) {
+      logger.warn(
+        `Chrome launcher could not connect to your system browser. Is your port ${e.port} accessible?`,
+      );
+      const prc = await find('port', e.port);
+      prc.forEach(pr => {
+        logger.log(
+          `Killing incompletely launched system chrome instance on pid ${pr.pid}`,
+        );
+        process.kill(pr.pid);
+      });
     }
+
+    // Inform user that system chrome is not found
+    if (e.code === LAUNCHER_NOT_INSTALLED_ERROR_CODE) {
+      logger.warn('Looks like Chrome is not installed on your system');
+    }
+
     browser = await getLocalBrowserInstance(launchArgs);
   }
 
   return { browser, chrome };
 };
 
+export const killBrowser = async (
+  browser: Browser,
+  chrome: LaunchedChrome | undefined,
+): Promise<void> => {
+  if (chrome) {
+    await browser.disconnect();
+    await chrome.kill();
+  } else {
+    await browser.close();
+  }
+};
+
 export default {
   getBrowserInstance,
+  killBrowser,
 };
