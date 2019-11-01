@@ -3,12 +3,17 @@ name: CI
 on: [push]
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    if: "! contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - run: echo "${{ github.event.head_commit.message }}"
+
   test:
     name: Test on node ${{ matrix.node }} and ${{ matrix.os }}
-
+    needs: prepare
     runs-on: ${{ matrix.os }}
-
-    timeout-minutes: 5
+    timeout-minutes: 10
 
     strategy:
       fail-fast: false
