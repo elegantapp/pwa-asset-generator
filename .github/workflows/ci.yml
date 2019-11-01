@@ -8,6 +8,8 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
+    timeout-minutes: 5
+
     strategy:
       matrix:
         node: [8, 10, 12]

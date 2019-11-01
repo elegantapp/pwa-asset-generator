@@ -319,11 +319,7 @@ const generateImages = async (
     browser,
   );
 
-  try {
-    await browserHelper.killBrowser(browser, chrome);
-  } catch (e) {
-    // Silently try killing browser instance
-  }
+  await browserHelper.killBrowser(browser, chrome).catch();
 
   return savedImages;
 };
