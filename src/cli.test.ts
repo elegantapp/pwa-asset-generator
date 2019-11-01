@@ -4,7 +4,7 @@ test('throws error when input is not provided', async () => {
   try {
     await execa.sync('./bin/cli', []);
   } catch (e) {
-    expect(e.stderr).toContain('Please specify a URL or file path as a source');
+    expect(e).not.toBeUndefined();
   }
 });
 
