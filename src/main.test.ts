@@ -1,6 +1,6 @@
 import { generateImages } from './main';
 
-test('generates icons only', async () => {
+test.concurrent('generates icons only', async () => {
   const result = await generateImages('./static/logo.png', './temp', {
     scrape: false,
     iconOnly: true,
@@ -10,7 +10,7 @@ test('generates icons only', async () => {
   expect(result).toMatchSnapshot();
 });
 
-test('generates splash screens only', async () => {
+test.concurrent('generates splash screens only', async () => {
   const result = await generateImages('./static/logo.png', './temp', {
     scrape: false,
     splashOnly: true,
@@ -20,7 +20,7 @@ test('generates splash screens only', async () => {
   expect(result).toMatchSnapshot();
 });
 
-test('generates portrait splash screens only', async () => {
+test.concurrent('generates portrait splash screens only', async () => {
   const result = await generateImages('./static/logo.png', './temp', {
     scrape: false,
     splashOnly: true,
@@ -31,7 +31,7 @@ test('generates portrait splash screens only', async () => {
   expect(result).toMatchSnapshot();
 });
 
-test('generates landscape splash screens only', async () => {
+test.concurrent('generates landscape splash screens only', async () => {
   const result = await generateImages('./static/logo.png', './temp', {
     scrape: false,
     splashOnly: true,
@@ -42,28 +42,34 @@ test('generates landscape splash screens only', async () => {
   expect(result).toMatchSnapshot();
 });
 
-test('generates icons and splash screens when both only flags exist', async () => {
-  const result = await generateImages('./static/logo.png', './temp', {
-    scrape: false,
-    iconOnly: true,
-    splashOnly: true,
-    log: false,
-  });
+test.concurrent(
+  'generates icons and splash screens when both only flags exist',
+  async () => {
+    const result = await generateImages('./static/logo.png', './temp', {
+      scrape: false,
+      iconOnly: true,
+      splashOnly: true,
+      log: false,
+    });
 
-  expect(result).toMatchSnapshot();
-});
+    expect(result).toMatchSnapshot();
+  },
+);
 
-test('generates icons and splash screens with path prefix', async () => {
-  const result = await generateImages('./static/logo.png', './temp', {
-    scrape: false,
-    path: '%PUBLIC_URL%',
-    log: false,
-  });
+test.concurrent(
+  'generates icons and splash screens with path prefix',
+  async () => {
+    const result = await generateImages('./static/logo.png', './temp', {
+      scrape: false,
+      path: '%PUBLIC_URL%',
+      log: false,
+    });
 
-  expect(result).toMatchSnapshot();
-});
+    expect(result).toMatchSnapshot();
+  },
+);
 
-test('generates favicon html as part of htmlMeta', async () => {
+test.concurrent('generates favicon html as part of htmlMeta', async () => {
   const result = await generateImages('./static/logo.png', './temp', {
     scrape: false,
     iconOnly: true,
@@ -74,15 +80,18 @@ test('generates favicon html as part of htmlMeta', async () => {
   expect(result).toMatchSnapshot();
 });
 
-test('generates dark mode splash screen html as part of htmlMeta', async () => {
-  const result = await generateImages('./static/logo.png', './temp', {
-    scrape: false,
-    splashOnly: true,
-    type: 'jpeg',
-    quality: 80,
-    darkMode: true,
-    log: false,
-  });
+test.concurrent(
+  'generates dark mode splash screen html as part of htmlMeta',
+  async () => {
+    const result = await generateImages('./static/logo.png', './temp', {
+      scrape: false,
+      splashOnly: true,
+      type: 'jpeg',
+      quality: 80,
+      darkMode: true,
+      log: false,
+    });
 
-  expect(result).toMatchSnapshot();
-});
+    expect(result).toMatchSnapshot();
+  },
+);
