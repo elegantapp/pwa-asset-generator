@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/onderceylan/pwa-asset-generator/compare/v2.0.2...v2.1.0) (2019-11-01)
+
+
+### Bug Fixes
+
+* **browser:** added a method to kill premature chrome instances ([ad69854](https://github.com/onderceylan/pwa-asset-generator/commit/ad69854c45af27d767319095aaae2706eb404f05)), closes [#58](https://github.com/onderceylan/pwa-asset-generator/issues/58)
+* **file:** replaced backslash in path output of generate images API res ([6563977](https://github.com/onderceylan/pwa-asset-generator/commit/656397727017ad93290bd781c7dffb1874fbae51)), closes [#64](https://github.com/onderceylan/pwa-asset-generator/issues/64)
+
+
+### Features
+
+* **main:** upgraded to pptr v2 and optimized chrome launcher ([a14e8e6](https://github.com/onderceylan/pwa-asset-generator/commit/a14e8e630fc3542bf353fe88f5d398b409bb0c53)), closes [#62](https://github.com/onderceylan/pwa-asset-generator/issues/62) [#58](https://github.com/onderceylan/pwa-asset-generator/issues/58)
+
 ## [2.0.2](https://github.com/onderceylan/pwa-asset-generator/compare/v2.0.1...v2.0.2) (2019-10-30)
 
 
