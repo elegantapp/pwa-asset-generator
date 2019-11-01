@@ -1,6 +1,6 @@
 {
   "name": "pwa-asset-generator",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "PWA asset generator based on Puppeteer. Automatically generates icons and splash screens guided by Web App Manifest specs and Apple Human Interface guidelines. Updates manifest.json and index.html files with the generated images.",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",

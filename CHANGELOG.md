@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/onderceylan/pwa-asset-generator/compare/v2.1.0...v2.1.1) (2019-11-01)
+
+
+### Bug Fixes
+
+* **puppets:** added error handling for failing chrome kill attempt ([6cc65fd](https://github.com/onderceylan/pwa-asset-generator/commit/6cc65fd1fdce6b70ffb6383ac452aba207f1d1b1)), closes [#65](https://github.com/onderceylan/pwa-asset-generator/issues/65)
+
 # [2.1.0](https://github.com/onderceylan/pwa-asset-generator/compare/v2.0.2...v2.1.0) (2019-11-01)
 
 
