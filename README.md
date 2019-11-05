@@ -31,7 +31,7 @@ PWA Asset Generator automates the image generation in a creative way. Having [Pu
 
     * Supports offline mode and uses static spec data when things go wrong with scraping 📴
 
-* Uses Chrome browser as it’s a canvas of your fav image editor. It uses a shell HTML file as an artboard and centers your logo before taking screenshots for each resolution via Puppeteer 🤖
+* Uses Chrome browser as it’s a canvas of your fav image editor. It uses a shell HTML on the fly as an artboard and centers your logo before taking screenshots for each resolution via Puppeteer 🤖
 
 * You can provide your source in multiple formats; a local image file, a local HTML file, a remote image or HTML file 🙌
 
