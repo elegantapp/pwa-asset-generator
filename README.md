@@ -38,7 +38,7 @@ PWA Asset Generator automates the image generation in a creative way. Having [Pu
     * When it’s an image source, it is centered over the background option you provide 🌅
     * When it’s an HTML source, you can go as creative as you like; position your logo, use SVG filters, use variable fonts, use gradient backgrounds, use typography and etc. Your html file is rendered on Chrome before taking screenshots for each resolution 🎨
     
-* It uses [puppeteer-core](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteer-vs-puppeteer-core) instead of puppeteer and only installs Chromium if it doesn't exist on the system. Saves waste of ~110-150mb of disk space and many seconds from the world per each user 🌎
+* It uses [puppeteer-core](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteer-vs-puppeteer-core) instead of puppeteer and only installs Chromium if it doesn't exist on the system. Saves waste of ~110-150mb of disk space and many seconds from the world per each user 🌎⚡️
 
 * Supports dark mode splash screens on iOS! So, you can provide both light 🌕 and dark 🌚 splash screen images to differentiate your apps look & feel based on user preference 🌙
 
@@ -68,7 +68,7 @@ $ pwa-asset-generator --help
     
   Options
     -b --background             Page background to use when image source is provided: css value  [default: transparent]
-    -o --opaque                 Making screenshots to be saved with a background color  [default: true]
+    -o --opaque                 Shows white as canvas background and generates images without transparency  [default: true]
     -p --padding                Padding to use when image source provided: css value  [default: "10%"]
     -s --scrape                 Scraping Apple Human Interface guidelines to fetch splash screen specs  [default: true]
     -m --manifest               Web app manifest file path to automatically update manifest file with the generated icons
@@ -90,7 +90,7 @@ $ pwa-asset-generator --help
     $ pwa-asset-generator logo.svg -i ./index.html -m ./manifest.json
     $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png ./ -t jpeg -q 90 --splash-only --portrait-only
     $ pwa-asset-generator logo.svg ./assets --scrape false --icon-only --path "%PUBLIC_URL%"
-    $ pwa-asset-generator logo.svg ./assets --icon-only --favicon
+    $ pwa-asset-generator logo.svg ./assets --icon-only --favicon --opaque false
     $ pwa-asset-generator logo.svg ./assets --dark-mode --background dimgrey --splash-only --type jpeg --quality 80
     $ pwa-asset-generator logo.svg ./assets --padding "calc(50vh - 5%) calc(50vw - 10%)"
     $ pwa-asset-generator https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png ./temp -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
@@ -134,7 +134,7 @@ const pwaAssetGenerator = require('pwa-asset-generator');
 })();
 ```
 
-## Troubleshooting
+## FAQ
 
 ### How to make an image smaller or larger relative to the background?
 The default value for the padding surrounding the image is 10%. But it's just a css padding value that you can configure and override yourself with **-p --padding** option.
@@ -146,6 +146,15 @@ The default value for the padding surrounding the image is 10%. But it's just a 
     **Smaller logo:** `--padding "calc(50vh - 5%) calc(50vw - 10%)"`
 
 2. You can create your own html input file which uses css media queries and provides different padding options based on breakpoints: https://material.io/design/layout/responsive-layout-grid.html#breakpoints
+
+### How can I generate a PNG image with transparency?
+Although default background color is **transparent**, there's another option that you need to use to generate transparent images: **opaque**.
+
+You need to run your CLI command with `--opaque false` option in order to get the transparency; `pwa-asset-generator logo.svg --opaque false`.
+
+This might be confusing for some but it's necessary to support the use of background values with alpha channels.
+
+## Troubleshooting
 
 ### "No usable sandbox!" error on Linux
 In case of getting "No usable sandbox!" error on Linux, you need to enable [system sandboxing](https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#setting-up-chrome-linux-sandbox).

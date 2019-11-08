@@ -14,7 +14,7 @@ $ pwa-asset-generator --help
     
   Options
     -b --background             Page background to use when image source is provided: css value  [default: transparent]
-    -o --opaque                 Making screenshots to be saved with a background color  [default: true]
+    -o --opaque                 Shows white as canvas background and generates images without transparency  [default: true]
     -p --padding                Padding to use when image source provided: css value  [default: "10%"]
     -s --scrape                 Scraping Apple Human Interface guidelines to fetch splash screen specs  [default: true]
     -m --manifest               Web app manifest file path to automatically update manifest file with the generated icons
@@ -36,7 +36,7 @@ $ pwa-asset-generator --help
     $ pwa-asset-generator logo.svg -i ./index.html -m ./manifest.json
     $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png ./ -t jpeg -q 90 --splash-only --portrait-only
     $ pwa-asset-generator logo.svg ./assets --scrape false --icon-only --path "%PUBLIC_URL%"
-    $ pwa-asset-generator logo.svg ./assets --icon-only --favicon
+    $ pwa-asset-generator logo.svg ./assets --icon-only --favicon --opaque false
     $ pwa-asset-generator logo.svg ./assets --dark-mode --background dimgrey --splash-only --type jpeg --quality 80
     $ pwa-asset-generator logo.svg ./assets --padding "calc(50vh - 5%) calc(50vw - 10%)"
     $ pwa-asset-generator https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png ./temp -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
