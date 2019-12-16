@@ -154,20 +154,24 @@ const addIconsToManifest = async (
     throw Error(`Cannot write to manifest json file ${manifestJsonFilePath}`);
   }
 
-  const manifestJson = JSON.parse((await file.readFile(
-    manifestJsonFilePath,
-  )) as string);
+  const manifestJson = JSON.parse(
+    (await file.readFile(manifestJsonFilePath)) as string,
+  );
 
   const newManifestContent = {
     ...manifestJson,
-    icons: [
+    icons: [...manifestContent],
+  };
+
+  if (manifestJson.icons) {
+    newManifestContent.icons = [
+      ...newManifestContent.icons,
       ...manifestJson.icons.filter(
         (icon: ManifestJsonIcon) =>
           !manifestContent.some(man => man.sizes === icon.sizes),
       ),
-      ...manifestContent,
-    ],
-  };
+    ];
+  }
 
   return file.writeFile(
     manifestJsonFilePath,

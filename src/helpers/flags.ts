@@ -44,15 +44,12 @@ const getDefaultOptions = (): Options => {
     .filter(flagKey =>
       flags[flagKey as keyof Options].hasOwnProperty('default'),
     )
-    .reduce(
-      (acc: Options, curr: string | keyof Options) => {
-        return {
-          ...acc,
-          [curr]: flags[curr as keyof Options].default,
-        };
-      },
-      {} as Options,
-    );
+    .reduce((acc: Options, curr: string | keyof Options) => {
+      return {
+        ...acc,
+        [curr]: flags[curr as keyof Options].default,
+      };
+    }, {} as Options);
 };
 
 export default { normalizeOnlyFlagPairs, normalizeOutput, getDefaultOptions };

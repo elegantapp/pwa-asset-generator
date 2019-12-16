@@ -117,7 +117,10 @@ const makeDir = (folderPath: string): Promise<string> => {
 
 const readFile = (
   filePath: string,
-  options?: { encoding?: 'base64' | null; flag?: string } | undefined | null,
+  options?:
+    | { encoding?: 'base64' | 'utf8' | null; flag?: string }
+    | undefined
+    | null,
 ): Promise<Buffer | string> => {
   return new Promise((resolve, reject): void => {
     fs.readFile(filePath, options, (err, data) => {
@@ -180,6 +183,17 @@ const getHtmlShell = (
   )}`;
 };
 
+const getFilesInDir = (dirPath: string): Promise<string[]> => {
+  return new Promise((resolve, reject) => {
+    fs.readdir(dirPath, (err, files) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(files);
+    });
+  });
+};
+
 export default {
   convertBackslashPathToSlashPath,
   getRelativeImagePath,
@@ -194,6 +208,7 @@ export default {
   getRelativeFilePath,
   getAppDir,
   getExtension,
+  getFilesInDir,
   readFile,
   readFileSync,
   writeFile,
