@@ -44,9 +44,12 @@ const getAppleSplashScreenData = async (
 
   const splashScreenData = await page.evaluate(
     ({ selector }) => {
+      // TypeScript doesn't recognize the page context within callback
+      /* eslint-disable @typescript-eslint/ban-ts-ignore */
       const scrapeSplashScreenDataFromHIGPage = (): LaunchScreenSpec[] =>
         Array.from(document.querySelectorAll(selector)).map(tr => {
           return Array.from(tr.querySelectorAll('td')).reduce(
+            // @ts-ignore
             (acc, curr, index) => {
               const appleLaunchScreenTableColumnOrder = [
                 'device',
@@ -54,7 +57,7 @@ const getAppleSplashScreenData = async (
                 'landscape',
               ];
               const dimensionRegex = new RegExp(/(\d*)[^\d]+(\d*)[^\d]+/gm);
-
+              // @ts-ignore
               const keyToUpdate = appleLaunchScreenTableColumnOrder[index];
               const execDimensionRegex = (
                 val: string,
@@ -62,6 +65,7 @@ const getAppleSplashScreenData = async (
                 return dimensionRegex.exec(val);
               };
 
+              // @ts-ignore
               const getDimensions = (val: string): Dimension => {
                 const regexMatch = execDimensionRegex(val);
 
@@ -77,8 +81,8 @@ const getAppleSplashScreenData = async (
                   height: 1,
                 };
               };
-
               return {
+                // @ts-ignore
                 ...acc,
                 [keyToUpdate]:
                   index > 0
@@ -93,6 +97,7 @@ const getAppleSplashScreenData = async (
             },
           ) as LaunchScreenSpec;
         });
+      /* eslint-enable @typescript-eslint/ban-ts-ignore */
       return scrapeSplashScreenDataFromHIGPage();
     },
     { selector: constants.APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR },
@@ -135,9 +140,12 @@ const getDeviceScaleFactorData = async (
 
   const scaleFactorData = await page.evaluate(
     ({ selector }) => {
+      // TypeScript doesn't recognize the page context within callback
+      /* eslint-disable @typescript-eslint/ban-ts-ignore */
       const scrapeScaleFactorDataFromHIGPage = (): DeviceFactorSpec[] =>
         Array.from(document.querySelectorAll(selector)).map(tr => {
           return Array.from(tr.querySelectorAll('td')).reduce(
+            // @ts-ignore
             (acc, curr, index) => {
               const appleScaleFactorTableColumnOrder = [
                 'device',
@@ -151,8 +159,9 @@ const getDeviceScaleFactorData = async (
                 return scaleFactorRegex.exec(val);
               };
 
+              // @ts-ignore
               const keyToUpdate = appleScaleFactorTableColumnOrder[index];
-
+              // @ts-ignore
               const getScaleFactor = (val: string): number => {
                 const regexMatch = execScaleFactorRegex(val);
 
@@ -163,6 +172,7 @@ const getDeviceScaleFactorData = async (
               };
 
               return {
+                // @ts-ignore
                 ...acc,
                 [keyToUpdate]:
                   index > 0
@@ -173,6 +183,7 @@ const getDeviceScaleFactorData = async (
             { device: '', scaleFactor: 1 },
           ) as DeviceFactorSpec;
         });
+      /* eslint-enable @typescript-eslint/ban-ts-ignore */
       return scrapeScaleFactorDataFromHIGPage();
     },
     { selector: constants.APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR },

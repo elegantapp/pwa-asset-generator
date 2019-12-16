@@ -185,7 +185,7 @@ export default {
       width: 100%;
       height: 100%;
       margin: 0 auto;
-      object-fit: contain;    
+      object-fit: contain;
     }
   </style>
 </head>
@@ -209,17 +209,13 @@ export default {
     /* eslint-disable */
     if (orientation === 'portrait') {
       return `\
-<link rel="apple-touch-startup-image"
-    href="${url}"
-    media="${darkMode ? '(prefers-color-scheme: dark) and ' : ''}(device-width: ${width / scaleFactor}px) and (device-height: ${height / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})">
+<link rel="apple-touch-startup-image" href="${url}" media="${darkMode ? '(prefers-color-scheme: dark) and ' : ''}(device-width: ${width / scaleFactor}px) and (device-height: ${height / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})">
 `;
     }
 
     // As weird as it gets, Apple expects same device width and height values from portrait orientation, for landscape
     return `\
-<link rel="apple-touch-startup-image"
-    href="${url}"
-    media="${darkMode ? '(prefers-color-scheme: dark) and ' : ''}(device-width: ${height / scaleFactor}px) and (device-height: ${width / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})">
+<link rel="apple-touch-startup-image" href="${url}" media="${darkMode ? '(prefers-color-scheme: dark) and ' : ''}(device-width: ${height / scaleFactor}px) and (device-height: ${width / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})">
 `;
     /* eslint-enable */
   },

@@ -2,6 +2,8 @@
 static/*
 !static/demo.gif
 !static/logo.png
+!static/logo.svg
+!static/logo.html
 temp
 dist
 
