@@ -319,9 +319,6 @@ const generateImages = async (
     await file.makeDir(output);
   }
 
-  // Increase MaxListeners and suppress MaxListenersExceededWarning
-  process.setMaxListeners(0);
-
   const savedImages = await saveImages(
     allImages,
     source,
