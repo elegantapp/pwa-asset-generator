@@ -118,10 +118,21 @@ const getHtmlShell = (
   )}`;
 };
 
-const pathExists = (
+const isPathAccessible = (
   filePath: string,
   mode?: number | undefined,
 ): Promise<boolean> => promisify(fs.access)(filePath, mode).then(() => true);
+
+// TODO: switch to fs.mkdir('', { recursive: true }) when node engine > 10.12.0 targeted
+const makeDirRecursiveSync = (dirPath: string): string => {
+  return dirPath.split(path.sep).reduce((prevPath, folder) => {
+    const currentPath = path.join(prevPath, folder, path.sep);
+    if (!fs.existsSync(currentPath)) {
+      fs.mkdirSync(currentPath);
+    }
+    return currentPath;
+  }, '');
+};
 
 export default {
   convertBackslashPathToSlashPath,
@@ -133,7 +144,7 @@ export default {
   getShellHtmlFilePath,
   getImageSavePath,
   getFileUrlOfPath,
-  pathExists,
+  isPathAccessible,
   getRelativeFilePath,
   getAppDir,
   getExtension,
@@ -142,6 +153,8 @@ export default {
   readFileSync: fs.readFileSync,
   writeFile: promisify(fs.writeFile),
   makeDir: promisify(fs.mkdir),
+  exists: promisify(fs.exists),
+  makeDirRecursiveSync,
   READ_ACCESS: fs.constants.R_OK,
   WRITE_ACCESS: fs.constants.W_OK,
 };

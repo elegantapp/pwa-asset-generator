@@ -312,11 +312,16 @@ const generateImages = async (
     ...(!options.splashOnly ? images.getIconImages(options) : []),
   ];
 
-  if (!(await file.pathExists(output, file.WRITE_ACCESS))) {
+  if (
+    !(
+      (await file.exists(output)) &&
+      (await file.isPathAccessible(output, file.WRITE_ACCESS))
+    )
+  ) {
+    file.makeDirRecursiveSync(output);
     logger.warn(
       `Looks like folder ${output} doesn't exist. Created one for you`,
     );
-    await file.makeDir(output);
   }
 
   const savedImages = await saveImages(

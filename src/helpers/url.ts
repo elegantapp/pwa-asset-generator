@@ -72,7 +72,7 @@ const getShellHtml = async (
     return useShell(true);
   }
 
-  if (!(await file.pathExists(source, file.READ_ACCESS))) {
+  if (!(await file.isPathAccessible(source, file.READ_ACCESS))) {
     throw Error(`Cannot find path ${source}. Please check if file exists`);
   }
 
