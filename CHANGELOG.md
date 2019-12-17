@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.2](https://github.com/onderceylan/pwa-asset-generator/compare/v2.1.1...v2.1.2) (2019-11-08)
+
+
+### Bug Fixes
+
+* **cli:** updated docs to clarify transparency option ([a4bcaff](https://github.com/onderceylan/pwa-asset-generator/commit/a4bcaffc0b91621b25fd65084eb09ef008bb60b0)), closes [#68](https://github.com/onderceylan/pwa-asset-generator/issues/68)
+
 ## [2.1.1](https://github.com/onderceylan/pwa-asset-generator/compare/v2.1.0...v2.1.1) (2019-11-01)
 
 
