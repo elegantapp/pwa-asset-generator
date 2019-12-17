@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import slash from 'slash';
 import { lookup } from 'mime-types';
+import { promisify } from 'util';
 import constants from '../config/constants';
 import { Extension, Options } from '../models/options';
 
@@ -85,72 +86,6 @@ const getRelativeFilePath = (
   );
 };
 
-const pathExists = (
-  filePath: string,
-  mode?: number | undefined,
-): Promise<boolean> => {
-  return new Promise((resolve, reject): void => {
-    try {
-      fs.access(filePath, mode, err => {
-        if (err) {
-          return resolve(false);
-        }
-        return resolve(true);
-      });
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
-
-const makeDir = (folderPath: string): Promise<string> => {
-  return new Promise((resolve, reject): void => {
-    fs.mkdir(folderPath, { recursive: true }, err => {
-      if (err) {
-        return reject(err);
-      }
-
-      return resolve();
-    });
-  });
-};
-
-const readFile = (
-  filePath: string,
-  options?:
-    | { encoding?: 'base64' | 'utf8' | null; flag?: string }
-    | undefined
-    | null,
-): Promise<Buffer | string> => {
-  return new Promise((resolve, reject): void => {
-    fs.readFile(filePath, options, (err, data) => {
-      if (err) {
-        return reject(err);
-      }
-
-      return resolve(data);
-    });
-  });
-};
-
-const readFileSync = (
-  filePath: string,
-  options?: { encoding?: 'base64' | null; flag?: string } | undefined | null,
-): string => {
-  return fs.readFileSync(filePath, options) as string;
-};
-
-const writeFile = (filePath: string, data: string): Promise<void> => {
-  return new Promise((resolve, reject): void => {
-    fs.writeFile(filePath, data, (err: NodeJS.ErrnoException | null) => {
-      if (err) {
-        return reject();
-      }
-      return resolve();
-    });
-  });
-};
-
 const getRelativeImagePath = (
   outputFilePath: string,
   imagePath: string,
@@ -164,7 +99,7 @@ const getRelativeImagePath = (
 };
 
 const getImageBase64Url = (imagePath: string): string => {
-  return `data:${lookup(imagePath)};base64,${readFileSync(imagePath, {
+  return `data:${lookup(imagePath)};base64,${fs.readFileSync(imagePath, {
     encoding: 'base64',
   })}`;
 };
@@ -183,16 +118,10 @@ const getHtmlShell = (
   )}`;
 };
 
-const getFilesInDir = (dirPath: string): Promise<string[]> => {
-  return new Promise((resolve, reject) => {
-    fs.readdir(dirPath, (err, files) => {
-      if (err) {
-        return reject(err);
-      }
-      return resolve(files);
-    });
-  });
-};
+const pathExists = (
+  filePath: string,
+  mode?: number | undefined,
+): Promise<boolean> => promisify(fs.access)(filePath, mode).then(() => true);
 
 export default {
   convertBackslashPathToSlashPath,
@@ -208,11 +137,11 @@ export default {
   getRelativeFilePath,
   getAppDir,
   getExtension,
-  getFilesInDir,
-  readFile,
-  readFileSync,
-  writeFile,
-  makeDir,
+  getFilesInDir: promisify(fs.readdir),
+  readFile: promisify(fs.readFile),
+  readFileSync: fs.readFileSync,
+  writeFile: promisify(fs.writeFile),
+  makeDir: promisify(fs.mkdir),
   READ_ACCESS: fs.constants.R_OK,
   WRITE_ACCESS: fs.constants.W_OK,
 };

@@ -155,7 +155,7 @@ const addIconsToManifest = async (
   }
 
   const manifestJson = JSON.parse(
-    (await file.readFile(manifestJsonFilePath)) as string,
+    ((await file.readFile(manifestJsonFilePath)) as unknown) as string,
   );
 
   const newManifestContent = {
