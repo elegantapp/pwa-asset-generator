@@ -150,7 +150,7 @@ const addIconsToManifest = async (
   manifestContent: ManifestJsonIcon[],
   manifestJsonFilePath: string,
 ): Promise<void> => {
-  if (!(await file.pathExists(manifestJsonFilePath, file.WRITE_ACCESS))) {
+  if (!(await file.isPathAccessible(manifestJsonFilePath, file.WRITE_ACCESS))) {
     throw Error(`Cannot write to manifest json file ${manifestJsonFilePath}`);
   }
 
@@ -197,7 +197,7 @@ const addMetaTagsToIndexPage = async (
   htmlMeta: HTMLMeta,
   indexHtmlFilePath: string,
 ): Promise<void> => {
-  if (!(await file.pathExists(indexHtmlFilePath, file.WRITE_ACCESS))) {
+  if (!(await file.isPathAccessible(indexHtmlFilePath, file.WRITE_ACCESS))) {
     throw Error(`Cannot write to index html file ${indexHtmlFilePath}`);
   }
 
