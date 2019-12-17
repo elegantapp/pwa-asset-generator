@@ -125,13 +125,16 @@ const isPathAccessible = (
 
 // TODO: switch to fs.mkdir('', { recursive: true }) when node engine > 10.12.0 targeted
 const makeDirRecursiveSync = (dirPath: string): string => {
-  return dirPath.split(path.sep).reduce((prevPath, folder) => {
-    const currentPath = path.join(prevPath, folder, path.sep);
-    if (!fs.existsSync(currentPath)) {
-      fs.mkdirSync(currentPath);
-    }
-    return currentPath;
-  }, '');
+  return path
+    .resolve(dirPath)
+    .split(path.sep)
+    .reduce((prevPath, folder) => {
+      const currentPath = path.join(prevPath, folder, path.sep);
+      if (!fs.existsSync(currentPath)) {
+        fs.mkdirSync(currentPath);
+      }
+      return currentPath;
+    }, '');
 };
 
 export default {
