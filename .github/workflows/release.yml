@@ -21,9 +21,20 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org
-      - run: npm install
-      - run: npm run build
-      - run: npx semantic-release
+      - name: install
+        run: npm install
+      # Building for the first time to make dep libs available for update
+      - name: update prep
+        run: npm run build
+      - name: install chromium
+        run: npm run chromium
+      - name: update
+        run: npm run update
+      # Actual build with updated fallback data
+      - name: build
+        run: npm run build
+      - name: publish
+        run: npx semantic-release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
