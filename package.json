@@ -12,6 +12,7 @@
     "test:update": "jest -u",
     "commit": "git-cz",
     "chromium": "cross-env PAG_TEST_MODE=1 node bin/install",
+    "update": "node bin/update-fallback-data",
     "build": "tsc",
     "start": "tsc -w",
     "lint": "eslint \"src/**/**.ts\"",

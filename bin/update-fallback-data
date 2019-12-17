@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+/*
+Library keeps fallback data of Apple Human Interface guidelines specs on apple-fallback-data.json
+This script fetches new specs with puppeteer and updates that static json file
+ */
+
+const {
+  getBrowserInstance,
+  killBrowser,
+} = require('../dist/helpers/browser').default;
+const { getSplashScreenMetaData } = require('../dist/helpers/puppets').default;
+const { writeFile } = require('../dist/helpers/file').default;
+const constants = require('../dist/config/constants').default;
+
+(async () => {
+  try {
+    const { browser, chrome } = await getBrowserInstance({
+      timeout: constants.BROWSER_TIMEOUT,
+    });
+
+    const splashScreenMetaData = await getSplashScreenMetaData({ scrape: true }, browser);
+    console.log(splashScreenMetaData);
+    const jsonData = JSON.stringify(splashScreenMetaData, null, 2);
+
+    await writeFile('./src/config/apple-fallback-data.json', jsonData, { encoding:'utf8' });
+    try {
+      await killBrowser(browser, chrome);
+    } catch (e) {
+      // Silently try killing chrome as Chrome launcher might have already killed it
+    }
+  } catch (e) {
+    console.error('Failed to fetch Apple specs from HIG website');
+    console.error(e);
+    process.exit(1);
+  } finally {
+    process.exit(0);
+  }
+})();
