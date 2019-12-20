@@ -6,7 +6,7 @@ jobs:
   test:
     name: Test on node ${{ matrix.node }} and ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 30
 
     strategy:
       fail-fast: false
