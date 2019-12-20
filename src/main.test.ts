@@ -452,14 +452,14 @@ describe('visually compares generated images with', () => {
           log: false,
           background: 'coral',
         },
-        'https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png',
+        'https://onderceylan.github.io/pwa-asset-generator/static/logo.png',
         `./temp/remote/${testSuite}`,
       );
 
       await assertMatchedSnapshots(result, testSuite);
     });
 
-    test.skip('in svg format', async () => {
+    test('in svg format', async () => {
       const testSuite = 'input-svg';
       const result = await generateTempImages(
         {
@@ -467,21 +467,21 @@ describe('visually compares generated images with', () => {
           log: false,
           background: 'coral',
         },
-        'https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.svg',
+        'https://onderceylan.github.io/pwa-asset-generator/static/logo.svg',
         `./temp/remote/${testSuite}`,
       );
 
       await assertMatchedSnapshots(result, testSuite);
     });
 
-    test.skip('in html format', async () => {
+    test('in html format', async () => {
       const testSuite = 'input-html';
       const result = await generateTempImages(
         {
           scrape: false,
           log: false,
         },
-        'https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.html',
+        'https://onderceylan.github.io/pwa-asset-generator/static/logo.html',
         `./temp/remote/${testSuite}`,
       );
 
