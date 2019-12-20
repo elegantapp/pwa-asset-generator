@@ -15,9 +15,9 @@ jobs:
           registry-url: https://registry.npmjs.org
       - name: install dep
         run: npm install
-      - name: install chromium
-        run: npm run chromium
       - name: build
         run: npm run build
+      - name: install chromium
+        run: npm run chromium
       - name: update fallback data
         run: npm run update
