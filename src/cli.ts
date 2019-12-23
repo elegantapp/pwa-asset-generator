@@ -9,9 +9,9 @@ $ pwa-asset-generator --help
 
   Usage
     $ pwa-asset-generator [source] [output-folder]
-    
+
     The assets will be saved to the folder where the command is executed if no output-folder provided.
-    
+
   Options
     -b --background             Page background to use when image source is provided: css value  [default: transparent]
     -o --opaque                 Shows white as canvas background and generates images without transparency  [default: true]
@@ -30,7 +30,7 @@ $ pwa-asset-generator --help
     -d --dark-mode              Generate iOS splash screen meta with (prefers-color-scheme: dark) media attr  [default: false]
     -u --single-quotes          Generate HTML meta tags with single quotes  [default: false]
     -g --log                    Logs the steps of the library process  [default: true]
-    
+
   Examples
     $ pwa-asset-generator logo.html
     $ pwa-asset-generator logo.svg -i ./index.html -m ./manifest.json
@@ -60,13 +60,12 @@ $ pwa-asset-generator --help
     --single-quotes
     --log false
 `,
+  // TODO: remove when inferred meow types are corrected
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
   {
-    // TODO: remove when inferred meow types are corrected
-    // Default vars can be number and boolean too but declared to be string in type defs
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     flags: constants.FLAGS,
-  },
+  } as meow.TypedFlags<any>,
 );
 const logger = preLogger('cli', cli.flags);
 
