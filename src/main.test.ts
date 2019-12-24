@@ -341,26 +341,32 @@ describe('visually compares generated images with', () => {
     return numDiffPixels === 0;
   };
 
-  const assertMatchedSnapshots = async (
+  interface MatchResult {
+    path: string;
+    looksSame: boolean;
+  }
+
+  const getAllSnapshotsMatchStatus = async (
     result: Result,
     testSuite: string,
-  ): Promise<void> => {
+  ): Promise<MatchResult[]> => {
     const SNAPSHOT_PATH = './src/__snapshots__/visual';
     const snapshots = await file.getFilesInDir(
       path.join(SNAPSHOT_PATH, testSuite),
     );
 
-    result.savedImages.forEach((savedImage: SavedImage) => {
+    return result.savedImages.map((savedImage: SavedImage) => {
       const matchedSnapshot = snapshots.find(snapshot =>
         snapshot.includes(savedImage.name),
       );
 
-      expect(
-        doFilesLookSame(
+      return {
+        path: savedImage.path,
+        looksSame: doFilesLookSame(
           savedImage.path,
           path.join(SNAPSHOT_PATH, testSuite, matchedSnapshot as string),
         ),
-      ).toBeTruthy();
+      };
     });
   };
 
@@ -377,7 +383,10 @@ describe('visually compares generated images with', () => {
         `./temp/local/${testSuite}`,
       );
 
-      await assertMatchedSnapshots(result, testSuite);
+      const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
+      matchResult.forEach((mr: MatchResult) => {
+        expect(mr.looksSame).toBeTruthy();
+      });
     });
 
     test('in svg format', async () => {
@@ -392,7 +401,10 @@ describe('visually compares generated images with', () => {
         `./temp/local/${testSuite}`,
       );
 
-      await assertMatchedSnapshots(result, testSuite);
+      const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
+      matchResult.forEach((mr: MatchResult) => {
+        expect(mr.looksSame).toBeTruthy();
+      });
     });
 
     test('in html format', async () => {
@@ -406,7 +418,10 @@ describe('visually compares generated images with', () => {
         `./temp/local/${testSuite}`,
       );
 
-      await assertMatchedSnapshots(result, testSuite);
+      const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
+      matchResult.forEach((mr: MatchResult) => {
+        expect(mr.looksSame).toBeTruthy();
+      });
     });
 
     test('with a transparency', async () => {
@@ -422,7 +437,10 @@ describe('visually compares generated images with', () => {
         `./temp/local/${testSuite}`,
       );
 
-      await assertMatchedSnapshots(result, testSuite);
+      const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
+      matchResult.forEach((mr: MatchResult) => {
+        expect(mr.looksSame).toBeTruthy();
+      });
     });
 
     test('with JPG format as output', async () => {
@@ -439,7 +457,10 @@ describe('visually compares generated images with', () => {
         `./temp/local/${testSuite}`,
       );
 
-      await assertMatchedSnapshots(result, testSuite);
+      const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
+      matchResult.forEach((mr: MatchResult) => {
+        expect(mr.looksSame).toBeTruthy();
+      });
     });
   });
 
@@ -456,7 +477,10 @@ describe('visually compares generated images with', () => {
         `./temp/remote/${testSuite}`,
       );
 
-      await assertMatchedSnapshots(result, testSuite);
+      const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
+      matchResult.forEach((mr: MatchResult) => {
+        expect(mr.looksSame).toBeTruthy();
+      });
     });
 
     test('in svg format', async () => {
@@ -471,7 +495,10 @@ describe('visually compares generated images with', () => {
         `./temp/remote/${testSuite}`,
       );
 
-      await assertMatchedSnapshots(result, testSuite);
+      const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
+      matchResult.forEach((mr: MatchResult) => {
+        expect(mr.looksSame).toBeTruthy();
+      });
     });
 
     test('in html format', async () => {
@@ -485,7 +512,10 @@ describe('visually compares generated images with', () => {
         `./temp/remote/${testSuite}`,
       );
 
-      await assertMatchedSnapshots(result, testSuite);
+      const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
+      matchResult.forEach((mr: MatchResult) => {
+        expect(mr.looksSame).toBeTruthy();
+      });
     });
   });
 });

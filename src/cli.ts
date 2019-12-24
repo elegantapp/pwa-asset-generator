@@ -61,11 +61,12 @@ $ pwa-asset-generator --help
     --log false
 `,
   // TODO: remove when inferred meow types are corrected
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  /* eslint-disable */
   // @ts-ignore
   {
     flags: constants.FLAGS,
   } as meow.TypedFlags<any>,
+  /* eslint-enable */
 );
 const logger = preLogger('cli', cli.flags);
 
