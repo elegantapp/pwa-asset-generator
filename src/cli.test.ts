@@ -2,11 +2,7 @@ import execa from 'execa';
 
 describe('CLI', () => {
   test('throws error when input is not provided', async () => {
-    try {
-      await execa.sync('./bin/cli', []);
-    } catch (e) {
-      expect(e).not.toBeUndefined();
-    }
+    expect(() => execa.sync('./bin/cli', [])).toThrow();
   });
 
   test('integrates with main API and creates an output with generated meta', async () => {
