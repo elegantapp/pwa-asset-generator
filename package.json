@@ -47,6 +47,7 @@
     "image",
     "manifest",
     "mobile",
+    "favicon",
     "pwa-assets"
   ],
   "author": "Önder Ceylan <onderceylan@gmail.com>",

@@ -30,6 +30,7 @@ PWA Asset Generator automates the image generation in a creative way. Having [Pu
 * Scrapes latest specs from Apple Human Interface guidelines website via Puppeteer to make your PWA ready for all/recent iOS devices out there 🤖
 
     * Supports offline mode and uses static spec data when things go wrong with scraping 📴
+    * Updates static spec data before each release automatically and [monitors spec changes everyday](https://github.com/onderceylan/pwa-asset-generator/actions?query=workflow%3A%22Sanity+Check%22) 🔄
 
 * Uses the Chrome browser as it’s a canvas of your fav image editor. It uses a shell HTML on the fly as an artboard and centers your logo before taking screenshots for each resolution via Puppeteer 🤖
 
@@ -62,7 +63,7 @@ Read more about npx [here](https://blog.npmjs.org/post/162869356040/introducing-
 $ pwa-asset-generator --help
 
   Usage
-    $ pwa-asset-generator [source] [output-folder]
+    $ pwa-asset-generator [source-file] [output-folder]
 
     The assets will be saved to the folder where the command is executed if no output-folder provided.
 
@@ -159,8 +160,8 @@ Default behaviour of the library is to generate a favicon along with app icons. 
 
 However, you can use this workaround to work with this edge case:
 
-* First, generate a favicon with `--opaque false --iconOnly --favicon` options.
-* Then, overwrite app icons with `--background "#FFF" --iconOnly` options.
+* First, generate a favicon with `--opaque false --icon-only --favicon` options.
+* Then, overwrite app icons with `--background "#FFF" --icon-only` options.
 
 ## Troubleshooting
 
