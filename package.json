@@ -92,7 +92,7 @@
     "eslint-plugin-jest": "^23.1.1",
     "eslint-plugin-prettier": "^3.1.0",
     "execa": "^2.0.3",
-    "husky": "^3.0.3",
+    "husky": "^4.0.0",
     "jest": "^24.8.0",
     "jpeg-js": "^0.3.6",
     "lint-staged": "^9.2.1",
