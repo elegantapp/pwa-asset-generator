@@ -6,23 +6,27 @@ describe('CLI', () => {
   });
 
   test('integrates with main API and creates an output with generated meta', async () => {
-    const { stdout } = await execa(
-      './bin/cli',
-      [
-        './static/logo.png',
-        './temp',
-        '-s=false',
-        '--splash-only',
-        '--landscape-only',
-        '--favicon',
-        '-a="%PUBLIC_URL%"',
-        '--dark-mode',
-        '--type=jpeg',
-        '-q=20',
-      ],
-      { env: { PAG_TEST_MODE: '1' } },
-    );
-
-    expect(stdout).toMatchSnapshot();
+    let response = { stdout: '', stderr: '' };
+    try {
+      response = await execa(
+        './bin/cli',
+        [
+          './static/logo.png',
+          './temp',
+          '-s=false',
+          '--splash-only',
+          '--landscape-only',
+          '--favicon',
+          '-a="%PUBLIC_URL%"',
+          '--dark-mode',
+          '--type=jpeg',
+          '-q=20',
+        ],
+        { env: { PAG_TEST_MODE: '1' } },
+      );
+    } catch (e) {
+      console.error(e, 'stderr', response.stderr);
+    }
+    expect(response.stdout).toMatchSnapshot();
   });
 });
