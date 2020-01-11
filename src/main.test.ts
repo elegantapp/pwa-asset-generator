@@ -335,7 +335,7 @@ describe('visually compares generated images with', () => {
       width,
       height,
       {
-        threshold: 0.3,
+        threshold: 0.5,
       },
     );
     return numDiffPixels === 0;
