@@ -31,3 +31,5 @@ jobs:
         run: npm run chromium
       - name: test
         run: npm test
+        env:
+          FORCE_EXIT: true
