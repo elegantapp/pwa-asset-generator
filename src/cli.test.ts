@@ -25,7 +25,8 @@ describe('CLI', () => {
         { env: { PAG_TEST_MODE: '1' } },
       );
     } catch (e) {
-      console.error(e, 'stderr', response.stderr);
+      // eslint-disable-next-line no-console
+      console.error(e);
     }
     expect(response.stdout).toMatchSnapshot();
   });
