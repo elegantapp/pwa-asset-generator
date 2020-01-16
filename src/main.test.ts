@@ -105,6 +105,17 @@ describe('generates meta', () => {
 
       expect(result).toMatchSnapshot();
     });
+
+    test('jpg extension', async () => {
+      const result = await generateTempImages({
+        scrape: false,
+        favicon: true,
+        type: 'jpg',
+        log: false,
+      });
+
+      expect(result).toMatchSnapshot();
+    });
   });
 
   describe('saving meta to manifest.json', () => {
@@ -443,7 +454,7 @@ describe('visually compares generated images with', () => {
       });
     });
 
-    test('with JPG format as output', async () => {
+    test('with JPEG format as output', async () => {
       const testSuite = 'output-jpeg';
       const result = await generateTempImages(
         {
@@ -451,6 +462,26 @@ describe('visually compares generated images with', () => {
           log: false,
           background: 'coral',
           type: 'jpeg',
+          quality: 80,
+        },
+        './static/logo.svg',
+        `./temp/local/${testSuite}`,
+      );
+
+      const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
+      matchResult.forEach((mr: MatchResult) => {
+        expect(mr.looksSame).toBeTruthy();
+      });
+    });
+
+    test('with JPG format as output', async () => {
+      const testSuite = 'output-jpg';
+      const result = await generateTempImages(
+        {
+          scrape: false,
+          log: false,
+          background: 'coral',
+          type: 'jpg',
           quality: 80,
         },
         './static/logo.svg',
