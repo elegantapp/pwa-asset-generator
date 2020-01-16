@@ -99,7 +99,7 @@
     "lint-staged": "^9.2.1",
     "pixelmatch": "^5.1.0",
     "prettier": "^1.19.1",
-    "semantic-release": "^15.13.31",
+    "semantic-release": "^16.0.2",
     "ts-jest": "^24.1.0",
     "typescript": "^3.7.3"
   },
