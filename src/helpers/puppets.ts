@@ -278,7 +278,6 @@ const saveImages = async (
         await page.screenshot({
           path,
           omitBackground: !options.opaque,
-          type: options.type,
           ...(type !== 'png' ? { quality } : {}),
         });
 

@@ -75,7 +75,7 @@ $ pwa-asset-generator --help
     -m --manifest               Web app manifest file path to automatically update manifest file with the generated icons
     -i --index                  Index HTML file path to automatically put splash screen and icon meta tags in
     -a --path                   Path prefix to prepend for href links generated for meta tags
-    -t --type                   Image type: png|jpeg  [default: png]
+    -t --type                   Image type: png|jpg|jpeg  [default: png]
     -q --quality                Image quality: 0...100 (Only for JPEG)  [default: 100]
     -h --splash-only            Only generate splash screens  [default: false]
     -c --icon-only              Only generate icons  [default: false]
@@ -89,7 +89,7 @@ $ pwa-asset-generator --help
   Examples
     $ pwa-asset-generator logo.html
     $ pwa-asset-generator logo.svg -i ./index.html -m ./manifest.json
-    $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png ./ -t jpeg -q 90 --splash-only --portrait-only
+    $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png ./ -t jpg -q 90 --splash-only --portrait-only
     $ pwa-asset-generator logo.svg ./assets --scrape false --icon-only --path "%PUBLIC_URL%"
     $ pwa-asset-generator logo.svg ./assets --icon-only --favicon --opaque false
     $ pwa-asset-generator logo.svg ./assets --dark-mode --background dimgrey --splash-only --type jpeg --quality 80
@@ -104,7 +104,7 @@ $ pwa-asset-generator --help
     --manifest ./src/manifest.json
     --index ./src/index.html
     --path "%PUBLIC_URL%"
-    --type jpeg
+    --type jpg
     --quality 80
     --splash-only
     --icon-only

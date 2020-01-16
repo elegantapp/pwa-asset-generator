@@ -1,4 +1,4 @@
-export type Extension = 'png' | 'jpeg';
+export type Extension = 'png' | 'jpeg' | 'jpg';
 
 export interface Options {
   /**
