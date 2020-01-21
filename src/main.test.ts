@@ -324,7 +324,20 @@ describe('visually compares generated images with', () => {
   const { PNG } = require('pngjs');
   const JPEG = require('jpeg-js');
 
-  const doFilesLookSame = (fileAPath: string, fileBPath: string): boolean => {
+  interface VisualDiffResult {
+    numDiffPixels: number;
+    diff: boolean;
+  }
+
+  interface MatchResult {
+    path: string;
+    looksSame: boolean;
+  }
+
+  const getVisualDiff = (
+    fileAPath: string,
+    fileBPath: string,
+  ): VisualDiffResult => {
     const isPNG = fileAPath.endsWith('.png');
     let imgA;
     let imgB;
@@ -349,13 +362,25 @@ describe('visually compares generated images with', () => {
         threshold: 0.5,
       },
     );
-    return numDiffPixels === 0;
+    return {
+      numDiffPixels,
+      diff,
+    };
   };
 
-  interface MatchResult {
-    path: string;
-    looksSame: boolean;
-  }
+  const doFilesLookSame = (fileAPath: string, fileBPath: string): boolean => {
+    const visualDiff = getVisualDiff(fileAPath, fileBPath);
+
+    if (visualDiff.numDiffPixels !== 0) {
+      /* eslint-disable no-console */
+      console.log('numDiffPixels', visualDiff.numDiffPixels);
+      const diffBase64 = PNG.sync.write(visualDiff.diff).toString('base64');
+      console.log('diffBase64', diffBase64);
+      /* eslint-enable no-console */
+    }
+
+    return visualDiff.numDiffPixels === 0;
+  };
 
   const getAllSnapshotsMatchStatus = async (
     result: Result,
@@ -371,12 +396,19 @@ describe('visually compares generated images with', () => {
         snapshot.includes(savedImage.name),
       );
 
+      const looksSame = doFilesLookSame(
+        savedImage.path,
+        path.join(SNAPSHOT_PATH, testSuite, matchedSnapshot as string),
+      );
+
+      if (!looksSame) {
+        // eslint-disable-next-line no-console
+        console.log('looksSame failed on', savedImage.path);
+      }
+
       return {
         path: savedImage.path,
-        looksSame: doFilesLookSame(
-          savedImage.path,
-          path.join(SNAPSHOT_PATH, testSuite, matchedSnapshot as string),
-        ),
+        looksSame,
       };
     });
   };
