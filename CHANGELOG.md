@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/onderceylan/pwa-asset-generator/compare/v2.2.0...v2.2.1) (2020-01-21)
+
+
+### Bug Fixes
+
+* **puppets:** added wait until networkidle opt for remote html input ([9aa86eb](https://github.com/onderceylan/pwa-asset-generator/commit/9aa86eb8a783f66cd0608f7684271cfe93c3a686)), closes [#125](https://github.com/onderceylan/pwa-asset-generator/issues/125)
+
 # [2.2.0](https://github.com/onderceylan/pwa-asset-generator/compare/v2.1.3...v2.2.0) (2020-01-16)
 
 
