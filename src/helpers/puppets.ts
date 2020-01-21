@@ -270,7 +270,7 @@ const saveImages = async (
         await page.setViewport({ width, height });
 
         if (address) {
-          await page.goto(address);
+          await page.goto(address, { waitUntil: 'networkidle0' });
         } else {
           await page.setContent(shellHtml);
         }
