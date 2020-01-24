@@ -94,13 +94,13 @@
     "eslint-plugin-prettier": "^3.1.0",
     "execa": "^2.0.3",
     "husky": "^4.0.10",
-    "jest": "^24.8.0",
+    "jest": "^25.1.0",
     "jpeg-js": "^0.3.6",
     "lint-staged": "^10.0.0",
     "pixelmatch": "^5.1.0",
     "prettier": "^1.19.1",
     "semantic-release": "^16.0.2",
-    "ts-jest": "^24.1.0",
+    "ts-jest": "^25.0.0",
     "typescript": "^3.7.3"
   },
   "husky": {
