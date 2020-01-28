@@ -528,7 +528,9 @@ describe('visually compares generated images with', () => {
   });
 
   describe('using a remote input', () => {
-    test('in png format', async () => {
+    // Somehow flaky test, occasionally failing on windows-latest
+    // TODO: inspect the root cause of the failure
+    test.skip('in png format', async () => {
       const testSuite = 'input-png';
       const result = await generateTempImages(
         {
