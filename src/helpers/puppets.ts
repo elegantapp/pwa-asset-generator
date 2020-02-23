@@ -227,12 +227,11 @@ const getSplashScreenMetaData = async (
     );
     logger.success('Loaded metadata for iOS platform');
   } catch (e) {
-    splashScreenUniformMetaData =
-      constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA;
     logger.error(e);
     logger.warn(
       `Failed to fetch latest specs from Apple Human Interface guidelines - using static fallback data`,
     );
+    throw e;
   }
 
   return splashScreenUniformMetaData;
@@ -303,7 +302,15 @@ const generateImages = async (
   const { browser, chrome } = await browserHelper.getBrowserInstance({
     timeout: constants.BROWSER_TIMEOUT,
   });
-  const splashScreenMetaData = await getSplashScreenMetaData(options, browser);
+
+  let splashScreenMetaData;
+
+  try {
+    splashScreenMetaData = await getSplashScreenMetaData(options, browser);
+  } catch (e) {
+    splashScreenMetaData = constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA;
+  }
+
   const allImages = [
     ...(!options.iconOnly
       ? images.getSplashScreenImages(splashScreenMetaData, options)
