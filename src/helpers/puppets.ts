@@ -42,66 +42,65 @@ const getAppleSplashScreenData = async (
     throw e;
   }
 
-  const splashScreenData = await page.evaluate(
-    ({ selector }) => {
-      // TypeScript doesn't recognize the page context within callback
-      /* eslint-disable @typescript-eslint/ban-ts-ignore */
-      const scrapeSplashScreenDataFromHIGPage = (): LaunchScreenSpec[] =>
-        Array.from(document.querySelectorAll(selector)).map(tr => {
-          return Array.from(tr.querySelectorAll('td')).reduce(
+  const splashScreenData = await page.evaluate(() => {
+    // TypeScript doesn't recognize the page context within callback
+    /* eslint-disable @typescript-eslint/ban-ts-ignore */
+    const scrapeSplashScreenDataFromHIGPage = (): LaunchScreenSpec[] =>
+      Array.from(
+        document.querySelectorAll('table')?.[0].querySelectorAll('tbody tr'),
+      ).map(tr => {
+        return Array.from(tr.querySelectorAll('td')).reduce(
+          // @ts-ignore
+          (acc, curr, index) => {
+            const appleLaunchScreenTableColumnOrder = [
+              'device',
+              'portrait',
+              'landscape',
+            ];
+            const dimensionRegex = new RegExp(/(\d*)[^\d]+(\d*)[^\d]+/gm);
             // @ts-ignore
-            (acc, curr, index) => {
-              const appleLaunchScreenTableColumnOrder = [
-                'device',
-                'portrait',
-                'landscape',
-              ];
-              const dimensionRegex = new RegExp(/(\d*)[^\d]+(\d*)[^\d]+/gm);
-              // @ts-ignore
-              const keyToUpdate = appleLaunchScreenTableColumnOrder[index];
-              const execDimensionRegex = (
-                val: string,
-              ): RegExpExecArray | null => {
-                return dimensionRegex.exec(val);
-              };
+            const keyToUpdate = appleLaunchScreenTableColumnOrder[index];
+            const execDimensionRegex = (
+              val: string,
+            ): RegExpExecArray | null => {
+              return dimensionRegex.exec(val);
+            };
 
-              // @ts-ignore
-              const getDimensions = (val: string): Dimension => {
-                const regexMatch = execDimensionRegex(val);
+            // @ts-ignore
+            const getDimensions = (val: string): Dimension => {
+              const regexMatch = execDimensionRegex(val);
 
-                if (regexMatch && regexMatch.length) {
-                  return {
-                    width: parseInt(regexMatch[1], 10),
-                    height: parseInt(regexMatch[2], 10),
-                  };
-                }
-
+              if (regexMatch && regexMatch.length) {
                 return {
-                  width: 1,
-                  height: 1,
+                  width: parseInt(regexMatch[1], 10),
+                  height: parseInt(regexMatch[2], 10),
                 };
-              };
+              }
+
               return {
-                // @ts-ignore
-                ...acc,
-                [keyToUpdate]:
-                  index > 0
-                    ? getDimensions((curr as HTMLElement).innerText)
-                    : (curr as HTMLElement).innerText,
+                width: 1,
+                height: 1,
               };
-            },
-            {
-              device: '',
-              portrait: { width: 0, height: 0 },
-              landscape: { width: 0, height: 0 },
-            },
-          ) as LaunchScreenSpec;
-        });
-      /* eslint-enable @typescript-eslint/ban-ts-ignore */
-      return scrapeSplashScreenDataFromHIGPage();
-    },
-    { selector: constants.APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR },
-  );
+            };
+            return {
+              // @ts-ignore
+              ...acc,
+              [keyToUpdate]:
+                index > 0
+                  ? getDimensions((curr as HTMLElement).innerText)
+                  : (curr as HTMLElement).innerText,
+            };
+          },
+          {
+            device: '',
+            portrait: { width: 0, height: 0 },
+            landscape: { width: 0, height: 0 },
+          },
+        ) as LaunchScreenSpec;
+      });
+    /* eslint-enable @typescript-eslint/ban-ts-ignore */
+    return scrapeSplashScreenDataFromHIGPage();
+  });
 
   if (!splashScreenData.length) {
     const err = `Failed scraping the data on web page ${constants.APPLE_HIG_SPLASH_SCR_SPECS_URL}`;

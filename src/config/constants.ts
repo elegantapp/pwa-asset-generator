@@ -137,7 +137,7 @@ export default {
   EMULATED_USER_AGENT:
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3641.0 Safari/537.36',
   APPLE_HIG_SPLASH_SCR_SPECS_URL:
-    'https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/launch-screen/',
+    'https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/',
   APPLE_HIG_DEVICE_SCALE_FACTOR_SPECS_URL:
     'https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/image-size-and-resolution/',
 
