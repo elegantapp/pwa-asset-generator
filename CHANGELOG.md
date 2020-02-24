@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.2](https://github.com/onderceylan/pwa-asset-generator/compare/v2.2.1...v2.2.2) (2020-02-24)
+
+
+### Bug Fixes
+
+* **puppets:** fixed failing scrape of Apple splash screen specs ([cff635b](https://github.com/onderceylan/pwa-asset-generator/commit/cff635b940ef6ae6233224fcdff297b068985d54)), closes [#168](https://github.com/onderceylan/pwa-asset-generator/issues/168)
+
 ## [2.2.1](https://github.com/onderceylan/pwa-asset-generator/compare/v2.2.0...v2.2.1) (2020-01-21)
 
 
