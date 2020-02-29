@@ -167,11 +167,3 @@ However, you can use this workaround to work with this edge case:
 
 ### "No usable sandbox!" error on Linux
 In case of getting "No usable sandbox!" error on Linux, you need to enable [system sandboxing](https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#setting-up-chrome-linux-sandbox).
-
-### Process could not be terminated error on Windows
-When Chrome launcher is used with puppeteer-core, chrome-launcher sometime throws the following error after browser instance is killed.
-```
-ERROR: The process with PID 12345 (child process of PID 1234) could not be terminated.
-Reason: There is no running instance of the task.
-```
-This is a [known bug](https://github.com/GoogleChrome/chrome-launcher/issues/178) on chrome-launcher and for now you can just ignore it.
