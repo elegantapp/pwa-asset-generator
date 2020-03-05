@@ -13,14 +13,14 @@ describe('CLI', () => {
         [
           './static/logo.png',
           './temp',
-          '-s=false',
+          '--scrape=false',
           '--splash-only',
           '--landscape-only',
           '--favicon',
-          '-a="%PUBLIC_URL%"',
+          '--path="%PUBLIC_URL%"',
           '--dark-mode',
           '--type=jpeg',
-          '-q=20',
+          '--quality=20',
         ],
         { env: { PAG_TEST_MODE: '1' } },
       );

@@ -46,6 +46,10 @@ export default {
       type: 'string',
       alias: 'a',
     },
+    pathOverride: {
+      type: 'string',
+      alias: 'h',
+    },
     opaque: {
       type: 'boolean',
       alias: 'o',
