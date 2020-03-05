@@ -45,9 +45,16 @@ export interface Options {
   /**
    Path prefix to prepend for href links generated for meta tags
 
-   @example %PUBLIC_URL%
+   @example "%PUBLIC_URL%"
    */
   readonly path?: string;
+
+  /**
+   Override the path of images used in href/src in Web App Manifest and HTML files
+
+   @example "./your-custom-image-folder-path"
+   */
+  readonly pathOverride?: string;
 
   /**
    Image type

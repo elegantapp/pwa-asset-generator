@@ -218,6 +218,19 @@ describe('generates meta', () => {
       });
       expect(manifestJson.icons.length).toBe(2);
     });
+
+    test('using a path override', async () => {
+      const pathOverride = './my-custom-path-override';
+      const result = await generateTempImages({
+        scrape: false,
+        iconOnly: true,
+        log: false,
+        pathOverride,
+        manifest: './temp/manifest.json',
+      });
+
+      expect(result).toMatchSnapshot();
+    });
   });
 
   describe('saving meta to index.html', () => {
@@ -315,6 +328,22 @@ describe('generates meta', () => {
       expect(savedIndex).toContain(
         resultDark.htmlMeta[HTMLMetaNames.appleLaunchImageDarkMode],
       );
+    });
+
+    test('using a path override', async () => {
+      const pathOverride = './my-custom-path-override';
+      const result = await generateTempImages({
+        scrape: false,
+        favicon: true,
+        pathOverride,
+        log: false,
+        index: './temp/index.html',
+      });
+
+      const savedIndex = await readIndex();
+
+      expect(savedIndex).toContain(pathOverride);
+      expect(result).toMatchSnapshot();
     });
   });
 });

@@ -20,6 +20,7 @@ $ pwa-asset-generator --help
     -m --manifest               Web app manifest file path to automatically update manifest file with the generated icons
     -i --index                  Index HTML file path to automatically put splash screen and icon meta tags in
     -a --path                   Path prefix to prepend for href links generated for meta tags
+    -h --path-override          Override the generated path of images used in href/src in Web App Manifest and HTML files
     -t --type                   Image type: png|jpg|jpeg  [default: png]
     -q --quality                Image quality: 0...100 (Only for JPEG)  [default: 100]
     -h --splash-only            Only generate splash screens  [default: false]
@@ -38,7 +39,7 @@ $ pwa-asset-generator --help
     $ pwa-asset-generator logo.svg ./assets --scrape false --icon-only --path "%PUBLIC_URL%"
     $ pwa-asset-generator logo.svg ./assets --icon-only --favicon --opaque false
     $ pwa-asset-generator logo.svg ./assets --dark-mode --background dimgrey --splash-only --type jpeg --quality 80
-    $ pwa-asset-generator logo.svg ./assets --padding "calc(50vh - 5%) calc(50vw - 10%)"
+    $ pwa-asset-generator logo.svg ./assets --padding "calc(50vh - 5%) calc(50vw - 10%)" --path-override "./your-custom-image-folder-path"
     $ pwa-asset-generator https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png ./temp -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
 
   Flag examples
@@ -49,6 +50,7 @@ $ pwa-asset-generator --help
     --manifest ./src/manifest.json
     --index ./src/index.html
     --path "%PUBLIC_URL%"
+    --path-override "./your-custom-image-folder-path"
     --type jpg
     --quality 80
     --splash-only
