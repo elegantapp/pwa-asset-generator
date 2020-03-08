@@ -110,6 +110,11 @@ export default {
       alias: 'f',
       default: false,
     },
+    maskable: {
+      type: 'boolean',
+      alias: 'e',
+      default: true,
+    },
     darkMode: {
       type: 'boolean',
       alias: 'd',
