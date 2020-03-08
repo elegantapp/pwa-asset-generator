@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/onderceylan/pwa-asset-generator/compare/v2.2.2...v2.3.0) (2020-03-08)
+
+
+### Features
+
+* **main:** added maskable purpose as default declaration in manifest ([006d73c](https://github.com/onderceylan/pwa-asset-generator/commit/006d73cf3712fdadb6686e48a6169c33eb5dc641)), closes [#38](https://github.com/onderceylan/pwa-asset-generator/issues/38)
+* **main:** added maskable purpose as default declaration in manifest ([84dcc67](https://github.com/onderceylan/pwa-asset-generator/commit/84dcc6714f7251b6d1df83e4d51ffcb6e5ff07ad)), closes [#38](https://github.com/onderceylan/pwa-asset-generator/issues/38)
+* **main:** added pathOverride option to allow path optimisation on href ([7ff2e07](https://github.com/onderceylan/pwa-asset-generator/commit/7ff2e071ddd011412b2aa3fae8865270069bf565)), closes [#148](https://github.com/onderceylan/pwa-asset-generator/issues/148)
+* **main:** added pathOverride option to allow path optimisation on href ([2d89cba](https://github.com/onderceylan/pwa-asset-generator/commit/2d89cba433e6ac3e7c359f0228750e092e1ccd08)), closes [#148](https://github.com/onderceylan/pwa-asset-generator/issues/148)
+
 ## [2.2.2](https://github.com/onderceylan/pwa-asset-generator/compare/v2.2.1...v2.2.2) (2020-02-24)
 
 
