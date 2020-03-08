@@ -34,7 +34,7 @@ export interface ManifestJsonIcon {
    @tutorial https://www.w3.org/TR/appmanifest/#dfn-icon-purposes
    @default any
    */
-  purpose?: 'badge' | 'maskable' | 'any';
+  purpose?: string;
 
   /**
    The platform member represents the platform to which a containing object applies

@@ -123,6 +123,13 @@ export interface Options {
   readonly favicon: boolean;
 
   /**
+   Declare icons in manifest file as maskable icons
+
+   @default true
+   */
+  readonly maskable: boolean;
+
+  /**
    Generate iOS splash screen meta with (prefers-color-scheme: dark) media attr
 
    @default false

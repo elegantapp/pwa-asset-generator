@@ -231,6 +231,18 @@ describe('generates meta', () => {
 
       expect(result).toMatchSnapshot();
     });
+
+    test('disabling maskable icons', async () => {
+      const result = await generateTempImages({
+        scrape: false,
+        iconOnly: true,
+        log: false,
+        maskable: false,
+        manifest: './temp/manifest.json',
+      });
+
+      expect(result).toMatchSnapshot();
+    });
   });
 
   describe('saving meta to index.html', () => {

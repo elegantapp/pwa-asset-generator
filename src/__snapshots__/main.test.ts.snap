@@ -34,11 +34,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "maskable any",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
+      "purpose": "maskable any",
       "sizes": "512x512",
       "src": "temp/manifest-icon-512.png",
       "type": "image/png",
@@ -270,11 +272,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "maskable any",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
+      "purpose": "maskable any",
       "sizes": "512x512",
       "src": "temp/manifest-icon-512.png",
       "type": "image/png",
@@ -940,11 +944,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "maskable any",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
+      "purpose": "maskable any",
       "sizes": "512x512",
       "src": "temp/manifest-icon-512.png",
       "type": "image/png",
@@ -1047,11 +1053,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "maskable any",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.jpg",
       "type": "image/jpg",
     },
     Object {
+      "purpose": "maskable any",
       "sizes": "512x512",
       "src": "temp/manifest-icon-512.jpg",
       "type": "image/jpg",
@@ -1312,11 +1320,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "maskable any",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
+      "purpose": "maskable any",
       "sizes": "512x512",
       "src": "temp/manifest-icon-512.png",
       "type": "image/png",
@@ -1571,11 +1581,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "maskable any",
       "sizes": "192x192",
       "src": "./my-custom-path-override/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
+      "purpose": "maskable any",
       "sizes": "512x512",
       "src": "./my-custom-path-override/manifest-icon-512.png",
       "type": "image/png",
@@ -1802,6 +1814,84 @@ Object {
 }
 `;
 
+exports[`generates meta saving meta to manifest.json disabling maskable icons 1`] = `
+Object {
+  "htmlMeta": Object {
+    "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
+",
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"temp/apple-icon-180.png\\">
+<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"temp/apple-icon-167.png\\">
+<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"temp/apple-icon-152.png\\">
+<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"temp/apple-icon-120.png\\">
+",
+  },
+  "manifestJsonContent": Array [
+    Object {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "manifest-icon-192.png",
+      "type": "image/png",
+    },
+    Object {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "manifest-icon-512.png",
+      "type": "image/png",
+    },
+  ],
+  "savedImages": Array [
+    Object {
+      "height": 180,
+      "name": "apple-icon-180",
+      "orientation": null,
+      "path": "temp/apple-icon-180.png",
+      "scaleFactor": undefined,
+      "width": 180,
+    },
+    Object {
+      "height": 167,
+      "name": "apple-icon-167",
+      "orientation": null,
+      "path": "temp/apple-icon-167.png",
+      "scaleFactor": undefined,
+      "width": 167,
+    },
+    Object {
+      "height": 152,
+      "name": "apple-icon-152",
+      "orientation": null,
+      "path": "temp/apple-icon-152.png",
+      "scaleFactor": undefined,
+      "width": 152,
+    },
+    Object {
+      "height": 120,
+      "name": "apple-icon-120",
+      "orientation": null,
+      "path": "temp/apple-icon-120.png",
+      "scaleFactor": undefined,
+      "width": 120,
+    },
+    Object {
+      "height": 192,
+      "name": "manifest-icon-192",
+      "orientation": null,
+      "path": "temp/manifest-icon-192.png",
+      "scaleFactor": undefined,
+      "width": 192,
+    },
+    Object {
+      "height": 512,
+      "name": "manifest-icon-512",
+      "orientation": null,
+      "path": "temp/manifest-icon-512.png",
+      "scaleFactor": undefined,
+      "width": 512,
+    },
+  ],
+}
+`;
+
 exports[`generates meta saving meta to manifest.json using a path override 1`] = `
 Object {
   "htmlMeta": Object {
@@ -1815,11 +1905,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "maskable any",
       "sizes": "192x192",
       "src": "./my-custom-path-override/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
+      "purpose": "maskable any",
       "sizes": "512x512",
       "src": "./my-custom-path-override/manifest-icon-512.png",
       "type": "image/png",
