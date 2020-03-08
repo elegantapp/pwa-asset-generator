@@ -74,7 +74,7 @@ async function generateImages(
 
   const manifestJsonContent = meta.generateIconsContentForManifest(
     savedImages,
-    modOptions.manifest,
+    modOptions,
   );
   const htmlMeta = meta.generateHtmlForIndexPage(savedImages, modOptions);
 

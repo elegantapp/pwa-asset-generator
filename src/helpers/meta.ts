@@ -7,34 +7,67 @@ import { ManifestJsonIcon } from '../models/result';
 import { Options } from '../models/options';
 import { HTMLMeta, HTMLMetaNames, HTMLMetaSelector } from '../models/meta';
 
+const generateOutputPath = (
+  options: Options,
+  imageName: string,
+  imagePath: string,
+  isManifest = false,
+): string => {
+  const {
+    type,
+    path: pathPrefix,
+    pathOverride,
+    index: indexHtmlPath,
+    manifest: manifestJsonPath,
+  } = options;
+
+  const outputFilePath = (isManifest
+    ? manifestJsonPath
+    : indexHtmlPath) as string;
+
+  if (pathOverride) {
+    return `${pathOverride}/${imageName}.${type}`;
+  }
+
+  if (pathPrefix && !isManifest) {
+    return `${pathPrefix}/${file.getRelativeImagePath(
+      outputFilePath,
+      imagePath,
+    )}`;
+  }
+
+  return file.getRelativeImagePath(outputFilePath, imagePath);
+};
+
 const generateIconsContentForManifest = (
   savedImages: SavedImage[],
-  manifestJsonPath = '',
+  options: Options,
 ): ManifestJsonIcon[] => {
+  const purpose = `${options.maskable ? 'maskable ' : ''}any`;
   return savedImages
     .filter(image =>
       image.name.startsWith(constants.MANIFEST_ICON_FILENAME_PREFIX),
     )
-    .map(({ path, width, height }) => ({
-      src: file.getRelativeImagePath(manifestJsonPath, path),
+    .map(({ path, width, height, name }) => ({
+      src: generateOutputPath(options, name, path, true),
       sizes: `${width}x${height}`,
       type: `image/${file.getExtension(path)}`,
+      purpose,
     }));
 };
 
 const generateAppleTouchIconHtml = (
   savedImages: SavedImage[],
-  indexHtmlPath: string,
-  pathPrefix = '',
+  options: Options,
 ): string => {
   return savedImages
     .filter(image =>
       image.name.startsWith(constants.APPLE_ICON_FILENAME_PREFIX),
     )
-    .map(({ width, path }) =>
+    .map(({ width, path, name }) =>
       constants.APPLE_TOUCH_ICON_META_HTML(
         width,
-        pathPrefix + file.getRelativeImagePath(indexHtmlPath, path),
+        generateOutputPath(options, name, path),
       ),
     )
     .join('');
@@ -42,15 +75,14 @@ const generateAppleTouchIconHtml = (
 
 const generateFaviconHtml = (
   savedImages: SavedImage[],
-  indexHtmlPath: string,
-  pathPrefix = '',
+  options: Options,
 ): string => {
   return savedImages
     .filter(image => image.name.startsWith(constants.FAVICON_FILENAME_PREFIX))
-    .map(({ width, path }) =>
+    .map(({ width, path, name }) =>
       constants.FAVICON_META_HTML(
         width,
-        pathPrefix + file.getRelativeImagePath(indexHtmlPath, path),
+        generateOutputPath(options, name, path),
         lookup(path) as string,
       ),
     )
@@ -59,19 +91,18 @@ const generateFaviconHtml = (
 
 const generateAppleLaunchImageHtml = (
   savedImages: SavedImage[],
-  indexHtmlPath: string,
-  pathPrefix = '',
+  options: Options,
   darkMode: boolean,
 ): string => {
   return savedImages
     .filter(image =>
       image.name.startsWith(constants.APPLE_SPLASH_FILENAME_PREFIX),
     )
-    .map(({ width, height, path, scaleFactor, orientation }) =>
+    .map(({ width, height, path, name, scaleFactor, orientation }) =>
       constants.APPLE_LAUNCH_SCREEN_META_HTML(
         width,
         height,
-        pathPrefix + file.getRelativeImagePath(indexHtmlPath, path),
+        generateOutputPath(options, name, path),
         scaleFactor as number,
         orientation,
         darkMode,
@@ -80,20 +111,10 @@ const generateAppleLaunchImageHtml = (
     .join('');
 };
 
-const getPathPrefix = (pathPrefix: string): string => {
-  if (pathPrefix) {
-    return `${pathPrefix}/`;
-  }
-  return '';
-};
-
 const generateHtmlForIndexPage = (
   savedImages: SavedImage[],
   options: Options,
 ): HTMLMeta => {
-  const indexHtmlPath = options.index || '';
-  const pathPrefix = options.path || '';
-  const prependPath = getPathPrefix(pathPrefix);
   const htmlMeta: HTMLMeta = {
     [HTMLMetaNames.appleMobileWebAppCapable]: `<meta name="apple-mobile-web-app-capable" content="yes">
 `,
@@ -101,17 +122,12 @@ const generateHtmlForIndexPage = (
 
   if (!options.splashOnly) {
     if (options.favicon) {
-      htmlMeta.favicon = `${generateFaviconHtml(
-        savedImages,
-        indexHtmlPath,
-        prependPath,
-      )}`;
+      htmlMeta.favicon = `${generateFaviconHtml(savedImages, options)}`;
     }
 
     htmlMeta.appleTouchIcon = `${generateAppleTouchIconHtml(
       savedImages,
-      indexHtmlPath,
-      prependPath,
+      options,
     )}`;
   }
 
@@ -119,15 +135,13 @@ const generateHtmlForIndexPage = (
     if (options.darkMode) {
       htmlMeta.appleLaunchImageDarkMode = `${generateAppleLaunchImageHtml(
         savedImages,
-        indexHtmlPath,
-        prependPath,
+        options,
         true,
       )}`;
     } else {
       htmlMeta.appleLaunchImage = `${generateAppleLaunchImageHtml(
         savedImages,
-        indexHtmlPath,
-        prependPath,
+        options,
         false,
       )}`;
     }
