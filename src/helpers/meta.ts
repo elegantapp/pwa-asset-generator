@@ -1,5 +1,6 @@
 import cheerio from 'cheerio';
 import { lookup } from 'mime-types';
+import beautify from 'js-beautify';
 import constants from '../config/constants';
 import file from './file';
 import { SavedImage } from '../models/image';
@@ -207,6 +208,21 @@ ${htmlMeta[meta.name]}`;
   );
 };
 
+const formatHTML = (htmlContent: string): string => {
+  /* eslint-disable @typescript-eslint/camelcase */
+  return beautify.html(htmlContent, {
+    indent_size: 1,
+    indent_char: '\t',
+    max_preserve_newlines: 5,
+    preserve_newlines: true,
+    indent_scripts: 'keep',
+    end_with_newline: false,
+    wrap_line_length: 0,
+    indent_inner_html: false,
+  } as HTMLBeautifyOptions);
+  /* eslint-enable @typescript-eslint/camelcase */
+};
+
 const addMetaTagsToIndexPage = async (
   htmlMeta: HTMLMeta,
   indexHtmlFilePath: string,
@@ -234,7 +250,6 @@ const addMetaTagsToIndexPage = async (
     return false;
   };
 
-  // TODO: Find a way to remove tags without leaving newlines behind
   constants.HTML_META_ORDERED_SELECTOR_LIST.forEach(
     (meta: HTMLMetaSelector) => {
       if (htmlMeta.hasOwnProperty(meta.name) && htmlMeta[meta.name] !== '') {
@@ -243,21 +258,22 @@ const addMetaTagsToIndexPage = async (
         if (hasElement(meta.selector)) {
           $(meta.selector).remove();
         }
-
         // Because meta tags with dark mode media attr has to be declared after the regular splash screen meta tags
         if (
           meta.name === HTMLMetaNames.appleLaunchImage &&
           hasDarkModeElement()
         ) {
-          $(HEAD_SELECTOR).prepend(`\n${content}`);
+          $(HEAD_SELECTOR).prepend(`${content}`);
         } else {
-          $(HEAD_SELECTOR).append(`${content}\n`);
+          $(HEAD_SELECTOR).append(`${content}`);
         }
       }
     },
   );
 
-  return file.writeFile(indexHtmlFilePath, $.html());
+  const formattedHTML = formatHTML($.html());
+
+  return file.writeFile(indexHtmlFilePath, formattedHTML);
 };
 
 export default {
