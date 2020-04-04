@@ -98,7 +98,7 @@
     "jpeg-js": "^0.3.6",
     "lint-staged": "^10.0.0",
     "pixelmatch": "^5.1.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.2",
     "semantic-release": "^16.0.2",
     "ts-jest": "^25.0.0",
     "typescript": "^3.7.3"
