@@ -32,10 +32,10 @@ const mapToImageFileObj = (
 
 const getIconImages = (options: Options): Image[] => {
   let icons = [
-    ...constants.APPLE_ICON_SIZES.map(size =>
+    ...constants.APPLE_ICON_SIZES.map((size) =>
       mapToSqImageFileObj(constants.APPLE_ICON_FILENAME_PREFIX, size),
     ),
-    ...constants.MANIFEST_ICON_SIZES.map(size =>
+    ...constants.MANIFEST_ICON_SIZES.map((size) =>
       mapToSqImageFileObj(constants.MANIFEST_ICON_FILENAME_PREFIX, size),
     ),
   ];
@@ -43,7 +43,7 @@ const getIconImages = (options: Options): Image[] => {
   if (options.favicon) {
     icons = [
       ...icons,
-      ...constants.FAVICON_SIZES.map(size =>
+      ...constants.FAVICON_SIZES.map((size) =>
         mapToSqImageFileObj(constants.FAVICON_FILENAME_PREFIX, size),
       ),
     ];
