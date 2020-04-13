@@ -492,20 +492,40 @@ describe('visually compares generated images with', () => {
       });
     });
 
-    test('in html format', async () => {
-      const testSuite = 'input-html';
-      const result = await generateTempImages(
-        {
-          scrape: false,
-          log: false,
-        },
-        './static/logo.html',
-        `./temp/local/${testSuite}`,
-      );
+    describe('in html format', () => {
+      test('with dark mode disabled', async () => {
+        const testSuite = 'input-html';
+        const result = await generateTempImages(
+          {
+            scrape: false,
+            log: false,
+          },
+          './static/logo.html',
+          `./temp/local/${testSuite}`,
+        );
 
-      const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
-      matchResult.forEach((mr: MatchResult) => {
-        expect(mr.looksSame).toBeTruthy();
+        const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
+        matchResult.forEach((mr: MatchResult) => {
+          expect(mr.looksSame).toBeTruthy();
+        });
+      });
+
+      test('with dark mode enabled', async () => {
+        const testSuite = 'input-html-dark';
+        const result = await generateTempImages(
+          {
+            scrape: false,
+            darkMode: true,
+            log: false,
+          },
+          './static/logo.html',
+          `./temp/local/${testSuite}`,
+        );
+
+        const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
+        matchResult.forEach((mr: MatchResult) => {
+          expect(mr.looksSame).toBeTruthy();
+        });
       });
     });
 
@@ -608,20 +628,40 @@ describe('visually compares generated images with', () => {
       });
     });
 
-    test('in html format', async () => {
-      const testSuite = 'input-html';
-      const result = await generateTempImages(
-        {
-          scrape: false,
-          log: false,
-        },
-        'https://onderceylan.github.io/pwa-asset-generator/static/logo.html',
-        `./temp/remote/${testSuite}`,
-      );
+    describe('in html format', () => {
+      test('with dark mode disabled', async () => {
+        const testSuite = 'input-html';
+        const result = await generateTempImages(
+          {
+            scrape: false,
+            log: false,
+          },
+          'https://onderceylan.github.io/pwa-asset-generator/static/logo.html',
+          `./temp/remote/${testSuite}`,
+        );
 
-      const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
-      matchResult.forEach((mr: MatchResult) => {
-        expect(mr.looksSame).toBeTruthy();
+        const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
+        matchResult.forEach((mr: MatchResult) => {
+          expect(mr.looksSame).toBeTruthy();
+        });
+      });
+
+      test('with dark mode enabled', async () => {
+        const testSuite = 'input-html-dark';
+        const result = await generateTempImages(
+          {
+            scrape: false,
+            log: false,
+            darkMode: true,
+          },
+          'https://onderceylan.github.io/pwa-asset-generator/static/logo.html',
+          `./temp/remote/${testSuite}`,
+        );
+
+        const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
+        matchResult.forEach((mr: MatchResult) => {
+          expect(mr.looksSame).toBeTruthy();
+        });
       });
     });
   });
