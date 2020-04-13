@@ -105,6 +105,11 @@ export default {
       alias: 'u',
       default: false,
     },
+    xhtml: {
+      type: 'boolean',
+      alias: 'x',
+      default: false,
+    },
     favicon: {
       type: 'boolean',
       alias: 'f',
@@ -177,8 +182,15 @@ export default {
   WAIT_FOR_SELECTOR_TIMEOUT: 1000,
   BROWSER_TIMEOUT: 10000,
 
-  FAVICON_META_HTML: (size: number, url: string, mimeType: string): string =>
-    `<link rel="icon" type="${mimeType}" sizes="${size}x${size}" href="${url}">
+  FAVICON_META_HTML: (
+    size: number,
+    url: string,
+    mimeType: string,
+    xhtml: boolean,
+  ): string =>
+    `<link rel="icon" type="${mimeType}" sizes="${size}x${size}" href="${url}"${
+      xhtml ? ' /' : ''
+    }>
 `,
 
   SHELL_HTML_FOR_LOGO: (
@@ -211,8 +223,14 @@ export default {
 </body>
 </html>`,
 
-  APPLE_TOUCH_ICON_META_HTML: (size: number, url: string): string =>
-    `<link rel="apple-touch-icon" sizes="${size}x${size}" href="${url}">
+  APPLE_TOUCH_ICON_META_HTML: (
+    size: number,
+    url: string,
+    xhtml: boolean,
+  ): string =>
+    `<link rel="apple-touch-icon" sizes="${size}x${size}" href="${url}"${
+      xhtml ? ' /' : ''
+    }>
 `,
 
   APPLE_LAUNCH_SCREEN_META_HTML: (
@@ -222,17 +240,18 @@ export default {
     scaleFactor: number,
     orientation: Orientation,
     darkMode: boolean,
+    xhtml: boolean,
   ): string => {
     /* eslint-disable */
     if (orientation === 'portrait') {
       return `\
-<link rel="apple-touch-startup-image" href="${url}" media="${darkMode ? '(prefers-color-scheme: dark) and ' : ''}(device-width: ${width / scaleFactor}px) and (device-height: ${height / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})">
+<link rel="apple-touch-startup-image" href="${url}" media="${darkMode ? '(prefers-color-scheme: dark) and ' : ''}(device-width: ${width / scaleFactor}px) and (device-height: ${height / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})"${xhtml ? ' /' : ''}>
 `;
     }
 
     // As weird as it gets, Apple expects same device width and height values from portrait orientation, for landscape
     return `\
-<link rel="apple-touch-startup-image" href="${url}" media="${darkMode ? '(prefers-color-scheme: dark) and ' : ''}(device-width: ${height / scaleFactor}px) and (device-height: ${width / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})">
+<link rel="apple-touch-startup-image" href="${url}" media="${darkMode ? '(prefers-color-scheme: dark) and ' : ''}(device-width: ${height / scaleFactor}px) and (device-height: ${width / scaleFactor}px) and (-webkit-device-pixel-ratio: ${scaleFactor}) and (orientation: ${orientation})"${xhtml ? ' /' : ''}>
 `;
     /* eslint-enable */
   },
