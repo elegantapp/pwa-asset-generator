@@ -260,86 +260,126 @@ describe('generates meta', () => {
       await saveIndex();
     });
 
-    test('creating a favicon meta', async () => {
-      const result = await generateTempImages({
-        scrape: false,
-        favicon: true,
-        iconOnly: true,
-        log: false,
-        index: './temp/index.html',
+    describe('creating a favicon meta', () => {
+      test('with html output', async () => {
+        const result = await generateTempImages({
+          scrape: false,
+          favicon: true,
+          iconOnly: true,
+          log: false,
+          index: './temp/index.html',
+        });
+
+        const savedIndex = await readIndex();
+
+        expect(savedIndex).toContain(
+          result.htmlMeta[HTMLMetaNames.appleMobileWebAppCapable],
+        );
+        expect(savedIndex).toContain(result.htmlMeta[HTMLMetaNames.favicon]);
       });
 
-      const savedIndex = await readIndex();
+      test('with xhtml output', async () => {
+        const result = await generateTempImages({
+          scrape: false,
+          favicon: true,
+          iconOnly: true,
+          log: false,
+          xhtml: true,
+        });
 
-      expect(savedIndex).toContain(
-        result.htmlMeta[HTMLMetaNames.appleMobileWebAppCapable],
-      );
-      expect(savedIndex).toContain(result.htmlMeta[HTMLMetaNames.favicon]);
+        expect(result).toMatchSnapshot();
+      });
     });
 
-    test('creating apple icons meta', async () => {
-      const result = await generateTempImages({
-        scrape: false,
-        iconOnly: true,
-        log: false,
-        index: './temp/index.html',
+    describe('creating apple icons meta', () => {
+      test('with html output', async () => {
+        const result = await generateTempImages({
+          scrape: false,
+          iconOnly: true,
+          log: false,
+          index: './temp/index.html',
+        });
+
+        const savedIndex = await readIndex();
+
+        expect(savedIndex).toContain(
+          result.htmlMeta[HTMLMetaNames.appleMobileWebAppCapable],
+        );
+        expect(savedIndex).toContain(
+          result.htmlMeta[HTMLMetaNames.appleTouchIcon],
+        );
       });
 
-      const savedIndex = await readIndex();
+      test('with xhtml output', async () => {
+        const result = await generateTempImages({
+          scrape: false,
+          iconOnly: true,
+          log: false,
+          xhtml: true,
+        });
 
-      expect(savedIndex).toContain(
-        result.htmlMeta[HTMLMetaNames.appleMobileWebAppCapable],
-      );
-      expect(savedIndex).toContain(
-        result.htmlMeta[HTMLMetaNames.appleTouchIcon],
-      );
+        expect(result).toMatchSnapshot();
+      });
     });
 
-    test('creating splash screens meta', async () => {
-      const result = await generateTempImages({
-        scrape: false,
-        splashOnly: true,
-        log: false,
-        index: './temp/index.html',
+    describe('creating splash screens meta', () => {
+      test('with default html output', async () => {
+        const result = await generateTempImages({
+          scrape: false,
+          splashOnly: true,
+          log: false,
+          index: './temp/index.html',
+        });
+
+        const savedIndex = await readIndex();
+
+        expect(savedIndex).toContain(
+          result.htmlMeta[HTMLMetaNames.appleMobileWebAppCapable],
+        );
+        expect(savedIndex).toContain(
+          result.htmlMeta[HTMLMetaNames.appleLaunchImage],
+        );
       });
 
-      const savedIndex = await readIndex();
+      test('with dark mode html output', async () => {
+        const resultLight = await generateTempImages({
+          scrape: false,
+          splashOnly: true,
+          log: false,
+          index: './temp/index.html',
+        });
 
-      expect(savedIndex).toContain(
-        result.htmlMeta[HTMLMetaNames.appleMobileWebAppCapable],
-      );
-      expect(savedIndex).toContain(
-        result.htmlMeta[HTMLMetaNames.appleLaunchImage],
-      );
-    });
+        const resultDark = await generateTempImages({
+          scrape: false,
+          splashOnly: true,
+          darkMode: true,
+          log: false,
+          index: './temp/index.html',
+        });
 
-    test('creating splash screens meta with dark mode enabled', async () => {
-      const resultLight = await generateTempImages({
-        scrape: false,
-        splashOnly: true,
-        log: false,
-        index: './temp/index.html',
+        const savedIndex = await readIndex();
+
+        expect(savedIndex).toContain(
+          resultDark.htmlMeta[HTMLMetaNames.appleMobileWebAppCapable],
+        );
+        expect(savedIndex).toContain(
+          resultLight.htmlMeta[HTMLMetaNames.appleLaunchImage],
+        );
+        expect(savedIndex).toContain(
+          resultDark.htmlMeta[HTMLMetaNames.appleLaunchImageDarkMode],
+        );
       });
 
-      const resultDark = await generateTempImages({
-        scrape: false,
-        splashOnly: true,
-        darkMode: true,
-        log: false,
-        index: './temp/index.html',
+      test('with xhtml output', async () => {
+        const result = await generateTempImages({
+          scrape: false,
+          splashOnly: true,
+          log: false,
+          xhtml: true,
+        });
+
+        expect(result).toMatchSnapshot();
       });
-
-      const savedIndex = await readIndex();
-
-      expect(savedIndex).toContain(
-        resultDark.htmlMeta[HTMLMetaNames.appleMobileWebAppCapable],
-      );
-      expect(savedIndex).toContain(
-        resultLight.htmlMeta[HTMLMetaNames.appleLaunchImage],
-      );
-      expect(savedIndex).toContain(
-        resultDark.htmlMeta[HTMLMetaNames.appleLaunchImageDarkMode],
-      );
     });
 
     test('using a path override', async () => {

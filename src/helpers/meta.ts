@@ -68,6 +68,7 @@ const generateAppleTouchIconHtml = (
       constants.APPLE_TOUCH_ICON_META_HTML(
         width,
         generateOutputPath(options, name, path),
+        options.xhtml,
       ),
     )
     .join('');
@@ -84,6 +85,7 @@ const generateFaviconHtml = (
         width,
         generateOutputPath(options, name, path),
         lookup(path) as string,
+        options.xhtml,
       ),
     )
     .join('');
@@ -106,6 +108,7 @@ const generateAppleLaunchImageHtml = (
         scaleFactor as number,
         orientation,
         darkMode,
+        options.xhtml,
       ),
     )
     .join('');
@@ -116,7 +119,9 @@ const generateHtmlForIndexPage = (
   options: Options,
 ): HTMLMeta => {
   const htmlMeta: HTMLMeta = {
-    [HTMLMetaNames.appleMobileWebAppCapable]: `<meta name="apple-mobile-web-app-capable" content="yes">
+    [HTMLMetaNames.appleMobileWebAppCapable]: `<meta name="apple-mobile-web-app-capable" content="yes"${
+      options.xhtml ? ' /' : ''
+    }>
 `,
   };
 

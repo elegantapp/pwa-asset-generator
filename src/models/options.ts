@@ -116,6 +116,13 @@ export interface Options {
   readonly singleQuotes: boolean;
 
   /**
+   Generate HTML meta tags by self-closing the tags
+
+   @default false
+   */
+  readonly xhtml: boolean;
+
+  /**
    Generate favicon images and HTML meta tags
 
    @default false
