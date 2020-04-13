@@ -122,7 +122,7 @@ export default {
     },
   },
 
-  PUPPETEER_LAUNCH_ARGS: [
+  CHROME_LAUNCH_ARGS: [
     '--log-level=3', // Fatal only
     '--no-default-browser-check',
     '--disable-infobars',
@@ -133,7 +133,14 @@ export default {
     '--enable-features=NetworkService',
     '--disable-features=TranslateUI',
     '--disable-extensions',
+    '--disable-component-extensions-with-background-pages',
     '--disable-background-networking',
+    '--disable-backgrounding-occluded-windows',
+    '--disable-background-timer-throttling',
+    '--disable-renderer-backgrounding',
+    '--disable-file-system',
+    '--disable-permissions-api',
+    '--incognito',
     '--disable-sync',
     '--metrics-recording-only',
     '--mute-audio',
