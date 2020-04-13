@@ -268,6 +268,15 @@ const saveImages = async (
         await page.setViewport({ width, height });
 
         if (address) {
+          // Emulate dark mode media feature when html source is provided and darkMode is enabled
+          if (options.darkMode) {
+            await page.emulateMediaFeatures([
+              {
+                name: 'prefers-color-scheme',
+                value: 'dark',
+              },
+            ]);
+          }
           await page.goto(address, { waitUntil: 'networkidle0' });
         } else {
           await page.setContent(shellHtml);
