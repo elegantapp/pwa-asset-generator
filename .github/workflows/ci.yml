@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        node: [8, 10, 12]
+        node: [10, 12, 13]
         os: [ubuntu-latest, macOS-latest, windows-latest]
 
     steps:
@@ -24,8 +24,6 @@ jobs:
       - name: install
         run: npm install
       - name: lint
-        # Prettier runs are disabled on node 8 as prettier >v2 doesn't support this env
-        if: matrix.node != 8
         run: npm run lint
       - name: build
         run: npm run build
