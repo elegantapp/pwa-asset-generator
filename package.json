@@ -33,7 +33,7 @@
     "url": "https://github.com/onderceylan/pwa-asset-generator.git"
   },
   "engines": {
-    "node": ">=8.16.0"
+    "node": ">=10"
   },
   "keywords": [
     "pwa",
