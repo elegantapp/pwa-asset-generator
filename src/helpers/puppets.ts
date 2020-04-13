@@ -48,7 +48,7 @@ const getAppleSplashScreenData = async (
     const scrapeSplashScreenDataFromHIGPage = (): LaunchScreenSpec[] =>
       Array.from(
         document.querySelectorAll('table')?.[0].querySelectorAll('tbody tr'),
-      ).map(tr => {
+      ).map((tr) => {
         return Array.from(tr.querySelectorAll('td')).reduce(
           // @ts-ignore
           (acc, curr, index) => {
@@ -142,7 +142,7 @@ const getDeviceScaleFactorData = async (
       // TypeScript doesn't recognize the page context within callback
       /* eslint-disable @typescript-eslint/ban-ts-ignore */
       const scrapeScaleFactorDataFromHIGPage = (): DeviceFactorSpec[] =>
-        Array.from(document.querySelectorAll(selector)).map(tr => {
+        Array.from(document.querySelectorAll(selector)).map((tr) => {
           return Array.from(tr.querySelectorAll('td')).reduce(
             // @ts-ignore
             (acc, curr, index) => {
