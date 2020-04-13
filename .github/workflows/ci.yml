@@ -9,13 +9,13 @@ jobs:
     timeout-minutes: 30
 
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         node: [8, 10, 12]
         os: [ubuntu-latest, macOS-latest, windows-latest]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Use node ${{ matrix.node }}
         uses: actions/setup-node@v1
         with:
@@ -24,6 +24,8 @@ jobs:
       - name: install
         run: npm install
       - name: lint
+        # Prettier runs are disabled on node 8 as prettier >v2 doesn't support this env
+        if: matrix.node != 8
         run: npm run lint
       - name: build
         run: npm run build
