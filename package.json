@@ -66,7 +66,7 @@
     "lodash.isequal": "^4.5.0",
     "lodash.uniqwith": "^4.5.0",
     "meow": "^6.1.0",
-    "mime-types": "^2.1.26",
+    "mime-types": "^2.1.27",
     "progress": "^2.0.3",
     "puppeteer-core": "^2.1.1",
     "slash": "^3.0.0"
@@ -96,7 +96,7 @@
     "execa": "^4.0.0",
     "husky": "^4.0.10",
     "jest": "^25.1.0",
-    "jpeg-js": "^0.3.6",
+    "jpeg-js": "^0.4.0",
     "lint-staged": "^10.0.0",
     "pixelmatch": "^5.1.0",
     "prettier": "^2.0.4",
