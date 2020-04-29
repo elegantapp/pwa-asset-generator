@@ -67,7 +67,7 @@ const getLocalBrowserInstance = async (
 
 const launchSystemBrowser = (): Promise<LaunchedChrome> => {
   const launchOptions: ChromeLauncherOptions = {
-    chromeFlags: constants.PUPPETEER_LAUNCH_ARGS,
+    chromeFlags: constants.CHROME_LAUNCH_ARGS,
     logLevel: 'silent',
     port: constants.CHROME_LAUNCHER_DEBUG_PORT,
     maxConnectionRetries: constants.CHROME_LAUNCHER_MAX_CONN_RETRIES,
@@ -80,18 +80,18 @@ const getLaunchedChromeVersionInfo = (
   chrome: LaunchedChrome,
 ): Promise<BrowserVersionInfo> => {
   return new Promise((resolve, reject) => {
-    get(`http://localhost:${chrome.port}/json/version`, res => {
+    get(`http://localhost:${chrome.port}/json/version`, (res) => {
       let data = '';
       res.setEncoding('utf8');
 
-      res.on('data', chunk => {
+      res.on('data', (chunk) => {
         data += chunk;
       });
 
       res.on('end', () => {
         resolve(JSON.parse(data));
       });
-    }).on('error', err => reject(err));
+    }).on('error', (err) => reject(err));
   });
 };
 
@@ -127,7 +127,7 @@ const getBrowserInstance = async (
         `Chrome launcher could not connect to your system browser. Is your port ${e.port} accessible?`,
       );
       const prc = await find('port', e.port);
-      prc.forEach(pr => {
+      prc.forEach((pr) => {
         logger.log(
           `Killing incompletely launched system chrome instance on pid ${pr.pid}`,
         );
