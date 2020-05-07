@@ -20,7 +20,7 @@ $ pwa-asset-generator --help
     -m --manifest               Web app manifest file path to automatically update manifest file with the generated icons
     -i --index                  Index HTML file path to automatically put splash screen and icon meta tags in
     -a --path                   Path prefix to prepend for href links generated for meta tags
-    -h --path-override          Override the path of images used in href/src tags of manifest and HTML files
+    -v --path-override          Override the path of images used in href/src tags of manifest and HTML files
     -t --type                   Image type: png|jpg|jpeg  [default: png]
     -q --quality                Image quality: 0...100 (Only for JPEG)  [default: 100]
     -h --splash-only            Only generate splash screens  [default: false]
