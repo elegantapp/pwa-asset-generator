@@ -115,7 +115,7 @@ async function generateImages(
 }
 
 /**
- Fallback data for Apple Device specs for launch images
+ Static data for Apple Device specs that are used for generating launch images
  */
 const appleDeviceSpecsForLaunchImages =
   constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA;
