@@ -255,6 +255,24 @@ render() {
 }
 ```
 
+### My index.html file's format has been changed after an automated update. Is there any way to re-format it?
+
+pwa-asset-generator uses [cheerio](https://cheerio.js.org/) for maintaining HTML tags in your index.html file. While doing so, it creates extra whitespaces and it might also introduce misaligned indentations.
+
+A recommended way to maintain the same format for your index.html file would be using [Prettier](https://prettier.io/) and adding the following script to your project's package.json file.
+
+```
+"format:index": "prettier \"index.html\" --write"
+```
+
+Executing `npm run format:index` after using pwa-asset-generator assures the same format for your HTML file.
+
+### When generating PNG images, there's no compression settings. Is there a way to introduce compression for PNG files?
+
+pwa-asset-generator depends on Puppeteer and it's screenshot API for image generation. Puppeteer doesn't provide compression settings for PNG files for the time being.
+
+However, you can use one of the lossless / lossy compression libraries - like [pngquant](https://pngquant.org/) to compress the generated PNG images.
+
 ## Troubleshooting
 
 ### "No usable sandbox!" error on Linux
