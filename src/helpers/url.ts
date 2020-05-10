@@ -13,7 +13,7 @@ const isUrl = (val: string): boolean => {
 const isUrlExists = (source: string): Promise<boolean> => {
   return new Promise((resolve, reject): void => {
     try {
-      dns.resolve(url.parse(source).hostname as string, err => {
+      dns.resolve(url.parse(source).hostname as string, (err) => {
         if (err) {
           return resolve(false);
         }
