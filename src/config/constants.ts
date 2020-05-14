@@ -68,12 +68,12 @@ export default {
     type: {
       type: 'string',
       alias: 't',
-      default: 'png',
+      default: 'jpg',
     },
     quality: {
       type: 'number',
       alias: 'q',
-      default: 100,
+      default: 70,
     },
     splashOnly: {
       type: 'boolean',
