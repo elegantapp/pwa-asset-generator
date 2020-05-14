@@ -20,7 +20,7 @@ describe('CLI', () => {
           '--favicon',
           '--path="%PUBLIC_URL%"',
           '--dark-mode',
-          '--type=jpeg',
+          '--type=jpg',
           '--quality=20',
         ],
         { env: { PAG_TEST_MODE: '1' } },

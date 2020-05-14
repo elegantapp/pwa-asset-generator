@@ -1,4 +1,4 @@
-export type Extension = 'png' | 'jpeg' | 'jpg';
+export type Extension = 'png' | 'jpg';
 
 export interface Options {
   /**
@@ -59,7 +59,7 @@ export interface Options {
   /**
    Image type
 
-   @default png
+   @default jpg
    */
   readonly type: Extension;
 
@@ -67,7 +67,7 @@ export interface Options {
    Image quality: 0...100
    Enabled only for jpeg image type
 
-   @default 100
+   @default 70
    */
   readonly quality: number;
 

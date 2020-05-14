@@ -97,7 +97,7 @@ describe('generates meta', () => {
       const result = await generateTempImages({
         scrape: false,
         splashOnly: true,
-        type: 'jpeg',
+        type: 'jpg',
         quality: 80,
         darkMode: true,
         log: false,
@@ -575,48 +575,9 @@ describe('visually compares generated images with', () => {
         {
           scrape: false,
           log: false,
+          type: 'png',
           background: 'transparent',
           opaque: false,
-        },
-        './static/logo.svg',
-        `./temp/local/${testSuite}`,
-      );
-
-      const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
-      matchResult.forEach((mr: MatchResult) => {
-        expect(mr.looksSame).toBeTruthy();
-      });
-    });
-
-    test('with JPEG format as output', async () => {
-      const testSuite = 'output-jpeg';
-      const result = await generateTempImages(
-        {
-          scrape: false,
-          log: false,
-          background: 'coral',
-          type: 'jpeg',
-          quality: 80,
-        },
-        './static/logo.svg',
-        `./temp/local/${testSuite}`,
-      );
-
-      const matchResult = await getAllSnapshotsMatchStatus(result, testSuite);
-      matchResult.forEach((mr: MatchResult) => {
-        expect(mr.looksSame).toBeTruthy();
-      });
-    });
-
-    test('with JPG format as output', async () => {
-      const testSuite = 'output-jpg';
-      const result = await generateTempImages(
-        {
-          scrape: false,
-          log: false,
-          background: 'coral',
-          type: 'jpg',
-          quality: 80,
         },
         './static/logo.svg',
         `./temp/local/${testSuite}`,
