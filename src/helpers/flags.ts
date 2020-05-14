@@ -41,7 +41,7 @@ const getDefaultOptions = (): Options => {
   // TODO: replace Object.keys typecasting when it can be derived as a type
   // https://github.com/microsoft/TypeScript/pull/12253#issuecomment-263132208
   return Object.keys(flags)
-    .filter(flagKey =>
+    .filter((flagKey) =>
       flags[flagKey as keyof Options].hasOwnProperty('default'),
     )
     .reduce((acc: Options, curr: string | keyof Options) => {

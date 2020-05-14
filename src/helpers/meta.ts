@@ -45,7 +45,7 @@ const generateIconsContentForManifest = (
 ): ManifestJsonIcon[] => {
   const purpose = `${options.maskable ? 'maskable ' : ''}any`;
   return savedImages
-    .filter(image =>
+    .filter((image) =>
       image.name.startsWith(constants.MANIFEST_ICON_FILENAME_PREFIX),
     )
     .map(({ path, width, height, name }) => ({
@@ -61,7 +61,7 @@ const generateAppleTouchIconHtml = (
   options: Options,
 ): string => {
   return savedImages
-    .filter(image =>
+    .filter((image) =>
       image.name.startsWith(constants.APPLE_ICON_FILENAME_PREFIX),
     )
     .map(({ width, path, name }) =>
@@ -78,7 +78,7 @@ const generateFaviconHtml = (
   options: Options,
 ): string => {
   return savedImages
-    .filter(image => image.name.startsWith(constants.FAVICON_FILENAME_PREFIX))
+    .filter((image) => image.name.startsWith(constants.FAVICON_FILENAME_PREFIX))
     .map(({ width, path, name }) =>
       constants.FAVICON_META_HTML(
         width,
@@ -95,7 +95,7 @@ const generateAppleLaunchImageHtml = (
   darkMode: boolean,
 ): string => {
   return savedImages
-    .filter(image =>
+    .filter((image) =>
       image.name.startsWith(constants.APPLE_SPLASH_FILENAME_PREFIX),
     )
     .map(({ width, height, path, name, scaleFactor, orientation }) =>
@@ -182,7 +182,7 @@ const addIconsToManifest = async (
       ...newManifestContent.icons,
       ...manifestJson.icons.filter(
         (icon: ManifestJsonIcon) =>
-          !manifestContent.some(man => man.sizes === icon.sizes),
+          !manifestContent.some((man) => man.sizes === icon.sizes),
       ),
     ];
   }
