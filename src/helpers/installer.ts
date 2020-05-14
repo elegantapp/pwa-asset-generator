@@ -48,7 +48,7 @@ const toMegabytes = (bytes: number): string => {
 };
 
 const cleanUpOldRevisions = (revisions: string[]): Promise<void[]> => {
-  const localRevisions = revisions.filter(rev => revision !== rev);
+  const localRevisions = revisions.filter((rev) => revision !== rev);
   // Remove previous chromium revisions.
   const cleanupOldVersions = localRevisions.map((rev: string) =>
     getBrowserFetcher().remove(rev),
@@ -88,9 +88,7 @@ const installPreferredBrowserRevision = async (): Promise<RevisionInfo> => {
   );
   logger.log(`Chromium downloaded to ${revisionInfo.folderPath}`);
 
-  await getBrowserFetcher()
-    .localRevisions()
-    .then(cleanUpOldRevisions);
+  await getBrowserFetcher().localRevisions().then(cleanUpOldRevisions);
 
   return installedRevision;
 };
