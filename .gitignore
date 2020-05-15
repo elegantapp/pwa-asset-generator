@@ -4,6 +4,7 @@ static/*
 !static/logo.png
 !static/logo.svg
 !static/logo.html
+!static/ios-demo.png
 temp
 dist
 

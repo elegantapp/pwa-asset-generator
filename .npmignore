@@ -6,6 +6,7 @@ static/*
 temp/*
 __snapshots__/*
 *.tgz
+coverage/*
 
 # Source files
 *.test.js
