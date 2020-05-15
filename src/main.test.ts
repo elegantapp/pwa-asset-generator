@@ -454,6 +454,7 @@ describe('visually compares generated images with', () => {
 
     if (visualDiff.numDiffPixels !== 0) {
       /* eslint-disable no-console */
+      console.log(`There's a diff between file ${fileAPath} and ${fileBPath}`);
       console.log('numDiffPixels', visualDiff.numDiffPixels);
       const diffBase64 = PNG.sync.write(visualDiff.diff).toString('base64');
       console.log('diffBase64', diffBase64);
