@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/onderceylan/pwa-asset-generator/compare/v2.3.0...v3.0.0) (2020-05-15)
+
+
+### Bug Fixes
+
+* **cli:** fixed conflicting -h option ([3d4f04c](https://github.com/onderceylan/pwa-asset-generator/commit/3d4f04c8bb9d784e73e1b0a398e909432e8d7887)), closes [#263](https://github.com/onderceylan/pwa-asset-generator/issues/263)
+
+
+### Features
+
+* **main:** added dark mode media query support for html inputs ([c5d2e0d](https://github.com/onderceylan/pwa-asset-generator/commit/c5d2e0d2b729d130b759cd39755280b8cee8c4c3)), closes [#227](https://github.com/onderceylan/pwa-asset-generator/issues/227)
+* **main:** added stricter chrome launch args set ([bdfbef4](https://github.com/onderceylan/pwa-asset-generator/commit/bdfbef4021567f9b055a614f574c58863a9ee3a3)), closes [#229](https://github.com/onderceylan/pwa-asset-generator/issues/229)
+* **main:** exported appleDeviceSpecsForLaunchImages from module API ([dac56d4](https://github.com/onderceylan/pwa-asset-generator/commit/dac56d4cadcff35e95188d7a684f0b882683c679)), closes [#248](https://github.com/onderceylan/pwa-asset-generator/issues/248)
+* **main:** switched to JPG as default output type ([bb5cfec](https://github.com/onderceylan/pwa-asset-generator/commit/bb5cfec59daf9087f9415831788453b32254d1f6)), closes [#278](https://github.com/onderceylan/pwa-asset-generator/issues/278)
+* **meta:** added xhtml option to introduce self-closing meta tags ([0dea81a](https://github.com/onderceylan/pwa-asset-generator/commit/0dea81a764e5f1d3f2d1069c31aae2722aec37cd)), closes [#192](https://github.com/onderceylan/pwa-asset-generator/issues/192)
+* **node:** drop node 8 support due to its EOL ([030569b](https://github.com/onderceylan/pwa-asset-generator/commit/030569b1afbb908ba39f85d2e64c18f7981852ad)), closes [#231](https://github.com/onderceylan/pwa-asset-generator/issues/231)
+
+
+### BREAKING CHANGES
+
+* **main:** Due to the large carbon footprint that PNG assets create, switched over using JPG
+output with compression by default.
+* **cli:** -h path override usage is dropped. It's replaced with -v shorthand.
+* **node:** Users with node v8 will not be actively supported.
+
 # [2.3.0](https://github.com/onderceylan/pwa-asset-generator/compare/v2.2.2...v2.3.0) (2020-03-08)
 
 
