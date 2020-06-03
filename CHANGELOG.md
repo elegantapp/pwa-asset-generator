@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/onderceylan/pwa-asset-generator/compare/v3.1.0...v3.1.1) (2020-06-03)
+
+
+### Bug Fixes
+
+* **docs:** fix BLM example image URL ([2cb0e76](https://github.com/onderceylan/pwa-asset-generator/commit/2cb0e76173f8516e7a8bcf005bbf8e02c322f8a9)), closes [#303](https://github.com/onderceylan/pwa-asset-generator/issues/303)
+
 # [3.1.0](https://github.com/onderceylan/pwa-asset-generator/compare/v3.0.0...v3.1.0) (2020-06-03)
 
 
