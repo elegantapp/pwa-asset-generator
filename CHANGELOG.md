@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/onderceylan/pwa-asset-generator/compare/v3.0.0...v3.1.0) (2020-06-03)
+
+
+### Features
+
+* **cli:** display help when no arg is provided ([0641bd9](https://github.com/onderceylan/pwa-asset-generator/commit/0641bd9fb3da650ac06abff3f90e8007567804a6)), closes [#302](https://github.com/onderceylan/pwa-asset-generator/issues/302)
+* **main:** add BLM branding #blacklifematters ([d572c5d](https://github.com/onderceylan/pwa-asset-generator/commit/d572c5da436fb4dec59eb1bfd0609e5b05b6d4b9)), closes [#301](https://github.com/onderceylan/pwa-asset-generator/issues/301)
+
 # [3.0.0](https://github.com/onderceylan/pwa-asset-generator/compare/v2.3.0...v3.0.0) (2020-05-15)
 
 
