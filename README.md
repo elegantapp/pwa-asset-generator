@@ -3,11 +3,11 @@
 
 > A JavaScript library that automates PWA asset generation and image declaration. It automatically generates icon and splash screen images, guided by Web App Manifest specs and Apple Human Interface guidelines. It also updates manifest.json and index.html files with the generated images.
 
-![Usage demonstration](https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/demo.gif)
+![Usage demonstration](https://onderceylan.github.io/pwa-asset-generator/static/demo.gif)
 
 ## Motivation — [read the full blog post here](https://itnext.io/pwa-splash-screen-and-icon-generator-a74ebb8a130)
 
-![A PWA on iOS with icons and splash screens](https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/ios-demo.png)
+![A PWA on iOS with icons and splash screens](https://onderceylan.github.io/pwa-asset-generator/static/ios-demo-blm.png)
 
 When you build a PWA with a goal of providing native-like experiences on multiple platforms and stores, you need to meet with the criteria of those platforms and stores with your PWA assets; icon sizes and splash screens. Such criteria are;
 
@@ -104,7 +104,8 @@ $ pwa-asset-generator --help
     $ pwa-asset-generator logo.svg ./assets --icon-only --favicon --opaque false --maskable false --type png
     $ pwa-asset-generator logo.svg ./assets --dark-mode --background dimgrey --splash-only --quality 80
     $ pwa-asset-generator logo.svg ./assets --padding "calc(50vh - 5%) calc(50vw - 10%)" --path-override "./your-custom-image-folder-path"
-    $ pwa-asset-generator https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png ./temp -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
+    $ pwa-asset-generator https://onderceylan.github.io/pwa-asset-generator/static/logo.png ./temp -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
+    $ pwa-asset-generator https://onderceylan.github.io/pwa-asset-generator/static/blm-logo.png ./blm -p "15%" -b "linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1)"
 
   Flag examples
     --background "rgba(255, 255, 255, .5)"
@@ -139,7 +140,7 @@ const pwaAssetGenerator = require('pwa-asset-generator');
 // Generate images over a module function call, instead of using CLI commands
 (async () => {
   const { savedImages, htmlMeta, manifestJsonContent } = await pwaAssetGenerator.generateImages(
-    'https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png',
+    'https://onderceylan.github.io/pwa-asset-generator/static/logo.png',
     './temp',
     {
       scrape: false,
@@ -178,7 +179,7 @@ The default value for the padding surrounding the image is 10%. But it's just a 
 ### How can I generate a PNG image with a transparency?
 Although the default background color is **transparent**, there's another option that you need to use for generating transparent images: **opaque**.
 
-You need to run your CLI command with `--opaque false` option in order to get the transparency; `pwa-asset-generator logo.svg --opaque false`.
+You need to run your CLI command with `--opaque false` option in order to get the transparency; `pwa-asset-generator logo.svg --opaque false --type png`.
 
 This might be confusing for some, but it's necessary to support the use of background values with alpha channels.
 
@@ -187,7 +188,7 @@ Default behaviour of the library is to generate a favicon along with app icons. 
 
 However, you can use this workaround to work with this edge case:
 
-* First, generate a favicon with `--opaque false --icon-only --favicon` options.
+* First, generate a favicon with `--opaque false --icon-only --favicon --type png` options.
 * Then, overwrite app icons with `--background "#FFF" --icon-only` options.
 
 ### How can I generate both dark mode and light mode splash screen images?
