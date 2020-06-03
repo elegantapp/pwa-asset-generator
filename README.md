@@ -3,7 +3,7 @@
 
 > A JavaScript library that automates PWA asset generation and image declaration. It automatically generates icon and splash screen images, guided by Web App Manifest specs and Apple Human Interface guidelines. It also updates manifest.json and index.html files with the generated images.
 
-![Usage demonstration](https://onderceylan.github.io/pwa-asset-generator/static/demo.gif)
+![Usage demonstration](https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/demo.gif)
 
 ## Motivation — [read the full blog post here](https://itnext.io/pwa-splash-screen-and-icon-generator-a74ebb8a130)
 
