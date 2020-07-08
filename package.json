@@ -67,7 +67,7 @@
     "meow": "7.0.1",
     "mime-types": "2.1.27",
     "progress": "2.0.3",
-    "puppeteer-core": "4.0.1",
+    "puppeteer-core": "5.0.0",
     "slash": "3.0.0"
   },
   "devDependencies": {
