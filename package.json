@@ -60,7 +60,7 @@
   "dependencies": {
     "chalk": "4.1.0",
     "cheerio": "1.0.0-rc.3",
-    "chrome-launcher": "0.13.3",
+    "chrome-launcher": "0.13.4",
     "find-process": "1.4.3",
     "lodash.isequal": "4.5.0",
     "lodash.uniqwith": "4.5.0",
