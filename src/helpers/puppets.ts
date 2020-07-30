@@ -6,12 +6,7 @@ import images from './images';
 import browserHelper from './browser';
 import preLogger from './logger';
 import { Options } from '../models/options';
-import {
-  DeviceFactorSpec,
-  Dimension,
-  LaunchScreenSpec,
-  SplashScreenSpec,
-} from '../models/spec';
+import { LaunchScreenSpec } from '../models/spec';
 import { Image, SavedImage } from '../models/image';
 
 const getAppleSplashScreenData = async (
@@ -43,62 +38,81 @@ const getAppleSplashScreenData = async (
   }
 
   const splashScreenData = await page.evaluate(() => {
-    // TypeScript doesn't recognize the page context within callback
-    /* eslint-disable @typescript-eslint/ban-ts-ignore */
-    const scrapeSplashScreenDataFromHIGPage = (): LaunchScreenSpec[] =>
-      Array.from(
+    const scrapeSplashScreenDataFromHIGPage = (): LaunchScreenSpec[] => {
+      return Array.from(
         document.querySelectorAll('table')?.[0].querySelectorAll('tbody tr'),
       ).map((tr) => {
-        return Array.from(tr.querySelectorAll('td')).reduce(
-          // @ts-ignore
-          (acc, curr, index) => {
-            const appleLaunchScreenTableColumnOrder = [
-              'device',
-              'portrait',
-              'landscape',
-            ];
-            const dimensionRegex = new RegExp(/(\d*)[^\d]+(\d*)[^\d]+/gm);
-            // @ts-ignore
-            const keyToUpdate = appleLaunchScreenTableColumnOrder[index];
-            const execDimensionRegex = (
-              val: string,
-            ): RegExpExecArray | null => {
-              return dimensionRegex.exec(val);
-            };
+        const dimensionRegex = new RegExp(
+          /\d+pt\s.\s\d+pt\s.(\d+)px\s.\s(\d+)px\s@(\d)x./gm,
+        );
 
-            // @ts-ignore
-            const getDimensions = (val: string): Dimension => {
-              const regexMatch = execDimensionRegex(val);
+        const getParsedSpecs = (
+          val: string,
+        ): { width: number; height: number; scaleFactor: number } => {
+          const regexMatch = dimensionRegex.exec(val);
 
-              if (regexMatch && regexMatch.length) {
-                return {
-                  width: parseInt(regexMatch[1], 10),
-                  height: parseInt(regexMatch[2], 10),
-                };
-              }
+          if (!regexMatch?.length) {
+            throw Error('Regex match failed while scraping the specs');
+          }
 
+          const width = parseInt(regexMatch[1], 10);
+          const height = parseInt(regexMatch[2], 10);
+          const scaleFactor = parseInt(regexMatch[3], 10);
+
+          if (
+            width === 0 ||
+            Number.isNaN(width) ||
+            height === 0 ||
+            Number.isNaN(height) ||
+            scaleFactor === 0 ||
+            Number.isNaN(scaleFactor)
+          ) {
+            throw Error('Got unexpected dimensions while scraping the specs');
+          }
+
+          return {
+            width,
+            height,
+            scaleFactor,
+          };
+        };
+
+        const tableColumns = ['device', 'portrait'];
+        const columns = Array.from(tr.querySelectorAll('td'));
+
+        if (columns.length !== tableColumns.length) {
+          throw Error(
+            'Table columns on the page do not match with the scraper',
+          );
+        }
+
+        return columns.reduce(
+          (acc, curr: HTMLElement, index) => {
+            if (index === 0) {
               return {
-                width: 1,
-                height: 1,
+                ...acc,
+                device: curr.innerText,
               };
-            };
+            }
+
+            const specs = getParsedSpecs(curr.innerText.trim());
+
             return {
-              // @ts-ignore
               ...acc,
-              [keyToUpdate]:
-                index > 0
-                  ? getDimensions((curr as HTMLElement).innerText)
-                  : (curr as HTMLElement).innerText,
+              portrait: { width: specs.width, height: specs.height },
+              landscape: { width: specs.height, height: specs.width },
+              scaleFactor: specs.scaleFactor,
             };
           },
           {
             device: '',
             portrait: { width: 0, height: 0 },
             landscape: { width: 0, height: 0 },
+            scaleFactor: 0,
           },
         ) as LaunchScreenSpec;
       });
-    /* eslint-enable @typescript-eslint/ban-ts-ignore */
+    };
     return scrapeSplashScreenDataFromHIGPage();
   });
 
@@ -113,101 +127,15 @@ const getAppleSplashScreenData = async (
   return splashScreenData;
 };
 
-const getDeviceScaleFactorData = async (
-  browser: Browser,
-  options: Options,
-): Promise<DeviceFactorSpec[]> => {
-  const logger = preLogger(getDeviceScaleFactorData.name, options);
-  const page = await browser.newPage();
-  await page.setUserAgent(constants.EMULATED_USER_AGENT);
-  logger.log(
-    `Navigating to Apple Human Interface Guidelines website - ${constants.APPLE_HIG_DEVICE_SCALE_FACTOR_SPECS_URL}`,
-  );
-  await page.goto(constants.APPLE_HIG_DEVICE_SCALE_FACTOR_SPECS_URL, {
-    waitUntil: 'networkidle0',
-  });
-
-  try {
-    await page.waitForSelector('table', {
-      timeout: constants.WAIT_FOR_SELECTOR_TIMEOUT,
-    });
-  } catch (e) {
-    const err = `Could not find the table on the page within timeout ${constants.WAIT_FOR_SELECTOR_TIMEOUT}ms`;
-    logger.error(err);
-    throw Error(err);
-  }
-
-  const scaleFactorData = await page.evaluate(
-    ({ selector }) => {
-      // TypeScript doesn't recognize the page context within callback
-      /* eslint-disable @typescript-eslint/ban-ts-ignore */
-      const scrapeScaleFactorDataFromHIGPage = (): DeviceFactorSpec[] =>
-        Array.from(document.querySelectorAll(selector)).map((tr) => {
-          return Array.from(tr.querySelectorAll('td')).reduce(
-            // @ts-ignore
-            (acc, curr, index) => {
-              const appleScaleFactorTableColumnOrder = [
-                'device',
-                'scaleFactor',
-              ];
-              const scaleFactorRegex = new RegExp(/[^\d]+(\d*)[^\d]+/gm);
-
-              const execScaleFactorRegex = (
-                val: string,
-              ): RegExpExecArray | null => {
-                return scaleFactorRegex.exec(val);
-              };
-
-              // @ts-ignore
-              const keyToUpdate = appleScaleFactorTableColumnOrder[index];
-              // @ts-ignore
-              const getScaleFactor = (val: string): number => {
-                const regexMatch = execScaleFactorRegex(val);
-
-                if (regexMatch && regexMatch.length) {
-                  return parseInt(regexMatch[1], 10);
-                }
-                return 1;
-              };
-
-              return {
-                // @ts-ignore
-                ...acc,
-                [keyToUpdate]:
-                  index > 0
-                    ? getScaleFactor((curr as HTMLElement).innerText)
-                    : (curr as HTMLElement).innerText,
-              };
-            },
-            { device: '', scaleFactor: 1 },
-          ) as DeviceFactorSpec;
-        });
-      /* eslint-enable @typescript-eslint/ban-ts-ignore */
-      return scrapeScaleFactorDataFromHIGPage();
-    },
-    { selector: constants.APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR },
-  );
-
-  if (!scaleFactorData.length) {
-    const err = `Failed scraping the data on web page ${constants.APPLE_HIG_DEVICE_SCALE_FACTOR_SPECS_URL}`;
-    logger.error(err);
-    throw Error(err);
-  }
-
-  logger.log('Retrieved scale factor data');
-  await page.close();
-  return scaleFactorData;
-};
-
 const getSplashScreenMetaData = async (
   options: Options,
   browser: Browser,
-): Promise<SplashScreenSpec[]> => {
+): Promise<LaunchScreenSpec[]> => {
   const logger = preLogger(getSplashScreenMetaData.name, options);
 
   if (!options.scrape) {
     logger.log(`Skipped scraping - using static data`);
-    return constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA;
+    return constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA as LaunchScreenSpec[];
   }
 
   logger.log(
@@ -215,15 +143,10 @@ const getSplashScreenMetaData = async (
     '🤖',
   );
 
-  let splashScreenUniformMetaData;
+  let splashScreenMetaData;
 
   try {
-    const splashScreenData = await getAppleSplashScreenData(browser, options);
-    const scaleFactorData = await getDeviceScaleFactorData(browser, options);
-    splashScreenUniformMetaData = images.getSplashScreenScaleFactorUnionData(
-      splashScreenData,
-      scaleFactorData,
-    );
+    splashScreenMetaData = await getAppleSplashScreenData(browser, options);
     logger.success('Loaded metadata for iOS platform');
   } catch (e) {
     logger.error(e);
@@ -233,7 +156,7 @@ const getSplashScreenMetaData = async (
     throw e;
   }
 
-  return splashScreenUniformMetaData;
+  return splashScreenMetaData;
 };
 
 const canNavigateTo = (source: string): boolean =>
@@ -321,7 +244,10 @@ const generateImages = async (
 
   const allImages = [
     ...(!options.iconOnly
-      ? images.getSplashScreenImages(splashScreenMetaData, options)
+      ? images.getSplashScreenImages(
+          splashScreenMetaData as LaunchScreenSpec[],
+          options,
+        )
       : []),
     ...(!options.splashOnly ? images.getIconImages(options) : []),
   ];

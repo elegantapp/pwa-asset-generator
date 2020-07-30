@@ -27,11 +27,71 @@
     "device": "10.5\" iPad Pro",
     "portrait": {
       "width": 1668,
+      "height": 2388
+    },
+    "landscape": {
+      "width": 2388,
+      "height": 1668
+    },
+    "scaleFactor": 2
+  },
+  {
+    "device": "9.7\" iPad Pro",
+    "portrait": {
+      "width": 1536,
+      "height": 2048
+    },
+    "landscape": {
+      "width": 2048,
+      "height": 1536
+    },
+    "scaleFactor": 2
+  },
+  {
+    "device": "7.9\" iPad mini",
+    "portrait": {
+      "width": 1536,
+      "height": 2048
+    },
+    "landscape": {
+      "width": 2048,
+      "height": 1536
+    },
+    "scaleFactor": 2
+  },
+  {
+    "device": "10.5\" iPad Air",
+    "portrait": {
+      "width": 1668,
       "height": 2224
     },
     "landscape": {
       "width": 2224,
       "height": 1668
+    },
+    "scaleFactor": 2
+  },
+  {
+    "device": "9.7\" iPad Air",
+    "portrait": {
+      "width": 1536,
+      "height": 2048
+    },
+    "landscape": {
+      "width": 2048,
+      "height": 1536
+    },
+    "scaleFactor": 2
+  },
+  {
+    "device": "10.2\" iPad",
+    "portrait": {
+      "width": 1620,
+      "height": 2160
+    },
+    "landscape": {
+      "width": 2160,
+      "height": 1620
     },
     "scaleFactor": 2
   },
@@ -48,14 +108,38 @@
     "scaleFactor": 2
   },
   {
-    "device": "7.9\" iPad mini 4",
+    "device": "iPhone 11 Pro Max",
     "portrait": {
-      "width": 1536,
-      "height": 2048
+      "width": 1242,
+      "height": 2688
     },
     "landscape": {
-      "width": 2048,
-      "height": 1536
+      "width": 2688,
+      "height": 1242
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 11 Pro",
+    "portrait": {
+      "width": 1125,
+      "height": 2436
+    },
+    "landscape": {
+      "width": 2436,
+      "height": 1125
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 11",
+    "portrait": {
+      "width": 828,
+      "height": 1792
+    },
+    "landscape": {
+      "width": 1792,
+      "height": 828
     },
     "scaleFactor": 2
   },
@@ -110,12 +194,12 @@
   {
     "device": "iPhone 8 Plus",
     "portrait": {
-      "width": 1242,
-      "height": 2208
+      "width": 1080,
+      "height": 1920
     },
     "landscape": {
-      "width": 2208,
-      "height": 1242
+      "width": 1920,
+      "height": 1080
     },
     "scaleFactor": 3
   },
@@ -134,12 +218,12 @@
   {
     "device": "iPhone 7 Plus",
     "portrait": {
-      "width": 1242,
-      "height": 2208
+      "width": 1080,
+      "height": 1920
     },
     "landscape": {
-      "width": 2208,
-      "height": 1242
+      "width": 1920,
+      "height": 1080
     },
     "scaleFactor": 3
   },
@@ -158,12 +242,12 @@
   {
     "device": "iPhone 6s Plus",
     "portrait": {
-      "width": 1242,
-      "height": 2208
+      "width": 1080,
+      "height": 1920
     },
     "landscape": {
-      "width": 2208,
-      "height": 1242
+      "width": 1920,
+      "height": 1080
     },
     "scaleFactor": 3
   },
@@ -180,7 +264,43 @@
     "scaleFactor": 2
   },
   {
-    "device": "iPhone SE",
+    "device": "iPhone 6 Plus",
+    "portrait": {
+      "width": 1080,
+      "height": 1920
+    },
+    "landscape": {
+      "width": 1920,
+      "height": 1080
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 6",
+    "portrait": {
+      "width": 750,
+      "height": 1334
+    },
+    "landscape": {
+      "width": 1334,
+      "height": 750
+    },
+    "scaleFactor": 2
+  },
+  {
+    "device": "4.7\" iPhone SE",
+    "portrait": {
+      "width": 750,
+      "height": 1334
+    },
+    "landscape": {
+      "width": 1334,
+      "height": 750
+    },
+    "scaleFactor": 2
+  },
+  {
+    "device": "4\" iPhone SE",
     "portrait": {
       "width": 640,
       "height": 1136
