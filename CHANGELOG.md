@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.3](https://github.com/onderceylan/pwa-asset-generator/compare/v3.1.2...v3.1.3) (2020-07-30)
+
+
+### Bug Fixes
+
+* **main:** constraint default type to png for manifest icons ([bf6f87c](https://github.com/onderceylan/pwa-asset-generator/commit/bf6f87cf7125796fcba090a98b503111b835cbda)), closes [#337](https://github.com/onderceylan/pwa-asset-generator/issues/337)
+
 ## [3.1.2](https://github.com/onderceylan/pwa-asset-generator/compare/v3.1.1...v3.1.2) (2020-07-30)
 
 
