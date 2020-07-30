@@ -2,11 +2,7 @@ import uniqWith from 'lodash.uniqwith';
 import isEqual from 'lodash.isequal';
 import constants from '../config/constants';
 import { Image, Orientation } from '../models/image';
-import {
-  DeviceFactorSpec,
-  LaunchScreenSpec,
-  SplashScreenSpec,
-} from '../models/spec';
+import { LaunchScreenSpec } from '../models/spec';
 import { Options } from '../models/options';
 
 const mapToSqImageFileObj = (fileNamePrefix: string, size: number): Image => ({
@@ -52,7 +48,7 @@ const getIconImages = (options: Options): Image[] => {
 };
 
 const getSplashScreenImages = (
-  uniformSplashScreenData: SplashScreenSpec[],
+  splashScreenData: LaunchScreenSpec[],
   options: Options,
 ): Image[] => {
   let appleSplashFilenamePrefix = constants.APPLE_SPLASH_FILENAME_PREFIX;
@@ -62,7 +58,7 @@ const getSplashScreenImages = (
   }
 
   return uniqWith(
-    uniformSplashScreenData.reduce((acc: Image[], curr: SplashScreenSpec) => {
+    splashScreenData.reduce((acc: Image[], curr: LaunchScreenSpec) => {
       let images: Image[] = acc;
 
       if (!options.landscapeOnly) {
@@ -95,29 +91,7 @@ const getSplashScreenImages = (
   );
 };
 
-const getSplashScreenScaleFactorUnionData = (
-  launchScreenSpecs: LaunchScreenSpec[],
-  deviceFactorSpecs: DeviceFactorSpec[],
-): SplashScreenSpec[] => {
-  return launchScreenSpecs.map((launchScreenSpec: LaunchScreenSpec) => {
-    const matchedDevice = deviceFactorSpecs.find(
-      (deviceFactorSpec: DeviceFactorSpec) =>
-        deviceFactorSpec.device === launchScreenSpec.device,
-    );
-
-    if (matchedDevice) {
-      return {
-        ...launchScreenSpec,
-        scaleFactor: matchedDevice.scaleFactor,
-      } as SplashScreenSpec;
-    }
-
-    return launchScreenSpec as SplashScreenSpec;
-  });
-};
-
 export default {
   getIconImages,
   getSplashScreenImages,
-  getSplashScreenScaleFactorUnionData,
 };

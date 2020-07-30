@@ -19,11 +19,16 @@ const constants = require('../dist/config/constants').default;
       timeout: constants.BROWSER_TIMEOUT,
     });
 
-    const splashScreenMetaData = await getSplashScreenMetaData({ scrape: true }, browser);
+    const splashScreenMetaData = await getSplashScreenMetaData(
+      { scrape: true },
+      browser,
+    );
     console.log(splashScreenMetaData);
     const jsonData = JSON.stringify(splashScreenMetaData, null, 2);
 
-    await writeFile('./src/config/apple-fallback-data.json', jsonData, { encoding:'utf8' });
+    await writeFile('./src/config/apple-fallback-data.json', jsonData, {
+      encoding: 'utf8',
+    });
     try {
       await killBrowser(browser, chrome);
     } catch (e) {
