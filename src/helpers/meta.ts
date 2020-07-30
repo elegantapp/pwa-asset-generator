@@ -26,7 +26,7 @@ const generateOutputPath = (
     : indexHtmlPath) as string;
 
   if (pathOverride) {
-    return `${pathOverride}/${imageName}.${type}`;
+    return `${pathOverride}/${imageName}.${isManifest ? 'png' : type}`;
   }
 
   if (pathPrefix && !isManifest) {
