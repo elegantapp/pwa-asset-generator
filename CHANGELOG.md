@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.2](https://github.com/onderceylan/pwa-asset-generator/compare/v3.1.1...v3.1.2) (2020-07-30)
+
+
+### Bug Fixes
+
+* **puppets:** updated scraper for latest specs and improve fallback handling ([6506952](https://github.com/onderceylan/pwa-asset-generator/commit/6506952133df437ab191400533fd57585c81d7ff)), closes [#355](https://github.com/onderceylan/pwa-asset-generator/issues/355)
+
 ## [3.1.1](https://github.com/onderceylan/pwa-asset-generator/compare/v3.1.0...v3.1.1) (2020-06-03)
 
 
