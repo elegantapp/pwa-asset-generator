@@ -64,7 +64,7 @@
     "find-process": "1.4.3",
     "lodash.isequal": "4.5.0",
     "lodash.uniqwith": "4.5.0",
-    "meow": "7.0.1",
+    "meow": "7.1.0",
     "mime-types": "2.1.27",
     "progress": "2.0.3",
     "puppeteer-core": "4.0.1",
