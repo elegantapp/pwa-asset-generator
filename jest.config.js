@@ -7,5 +7,6 @@ module.exports = {
   },
   testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(test).[jt]s?(x)'],
   setupFilesAfterEnv: ['./jest.setup.js'],
+  cacheDirectory: '.jest-cache',
   forceExit,
 };

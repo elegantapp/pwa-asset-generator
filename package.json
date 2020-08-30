@@ -8,7 +8,7 @@
     "pwa-asset-generator": "bin/cli"
   },
   "scripts": {
-    "test": "jest -i --verbose",
+    "test": "jest --verbose",
     "test:update": "npm run test:update:visuals && npm run test:update:snapshots",
     "test:update:snapshots": "jest -u",
     "test:update:visuals": "npm run visuals:input-svg && npm run visuals:input-png && npm run visuals:input-html && npm run visuals:input-html-dark && npm run visuals:output-transparent && npm run visuals:output-png",

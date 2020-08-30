@@ -69,7 +69,6 @@ const launchSystemBrowser = (): Promise<LaunchedChrome> => {
   const launchOptions: ChromeLauncherOptions = {
     chromeFlags: constants.CHROME_LAUNCH_ARGS,
     logLevel: 'silent',
-    port: constants.CHROME_LAUNCHER_DEBUG_PORT,
     maxConnectionRetries: constants.CHROME_LAUNCHER_MAX_CONN_RETRIES,
   };
 
