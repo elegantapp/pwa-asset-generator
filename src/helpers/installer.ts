@@ -33,7 +33,8 @@ const getPreferredBrowserRevisionInfo = (): RevisionInfo => {
     process.env.PUPPETEER_CHROMIUM_REVISION ||
     process.env.npm_config_puppeteer_chromium_revision ||
     process.env.npm_package_config_puppeteer_chromium_revision ||
-    require('puppeteer-core/package.json').puppeteer.chromium_revision;
+    require('puppeteer-core/lib/cjs/puppeteer/revisions.js').PUPPETEER_REVISIONS
+      .chromium;
 
   return getBrowserFetcher().revisionInfo(revision);
 };
