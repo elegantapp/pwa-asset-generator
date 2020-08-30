@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/onderceylan/pwa-asset-generator/compare/v3.1.3...v3.2.0) (2020-08-30)
+
+
+### Features
+
+* **main:** enable parallel execution ([98f0464](https://github.com/onderceylan/pwa-asset-generator/commit/98f046441a7930d0393610af7ec6b8156e076542)), closes [#357](https://github.com/onderceylan/pwa-asset-generator/issues/357)
+
 ## [3.1.3](https://github.com/onderceylan/pwa-asset-generator/compare/v3.1.2...v3.1.3) (2020-07-30)
 
 
