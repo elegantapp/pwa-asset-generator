@@ -215,13 +215,17 @@ ${htmlMeta[meta.name]}`;
 const addMetaTagsToIndexPage = async (
   htmlMeta: HTMLMeta,
   indexHtmlFilePath: string,
+  xhtml: boolean,
 ): Promise<void> => {
   if (!(await file.isPathAccessible(indexHtmlFilePath, file.WRITE_ACCESS))) {
     throw Error(`Cannot write to index html file ${indexHtmlFilePath}`);
   }
 
   const indexHtmlFile = await file.readFile(indexHtmlFilePath);
-  const $ = cheerio.load(indexHtmlFile, { decodeEntities: false });
+  const $ = cheerio.load(indexHtmlFile, {
+    decodeEntities: false,
+    xmlMode: xhtml,
+  });
 
   const HEAD_SELECTOR = 'head';
   const hasElement = (selector: string): boolean => {

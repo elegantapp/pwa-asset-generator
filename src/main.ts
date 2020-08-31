@@ -97,7 +97,11 @@ async function generateImages(
   }
 
   if (modOptions.index) {
-    await meta.addMetaTagsToIndexPage(htmlMeta, modOptions.index);
+    await meta.addMetaTagsToIndexPage(
+      htmlMeta,
+      modOptions.index,
+      modOptions.xhtml,
+    );
     logger.success(
       `iOS meta tags are saved to index html file ${modOptions.index}`,
     );
