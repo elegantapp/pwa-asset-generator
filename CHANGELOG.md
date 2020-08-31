@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.1](https://github.com/onderceylan/pwa-asset-generator/compare/v3.2.0...v3.2.1) (2020-08-31)
+
+
+### Bug Fixes
+
+* **main:** fix xhtml option having no effect on module usage ([4dfa9c4](https://github.com/onderceylan/pwa-asset-generator/commit/4dfa9c4c61826c392a735099b456efb4ec3da070)), closes [#351](https://github.com/onderceylan/pwa-asset-generator/issues/351)
+
 # [3.2.0](https://github.com/onderceylan/pwa-asset-generator/compare/v3.1.3...v3.2.0) (2020-08-30)
 
 
