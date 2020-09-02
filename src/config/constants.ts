@@ -151,6 +151,7 @@ export default {
     '--mute-audio',
     '--no-first-run',
     '--headless',
+    '--allow-file-access-from-files'
   ],
 
   CHROME_LAUNCHER_DEBUG_PORT: 9222,
