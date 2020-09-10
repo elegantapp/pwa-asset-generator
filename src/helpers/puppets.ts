@@ -189,7 +189,15 @@ const saveImages = async (
 
       try {
         const page = await browser.newPage();
-        await page.setViewport({ width, height });
+        await page.emulate({
+          userAgent: constants.EMULATED_USER_AGENT,
+          viewport: {
+            width: width / scaleFactor,
+            height: height / scaleFactor,
+            deviceScaleFactor: scaleFactor,
+            isLandscape: orientation === 'landscape'
+          }
+        });
 
         if (address) {
           // Emulate dark mode media feature when html source is provided and darkMode is enabled
