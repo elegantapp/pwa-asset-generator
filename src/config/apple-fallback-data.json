@@ -310,5 +310,17 @@
       "height": 640
     },
     "scaleFactor": 2
+  },
+  {
+    "device": "iPod touch 5th generation and later",
+    "portrait": {
+      "width": 640,
+      "height": 1136
+    },
+    "landscape": {
+      "width": 1136,
+      "height": 640
+    },
+    "scaleFactor": 2
   }
 ]
