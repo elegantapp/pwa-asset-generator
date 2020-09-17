@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.2](https://github.com/onderceylan/pwa-asset-generator/compare/v3.2.1...v3.2.2) (2020-09-17)
+
+
+### Bug Fixes
+
+* **main:** update dimension regex to match new apple hig data ([4303843](https://github.com/onderceylan/pwa-asset-generator/commit/4303843e1f000910b6ae9026499b11b086c24ef6)), closes [#405](https://github.com/onderceylan/pwa-asset-generator/issues/405)
+
 ## [3.2.1](https://github.com/onderceylan/pwa-asset-generator/compare/v3.2.0...v3.2.1) (2020-08-31)
 
 
