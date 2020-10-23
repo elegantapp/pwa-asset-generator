@@ -194,12 +194,12 @@
   {
     "device": "iPhone 8 Plus",
     "portrait": {
-      "width": 1080,
-      "height": 1920
+      "width": 1242,
+      "height": 2208
     },
     "landscape": {
-      "width": 1920,
-      "height": 1080
+      "width": 2208,
+      "height": 1242
     },
     "scaleFactor": 3
   },
@@ -218,12 +218,12 @@
   {
     "device": "iPhone 7 Plus",
     "portrait": {
-      "width": 1080,
-      "height": 1920
+      "width": 1242,
+      "height": 2208
     },
     "landscape": {
-      "width": 1920,
-      "height": 1080
+      "width": 2208,
+      "height": 1242
     },
     "scaleFactor": 3
   },
@@ -242,12 +242,12 @@
   {
     "device": "iPhone 6s Plus",
     "portrait": {
-      "width": 1080,
-      "height": 1920
+      "width": 1242,
+      "height": 2208
     },
     "landscape": {
-      "width": 1920,
-      "height": 1080
+      "width": 2208,
+      "height": 1242
     },
     "scaleFactor": 3
   },
@@ -266,12 +266,12 @@
   {
     "device": "iPhone 6 Plus",
     "portrait": {
-      "width": 1080,
-      "height": 1920
+      "width": 1242,
+      "height": 2208
     },
     "landscape": {
-      "width": 1920,
-      "height": 1080
+      "width": 2208,
+      "height": 1242
     },
     "scaleFactor": 3
   },
