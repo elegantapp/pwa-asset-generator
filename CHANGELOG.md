@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.3](https://github.com/onderceylan/pwa-asset-generator/compare/v3.2.2...v3.2.3) (2020-10-23)
+
+
+### Bug Fixes
+
+* **puppets:** fix wrong splash screen resolution for Apple iPhone Plus devices ([7e59b40](https://github.com/onderceylan/pwa-asset-generator/commit/7e59b40dbaff7f3dde6e85da68d5582ca0b3e14a)), closes [#391](https://github.com/onderceylan/pwa-asset-generator/issues/391)
+* **puppets:** use emulate instead of setViewport to preserve pixel sizes ([e0a0028](https://github.com/onderceylan/pwa-asset-generator/commit/e0a0028e7a0461c85dd7c20487c3175cf38bb7a8))
+
 ## [3.2.2](https://github.com/onderceylan/pwa-asset-generator/compare/v3.2.1...v3.2.2) (2020-09-17)
 
 
