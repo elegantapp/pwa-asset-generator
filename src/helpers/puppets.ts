@@ -42,8 +42,10 @@ const getAppleSplashScreenData = async (
       return Array.from(
         document.querySelectorAll('table')?.[0].querySelectorAll('tbody tr'),
       ).map((tr) => {
-        // https://regex101.com/r/4dwvYf/3
-        const dimensionRegex = new RegExp(/\((\d+)x(\d+)\spx\s@(\d)x\)/gm);
+        // https://regex101.com/r/4dwvYf/4
+        const dimensionRegex = new RegExp(
+          /(\d+)x(\d+)\spt\s\((\d+)x(\d+)\spx\s@(\d)x\)/gm,
+        );
 
         const getParsedSpecs = (
           val: string,
@@ -54,15 +56,15 @@ const getAppleSplashScreenData = async (
             throw Error('Regex match failed while scraping the specs');
           }
 
-          const width = parseInt(regexMatch[1], 10);
-          const height = parseInt(regexMatch[2], 10);
-          const scaleFactor = parseInt(regexMatch[3], 10);
+          const widthInPoints = parseInt(regexMatch[1], 10);
+          const heightInPoints = parseInt(regexMatch[2], 10);
+          const scaleFactor = parseInt(regexMatch[5], 10);
 
           if (
-            width === 0 ||
-            Number.isNaN(width) ||
-            height === 0 ||
-            Number.isNaN(height) ||
+            widthInPoints === 0 ||
+            Number.isNaN(widthInPoints) ||
+            heightInPoints === 0 ||
+            Number.isNaN(heightInPoints) ||
             scaleFactor === 0 ||
             Number.isNaN(scaleFactor)
           ) {
@@ -70,8 +72,8 @@ const getAppleSplashScreenData = async (
           }
 
           return {
-            width,
-            height,
+            width: widthInPoints * scaleFactor,
+            height: heightInPoints * scaleFactor,
             scaleFactor,
           };
         };
@@ -194,8 +196,8 @@ const saveImages = async (
             width: width / scaleFactor,
             height: height / scaleFactor,
             deviceScaleFactor: scaleFactor,
-            isLandscape: orientation === 'landscape'
-          }
+            isLandscape: orientation === 'landscape',
+          },
         });
 
         if (address) {

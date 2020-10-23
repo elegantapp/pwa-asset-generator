@@ -21,7 +21,7 @@ export interface Image {
    Key defaults to undefined for icons
 
    */
-  scaleFactor?: number;
+  scaleFactor: number;
 
   /**
    Device orientation used for generating HTML meta tags for iOS splash screens

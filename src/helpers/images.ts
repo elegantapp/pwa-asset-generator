@@ -10,6 +10,7 @@ const mapToSqImageFileObj = (fileNamePrefix: string, size: number): Image => ({
   width: size,
   height: size,
   orientation: null,
+  scaleFactor: 1,
 });
 
 const mapToImageFileObj = (
