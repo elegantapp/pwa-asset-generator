@@ -115,7 +115,11 @@ async function generateImages(
     logger.raw(`\n${meta.formatMetaTags(htmlMeta)}\n`);
   }
 
-  return { savedImages, htmlMeta, manifestJsonContent };
+  return {
+    savedImages,
+    htmlMeta,
+    manifestJsonContent,
+  };
 }
 
 /**

@@ -93,6 +93,17 @@ describe('generates meta', () => {
       expect(result).toMatchSnapshot();
     });
 
+    test('mstile static tile image html', async () => {
+      const result = await generateTempImages({
+        scrape: false,
+        iconOnly: true,
+        mstile: true,
+        log: false,
+      });
+
+      expect(result).toMatchSnapshot();
+    });
+
     test('dark mode splash screen html', async () => {
       const result = await generateTempImages({
         scrape: false,
@@ -443,6 +454,7 @@ describe('visually compares generated images with', () => {
         threshold: 0.5,
       },
     );
+
     return {
       numDiffPixels,
       diff,
@@ -475,8 +487,8 @@ describe('visually compares generated images with', () => {
     );
 
     return result.savedImages.map((savedImage: SavedImage) => {
-      const matchedSnapshot = snapshots.find((snapshot) =>
-        snapshot.includes(savedImage.name),
+      const matchedSnapshot = snapshots.find(
+        (snapshot: string) => path.parse(snapshot).name === savedImage.name,
       );
 
       const looksSame = doFilesLookSame(
@@ -503,6 +515,7 @@ describe('visually compares generated images with', () => {
         {
           scrape: false,
           log: false,
+          mstile: true,
           background: 'coral',
         },
         './static/logo.png',

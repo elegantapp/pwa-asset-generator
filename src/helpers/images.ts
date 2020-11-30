@@ -5,10 +5,14 @@ import { Image, Orientation } from '../models/image';
 import { LaunchScreenSpec } from '../models/spec';
 import { Options } from '../models/options';
 
-const mapToSqImageFileObj = (fileNamePrefix: string, size: number): Image => ({
-  name: `${fileNamePrefix}-${size}`,
-  width: size,
-  height: size,
+const mapToIconImageFileObj = (
+  fileNamePrefix: string,
+  width: number,
+  height?: number,
+): Image => ({
+  name: `${fileNamePrefix}-${width}${height ? `-${height}` : ''}`,
+  width,
+  height: height ?? width,
   orientation: null,
   scaleFactor: 1,
 });
@@ -30,10 +34,10 @@ const mapToImageFileObj = (
 const getIconImages = (options: Options): Image[] => {
   let icons = [
     ...constants.APPLE_ICON_SIZES.map((size) =>
-      mapToSqImageFileObj(constants.APPLE_ICON_FILENAME_PREFIX, size),
+      mapToIconImageFileObj(constants.APPLE_ICON_FILENAME_PREFIX, size),
     ),
     ...constants.MANIFEST_ICON_SIZES.map((size) =>
-      mapToSqImageFileObj(constants.MANIFEST_ICON_FILENAME_PREFIX, size),
+      mapToIconImageFileObj(constants.MANIFEST_ICON_FILENAME_PREFIX, size),
     ),
   ];
 
@@ -41,10 +45,28 @@ const getIconImages = (options: Options): Image[] => {
     icons = [
       ...icons,
       ...constants.FAVICON_SIZES.map((size) =>
-        mapToSqImageFileObj(constants.FAVICON_FILENAME_PREFIX, size),
+        mapToIconImageFileObj(constants.FAVICON_FILENAME_PREFIX, size),
       ),
     ];
   }
+
+  if (options.mstile) {
+    icons = [
+      ...icons,
+      ...constants.MS_ICON_SIZES.map((size) => {
+        if (typeof size === 'object') {
+          return mapToIconImageFileObj(
+            constants.MS_ICON_FILENAME_PREFIX,
+            size.width,
+            size.height,
+          );
+        }
+
+        return mapToIconImageFileObj(constants.MS_ICON_FILENAME_PREFIX, size);
+      }),
+    ];
+  }
+
   return uniqWith(icons, isEqual);
 };
 

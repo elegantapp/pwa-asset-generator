@@ -26,6 +26,7 @@ $ pwa-asset-generator --help
     -h --splash-only            Only generate splash screens  [default: false]
     -c --icon-only              Only generate icons  [default: false]
     -f --favicon                Generate favicon image and HTML meta tag  [default: false]
+    -w --mstile                 Generate Windows static tile icons and export a browserconfig.xml file content  [default: false]
     -e --maskable               Declare icons in manifest file as maskable icons  [default: true]
     -l --landscape-only         Only generate landscape splash screens  [default: false]
     -r --portrait-only          Only generate portrait splash screens  [default: false]
@@ -60,6 +61,7 @@ $ pwa-asset-generator --help
     --splash-only
     --icon-only
     --favicon
+    --mstile
     --maskable false
     --landscape-only
     --portrait-only

@@ -15,7 +15,7 @@
     "visuals:output-png": "rimraf ./src/__snapshots__/visual/output-png && node ./bin/cli ./static/logo.svg ./src/__snapshots__/visual/output-png -s false -t png -b coral",
     "visuals:output-transparent": "rimraf ./src/__snapshots__/visual/output-transparent && node ./bin/cli ./static/logo.svg ./src/__snapshots__/visual/output-transparent -s false -b -t png transparent -o false",
     "visuals:input-svg": "rimraf ./src/__snapshots__/visual/input-svg && node ./bin/cli ./static/logo.svg ./src/__snapshots__/visual/input-svg -s false -b coral",
-    "visuals:input-png": "rimraf ./src/__snapshots__/visual/input-png && node ./bin/cli ./static/logo.png ./src/__snapshots__/visual/input-png -s false -b coral",
+    "visuals:input-png": "rimraf ./src/__snapshots__/visual/input-png && node ./bin/cli ./static/logo.png ./src/__snapshots__/visual/input-png -s false -b coral -w",
     "visuals:input-html": "rimraf ./src/__snapshots__/visual/input-html && node ./bin/cli ./static/logo.html ./src/__snapshots__/visual/input-html -s false",
     "visuals:input-html-dark": "rimraf ./src/__snapshots__/visual/input-html-dark && node ./bin/cli ./static/logo.html ./src/__snapshots__/visual/input-html-dark -s false -d true",
     "commit": "git-cz",
@@ -32,7 +32,7 @@
     "url": "https://github.com/onderceylan/pwa-asset-generator.git"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=10.12.0"
   },
   "keywords": [
     "pwa",

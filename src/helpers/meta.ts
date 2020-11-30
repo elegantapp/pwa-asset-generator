@@ -90,6 +90,22 @@ const generateFaviconHtml = (
     .join('');
 };
 
+const generateMsTileImageHtml = (
+  savedImages: SavedImage[],
+  options: Options,
+): string => {
+  return savedImages
+    .filter((image) => image.name.startsWith(constants.MS_ICON_FILENAME_PREFIX))
+    .map(({ width, height, path, name }) =>
+      constants.MSTILE_IMAGE_META_HTML(
+        constants.MSTILE_SIZE_ELEMENT_NAME_MAP[`${width}x${height}`],
+        generateOutputPath(options, name, path),
+        options.xhtml,
+      ),
+    )
+    .join('');
+};
+
 const generateAppleLaunchImageHtml = (
   savedImages: SavedImage[],
   options: Options,
@@ -126,10 +142,13 @@ const generateHtmlForIndexPage = (
 
   if (!options.splashOnly) {
     if (options.favicon) {
-      htmlMeta.favicon = `${generateFaviconHtml(savedImages, options)}`;
+      htmlMeta[HTMLMetaNames.favicon] = `${generateFaviconHtml(
+        savedImages,
+        options,
+      )}`;
     }
 
-    htmlMeta.appleTouchIcon = `${generateAppleTouchIconHtml(
+    htmlMeta[HTMLMetaNames.appleTouchIcon] = `${generateAppleTouchIconHtml(
       savedImages,
       options,
     )}`;
@@ -137,18 +156,21 @@ const generateHtmlForIndexPage = (
 
   if (!options.iconOnly) {
     if (options.darkMode) {
-      htmlMeta.appleLaunchImageDarkMode = `${generateAppleLaunchImageHtml(
-        savedImages,
-        options,
-        true,
-      )}`;
+      htmlMeta[
+        HTMLMetaNames.appleLaunchImageDarkMode
+      ] = `${generateAppleLaunchImageHtml(savedImages, options, true)}`;
     } else {
-      htmlMeta.appleLaunchImage = `${generateAppleLaunchImageHtml(
-        savedImages,
-        options,
-        false,
-      )}`;
+      htmlMeta[
+        HTMLMetaNames.appleLaunchImage
+      ] = `${generateAppleLaunchImageHtml(savedImages, options, false)}`;
     }
+  }
+
+  if (options.mstile) {
+    htmlMeta[HTMLMetaNames.msTileImage] = `${generateMsTileImageHtml(
+      savedImages,
+      options,
+    )}`;
   }
 
   if (options.singleQuotes) {
@@ -273,5 +295,6 @@ export default {
   addIconsToManifest,
   addMetaTagsToIndexPage,
   generateHtmlForIndexPage,
+  generateBrowserConfigXml: generateMsTileImageHtml,
   generateIconsContentForManifest,
 };

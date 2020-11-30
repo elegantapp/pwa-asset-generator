@@ -49,6 +49,8 @@ PWA Asset Generator automates the image generation in a creative way. Having [Pu
 
 * Supports flexible tag formatting and path customization options to comply with various development environments. You can adjust your output using single quotes `--single-quotes`, self-closing tags `--xhtml`, path prefixes `--path` and path overrides `--path-override` 📝
 
+* Supports generating classic web app icons such as favicons `--favicon` and Windows static tiles `--mstile` ⏪
+
 ## Install
 
 ```
@@ -87,6 +89,7 @@ $ pwa-asset-generator --help
     -h --splash-only            Only generate splash screens  [default: false]
     -c --icon-only              Only generate icons  [default: false]
     -f --favicon                Generate favicon image and HTML meta tag  [default: false]
+    -w --mstile                 Generate Windows static tile icons and export a browserconfig.xml file content  [default: false]
     -e --maskable               Declare icons in manifest file as maskable icons  [default: true]
     -l --landscape-only         Only generate landscape splash screens  [default: false]
     -r --portrait-only          Only generate portrait splash screens  [default: false]
@@ -121,6 +124,7 @@ $ pwa-asset-generator --help
     --splash-only
     --icon-only
     --favicon
+    --mstile
     --maskable false
     --landscape-only
     --portrait-only
