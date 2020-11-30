@@ -185,7 +185,7 @@ const saveImages = async (
   return Promise.all(
     imageList.map(async ({ name, width, height, scaleFactor, orientation }) => {
       const { quality } = options;
-      const type = name.includes('manifest') ? 'png' : options.type;
+      const type = name.includes('icon') ? 'png' : options.type;
       const path = file.getImageSavePath(name, output, type);
 
       try {

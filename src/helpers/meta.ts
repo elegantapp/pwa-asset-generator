@@ -64,9 +64,8 @@ const generateAppleTouchIconHtml = (
     .filter((image) =>
       image.name.startsWith(constants.APPLE_ICON_FILENAME_PREFIX),
     )
-    .map(({ width, path, name }) =>
+    .map(({ path, name }) =>
       constants.APPLE_TOUCH_ICON_META_HTML(
-        width,
         generateOutputPath(options, name, path),
         options.xhtml,
       ),
