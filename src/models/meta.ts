@@ -4,6 +4,7 @@ export enum HTMLMetaNames {
   appleMobileWebAppCapable = 'appleMobileWebAppCapable',
   appleLaunchImage = 'appleLaunchImage',
   appleLaunchImageDarkMode = 'appleLaunchImageDarkMode',
+  msTileImage = 'msTileImage',
 }
 
 export interface HTMLMeta {
@@ -12,6 +13,7 @@ export interface HTMLMeta {
   [HTMLMetaNames.appleMobileWebAppCapable]: string;
   [HTMLMetaNames.appleLaunchImage]?: string;
   [HTMLMetaNames.appleLaunchImageDarkMode]?: string;
+  [HTMLMetaNames.msTileImage]?: string;
 }
 
 export interface HTMLMetaSelector {

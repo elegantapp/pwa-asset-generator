@@ -1448,6 +1448,94 @@ Object {
 }
 `;
 
+exports[`generates meta resulting an output with mstile static tile image html 1`] = `
+Object {
+  "htmlMeta": Object {
+    "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
+",
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"temp/apple-icon-180.png\\">
+",
+    "msTileImage": "<meta name=\\"msapplication-square70x70logo\\" content=\\"temp/mstile-icon-128.png\\">
+<meta name=\\"msapplication-square150x150logo\\" content=\\"temp/mstile-icon-270.png\\">
+<meta name=\\"msapplication-square310x310logo\\" content=\\"temp/mstile-icon-558.png\\">
+<meta name=\\"msapplication-wide310x150logo\\" content=\\"temp/mstile-icon-558-270.png\\">
+",
+  },
+  "manifestJsonContent": Array [
+    Object {
+      "purpose": "maskable any",
+      "sizes": "192x192",
+      "src": "temp/manifest-icon-192.png",
+      "type": "image/png",
+    },
+    Object {
+      "purpose": "maskable any",
+      "sizes": "512x512",
+      "src": "temp/manifest-icon-512.png",
+      "type": "image/png",
+    },
+  ],
+  "savedImages": Array [
+    Object {
+      "height": 180,
+      "name": "apple-icon-180",
+      "orientation": null,
+      "path": "temp/apple-icon-180.png",
+      "scaleFactor": 1,
+      "width": 180,
+    },
+    Object {
+      "height": 192,
+      "name": "manifest-icon-192",
+      "orientation": null,
+      "path": "temp/manifest-icon-192.png",
+      "scaleFactor": 1,
+      "width": 192,
+    },
+    Object {
+      "height": 512,
+      "name": "manifest-icon-512",
+      "orientation": null,
+      "path": "temp/manifest-icon-512.png",
+      "scaleFactor": 1,
+      "width": 512,
+    },
+    Object {
+      "height": 128,
+      "name": "mstile-icon-128",
+      "orientation": null,
+      "path": "temp/mstile-icon-128.png",
+      "scaleFactor": 1,
+      "width": 128,
+    },
+    Object {
+      "height": 270,
+      "name": "mstile-icon-270",
+      "orientation": null,
+      "path": "temp/mstile-icon-270.png",
+      "scaleFactor": 1,
+      "width": 270,
+    },
+    Object {
+      "height": 558,
+      "name": "mstile-icon-558",
+      "orientation": null,
+      "path": "temp/mstile-icon-558.png",
+      "scaleFactor": 1,
+      "width": 558,
+    },
+    Object {
+      "height": 270,
+      "name": "mstile-icon-558-270",
+      "orientation": null,
+      "path": "temp/mstile-icon-558-270.png",
+      "scaleFactor": 1,
+      "width": 558,
+    },
+  ],
+}
+`;
+
 exports[`generates meta resulting an output with path prefix 1`] = `
 Object {
   "htmlMeta": Object {

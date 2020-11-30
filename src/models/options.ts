@@ -142,6 +142,13 @@ export interface Options {
    @default false
    */
   readonly darkMode: boolean;
+
+  /**
+   Generate Windows static tile icons and export a browserconfig.xml file content
+
+   @default false
+   */
+  readonly mstile: boolean;
 }
 
 export type CLIOptions = Partial<Options>;

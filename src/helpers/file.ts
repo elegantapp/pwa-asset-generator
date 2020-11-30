@@ -123,18 +123,9 @@ const isPathAccessible = (
   mode?: number | undefined,
 ): Promise<boolean> => promisify(fs.access)(filePath, mode).then(() => true);
 
-// TODO: switch to fs.mkdir('', { recursive: true }) when node engine > 10.12.0 targeted
 const makeDirRecursiveSync = (dirPath: string): string => {
-  return path
-    .resolve(dirPath)
-    .split(path.sep)
-    .reduce((prevPath, folder) => {
-      const currentPath = path.join(prevPath, folder, path.sep);
-      if (!fs.existsSync(currentPath)) {
-        fs.mkdirSync(currentPath);
-      }
-      return currentPath;
-    }, '');
+  fs.mkdirSync(dirPath, { recursive: true });
+  return dirPath;
 };
 
 export default {
