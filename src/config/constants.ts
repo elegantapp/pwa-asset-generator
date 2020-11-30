@@ -161,7 +161,8 @@ export default {
     'https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/',
 
   // Apple platform specs: https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/app-icon/
-  APPLE_ICON_SIZES: [180, 167, 152, 120],
+  // https://web.dev/apple-touch-icon/
+  APPLE_ICON_SIZES: [180],
 
   // Android platform specs: https://developers.google.com/web/fundamentals/web-app-manifest/#icons
   // Windows platform specs: https://docs.microsoft.com/en-us/microsoft-edge/progressive-web-apps/get-started
@@ -221,14 +222,8 @@ export default {
 </body>
 </html>`,
 
-  APPLE_TOUCH_ICON_META_HTML: (
-    size: number,
-    url: string,
-    xhtml: boolean,
-  ): string =>
-    `<link rel="apple-touch-icon" sizes="${size}x${size}" href="${url}"${
-      xhtml ? ' /' : ''
-    }>
+  APPLE_TOUCH_ICON_META_HTML: (url: string, xhtml: boolean): string =>
+    `<link rel="apple-touch-icon" href="${url}"${xhtml ? ' /' : ''}>
 `,
 
   APPLE_LAUNCH_SCREEN_META_HTML: (

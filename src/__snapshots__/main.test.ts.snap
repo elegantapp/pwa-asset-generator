@@ -32,10 +32,7 @@ Object {
 ",
     "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
 ",
-    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"temp/apple-icon-180.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"temp/apple-icon-167.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"temp/apple-icon-152.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"temp/apple-icon-120.jpg\\">
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"temp/apple-icon-180.png\\">
 ",
   },
   "manifestJsonContent": Array [
@@ -265,33 +262,9 @@ Object {
       "height": 180,
       "name": "apple-icon-180",
       "orientation": null,
-      "path": "temp/apple-icon-180.jpg",
+      "path": "temp/apple-icon-180.png",
       "scaleFactor": 1,
       "width": 180,
-    },
-    Object {
-      "height": 167,
-      "name": "apple-icon-167",
-      "orientation": null,
-      "path": "temp/apple-icon-167.jpg",
-      "scaleFactor": 1,
-      "width": 167,
-    },
-    Object {
-      "height": 152,
-      "name": "apple-icon-152",
-      "orientation": null,
-      "path": "temp/apple-icon-152.jpg",
-      "scaleFactor": 1,
-      "width": 152,
-    },
-    Object {
-      "height": 120,
-      "name": "apple-icon-120",
-      "orientation": null,
-      "path": "temp/apple-icon-120.jpg",
-      "scaleFactor": 1,
-      "width": 120,
     },
     Object {
       "height": 192,
@@ -318,10 +291,7 @@ Object {
   "htmlMeta": Object {
     "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
 ",
-    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"temp/apple-icon-180.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"temp/apple-icon-167.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"temp/apple-icon-152.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"temp/apple-icon-120.jpg\\">
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"temp/apple-icon-180.png\\">
 ",
   },
   "manifestJsonContent": Array [
@@ -343,33 +313,9 @@ Object {
       "height": 180,
       "name": "apple-icon-180",
       "orientation": null,
-      "path": "temp/apple-icon-180.jpg",
+      "path": "temp/apple-icon-180.png",
       "scaleFactor": 1,
       "width": 180,
-    },
-    Object {
-      "height": 167,
-      "name": "apple-icon-167",
-      "orientation": null,
-      "path": "temp/apple-icon-167.jpg",
-      "scaleFactor": 1,
-      "width": 167,
-    },
-    Object {
-      "height": 152,
-      "name": "apple-icon-152",
-      "orientation": null,
-      "path": "temp/apple-icon-152.jpg",
-      "scaleFactor": 1,
-      "width": 152,
-    },
-    Object {
-      "height": 120,
-      "name": "apple-icon-120",
-      "orientation": null,
-      "path": "temp/apple-icon-120.jpg",
-      "scaleFactor": 1,
-      "width": 120,
     },
     Object {
       "height": 192,
@@ -1150,12 +1096,9 @@ Object {
   "htmlMeta": Object {
     "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
 ",
-    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"temp/apple-icon-180.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"temp/apple-icon-167.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"temp/apple-icon-152.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"temp/apple-icon-120.jpg\\">
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"temp/apple-icon-180.png\\">
 ",
-    "favicon": "<link rel=\\"icon\\" type=\\"image/jpeg\\" sizes=\\"196x196\\" href=\\"temp/favicon-196.jpg\\">
+    "favicon": "<link rel=\\"icon\\" type=\\"image/png\\" sizes=\\"196x196\\" href=\\"temp/favicon-196.png\\">
 ",
   },
   "manifestJsonContent": Array [
@@ -1177,33 +1120,9 @@ Object {
       "height": 180,
       "name": "apple-icon-180",
       "orientation": null,
-      "path": "temp/apple-icon-180.jpg",
+      "path": "temp/apple-icon-180.png",
       "scaleFactor": 1,
       "width": 180,
-    },
-    Object {
-      "height": 167,
-      "name": "apple-icon-167",
-      "orientation": null,
-      "path": "temp/apple-icon-167.jpg",
-      "scaleFactor": 1,
-      "width": 167,
-    },
-    Object {
-      "height": 152,
-      "name": "apple-icon-152",
-      "orientation": null,
-      "path": "temp/apple-icon-152.jpg",
-      "scaleFactor": 1,
-      "width": 152,
-    },
-    Object {
-      "height": 120,
-      "name": "apple-icon-120",
-      "orientation": null,
-      "path": "temp/apple-icon-120.jpg",
-      "scaleFactor": 1,
-      "width": 120,
     },
     Object {
       "height": 192,
@@ -1225,7 +1144,7 @@ Object {
       "height": 196,
       "name": "favicon-196",
       "orientation": null,
-      "path": "temp/favicon-196.jpg",
+      "path": "temp/favicon-196.png",
       "scaleFactor": 1,
       "width": 196,
     },
@@ -1265,12 +1184,9 @@ Object {
 ",
     "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
 ",
-    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"temp/apple-icon-180.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"temp/apple-icon-167.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"temp/apple-icon-152.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"temp/apple-icon-120.jpg\\">
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"temp/apple-icon-180.png\\">
 ",
-    "favicon": "<link rel=\\"icon\\" type=\\"image/jpeg\\" sizes=\\"196x196\\" href=\\"temp/favicon-196.jpg\\">
+    "favicon": "<link rel=\\"icon\\" type=\\"image/png\\" sizes=\\"196x196\\" href=\\"temp/favicon-196.png\\">
 ",
   },
   "manifestJsonContent": Array [
@@ -1500,33 +1416,9 @@ Object {
       "height": 180,
       "name": "apple-icon-180",
       "orientation": null,
-      "path": "temp/apple-icon-180.jpg",
+      "path": "temp/apple-icon-180.png",
       "scaleFactor": 1,
       "width": 180,
-    },
-    Object {
-      "height": 167,
-      "name": "apple-icon-167",
-      "orientation": null,
-      "path": "temp/apple-icon-167.jpg",
-      "scaleFactor": 1,
-      "width": 167,
-    },
-    Object {
-      "height": 152,
-      "name": "apple-icon-152",
-      "orientation": null,
-      "path": "temp/apple-icon-152.jpg",
-      "scaleFactor": 1,
-      "width": 152,
-    },
-    Object {
-      "height": 120,
-      "name": "apple-icon-120",
-      "orientation": null,
-      "path": "temp/apple-icon-120.jpg",
-      "scaleFactor": 1,
-      "width": 120,
     },
     Object {
       "height": 192,
@@ -1548,7 +1440,7 @@ Object {
       "height": 196,
       "name": "favicon-196",
       "orientation": null,
-      "path": "temp/favicon-196.jpg",
+      "path": "temp/favicon-196.png",
       "scaleFactor": 1,
       "width": 196,
     },
@@ -1588,10 +1480,7 @@ Object {
 ",
     "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
 ",
-    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"%PUBLIC_URL%/temp/apple-icon-180.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"%PUBLIC_URL%/temp/apple-icon-167.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"%PUBLIC_URL%/temp/apple-icon-152.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"%PUBLIC_URL%/temp/apple-icon-120.jpg\\">
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"%PUBLIC_URL%/temp/apple-icon-180.png\\">
 ",
   },
   "manifestJsonContent": Array [
@@ -1821,33 +1710,9 @@ Object {
       "height": 180,
       "name": "apple-icon-180",
       "orientation": null,
-      "path": "temp/apple-icon-180.jpg",
+      "path": "temp/apple-icon-180.png",
       "scaleFactor": 1,
       "width": 180,
-    },
-    Object {
-      "height": 167,
-      "name": "apple-icon-167",
-      "orientation": null,
-      "path": "temp/apple-icon-167.jpg",
-      "scaleFactor": 1,
-      "width": 167,
-    },
-    Object {
-      "height": 152,
-      "name": "apple-icon-152",
-      "orientation": null,
-      "path": "temp/apple-icon-152.jpg",
-      "scaleFactor": 1,
-      "width": 152,
-    },
-    Object {
-      "height": 120,
-      "name": "apple-icon-120",
-      "orientation": null,
-      "path": "temp/apple-icon-120.jpg",
-      "scaleFactor": 1,
-      "width": 120,
     },
     Object {
       "height": 192,
@@ -1874,12 +1739,9 @@ Object {
   "htmlMeta": Object {
     "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\" />
 ",
-    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"temp/apple-icon-180.jpg\\" />
-<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"temp/apple-icon-167.jpg\\" />
-<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"temp/apple-icon-152.jpg\\" />
-<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"temp/apple-icon-120.jpg\\" />
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"temp/apple-icon-180.png\\" />
 ",
-    "favicon": "<link rel=\\"icon\\" type=\\"image/jpeg\\" sizes=\\"196x196\\" href=\\"temp/favicon-196.jpg\\" />
+    "favicon": "<link rel=\\"icon\\" type=\\"image/png\\" sizes=\\"196x196\\" href=\\"temp/favicon-196.png\\" />
 ",
   },
   "manifestJsonContent": Array [
@@ -1901,33 +1763,9 @@ Object {
       "height": 180,
       "name": "apple-icon-180",
       "orientation": null,
-      "path": "temp/apple-icon-180.jpg",
+      "path": "temp/apple-icon-180.png",
       "scaleFactor": 1,
       "width": 180,
-    },
-    Object {
-      "height": 167,
-      "name": "apple-icon-167",
-      "orientation": null,
-      "path": "temp/apple-icon-167.jpg",
-      "scaleFactor": 1,
-      "width": 167,
-    },
-    Object {
-      "height": 152,
-      "name": "apple-icon-152",
-      "orientation": null,
-      "path": "temp/apple-icon-152.jpg",
-      "scaleFactor": 1,
-      "width": 152,
-    },
-    Object {
-      "height": 120,
-      "name": "apple-icon-120",
-      "orientation": null,
-      "path": "temp/apple-icon-120.jpg",
-      "scaleFactor": 1,
-      "width": 120,
     },
     Object {
       "height": 192,
@@ -1949,7 +1787,7 @@ Object {
       "height": 196,
       "name": "favicon-196",
       "orientation": null,
-      "path": "temp/favicon-196.jpg",
+      "path": "temp/favicon-196.png",
       "scaleFactor": 1,
       "width": 196,
     },
@@ -1962,10 +1800,7 @@ Object {
   "htmlMeta": Object {
     "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\" />
 ",
-    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"temp/apple-icon-180.jpg\\" />
-<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"temp/apple-icon-167.jpg\\" />
-<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"temp/apple-icon-152.jpg\\" />
-<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"temp/apple-icon-120.jpg\\" />
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"temp/apple-icon-180.png\\" />
 ",
   },
   "manifestJsonContent": Array [
@@ -1987,33 +1822,9 @@ Object {
       "height": 180,
       "name": "apple-icon-180",
       "orientation": null,
-      "path": "temp/apple-icon-180.jpg",
+      "path": "temp/apple-icon-180.png",
       "scaleFactor": 1,
       "width": 180,
-    },
-    Object {
-      "height": 167,
-      "name": "apple-icon-167",
-      "orientation": null,
-      "path": "temp/apple-icon-167.jpg",
-      "scaleFactor": 1,
-      "width": 167,
-    },
-    Object {
-      "height": 152,
-      "name": "apple-icon-152",
-      "orientation": null,
-      "path": "temp/apple-icon-152.jpg",
-      "scaleFactor": 1,
-      "width": 152,
-    },
-    Object {
-      "height": 120,
-      "name": "apple-icon-120",
-      "orientation": null,
-      "path": "temp/apple-icon-120.jpg",
-      "scaleFactor": 1,
-      "width": 120,
     },
     Object {
       "height": 192,
@@ -2314,12 +2125,9 @@ Object {
 ",
     "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
 ",
-    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"./my-custom-path-override/apple-icon-180.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"./my-custom-path-override/apple-icon-167.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"./my-custom-path-override/apple-icon-152.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"./my-custom-path-override/apple-icon-120.jpg\\">
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"./my-custom-path-override/apple-icon-180.jpg\\">
 ",
-    "favicon": "<link rel=\\"icon\\" type=\\"image/jpeg\\" sizes=\\"196x196\\" href=\\"./my-custom-path-override/favicon-196.jpg\\">
+    "favicon": "<link rel=\\"icon\\" type=\\"image/png\\" sizes=\\"196x196\\" href=\\"./my-custom-path-override/favicon-196.jpg\\">
 ",
   },
   "manifestJsonContent": Array [
@@ -2549,33 +2357,9 @@ Object {
       "height": 180,
       "name": "apple-icon-180",
       "orientation": null,
-      "path": "temp/apple-icon-180.jpg",
+      "path": "temp/apple-icon-180.png",
       "scaleFactor": 1,
       "width": 180,
-    },
-    Object {
-      "height": 167,
-      "name": "apple-icon-167",
-      "orientation": null,
-      "path": "temp/apple-icon-167.jpg",
-      "scaleFactor": 1,
-      "width": 167,
-    },
-    Object {
-      "height": 152,
-      "name": "apple-icon-152",
-      "orientation": null,
-      "path": "temp/apple-icon-152.jpg",
-      "scaleFactor": 1,
-      "width": 152,
-    },
-    Object {
-      "height": 120,
-      "name": "apple-icon-120",
-      "orientation": null,
-      "path": "temp/apple-icon-120.jpg",
-      "scaleFactor": 1,
-      "width": 120,
     },
     Object {
       "height": 192,
@@ -2597,7 +2381,7 @@ Object {
       "height": 196,
       "name": "favicon-196",
       "orientation": null,
-      "path": "temp/favicon-196.jpg",
+      "path": "temp/favicon-196.png",
       "scaleFactor": 1,
       "width": 196,
     },
@@ -2610,10 +2394,7 @@ Object {
   "htmlMeta": Object {
     "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
 ",
-    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"temp/apple-icon-180.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"temp/apple-icon-167.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"temp/apple-icon-152.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"temp/apple-icon-120.jpg\\">
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"temp/apple-icon-180.png\\">
 ",
   },
   "manifestJsonContent": Array [
@@ -2635,33 +2416,9 @@ Object {
       "height": 180,
       "name": "apple-icon-180",
       "orientation": null,
-      "path": "temp/apple-icon-180.jpg",
+      "path": "temp/apple-icon-180.png",
       "scaleFactor": 1,
       "width": 180,
-    },
-    Object {
-      "height": 167,
-      "name": "apple-icon-167",
-      "orientation": null,
-      "path": "temp/apple-icon-167.jpg",
-      "scaleFactor": 1,
-      "width": 167,
-    },
-    Object {
-      "height": 152,
-      "name": "apple-icon-152",
-      "orientation": null,
-      "path": "temp/apple-icon-152.jpg",
-      "scaleFactor": 1,
-      "width": 152,
-    },
-    Object {
-      "height": 120,
-      "name": "apple-icon-120",
-      "orientation": null,
-      "path": "temp/apple-icon-120.jpg",
-      "scaleFactor": 1,
-      "width": 120,
     },
     Object {
       "height": 192,
@@ -2688,10 +2445,7 @@ Object {
   "htmlMeta": Object {
     "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
 ",
-    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" sizes=\\"180x180\\" href=\\"./my-custom-path-override/apple-icon-180.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"167x167\\" href=\\"./my-custom-path-override/apple-icon-167.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"152x152\\" href=\\"./my-custom-path-override/apple-icon-152.jpg\\">
-<link rel=\\"apple-touch-icon\\" sizes=\\"120x120\\" href=\\"./my-custom-path-override/apple-icon-120.jpg\\">
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"./my-custom-path-override/apple-icon-180.jpg\\">
 ",
   },
   "manifestJsonContent": Array [
@@ -2713,33 +2467,9 @@ Object {
       "height": 180,
       "name": "apple-icon-180",
       "orientation": null,
-      "path": "temp/apple-icon-180.jpg",
+      "path": "temp/apple-icon-180.png",
       "scaleFactor": 1,
       "width": 180,
-    },
-    Object {
-      "height": 167,
-      "name": "apple-icon-167",
-      "orientation": null,
-      "path": "temp/apple-icon-167.jpg",
-      "scaleFactor": 1,
-      "width": 167,
-    },
-    Object {
-      "height": 152,
-      "name": "apple-icon-152",
-      "orientation": null,
-      "path": "temp/apple-icon-152.jpg",
-      "scaleFactor": 1,
-      "width": 152,
-    },
-    Object {
-      "height": 120,
-      "name": "apple-icon-120",
-      "orientation": null,
-      "path": "temp/apple-icon-120.jpg",
-      "scaleFactor": 1,
-      "width": 120,
     },
     Object {
       "height": 192,
