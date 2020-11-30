@@ -149,6 +149,13 @@ export interface Options {
    @default false
    */
   readonly mstile: boolean;
+
+  /**
+   Disable sandbox on bundled Chromium on Linux platforms - not recommended
+
+   @default false
+   */
+  readonly noSandbox: boolean;
 }
 
 export type CLIOptions = Partial<Options>;

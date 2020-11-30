@@ -240,9 +240,20 @@ const generateImages = async (
   options: Options,
 ): Promise<SavedImage[]> => {
   const logger = preLogger(generateImages.name, options);
-  const { browser, chrome } = await browserHelper.getBrowserInstance({
-    timeout: constants.BROWSER_TIMEOUT,
-  });
+  const isHtmlInput = canNavigateTo(source);
+
+  if (isHtmlInput) {
+    logger.warn(
+      'noSandbox option is disabled for HTML inputs, use an image input instead',
+    );
+  }
+
+  const { browser, chrome } = await browserHelper.getBrowserInstance(
+    {
+      timeout: constants.BROWSER_TIMEOUT,
+    },
+    isHtmlInput ? false : options.noSandbox,
+  );
 
   let splashScreenMetaData;
 

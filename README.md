@@ -97,6 +97,7 @@ $ pwa-asset-generator --help
     -u --single-quotes          Generate HTML meta tags with single quotes  [default: false]
     -x --xhtml                  Generate HTML meta tags by self-closing the tags  [default: false]
     -g --log                    Logs the steps of the library process  [default: true]
+    -n --no-sandbox             Disable sandbox on bundled Chromium on Linux platforms - not recommended  [default: false]
 
   Examples
     $ pwa-asset-generator logo.html
@@ -278,7 +279,8 @@ pwa-asset-generator depends on Puppeteer and it's screenshot API for image gener
 
 However, you can use one of the lossless / lossy compression libraries - like [pngquant](https://pngquant.org/) to compress the generated PNG images.
 
-## Troubleshooting
+### Running the CLI command on CI server causes Puppeteer error: "Running as root without --no-sandbox is not supported". How can I disable sandboxing?
 
-### "No usable sandbox!" error on Linux
-In case of getting "No usable sandbox!" error on Linux, you need to enable [system sandboxing](https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#setting-up-chrome-linux-sandbox).
+When root user has to be used and system sandboxing is not possible on Linux platforms, Chrome should be executed with the `--no-sandbox` [argument for Puppeteer to run](https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#setting-up-chrome-linux-sandbox).
+
+PAG provides users the `--no-sandbox` option to tackle this issue. Note that there are limitations for this option; it can only be used on Linux platforms and HTML inputs are disabled for security purposes.

@@ -134,6 +134,11 @@ export default {
       alias: 'd',
       default: false,
     },
+    noSandbox: {
+      type: 'boolean',
+      alias: 'n',
+      default: false,
+    },
   },
 
   CHROME_LAUNCH_ARGS: [

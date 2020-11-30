@@ -1,3 +1,4 @@
+import os from 'os';
 import constants from '../config/constants';
 import { CLIOptions, Options } from '../models/options';
 import { LoggerFunction } from '../models/logger';
@@ -52,4 +53,28 @@ const getDefaultOptions = (): Options => {
     }, {} as Options);
 };
 
-export default { normalizeOnlyFlagPairs, normalizeOutput, getDefaultOptions };
+const normalizeSandboxOption = (
+  noSandbox: boolean | undefined,
+  logger: LoggerFunction,
+): Partial<Options> => {
+  let sandboxDisabled = false;
+  if (noSandbox) {
+    if (os.platform() !== 'linux') {
+      logger.warn(
+        'Disabling sandbox is only relevant on Linux platforms, request declined!',
+      );
+    } else {
+      sandboxDisabled = true;
+    }
+  }
+  return {
+    noSandbox: sandboxDisabled,
+  };
+};
+
+export default {
+  normalizeOnlyFlagPairs,
+  normalizeOutput,
+  getDefaultOptions,
+  normalizeSandboxOption,
+};

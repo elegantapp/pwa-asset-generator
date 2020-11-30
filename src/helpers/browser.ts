@@ -48,7 +48,8 @@ const getLocalRevisionInfo = async (): Promise<RevisionInfo | undefined> => {
 };
 
 const getLocalBrowserInstance = async (
-  launchArgs?: LaunchOptions,
+  launchArgs: LaunchOptions,
+  noSandbox: boolean,
 ): Promise<Browser> => {
   let revisionInfo: RevisionInfo;
   const localRevisionInfo = await getLocalRevisionInfo();
@@ -61,6 +62,7 @@ const getLocalBrowserInstance = async (
 
   return puppeteer.launch({
     ...launchArgs,
+    ...(noSandbox && { args: ['--no-sandbox', '--disable-setuid-sandbox'] }),
     executablePath: revisionInfo.executablePath,
   });
 };
@@ -107,7 +109,8 @@ const getSystemBrowserInstance = async (
 };
 
 const getBrowserInstance = async (
-  launchArgs?: LaunchOptions,
+  launchArgs: LaunchOptions,
+  noSandbox: boolean,
 ): Promise<{ chrome: LaunchedChrome | undefined; browser: Browser }> => {
   const LAUNCHER_CONNECTION_REFUSED_ERROR_CODE = 'ECONNREFUSED';
   const LAUNCHER_NOT_INSTALLED_ERROR_CODE = 'ERR_LAUNCHER_NOT_INSTALLED';
@@ -139,7 +142,7 @@ const getBrowserInstance = async (
       logger.warn('Looks like Chrome is not installed on your system');
     }
 
-    browser = await getLocalBrowserInstance(launchArgs);
+    browser = await getLocalBrowserInstance(launchArgs, noSandbox);
   }
 
   return { browser, chrome };
