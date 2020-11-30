@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/onderceylan/pwa-asset-generator/compare/v3.2.3...v4.0.0) (2020-11-30)
+
+
+### Bug Fixes
+
+* **main:** add --no-sandbox option to optionally disable sandboxing on linux ([79444d2](https://github.com/onderceylan/pwa-asset-generator/commit/79444d29358a54a44c30fca62265688c03175fff))
+
+
+### Features
+
+* **main:** add iPhone 12 specs to fallback data ([e1f8a27](https://github.com/onderceylan/pwa-asset-generator/commit/e1f8a270d10c7c89384a30b3a8e2a3faf1ff0afb)), closes [#454](https://github.com/onderceylan/pwa-asset-generator/issues/454)
+* **main:** add optional windows mstile icon generation ([91ae0a9](https://github.com/onderceylan/pwa-asset-generator/commit/91ae0a9e0f410f55640e4f8f8ec23a8a6cc7dc63)), closes [#309](https://github.com/onderceylan/pwa-asset-generator/issues/309) [#389](https://github.com/onderceylan/pwa-asset-generator/issues/389)
+* **main:** reduce apple icons to a single file size ([c8f1321](https://github.com/onderceylan/pwa-asset-generator/commit/c8f13211709432b0bca030621cd8aa2549447bb4)), closes [#433](https://github.com/onderceylan/pwa-asset-generator/issues/433)
+
+
+### BREAKING CHANGES
+
+* **main:** Generated Apple touch icons is reduced to one icon. The icon file type is set to
+PNG as default type, rather than a JPEG type.
+
 ## [3.2.3](https://github.com/onderceylan/pwa-asset-generator/compare/v3.2.2...v3.2.3) (2020-10-23)
 
 
