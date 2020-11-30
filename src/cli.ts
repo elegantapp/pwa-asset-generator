@@ -34,6 +34,7 @@ $ pwa-asset-generator --help
     -u --single-quotes          Generate HTML meta tags with single quotes  [default: false]
     -x --xhtml                  Generate HTML meta tags by self-closing the tags  [default: false]
     -g --log                    Logs the steps of the library process  [default: true]
+    -n --no-sandbox             Disable sandbox on bundled Chromium on Linux platforms - not recommended  [default: false]
 
   Examples
     $ pwa-asset-generator logo.html

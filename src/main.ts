@@ -63,6 +63,7 @@ async function generateImages(
         options,
         logger,
       ),
+      ...flags.normalizeSandboxOption(options.noSandbox, logger),
     };
   } else {
     modOptions = {
