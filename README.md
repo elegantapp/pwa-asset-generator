@@ -89,7 +89,7 @@ $ pwa-asset-generator --help
     -h --splash-only            Only generate splash screens  [default: false]
     -c --icon-only              Only generate icons  [default: false]
     -f --favicon                Generate favicon image and HTML meta tag  [default: false]
-    -w --mstile                 Generate Windows static tile icons and export a browserconfig.xml file content  [default: false]
+    -w --mstile                 Generate Windows static tile icons and HTML meta tags  [default: false]
     -e --maskable               Declare icons in manifest file as maskable icons  [default: true]
     -l --landscape-only         Only generate landscape splash screens  [default: false]
     -r --portrait-only          Only generate portrait splash screens  [default: false]
@@ -281,6 +281,7 @@ However, you can use one of the lossless / lossy compression libraries - like [p
 
 ### Running the CLI command on CI server causes Puppeteer error: "Running as root without --no-sandbox is not supported". How can I disable sandboxing?
 
-When root user has to be used and system sandboxing is not possible on Linux platforms, Chrome should be executed with the `--no-sandbox` [argument for Puppeteer to run](https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#setting-up-chrome-linux-sandbox).
+
+(https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#setting-up-chrome-linux-sandbox).
 
 PAG provides users the `--no-sandbox` option to tackle this issue. Note that there are limitations for this option; it can only be used on Linux platforms and HTML inputs are disabled for security purposes.

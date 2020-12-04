@@ -144,7 +144,7 @@ export interface Options {
   readonly darkMode: boolean;
 
   /**
-   Generate Windows static tile icons and export a browserconfig.xml file content
+   Generate Windows static tile icons and HTML meta tags
 
    @default false
    */
