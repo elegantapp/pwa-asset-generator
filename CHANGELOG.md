@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/onderceylan/pwa-asset-generator/compare/v4.0.0...v4.0.1) (2020-12-05)
+
+
+### Bug Fixes
+
+* **main:** fix misleading description of mstiles flag ([f0f2478](https://github.com/onderceylan/pwa-asset-generator/commit/f0f2478e4925090fc5aa29154950e3cb60f960a3)), closes [#469](https://github.com/onderceylan/pwa-asset-generator/issues/469)
+
 # [4.0.0](https://github.com/onderceylan/pwa-asset-generator/compare/v3.2.3...v4.0.0) (2020-11-30)
 
 
