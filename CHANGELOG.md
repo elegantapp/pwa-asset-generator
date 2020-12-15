@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.2](https://github.com/onderceylan/pwa-asset-generator/compare/v4.0.1...v4.0.2) (2020-12-15)
+
+
+### Bug Fixes
+
+* **main:** force enable sRGB color profile ([15eef1b](https://github.com/onderceylan/pwa-asset-generator/commit/15eef1b34ec2e09df8aa73214e774ab351b9dce0)), closes [#325](https://github.com/onderceylan/pwa-asset-generator/issues/325)
+
 ## [4.0.1](https://github.com/onderceylan/pwa-asset-generator/compare/v4.0.0...v4.0.1) (2020-12-05)
 
 
