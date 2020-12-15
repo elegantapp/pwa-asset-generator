@@ -165,6 +165,7 @@ export default {
     '--mute-audio',
     '--no-first-run',
     '--headless',
+    '--force-color-profile=srgb',
   ],
 
   CHROME_LAUNCHER_DEBUG_PORT: 9222,
