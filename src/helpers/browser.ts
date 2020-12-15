@@ -62,7 +62,13 @@ const getLocalBrowserInstance = async (
 
   return puppeteer.launch({
     ...launchArgs,
-    ...(noSandbox && { args: ['--no-sandbox', '--disable-setuid-sandbox'] }),
+    ...(noSandbox && {
+      args: [
+        ...(launchArgs.args ?? []),
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+      ],
+    }),
     executablePath: revisionInfo.executablePath,
   });
 };

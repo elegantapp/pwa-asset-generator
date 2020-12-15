@@ -251,6 +251,7 @@ const generateImages = async (
   const { browser, chrome } = await browserHelper.getBrowserInstance(
     {
       timeout: constants.BROWSER_TIMEOUT,
+      args: constants.CHROME_LAUNCH_ARGS,
     },
     isHtmlInput ? false : options.noSandbox,
   );
