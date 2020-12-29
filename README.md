@@ -1,7 +1,7 @@
 # pwa-asset-generator ✨
-[![npm](https://img.shields.io/npm/v/pwa-asset-generator?color=brightgreen)](https://www.npmjs.com/package/pwa-asset-generator) [![node](https://img.shields.io/node/v/pwa-asset-generator)](https://www.npmjs.com/package/pwa-asset-generator) [![Build Status](https://github.com/onderceylan/pwa-asset-generator/workflows/CI/badge.svg)](https://github.com/onderceylan/pwa-asset-generator/actions?workflow=CI) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-brightgreen.svg)](https://github.com/semantic-release/semantic-release) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=onderceylan/pwa-asset-generator)](https://dependabot.com)
+[![npm](https://img.shields.io/npm/v/pwa-asset-generator?color=brightgreen)](https://www.npmjs.com/package/pwa-asset-generator) [![node](https://img.shields.io/node/v/pwa-asset-generator)](https://www.npmjs.com/package/pwa-asset-generator) [![Build Status](https://github.com/onderceylan/pwa-asset-generator/workflows/CI/badge.svg)](https://github.com/onderceylan/pwa-asset-generator/actions?workflow=CI) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-brightgreen.svg)](https://github.com/semantic-release/semantic-release) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=onderceylan/pwa-asset-generator)](https://dependabot.com) [![Buy me a coffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-blueviolet.svg)](https://www.buymeacoffee.com/onder)
 
-> A JavaScript library that automates PWA asset generation and image declaration. It automatically generates icon and splash screen images, guided by Web App Manifest specs and Apple Human Interface guidelines. It also updates manifest.json and index.html files with the generated images.
+> Automates PWA asset generation and image declaration. Automatically generates icon and splash screen images, favicons and mstile images. Updates manifest.json and index.html files with the generated images according to Web App Manifest specs and Apple Human Interface guidelines.
 
 ![Usage demonstration](https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/demo.gif)
 
@@ -285,3 +285,9 @@ However, you can use one of the lossless / lossy compression libraries - like [p
 (https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#setting-up-chrome-linux-sandbox).
 
 PAG provides users the `--no-sandbox` option to tackle this issue. Note that there are limitations for this option; it can only be used on Linux platforms and HTML inputs are disabled for security purposes.
+
+### You saved me hours of work with pwa-asset-generator. How can I buy you a coffee?
+
+I'm happy to hear you enjoy my work and it saved you your precious time. I've always been serving the community with no strings attached, without any financial expectation. However, people reached out to me a surprising amount of times, asking how they can pay me back for the hours my work save them.
+
+So, here's your chance to buy me a coffee, a lunch or even a dinner: https://www.buymeacoffee.com/onder
