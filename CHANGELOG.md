@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/onderceylan/pwa-asset-generator/compare/v4.0.2...v4.1.0) (2020-12-29)
+
+
+### Features
+
+* **main:** add funding ([f928197](https://github.com/onderceylan/pwa-asset-generator/commit/f928197ffbcfba442bf87fadc3d68b7594d5af89)), closes [#489](https://github.com/onderceylan/pwa-asset-generator/issues/489)
+
 ## [4.0.2](https://github.com/onderceylan/pwa-asset-generator/compare/v4.0.1...v4.0.2) (2020-12-15)
 
 
