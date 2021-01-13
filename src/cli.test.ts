@@ -2,8 +2,8 @@ import execa from 'execa';
 import constants from './config/constants';
 
 describe('CLI', () => {
-  test('throws error when input is not provided', async () => {
-    expect(() => execa.sync('./bin/cli', [])).toThrow();
+  test('does not throw when there is not any arg', async () => {
+    expect(() => execa.sync('./bin/cli', [])).not.toThrow();
   });
 
   test('integrates with main API and creates an output with generated meta', async () => {
