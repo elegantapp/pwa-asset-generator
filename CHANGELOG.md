@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.1](https://github.com/onderceylan/pwa-asset-generator/compare/v4.1.0...v4.1.1) (2021-01-13)
+
+
+### Bug Fixes
+
+* **cli:** do not throw when args are missing ([53608e7](https://github.com/onderceylan/pwa-asset-generator/commit/53608e7daf6d81f027d29a334f24a5fb76cd64a9)), closes [#499](https://github.com/onderceylan/pwa-asset-generator/issues/499)
+
 # [4.1.0](https://github.com/onderceylan/pwa-asset-generator/compare/v4.0.2...v4.1.0) (2020-12-29)
 
 
