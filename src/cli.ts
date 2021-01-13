@@ -2,6 +2,7 @@ import meow from 'meow';
 import preLogger from './helpers/logger';
 import { generateImages } from './main';
 import constants from './config/constants';
+import { CLIOptions } from './models/options';
 
 const cli = meow(
   `
@@ -71,22 +72,19 @@ $ pwa-asset-generator --help
     --xhtml
     --log false
 `,
-  // TODO: remove when inferred meow types are corrected
-  /* eslint-disable */
-  // @ts-ignore
   {
     flags: constants.FLAGS,
-  } as meow.TypedFlags<any>,
-  /* eslint-enable */
+  } as meow.Options<meow.AnyFlags>,
 );
-const logger = preLogger('cli', cli.flags);
+const flags = cli.flags as CLIOptions;
+const logger = preLogger('cli', flags);
 
 (async (): Promise<void> => {
   try {
     if (cli.input[0] === undefined) {
-      cli.showHelp();
+      cli.showHelp(0);
     }
-    await generateImages(cli.input[0], cli.input[1], cli.flags, logger);
+    await generateImages(cli.input[0], cli.input[1], flags, logger);
     process.exit(0);
   } catch (e) {
     logger.error(e);
