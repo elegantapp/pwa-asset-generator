@@ -286,8 +286,8 @@ However, you can use one of the lossless / lossy compression libraries - like [p
 
 PAG provides users the `--no-sandbox` option to tackle this issue. Note that there are limitations for this option; it can only be used on Linux platforms and HTML inputs are disabled for security purposes.
 
-### You saved me hours of work with pwa-asset-generator. How can I buy you a coffee?
+### You saved me hours of work with pwa-asset-generator. How can I support this project?
 
-I'm happy to hear you enjoy my work and it saved you your precious time. I've always been serving the community with no strings attached, without any financial expectation. However, people reached out to me a surprising amount of times, asking how they can pay me back for the hours my work save them.
+I'm happy to hear you enjoy my work and it saved you your precious time. People reached out to me a surprising amount of times, asking how they can pay me back for the hours my work save them.
 
-So, here's your chance to buy me a coffee, a lunch or even a dinner: https://www.buymeacoffee.com/onder
+Let's call it even! [Make a donation](https://www.buymeacoffee.com/onder) and help me support students in developing countries!
