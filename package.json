@@ -64,7 +64,7 @@
   "homepage": "https://github.com/onderceylan/pwa-asset-generator#readme",
   "dependencies": {
     "chalk": "4.1.1",
-    "cheerio": "1.0.0-rc.5",
+    "cheerio": "1.0.0-rc.9",
     "chrome-launcher": "0.13.4",
     "find-process": "1.4.4",
     "lodash.isequal": "4.5.0",
