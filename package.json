@@ -107,7 +107,7 @@
     "husky": "^5.0.9",
     "jest": "^26.2.1",
     "jpeg-js": "^0.4.0",
-    "lint-staged": "^10.0.0",
+    "lint-staged": "^11.0.0",
     "pixelmatch": "^5.2.1",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
