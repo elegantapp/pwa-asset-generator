@@ -104,7 +104,7 @@
     "eslint-plugin-jest": "^24.0.0",
     "eslint-plugin-prettier": "^3.1.0",
     "execa": "^5.0.0",
-    "husky": "^5.0.9",
+    "husky": "^7.0.1",
     "jest": "^26.2.1",
     "jpeg-js": "^0.4.0",
     "lint-staged": "^11.0.0",
