@@ -142,7 +142,6 @@ export default {
   },
 
   CHROME_LAUNCH_ARGS: [
-    '--disable-dev-shm-usage',
     '--log-level=3', // Fatal only
     '--no-default-browser-check',
     '--disable-infobars',
