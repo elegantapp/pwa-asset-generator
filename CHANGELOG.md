@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.3.0](https://github.com/onderceylan/pwa-asset-generator/compare/v4.2.1...v4.3.0) (2021-07-13)
+
+
+### Features
+
+* **main:** add "--disable-dev-shm-usage" as a default chrome launch arg ([a444f76](https://github.com/onderceylan/pwa-asset-generator/commit/a444f76b937d17e621bb5bb22b6352ea3d4fa9f2)), closes [#517](https://github.com/onderceylan/pwa-asset-generator/issues/517)
+
 ## [4.2.1](https://github.com/onderceylan/pwa-asset-generator/compare/v4.2.0...v4.2.1) (2021-07-13)
 
 
