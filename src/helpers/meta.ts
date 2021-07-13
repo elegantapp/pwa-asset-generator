@@ -21,9 +21,9 @@ const generateOutputPath = (
     manifest: manifestJsonPath,
   } = options;
 
-  const outputFilePath = (isManifest
-    ? manifestJsonPath
-    : indexHtmlPath) as string;
+  const outputFilePath = (
+    isManifest ? manifestJsonPath : indexHtmlPath
+  ) as string;
 
   if (pathOverride) {
     return `${pathOverride}/${imageName}.${isManifest ? 'png' : type}`;
@@ -195,7 +195,7 @@ const addIconsToManifest = async (
   }
 
   const manifestJson = JSON.parse(
-    ((await file.readFile(manifestJsonFilePath)) as unknown) as string,
+    (await file.readFile(manifestJsonFilePath)) as unknown as string,
   );
 
   const newManifestContent = {
