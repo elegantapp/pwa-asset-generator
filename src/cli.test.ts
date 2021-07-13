@@ -38,4 +38,32 @@ describe('CLI', () => {
     );
     expect(new Set(flagShorthands).size).toBe(flagShorthands.length);
   });
+
+  test('integrates with npx', async () => {
+    let response = { stdout: '', stderr: '' };
+    try {
+      response = await execa(
+        'npx',
+        [
+          '-p .',
+          'pwa-asset-generator',
+          './static/logo.png',
+          './temp',
+          '--scrape=false',
+          '--splash-only',
+          '--landscape-only',
+          '--favicon',
+          '--path="%PUBLIC_URL%"',
+          '--dark-mode',
+          '--type=jpg',
+          '--quality=20',
+        ],
+        { env: { PAG_TEST_MODE: '1' } },
+      );
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e);
+    }
+    expect(response.stdout).toMatchSnapshot();
+  });
 });
