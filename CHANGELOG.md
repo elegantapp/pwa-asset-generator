@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0](https://github.com/onderceylan/pwa-asset-generator/compare/v4.1.1...v4.2.0) (2021-07-13)
+
+
+### Features
+
+* **main:** add puppeteer's "--disable-dev-shm-usage" arg as a default one ([bc655fd](https://github.com/onderceylan/pwa-asset-generator/commit/bc655fdec9427fec2deeea9a29408d9d2048ba13)), closes [#517](https://github.com/onderceylan/pwa-asset-generator/issues/517)
+
 ## [4.1.1](https://github.com/onderceylan/pwa-asset-generator/compare/v4.1.0...v4.1.1) (2021-01-13)
 
 
