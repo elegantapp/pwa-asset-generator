@@ -1,4 +1,7 @@
-import puppeteer, { BrowserFetcher, RevisionInfo } from 'puppeteer-core';
+import puppeteer, {
+  BrowserFetcher,
+  BrowserFetcherRevisionInfo,
+} from 'puppeteer-core';
 import ProgressBar from 'progress';
 import preLogger from './logger';
 
@@ -24,11 +27,14 @@ const getBrowserFetcher = (): BrowserFetcher => {
     return browserFetcher;
   }
 
-  browserFetcher = puppeteer.createBrowserFetcher({ host: downloadHost });
+  // The next line uses a workaround for this issue: https://github.com/puppeteer/puppeteer/issues/7100
+  browserFetcher = ((puppeteer as unknown) as puppeteer.PuppeteerNode).createBrowserFetcher(
+    { host: downloadHost },
+  );
   return browserFetcher;
 };
 
-const getPreferredBrowserRevisionInfo = (): RevisionInfo => {
+const getPreferredBrowserRevisionInfo = (): BrowserFetcherRevisionInfo => {
   const revision =
     process.env.PUPPETEER_CHROMIUM_REVISION ||
     process.env.npm_config_puppeteer_chromium_revision ||
@@ -78,7 +84,7 @@ const onProgress = (downloadedBytes: number, totalBytes: number): void => {
   progressBar.tick(delta);
 };
 
-const installPreferredBrowserRevision = async (): Promise<RevisionInfo> => {
+const installPreferredBrowserRevision = async (): Promise<BrowserFetcherRevisionInfo> => {
   logger.warn(
     `Chromium is not found in module folder, gonna have to download r${revision} for you once`,
   );
