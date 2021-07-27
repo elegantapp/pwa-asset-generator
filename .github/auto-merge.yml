@@ -1,7 +1,0 @@
-- match:
-    dependency_type: development
-    update_type: "semver:major"
-
-- match:
-    dependency_type: production
-    update_type: "semver:minor"
