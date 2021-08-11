@@ -86,7 +86,7 @@
     "@semantic-release/release-notes-generator": "^9.0.1",
     "@types/cheerio": "^0.22.13",
     "@types/find-process": "^1.1.0",
-    "@types/jest": "^26.0.0",
+    "@types/jest": "^27.0.0",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.uniqwith": "^4.5.6",
     "@types/mime-types": "^2.1.0",
