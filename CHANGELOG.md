@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.7](https://github.com/onderceylan/pwa-asset-generator/compare/v4.3.6...v4.3.7) (2021-09-21)
+
 ## [4.3.6](https://github.com/onderceylan/pwa-asset-generator/compare/v4.3.5...v4.3.6) (2021-08-11)
 
 ## [4.3.5](https://github.com/onderceylan/pwa-asset-generator/compare/v4.3.4...v4.3.5) (2021-08-05)
