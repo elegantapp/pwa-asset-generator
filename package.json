@@ -66,7 +66,7 @@
     "chalk": "4.1.2",
     "cheerio": "1.0.0-rc.10",
     "chrome-launcher": "0.13.4",
-    "find-process": "1.4.4",
+    "find-process": "1.4.5",
     "lodash.isequal": "4.5.0",
     "lodash.uniqwith": "4.5.0",
     "meow": "9.0.0",
