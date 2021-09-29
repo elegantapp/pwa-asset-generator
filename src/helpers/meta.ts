@@ -43,7 +43,7 @@ const generateIconsContentForManifest = (
   savedImages: SavedImage[],
   options: Options,
 ): ManifestJsonIcon[] => {
-  const purpose = `${options.maskable ? 'maskable ' : ''}any`;
+  const purpose = options.maskable ? 'maskable' : 'any';
   return savedImages
     .filter((image) =>
       image.name.startsWith(constants.MANIFEST_ICON_FILENAME_PREFIX),

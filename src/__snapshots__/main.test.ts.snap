@@ -37,13 +37,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "512x512",
       "src": "temp/manifest-icon-512.png",
       "type": "image/png",
@@ -296,13 +296,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "512x512",
       "src": "temp/manifest-icon-512.png",
       "type": "image/png",
@@ -1103,13 +1103,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "512x512",
       "src": "temp/manifest-icon-512.png",
       "type": "image/png",
@@ -1191,13 +1191,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "512x512",
       "src": "temp/manifest-icon-512.png",
       "type": "image/png",
@@ -1463,13 +1463,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "512x512",
       "src": "temp/manifest-icon-512.png",
       "type": "image/png",
@@ -1573,13 +1573,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "512x512",
       "src": "temp/manifest-icon-512.png",
       "type": "image/png",
@@ -1834,13 +1834,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "512x512",
       "src": "temp/manifest-icon-512.png",
       "type": "image/png",
@@ -1893,13 +1893,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "512x512",
       "src": "temp/manifest-icon-512.png",
       "type": "image/png",
@@ -2220,13 +2220,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "192x192",
       "src": "./my-custom-path-override/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "512x512",
       "src": "./my-custom-path-override/manifest-icon-512.png",
       "type": "image/png",
@@ -2538,13 +2538,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "192x192",
       "src": "./my-custom-path-override/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
-      "purpose": "maskable any",
+      "purpose": "maskable",
       "sizes": "512x512",
       "src": "./my-custom-path-override/manifest-icon-512.png",
       "type": "image/png",
