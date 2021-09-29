@@ -159,7 +159,13 @@ describe('generates meta', () => {
         manifest: './temp/manifest.json',
       });
 
-    const saveManifest = (manifestMock: object): Promise<void> => {
+    const saveManifest = (manifestMock: {
+      name: string;
+      display: string;
+      scope: string;
+      description: string;
+      icons?: { src: string; sizes: string; type: string }[];
+    }): Promise<void> => {
       return file.writeFile(
         './temp/manifest.json',
         JSON.stringify(manifestMock),
