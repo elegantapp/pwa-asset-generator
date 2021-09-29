@@ -27,6 +27,8 @@
     "import/prefer-default-export": "off",
     "global-require": "off",
     "import/extensions": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/no-var-requires": "off"
   },
   "settings": {
