@@ -11,9 +11,7 @@
 
 When you build a PWA with a goal of providing native-like experiences on multiple platforms and stores, you need to meet with the criteria of those platforms and stores with your PWA assets; icon sizes and splash screens. Such criteria are;
 
-* Google's Android platform respects Web App Manifest API specs and it expects you to provide at least 2 icon sizes in your manifest file - https://developers.google.com/web/fundamentals/web-app-manifest/#icons 🤔
-
-* As it's noted on Microsoft docs, your PWA has to meet specific image criteria declared on Web App Manifest in order to be automatically packaged for Microsoft Store - https://docs.microsoft.com/en-us/microsoft-edge/progressive-web-apps/get-started#web-app-manifest 🤔
+* Google's Android platform respects Web App Manifest API specs, and it expects you to provide at least 2 icon sizes in your manifest file - https://web.dev/add-manifest/#icons 🤔
 
 * Apple's iOS currently doesn't support Web App Manifest API specs. You need to introduce custom html tags to set icons and splash screens to your PWA 🤔
     * You need to introduce a special html link tag with rel `apple-touch-icon` to provide icons for your PWA when it's added to home screen. Read more about it on [Apple's Icon Guidelines](https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/app-icon/) and [Safari Web Content Guide](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html).
@@ -29,7 +27,7 @@ PWA Asset Generator automates the image generation in a creative way. Having [Pu
 
 * Updates your `manifest.json` and `index.html` files automatically for declaring generated image assets 🙌
 
-* Scrapes latest specs from Apple Human Interface guidelines website via Puppeteer to make your PWA ready for all/recent iOS devices out there 🤖
+* Scrapes the latest specs from Apple Human Interface guidelines website via Puppeteer to make your PWA ready for all/recent iOS devices out there 🤖
 
     * Supports offline mode and uses static spec data when things go wrong with scraping 📴
     * Updates static spec data before each release automatically and [monitors spec changes everyday](https://github.com/onderceylan/pwa-asset-generator/actions?query=workflow%3A%22Sanity+Check%22) 🔄
@@ -218,7 +216,7 @@ When it's an exact match with device's resolution, iOS displays the splash scree
 ### How can I use JSX syntax to generate the meta tags?
 If you don't have HTML files in your project, and have a JSX/TSX files instead, you can either use `--xhtml` option or self-generate the meta tags.
 
-The `--xhtml` option allows you to generate the required meta tags with self closing them - `< />`. This will allow copying generated tags directly to a JSX/TSX file.
+The `--xhtml` option allows you to generate the required meta tags with self-closing them - `< />`. This will allow copying generated tags directly to a JSX/TSX file.
 
 Alternatively, you can use static data that this library exports to generate the required meta tags! pwa-asset-generator exposes the static Apple device specification data via it's module API. Here's an example JSX snippet;
 
@@ -263,7 +261,7 @@ render() {
 
 ### My index.html file's format has been changed after an automated update. Is there any way to re-format it?
 
-pwa-asset-generator uses [cheerio](https://cheerio.js.org/) for maintaining HTML tags in your index.html file. While doing so, it creates extra whitespaces and it might also introduce misaligned indentations.
+pwa-asset-generator uses [pretty](https://www.npmjs.com/package/pretty) for formatting your index.html file with a simple, opinionated output.
 
 A recommended way to maintain the same format for your index.html file would be using [Prettier](https://prettier.io/) and adding the following script to your project's package.json file.
 
@@ -275,19 +273,16 @@ Executing `npm run format:index` after using pwa-asset-generator assures the sam
 
 ### When generating PNG images, there's no compression settings. Is there a way to introduce compression for PNG files?
 
-pwa-asset-generator depends on Puppeteer and it's screenshot API for image generation. Puppeteer doesn't provide compression settings for PNG files for the time being.
+pwa-asset-generator depends on Puppeteer, and it's screenshot API for image generation. Puppeteer doesn't provide compression settings for PNG files for the time being.
 
 However, you can use one of the lossless / lossy compression libraries - like [pngquant](https://pngquant.org/) to compress the generated PNG images.
 
 ### Running the CLI command on CI server causes Puppeteer error: "Running as root without --no-sandbox is not supported". How can I disable sandboxing?
 
-
-(https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#setting-up-chrome-linux-sandbox).
+In case of getting "No usable sandbox!" error on Linux, you need to enable [system sandboxing](https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#setting-up-chrome-linux-sandbox).
 
 PAG provides users the `--no-sandbox` option to tackle this issue. Note that there are limitations for this option; it can only be used on Linux platforms and HTML inputs are disabled for security purposes.
 
 ### You saved me hours of work with pwa-asset-generator. How can I support this project?
 
-I'm happy to hear you enjoy my work and it saved you your precious time. People reached out to me a surprising amount of times, asking how they can pay me back for the hours my work save them.
-
-Let's call it even! [Make a donation](https://www.buymeacoffee.com/onder) and help me support students in developing countries!
+I'm happy to hear you enjoy my work, and it saved you your precious time. Let's call it even! [Make a donation](https://www.buymeacoffee.com/onder) and help me support students in developing countries!

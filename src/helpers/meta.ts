@@ -1,4 +1,5 @@
 import cheerio from 'cheerio';
+import pretty from 'pretty';
 import { lookup } from 'mime-types';
 import constants from '../config/constants';
 import file from './file';
@@ -287,7 +288,7 @@ const addMetaTagsToIndexPage = async (
     },
   );
 
-  return file.writeFile(indexHtmlFilePath, $.html());
+  return file.writeFile(indexHtmlFilePath, pretty($.html(), { ocd: true }));
 };
 
 export default {

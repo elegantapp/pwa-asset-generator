@@ -340,6 +340,14 @@ describe('generates meta', () => {
     });
 
     describe('creating splash screens meta', () => {
+      const assertEntriesInHTMLOutput = (
+        output: string,
+        expectedOutput: string,
+      ) =>
+        expectedOutput
+          .split('\n')
+          .forEach((entry) => expect(output).toContain(entry.trim()));
+
       test('with default html output', async () => {
         const result = await generateTempImages({
           scrape: false,
@@ -348,13 +356,16 @@ describe('generates meta', () => {
           index: './temp/index.html',
         });
 
-        const savedIndex = await readIndex();
+        const savedIndex = (await readIndex()) as string;
 
-        expect(savedIndex).toContain(
+        assertEntriesInHTMLOutput(
+          savedIndex,
           result.htmlMeta[HTMLMetaNames.appleMobileWebAppCapable],
         );
-        expect(savedIndex).toContain(
-          result.htmlMeta[HTMLMetaNames.appleLaunchImage],
+
+        assertEntriesInHTMLOutput(
+          savedIndex,
+          result.htmlMeta[HTMLMetaNames.appleLaunchImage] as string,
         );
       });
 
@@ -374,16 +385,21 @@ describe('generates meta', () => {
           index: './temp/index.html',
         });
 
-        const savedIndex = await readIndex();
+        const savedIndex = (await readIndex()) as string;
 
-        expect(savedIndex).toContain(
-          resultDark.htmlMeta[HTMLMetaNames.appleMobileWebAppCapable],
+        assertEntriesInHTMLOutput(
+          savedIndex,
+          resultLight.htmlMeta[HTMLMetaNames.appleMobileWebAppCapable],
         );
-        expect(savedIndex).toContain(
-          resultLight.htmlMeta[HTMLMetaNames.appleLaunchImage],
+
+        assertEntriesInHTMLOutput(
+          savedIndex,
+          resultLight.htmlMeta[HTMLMetaNames.appleLaunchImage] as string,
         );
-        expect(savedIndex).toContain(
-          resultDark.htmlMeta[HTMLMetaNames.appleLaunchImageDarkMode],
+
+        assertEntriesInHTMLOutput(
+          savedIndex,
+          resultDark.htmlMeta[HTMLMetaNames.appleLaunchImageDarkMode] as string,
         );
       });
 
