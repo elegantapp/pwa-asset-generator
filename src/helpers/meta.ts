@@ -1,6 +1,7 @@
 import cheerio from 'cheerio';
 import pretty from 'pretty';
 import { lookup } from 'mime-types';
+import path from 'path';
 import constants from '../config/constants';
 import file from './file';
 import { SavedImage } from '../models/image';
@@ -15,7 +16,6 @@ const generateOutputPath = (
   isManifest = false,
 ): string => {
   const {
-    type,
     path: pathPrefix,
     pathOverride,
     index: indexHtmlPath,
@@ -27,7 +27,7 @@ const generateOutputPath = (
   ) as string;
 
   if (pathOverride) {
-    return `${pathOverride}/${imageName}.${isManifest ? 'png' : type}`;
+    return `${pathOverride}/${imageName}${path.extname(imagePath)}`;
   }
 
   if (pathPrefix && !isManifest) {
@@ -49,10 +49,10 @@ const generateIconsContentForManifest = (
     .filter((image) =>
       image.name.startsWith(constants.MANIFEST_ICON_FILENAME_PREFIX),
     )
-    .map(({ path, width, height, name }) => ({
-      src: generateOutputPath(options, name, path, true),
+    .map(({ path: imagePath, width, height, name }) => ({
+      src: generateOutputPath(options, name, imagePath, true),
       sizes: `${width}x${height}`,
-      type: `image/${file.getExtension(path)}`,
+      type: `image/${file.getExtension(imagePath)}`,
       purpose,
     }));
 };
@@ -65,9 +65,9 @@ const generateAppleTouchIconHtml = (
     .filter((image) =>
       image.name.startsWith(constants.APPLE_ICON_FILENAME_PREFIX),
     )
-    .map(({ path, name }) =>
+    .map(({ path: imagePath, name }) =>
       constants.APPLE_TOUCH_ICON_META_HTML(
-        generateOutputPath(options, name, path),
+        generateOutputPath(options, name, imagePath),
         options.xhtml,
       ),
     )
@@ -80,11 +80,11 @@ const generateFaviconHtml = (
 ): string => {
   return savedImages
     .filter((image) => image.name.startsWith(constants.FAVICON_FILENAME_PREFIX))
-    .map(({ width, path, name }) =>
+    .map(({ width, path: imagePath, name }) =>
       constants.FAVICON_META_HTML(
         width,
-        generateOutputPath(options, name, path),
-        lookup(path) as string,
+        generateOutputPath(options, name, imagePath),
+        lookup(imagePath) as string,
         options.xhtml,
       ),
     )
@@ -97,10 +97,10 @@ const generateMsTileImageHtml = (
 ): string => {
   return savedImages
     .filter((image) => image.name.startsWith(constants.MS_ICON_FILENAME_PREFIX))
-    .map(({ width, height, path, name }) =>
+    .map(({ width, height, path: imagePath, name }) =>
       constants.MSTILE_IMAGE_META_HTML(
         constants.MSTILE_SIZE_ELEMENT_NAME_MAP[`${width}x${height}`],
-        generateOutputPath(options, name, path),
+        generateOutputPath(options, name, imagePath),
         options.xhtml,
       ),
     )
@@ -116,11 +116,11 @@ const generateAppleLaunchImageHtml = (
     .filter((image) =>
       image.name.startsWith(constants.APPLE_SPLASH_FILENAME_PREFIX),
     )
-    .map(({ width, height, path, name, scaleFactor, orientation }) =>
+    .map(({ width, height, path: imagePath, name, scaleFactor, orientation }) =>
       constants.APPLE_LAUNCH_SCREEN_META_HTML(
         width,
         height,
-        generateOutputPath(options, name, path),
+        generateOutputPath(options, name, imagePath),
         scaleFactor as number,
         orientation,
         darkMode,
