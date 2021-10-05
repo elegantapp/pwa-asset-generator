@@ -185,8 +185,16 @@ const saveImages = async (
   return Promise.all(
     imageList.map(async ({ name, width, height, scaleFactor, orientation }) => {
       const { quality } = options;
-      const type = name.includes('icon') ? 'png' : options.type;
-      const path = file.getImageSavePath(name, output, type);
+      const isIcon = name.includes('icon');
+      const isManifestIcon = name.includes('manifest-icon');
+      const type = isIcon ? 'png' : options.type;
+      const path = file.getImageSavePath(
+        name,
+        output,
+        type,
+        options.maskable,
+        isManifestIcon,
+      );
 
       try {
         const page = await browser.newPage();

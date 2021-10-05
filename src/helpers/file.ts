@@ -54,9 +54,20 @@ const getImageSavePath = (
   imageName: string,
   outputFolder: string,
   ext: Extension,
+  maskable: boolean,
+  isMaskableIcon: boolean,
 ): string => {
+  const getMaskablePrefix = (): '.maskable' | '' => {
+    if (!isMaskableIcon) {
+      return '';
+    }
+    if (maskable) {
+      return '.maskable';
+    }
+    return '';
+  };
   return convertBackslashPathToSlashPath(
-    path.join(outputFolder, `${imageName}.${ext}`),
+    path.join(outputFolder, `${imageName}${getMaskablePrefix()}.${ext}`),
   );
 };
 
