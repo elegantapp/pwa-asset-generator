@@ -2213,9 +2213,9 @@ Object {
 ",
     "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
 ",
-    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"./my-custom-path-override/apple-icon-180.jpg\\">
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"./my-custom-path-override/apple-icon-180.png\\">
 ",
-    "favicon": "<link rel=\\"icon\\" type=\\"image/png\\" sizes=\\"196x196\\" href=\\"./my-custom-path-override/favicon-196.jpg\\">
+    "favicon": "<link rel=\\"icon\\" type=\\"image/png\\" sizes=\\"196x196\\" href=\\"./my-custom-path-override/favicon-196.png\\">
 ",
   },
   "manifestJsonContent": Array [
@@ -2533,7 +2533,7 @@ Object {
   "htmlMeta": Object {
     "appleMobileWebAppCapable": "<meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">
 ",
-    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"./my-custom-path-override/apple-icon-180.jpg\\">
+    "appleTouchIcon": "<link rel=\\"apple-touch-icon\\" href=\\"./my-custom-path-override/apple-icon-180.png\\">
 ",
   },
   "manifestJsonContent": Array [
