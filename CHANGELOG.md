@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/onderceylan/pwa-asset-generator/compare/v4.3.9...v5.0.0) (2021-10-07)
+
+
+### Bug Fixes
+
+* **main:** prevent unnecessary newlines on index HTML file ([a40d016](https://github.com/onderceylan/pwa-asset-generator/commit/a40d016524efdda4702dde6a49426f20a8193357)), closes [#434](https://github.com/onderceylan/pwa-asset-generator/issues/434)
+* **meta:** fix wrong file types of icons' html ([a6d2c58](https://github.com/onderceylan/pwa-asset-generator/commit/a6d2c5846094709d8098e4d7ea920ef267671300)), closes [#495](https://github.com/onderceylan/pwa-asset-generator/issues/495)
+
+
+### Features
+
+* **file:** add maskable keyword to the manifest icons' file name ([47a09c6](https://github.com/onderceylan/pwa-asset-generator/commit/47a09c61ca889a89180c8e9785613e52cf3bfb8f)), closes [#679](https://github.com/onderceylan/pwa-asset-generator/issues/679)
+* **main:** use either 'maskable' or 'any' as a purpose ([4bdce80](https://github.com/onderceylan/pwa-asset-generator/commit/4bdce80a8bdde663352bf4e3d198656dd4b88321)), closes [#679](https://github.com/onderceylan/pwa-asset-generator/issues/679)
+
+
+### BREAKING CHANGES
+
+* **file:** The file name template of the manifest icons is updated.
+* **main:** The newlines created when re-saving meta tag changes on the same index HTML file
+will be removed. The prettier step to re-format after library execution is now optional and nice to
+have.
+* **main:** Instead of setting 'maskable any' as a purpose, the library will be setting
+'maskable' value only when provided the maskable option.
+
 ## [4.3.9](https://github.com/onderceylan/pwa-asset-generator/compare/v4.3.8...v4.3.9) (2021-09-22)
 
 ## [4.3.8](https://github.com/onderceylan/pwa-asset-generator/compare/v4.3.7...v4.3.8) (2021-09-21)
