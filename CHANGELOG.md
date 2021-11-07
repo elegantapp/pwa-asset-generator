@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0](https://github.com/onderceylan/pwa-asset-generator/compare/v5.0.1...v6.0.0) (2021-11-07)
+
+
+### Bug Fixes
+
+* **main:** add both 'any' and 'maskable' icons to manifest by default ([d7b488d](https://github.com/onderceylan/pwa-asset-generator/commit/d7b488d26cf1f2fd113e87eb419d2e1ae0033ed9)), closes [#725](https://github.com/onderceylan/pwa-asset-generator/issues/725)
+* **main:** fix wrong icons file name when 'pathOverride' option is used ([25cef00](https://github.com/onderceylan/pwa-asset-generator/commit/25cef002be226a801397b309dc8c8e93ac00b91b)), closes [#723](https://github.com/onderceylan/pwa-asset-generator/issues/723)
+
+
+### BREAKING CHANGES
+
+* **main:** In addition to 2 icons with `maskable` purpose in the manifest file, 2 more icon
+entries of the same icons with `any` purpose is added to the manifest output.
+
 ## [5.0.1](https://github.com/onderceylan/pwa-asset-generator/compare/v5.0.0...v5.0.1) (2021-11-04)
 
 # [5.0.0](https://github.com/onderceylan/pwa-asset-generator/compare/v4.3.9...v5.0.0) (2021-10-07)
