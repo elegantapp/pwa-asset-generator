@@ -37,9 +37,21 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
       "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "temp/manifest-icon-512.maskable.png",
       "type": "image/png",
     },
     Object {
@@ -296,9 +308,21 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
       "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "temp/manifest-icon-512.maskable.png",
       "type": "image/png",
     },
     Object {
@@ -1103,9 +1127,21 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
       "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "temp/manifest-icon-512.maskable.png",
       "type": "image/png",
     },
     Object {
@@ -1191,9 +1227,21 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
       "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "temp/manifest-icon-512.maskable.png",
       "type": "image/png",
     },
     Object {
@@ -1463,9 +1511,21 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
       "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "temp/manifest-icon-512.maskable.png",
       "type": "image/png",
     },
     Object {
@@ -1573,15 +1633,27 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "%PUBLIC_URL%/temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
       "purpose": "maskable",
       "sizes": "192x192",
-      "src": "temp/manifest-icon-192.maskable.png",
+      "src": "%PUBLIC_URL%/temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "%PUBLIC_URL%/temp/manifest-icon-512.maskable.png",
       "type": "image/png",
     },
     Object {
       "purpose": "maskable",
       "sizes": "512x512",
-      "src": "temp/manifest-icon-512.maskable.png",
+      "src": "%PUBLIC_URL%/temp/manifest-icon-512.maskable.png",
       "type": "image/png",
     },
   ],
@@ -1834,9 +1906,21 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
       "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "temp/manifest-icon-512.maskable.png",
       "type": "image/png",
     },
     Object {
@@ -1893,9 +1977,21 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
       "purpose": "maskable",
       "sizes": "192x192",
       "src": "temp/manifest-icon-192.maskable.png",
+      "type": "image/png",
+    },
+    Object {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "temp/manifest-icon-512.maskable.png",
       "type": "image/png",
     },
     Object {
@@ -2220,9 +2316,21 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "./my-custom-path-override/manifest-icon-192.png",
+      "type": "image/png",
+    },
+    Object {
       "purpose": "maskable",
       "sizes": "192x192",
       "src": "./my-custom-path-override/manifest-icon-192.png",
+      "type": "image/png",
+    },
+    Object {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "./my-custom-path-override/manifest-icon-512.png",
       "type": "image/png",
     },
     Object {
@@ -2487,15 +2595,13 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
-      "purpose": "any",
       "sizes": "192x192",
-      "src": "manifest-icon-192.png",
+      "src": "temp/manifest-icon-192.png",
       "type": "image/png",
     },
     Object {
-      "purpose": "any",
       "sizes": "512x512",
-      "src": "manifest-icon-512.png",
+      "src": "temp/manifest-icon-512.png",
       "type": "image/png",
     },
   ],
@@ -2538,9 +2644,21 @@ Object {
   },
   "manifestJsonContent": Array [
     Object {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "./my-custom-path-override/manifest-icon-192.png",
+      "type": "image/png",
+    },
+    Object {
       "purpose": "maskable",
       "sizes": "192x192",
       "src": "./my-custom-path-override/manifest-icon-192.png",
+      "type": "image/png",
+    },
+    Object {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "./my-custom-path-override/manifest-icon-512.png",
       "type": "image/png",
     },
     Object {
