@@ -186,7 +186,7 @@ describe('generates meta', () => {
       const manifestJson = await readManifest();
 
       expect(manifestJson.icons).toBeDefined();
-      expect(manifestJson.icons.length).toBe(2);
+      expect(manifestJson.icons.length).toBe(4);
     });
 
     test('extending icons array', async () => {
@@ -202,7 +202,7 @@ describe('generates meta', () => {
           ),
         ).toBeDefined();
       });
-      expect(manifestJson.icons.length).toBe(4);
+      expect(manifestJson.icons.length).toBe(6);
     });
 
     test('replacing items with target size in icons array', async () => {
@@ -233,7 +233,7 @@ describe('generates meta', () => {
           ),
         ).toBeUndefined();
       });
-      expect(manifestJson.icons.length).toBe(2);
+      expect(manifestJson.icons.length).toBe(4);
     });
 
     test('using a path override', async () => {

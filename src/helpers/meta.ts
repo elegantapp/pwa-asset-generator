@@ -44,17 +44,24 @@ const generateIconsContentForManifest = (
   savedImages: SavedImage[],
   options: Options,
 ): ManifestJsonIcon[] => {
-  const purpose = options.maskable ? 'maskable' : 'any';
   return savedImages
     .filter((image) =>
       image.name.startsWith(constants.MANIFEST_ICON_FILENAME_PREFIX),
     )
-    .map(({ path: imagePath, width, height, name }) => ({
-      src: generateOutputPath(options, name, imagePath, true),
-      sizes: `${width}x${height}`,
-      type: `image/${file.getExtension(imagePath)}`,
-      purpose,
-    }));
+    .reduce((curr, { path: imagePath, width, height, name }) => {
+      const icon: ManifestJsonIcon = {
+        src: generateOutputPath(options, name, imagePath),
+        sizes: `${width}x${height}`,
+        type: `image/${file.getExtension(imagePath)}`,
+      };
+      if (!options.maskable) {
+        return curr.concat(icon);
+      }
+      return curr.concat([
+        { ...icon, purpose: 'any' },
+        { ...icon, purpose: 'maskable' },
+      ]);
+    }, [] as ManifestJsonIcon[]);
 };
 
 const generateAppleTouchIconHtml = (
