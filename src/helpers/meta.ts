@@ -25,7 +25,7 @@ const generateOutputPath = (
     isManifest ? manifestJsonPath : indexHtmlPath
   ) as string;
 
-  if (pathOverride) {
+  if (pathOverride !== undefined) {
     return `${pathOverride}/${path.parse(imagePath).base}`;
   }
 
