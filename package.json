@@ -8,6 +8,7 @@
     "pwa-asset-generator": "bin/cli"
   },
   "scripts": {
+    "prepare": "husky install",
     "test": "jest --verbose",
     "test:update": "npm run test:update:visuals && npm run test:update:snapshots",
     "test:update:snapshots": "jest -u",
@@ -115,12 +116,6 @@
     "semantic-release": "^18.0.0",
     "ts-jest": "^27.0.5",
     "typescript": "^4.0.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "lint-staged": {
     "**/**.{ts}": [
