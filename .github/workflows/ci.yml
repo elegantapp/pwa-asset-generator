@@ -51,6 +51,7 @@ jobs:
           FORCE_EXIT: true
 
   auto-merge:
+    if: ${{ false }}
     needs: test
     runs-on: ubuntu-latest
     steps:
