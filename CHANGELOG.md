@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.4](https://github.com/onderceylan/pwa-asset-generator/compare/v6.0.3...v6.0.4) (2021-11-29)
+
+
+### Bug Fixes
+
+* **core:** revert puppeteer upgrade ([04d5c00](https://github.com/onderceylan/pwa-asset-generator/commit/04d5c009e04e6bb4aa31dfd745c46361d6705265)), closes [#764](https://github.com/onderceylan/pwa-asset-generator/issues/764)
+
 ## [6.0.3](https://github.com/onderceylan/pwa-asset-generator/compare/v6.0.2...v6.0.3) (2021-11-29)
 
 ## [6.0.2](https://github.com/onderceylan/pwa-asset-generator/compare/v6.0.1...v6.0.2) (2021-11-19)
