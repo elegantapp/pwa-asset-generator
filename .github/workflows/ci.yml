@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        node: [10, 12, 13]
+        node: [12, 14, 16]
         os: [ubuntu-latest, macOS-latest, windows-latest]
 
     steps:
@@ -49,6 +49,11 @@ jobs:
         run: npm test
         env:
           FORCE_EXIT: true
+
+  commit-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ahmadnassri/action-commit-lint@v1
 
   auto-merge:
     if: ${{ false }}
