@@ -24,7 +24,7 @@
     "update": "node bin/update-fallback-data",
     "build": "tsc",
     "start": "tsc -w",
-    "lint": "eslint \"src/**/**.ts\"",
+    "lint": "eslint \"src/**/**.ts\" && npx --no-install commitlint --edit $1",
     "lint:fix": "npm run lint -- --fix",
     "semantic-release": "semantic-release"
   },
@@ -98,7 +98,7 @@
     "@typescript-eslint/parser": "^4.32.0",
     "commitizen": "^4.2.4",
     "cross-env": "^7.0.0",
-    "cz-conventional-changelog": "^3.0.2",
+    "cz-conventional-changelog": "^3.0.3",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
@@ -118,7 +118,7 @@
     "typescript": "^4.0.2"
   },
   "lint-staged": {
-    "**/**.{ts}": [
+    "**/**.ts": [
       "eslint --fix"
     ]
   },
