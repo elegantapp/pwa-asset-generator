@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.5](https://github.com/onderceylan/pwa-asset-generator/compare/v6.0.4...v6.0.5) (2021-12-02)
+
+
+### Bug Fixes
+
+* **main:** allow path override of empty string ([351c8f7](https://github.com/onderceylan/pwa-asset-generator/commit/351c8f73d9640a44e0e0a9aa047dd09f0a3b5aaa))
+
 ## [6.0.4](https://github.com/onderceylan/pwa-asset-generator/compare/v6.0.3...v6.0.4) (2021-11-29)
 
 
