@@ -131,12 +131,13 @@ const getBrowserInstance = async (
     chrome = await launchSystemBrowser();
     browser = await getSystemBrowserInstance(chrome, launchArgs);
   } catch (e) {
+    const error = e as { port: number; code: string };
     // Kill chrome instance manually in case of connection error
-    if (e.code === LAUNCHER_CONNECTION_REFUSED_ERROR_CODE) {
+    if (error.code === LAUNCHER_CONNECTION_REFUSED_ERROR_CODE) {
       logger.warn(
-        `Chrome launcher could not connect to your system browser. Is your port ${e.port} accessible?`,
+        `Chrome launcher could not connect to your system browser. Is your port ${error.port} accessible?`,
       );
-      const prc = await find('port', e.port);
+      const prc = await find('port', error.port);
       prc.forEach((pr) => {
         logger.log(
           `Killing incompletely launched system chrome instance on pid ${pr.pid}`,
@@ -146,7 +147,7 @@ const getBrowserInstance = async (
     }
 
     // Inform user that system chrome is not found
-    if (e.code === LAUNCHER_NOT_INSTALLED_ERROR_CODE) {
+    if (error.code === LAUNCHER_NOT_INSTALLED_ERROR_CODE) {
       logger.warn('Looks like Chrome is not installed on your system');
     }
 
