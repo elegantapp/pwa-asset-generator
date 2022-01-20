@@ -5,7 +5,7 @@ export interface LoggerFunction {
   log(...args: string[]): void;
   warn(...args: string[]): void;
   trace(...args: string[]): void;
-  error(...args: string[]): void;
+  error(...args: string[] | Error[]): void;
   success(...args: string[]): void;
 }
 

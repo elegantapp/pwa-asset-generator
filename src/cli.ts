@@ -87,7 +87,7 @@ const logger = preLogger('cli', flags);
     await generateImages(cli.input[0], cli.input[1], flags, logger);
     process.exit(0);
   } catch (e) {
-    logger.error(e);
+    logger.error(e as Error);
     process.exit(1);
   }
 })();

@@ -150,11 +150,12 @@ const getSplashScreenMetaData = async (
     splashScreenMetaData = await getAppleSplashScreenData(browser, options);
     logger.success('Loaded metadata for iOS platform');
   } catch (e) {
-    logger.error(e);
+    const error = e as Error;
+    logger.error(error);
     logger.warn(
       `Failed to fetch latest specs from Apple Human Interface guidelines - using static fallback data`,
     );
-    throw e;
+    throw error;
   }
 
   return splashScreenMetaData;
@@ -235,7 +236,8 @@ const saveImages = async (
 
         return { name, width, height, scaleFactor, path, orientation };
       } catch (e) {
-        logger.error(e.message);
+        const error = e as Error;
+        logger.error(error.message);
         throw Error(`Failed to save image ${name}`);
       }
     }),
