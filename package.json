@@ -74,7 +74,7 @@
     "mime-types": "2.1.34",
     "pretty": "^2.0.0",
     "progress": "2.0.3",
-    "puppeteer-core": "11.0.0",
+    "puppeteer-core": "13.4.1",
     "slash": "3.0.0"
   },
   "devDependencies": {
