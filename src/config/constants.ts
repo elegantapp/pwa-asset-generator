@@ -231,8 +231,8 @@ export default {
 
   SHELL_HTML_FOR_LOGO: (
     imgPath: string,
-    backgroundColor = 'transparent',
     padding: string,
+    backgroundColor = 'transparent',
   ): string => `\
 <!DOCTYPE html>
 <html>

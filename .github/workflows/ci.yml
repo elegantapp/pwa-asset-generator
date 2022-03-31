@@ -13,7 +13,6 @@ jobs:
     timeout-minutes: 30
 
     strategy:
-      fail-fast: true
       matrix:
         node: [12, 14, 16]
         os: [ubuntu-latest, macOS-latest, windows-latest]
@@ -32,11 +31,6 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - name: Cache jest
-        uses: actions/cache@v1
-        with:
-          path: .jest-cache
-          key: ${{ runner.os }}-${{ matrix.node-version }}-jest
       - name: install
         run: npm ci
       - name: lint

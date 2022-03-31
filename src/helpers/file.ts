@@ -124,8 +124,8 @@ const getHtmlShell = (
 
   return `${constants.SHELL_HTML_FOR_LOGO(
     imageUrl,
-    options.background,
     options.padding,
+    options.background,
   )}`;
 };
 
@@ -157,6 +157,7 @@ export default {
   readFile: promisify(fs.readFile),
   readFileSync: fs.readFileSync,
   writeFile: promisify(fs.writeFile),
+  writeFileSync: promisify(fs.writeFileSync),
   makeDir: promisify(fs.mkdir),
   exists: promisify(fs.exists),
   makeDirRecursiveSync,

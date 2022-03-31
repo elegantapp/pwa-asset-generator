@@ -266,7 +266,7 @@ describe('generates meta', () => {
     const saveIndex = (): Promise<void> => {
       return file.writeFile(
         './temp/index.html',
-        constants.SHELL_HTML_FOR_LOGO('test.png', 'white', '10px'),
+        constants.SHELL_HTML_FOR_LOGO('test.png', '10px', 'white'),
       );
     };
 
@@ -491,9 +491,7 @@ describe('visually compares generated images with', () => {
     if (visualDiff.numDiffPixels !== 0) {
       /* eslint-disable no-console */
       console.log(`There's a diff between file ${fileAPath} and ${fileBPath}`);
-      console.log('numDiffPixels', visualDiff.numDiffPixels);
-      const diffBase64 = PNG.sync.write(visualDiff.diff).toString('base64');
-      console.log('diffBase64', diffBase64);
+      console.log(`numDiffPixels: ${visualDiff.numDiffPixels}`);
       /* eslint-enable no-console */
     }
 
@@ -512,7 +510,8 @@ describe('visually compares generated images with', () => {
 
     return result.savedImages.map((savedImage: SavedImage) => {
       const matchedSnapshot = snapshots.find(
-        (snapshot: string) => path.parse(snapshot).name === savedImage.name,
+        (snapshot: string) =>
+          path.parse(snapshot).name === path.parse(savedImage.path).name,
       );
 
       const looksSame = doFilesLookSame(
