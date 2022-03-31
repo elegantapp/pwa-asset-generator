@@ -43,9 +43,7 @@ const getAppleSplashScreenData = async (
         document.querySelectorAll('table')?.[0].querySelectorAll('tbody tr'),
       ).map((tr) => {
         // https://regex101.com/r/4dwvYf/4
-        const dimensionRegex = new RegExp(
-          /(\d+)x(\d+)\spt\s\((\d+)x(\d+)\spx\s@(\d)x\)/gm,
-        );
+        const dimensionRegex = /(\d+)x(\d+)\spt\s\((\d+)x(\d+)\spx\s@(\d)x\)/gm;
 
         const getParsedSpecs = (
           val: string,

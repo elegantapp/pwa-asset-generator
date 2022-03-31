@@ -10,7 +10,6 @@ coverage/*
 
 # Source files
 *.test.js
-*.js.map
 src/*
 dist/models/*.js
 !dist/models/meta.js
