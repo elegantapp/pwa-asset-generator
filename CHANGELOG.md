@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.8](https://github.com/onderceylan/pwa-asset-generator/compare/v6.0.7...v6.0.8) (2022-04-03)
+
 ## [6.0.7](https://github.com/onderceylan/pwa-asset-generator/compare/v6.0.6...v6.0.7) (2022-04-03)
 
 
