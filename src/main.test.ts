@@ -485,7 +485,29 @@ describe('visually compares generated images with', () => {
     };
   };
 
-  const doFilesLookSame = (fileAPath: string, fileBPath: string): boolean => {
+  const saveVisualDiff = (
+    filePath: string,
+    diffFileBuffer: Buffer,
+    testSuite: string,
+  ) => {
+    const savedFileParsedPath = path.parse(filePath);
+
+    file.makeDirRecursiveSync(`./temp/diff/${testSuite}`);
+    file.writeFileSync(
+      `./temp/diff/${testSuite}/diff-${savedFileParsedPath.name}.png`,
+      diffFileBuffer,
+    );
+    file.copyFileSync(
+      filePath,
+      `./temp/diff/${testSuite}/${savedFileParsedPath.base}`,
+    );
+  };
+
+  const doFilesLookSame = (
+    fileAPath: string,
+    fileBPath: string,
+    testSuite: string,
+  ): boolean => {
     const visualDiff = getVisualDiff(fileAPath, fileBPath);
 
     if (visualDiff.numDiffPixels !== 0) {
@@ -493,6 +515,12 @@ describe('visually compares generated images with', () => {
       console.log(`There's a diff between file ${fileAPath} and ${fileBPath}`);
       console.log(`numDiffPixels: ${visualDiff.numDiffPixels}`);
       /* eslint-enable no-console */
+
+      saveVisualDiff(
+        fileAPath,
+        PNG.sync.write(visualDiff.diff, { colorType: 6 }),
+        testSuite,
+      );
     }
 
     // Added a threshold for false negative pixel differences on some platforms
@@ -517,6 +545,7 @@ describe('visually compares generated images with', () => {
       const looksSame = doFilesLookSame(
         savedImage.path,
         path.join(SNAPSHOT_PATH, testSuite, matchedSnapshot as string),
+        testSuite,
       );
 
       if (!looksSame) {
