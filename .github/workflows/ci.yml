@@ -13,6 +13,7 @@ jobs:
     timeout-minutes: 30
 
     strategy:
+      fail-fast: false
       matrix:
         node: [12, 14, 16]
         os: [ubuntu-latest, macOS-latest, windows-latest]
@@ -31,6 +32,11 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+      - name: Cache jest
+        uses: actions/cache@v1
+        with:
+          path: .jest-cache
+          key: ${{ runner.os }}-${{ matrix.node-version }}-jest
       - name: install
         run: npm ci
       - name: lint
@@ -43,6 +49,11 @@ jobs:
         run: npm test
         env:
           FORCE_EXIT: true
+      - name: upload visual diff
+        uses: actions/upload-artifact@v3
+        with:
+          name: visual-test-diff-${{ runner.os }}-${{ matrix.node }}
+          path: temp/diff/*
 
   commit-lint:
     runs-on: ubuntu-latest
