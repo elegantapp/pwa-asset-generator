@@ -443,6 +443,8 @@ describe('visually compares generated images with', () => {
   interface VisualDiffResult {
     numDiffPixels: number;
     diff: boolean;
+    width: number;
+    height: number;
   }
 
   interface MatchResult {
@@ -475,13 +477,15 @@ describe('visually compares generated images with', () => {
       width,
       height,
       {
-        threshold: 0.5,
+        threshold: 0.7,
       },
     );
 
     return {
       numDiffPixels,
       diff,
+      width,
+      height,
     };
   };
 
@@ -503,14 +507,15 @@ describe('visually compares generated images with', () => {
     );
   };
 
-  const doFilesLookSame = (
+  const doFilesLookSimilar = (
     fileAPath: string,
     fileBPath: string,
     testSuite: string,
   ): boolean => {
     const visualDiff = getVisualDiff(fileAPath, fileBPath);
+    const acceptablePixedDiff = 0.25 * visualDiff.width * visualDiff.height;
 
-    if (visualDiff.numDiffPixels !== 0) {
+    if (visualDiff.numDiffPixels >= acceptablePixedDiff) {
       /* eslint-disable no-console */
       console.log(`There's a diff between file ${fileAPath} and ${fileBPath}`);
       console.log(`numDiffPixels: ${visualDiff.numDiffPixels}`);
@@ -523,8 +528,7 @@ describe('visually compares generated images with', () => {
       );
     }
 
-    // Added a threshold for false negative pixel differences on some platforms
-    return visualDiff.numDiffPixels < 750;
+    return visualDiff.numDiffPixels < acceptablePixedDiff;
   };
 
   const getAllSnapshotsMatchStatus = async (
@@ -542,7 +546,7 @@ describe('visually compares generated images with', () => {
           path.parse(snapshot).name === path.parse(savedImage.path).name,
       );
 
-      const looksSame = doFilesLookSame(
+      const looksSame = doFilesLookSimilar(
         savedImage.path,
         path.join(SNAPSHOT_PATH, testSuite, matchedSnapshot as string),
         testSuite,
