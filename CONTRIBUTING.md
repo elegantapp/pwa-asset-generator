@@ -20,12 +20,11 @@ Please note that if any of the issues have an assignee or is `In Progress` withi
 
 ## Commit messages and continuous deployment
 
-This project uses [husky](https://github.com/typicode/husky) w [commitizen](https://github.com/commitizen/cz-cli) and [semantic-release](https://github.com/semantic-release/semantic-release) for conventional changelog and continuous deployment.
+This project uses [husky](https://github.com/typicode/husky) and [semantic-release](https://github.com/semantic-release/semantic-release) for conventional changelog and continuous deployment.
 
 When you run `npm install` before introducing any change, all the necessary packages for this workflow will be installed on your local repo clone.
 
-You should commit your changes without providing a custom message via `git commit -m` ❌, but instead using `npm run commit` ✅.
-After running `npm run commit`, commitizen CLI will initialize and it will help you through. All of your commit messages will be linted by `commitlint` to make sure they're conventional.
+All of your commit messages will be linted by `commitlint` to make sure they're conventional.
 
 Please note that your commit message has a direct impact on the deployment of a new release. When your PR is merged to `master`, any changes in your PR with;
 

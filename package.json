@@ -19,7 +19,6 @@
     "visuals:input-png": "rimraf ./src/__snapshots__/visual/input-png && node ./bin/cli ./static/logo.png ./src/__snapshots__/visual/input-png -s false -b coral -w",
     "visuals:input-html": "rimraf ./src/__snapshots__/visual/input-html && node ./bin/cli ./static/logo.html ./src/__snapshots__/visual/input-html -s false",
     "visuals:input-html-dark": "rimraf ./src/__snapshots__/visual/input-html-dark && node ./bin/cli ./static/logo.html ./src/__snapshots__/visual/input-html-dark -s false -d true",
-    "commit": "git-cz",
     "chromium": "cross-env PAG_TEST_MODE=1 node bin/install",
     "update": "node bin/update-fallback-data",
     "build": "rimraf ./dist && tsc",
@@ -96,9 +95,7 @@
     "@types/progress": "^2.0.5",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
-    "commitizen": "^4.2.4",
     "cross-env": "^7.0.3",
-    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.12.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
@@ -121,10 +118,5 @@
     "**/**.ts": [
       "eslint --fix"
     ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }
