@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.1.0](https://github.com/onderceylan/pwa-asset-generator/compare/v6.0.8...v6.1.0) (2022-06-08)
+
+
+### Bug Fixes
+
+* **puppets:** update scraper for apple specs site ([bc90c4c](https://github.com/onderceylan/pwa-asset-generator/commit/bc90c4c32657bd3267a1caa1c909af6435473642))
+
+
+### Features
+
+* **main:** add iphone 13 specs ([7e09df1](https://github.com/onderceylan/pwa-asset-generator/commit/7e09df102d329fc6e3e51f04d7298e3f4b8fdce0))
+
 ## [6.0.8](https://github.com/onderceylan/pwa-asset-generator/compare/v6.0.7...v6.0.8) (2022-04-03)
 
 ## [6.0.7](https://github.com/onderceylan/pwa-asset-generator/compare/v6.0.6...v6.0.7) (2022-04-03)
