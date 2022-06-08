@@ -40,7 +40,11 @@ const getAppleSplashScreenData = async (
   const splashScreenData = await page.evaluate(() => {
     const scrapeSplashScreenDataFromHIGPage = (): LaunchScreenSpec[] => {
       return Array.from(
-        document.querySelectorAll('table')?.[0].querySelectorAll('tbody tr'),
+        document
+          .querySelectorAll(
+            '#device-screen-sizes-and-orientations + table',
+          )?.[0]
+          .querySelectorAll('tbody tr'),
       ).map((tr) => {
         // https://regex101.com/r/4dwvYf/4
         const dimensionRegex = /(\d+)x(\d+)\spt\s\((\d+)x(\d+)\spx\s@(\d)x\)/gm;
