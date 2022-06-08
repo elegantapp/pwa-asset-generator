@@ -108,6 +108,54 @@
     "scaleFactor": 2
   },
   {
+    "device": "iPhone 13 Pro Max",
+    "portrait": {
+      "width": 1284,
+      "height": 2778
+    },
+    "landscape": {
+      "width": 2778,
+      "height": 1284
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 13 Pro",
+    "portrait": {
+      "width": 1170,
+      "height": 2532
+    },
+    "landscape": {
+      "width": 2532,
+      "height": 1170
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 13",
+    "portrait": {
+      "width": 1170,
+      "height": 2532
+    },
+    "landscape": {
+      "width": 2532,
+      "height": 1170
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 13 mini",
+    "portrait": {
+      "width": 1125,
+      "height": 2436
+    },
+    "landscape": {
+      "width": 2436,
+      "height": 1125
+    },
+    "scaleFactor": 3
+  },
+  {
     "device": "iPhone 12 Pro Max",
     "portrait": {
       "width": 1284,
