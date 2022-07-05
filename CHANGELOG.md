@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.1](https://github.com/onderceylan/pwa-asset-generator/compare/v6.1.0...v6.1.1) (2022-07-05)
+
+
+### Bug Fixes
+
+* **deps:** upgrade dependencies ([a848254](https://github.com/onderceylan/pwa-asset-generator/commit/a8482542fcc16ebca9de605f3f993f66894b8b06))
+
 # [6.1.0](https://github.com/onderceylan/pwa-asset-generator/compare/v6.0.8...v6.1.0) (2022-06-08)
 
 
