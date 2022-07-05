@@ -45,6 +45,8 @@ jobs:
         run: npm run build
       - name: install chromium
         run: npm run chromium
+      - name: install package revision
+        run: npm i . -g
       - name: test
         run: npm test
         env:
