@@ -54,10 +54,6 @@
   ],
   "author": "Önder Ceylan <onderceylan@gmail.com>",
   "license": "MIT",
-  "funding": {
-    "type": "individual",
-    "url": "https://www.buymeacoffee.com/onder"
-  },
   "bugs": {
     "url": "https://github.com/onderceylan/pwa-asset-generator/issues"
   },
