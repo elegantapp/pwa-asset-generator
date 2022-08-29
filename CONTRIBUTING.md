@@ -4,13 +4,13 @@ Thank you for considering a contribution to `pwa-asset-generator`. Before jumpin
 
 ## Code of conduct
 
-First of all, please read the [__Code of Conduct__](https://github.com/onderceylan/pwa-asset-generator/blob/master/CODE_OF_CONDUCT.md) carefully. Once you start contributing, you agree on all terms in the code of conduct without any exception.
+First of all, please read the [__Code of Conduct__](https://github.com/elegantapp/pwa-asset-generator/blob/master/CODE_OF_CONDUCT.md) carefully. Once you start contributing, you agree on all terms in the code of conduct without any exception.
 
 ## Where to start
 
 You can contribute to this project in many aspects. Some are; reporting bugs, submitting feature requests, reviewing pull requests, improving documentation, adding new test scenarios, implementation of bug fixes, implementation of feature requests and etc. A good issue candidate for you to start with, is an issue with `good first issue` or `help wanted` labels. For all other issues, please contact one of the core contributors before working on them to prevent duplicate work.
 
-Please note that if any of the issues have an assignee or is `In Progress` within projects, it means it's assigned to a specific contributor and it's in progress already. You can see the milestones and road map under [projects](https://github.com/onderceylan/pwa-asset-generator/projects) section.
+Please note that if any of the issues have an assignee or is `In Progress` within projects, it means it's assigned to a specific contributor and it's in progress already. You can see the milestones and road map under [projects](https://github.com/elegantapp/pwa-asset-generator/projects) section.
 
 ## Code style
 
@@ -34,7 +34,7 @@ Please note that your commit message has a direct impact on the deployment of a 
 
 You can read more about it on [commitizen](https://github.com/commitizen/cz-cli), [semver](https://semver.org), and [semantic-release](https://github.com/semantic-release/semantic-release).
 
-All other commit types will trigger no new release. See the history of [release workflow on GitHub actions](https://github.com/onderceylan/pwa-asset-generator/actions?query=workflow%3ARelease).
+All other commit types will trigger no new release. See the history of [release workflow on GitHub actions](https://github.com/elegantapp/pwa-asset-generator/actions?query=workflow%3ARelease).
 
 ## Working with TypeScript
 
@@ -75,12 +75,12 @@ Tests can be executed with `npm test` command.
 Both snapshots and visual samples can be updated with `npm run test:update` when necessary.
 
 #### Snapshot testing
-* Utilizing jest's handy [snapshot testing](https://jestjs.io/docs/en/snapshot-testing) feature while testing feature integration is recommended. Please see [main.test.ts](https://github.com/onderceylan/pwa-asset-generator/blob/master/src/main.test.ts) file and [snapshots](https://github.com/onderceylan/pwa-asset-generator/tree/master/src/__snapshots__) folder for examples.
+* Utilizing jest's handy [snapshot testing](https://jestjs.io/docs/en/snapshot-testing) feature while testing feature integration is recommended. Please see [main.test.ts](https://github.com/elegantapp/pwa-asset-generator/blob/master/src/main.test.ts) file and [snapshots](https://github.com/elegantapp/pwa-asset-generator/tree/master/src/__snapshots__) folder for examples.
 * You can update the snapshots with `npm run test:update:snapshots` command when necessary.
 
 #### Visual regression testing
 
-* There are tests in [main.test.ts](https://github.com/onderceylan/pwa-asset-generator/blob/master/src/main.test.ts) file, running visual regressions over generated image file set. It tests if generated images are visually different from samples saved in [snapshots/visual](https://github.com/onderceylan/pwa-asset-generator/tree/master/src/__snapshots__/visual) folder, guaranteeing the expected output for all image generation scenarios.
+* There are tests in [main.test.ts](https://github.com/elegantapp/pwa-asset-generator/blob/master/src/main.test.ts) file, running visual regressions over generated image file set. It tests if generated images are visually different from samples saved in [snapshots/visual](https://github.com/elegantapp/pwa-asset-generator/tree/master/src/__snapshots__/visual) folder, guaranteeing the expected output for all image generation scenarios.
 * You can update the visual samples with `npm run test:update:visuals` command when necessary.
 
 > Please apply any of your code changes alongside with e2e or integration tests.
