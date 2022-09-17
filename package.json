@@ -1,6 +1,6 @@
 {
   "name": "pwa-asset-generator",
-  "version": "6.1.1",
+  "version": "6.1.3",
   "description": "Automates PWA asset generation and image declaration. Automatically generates icon and splash screen images, favicons and mstile images. Updates manifest.json and index.html files with the generated images according to Web App Manifest specs and Apple Human Interface guidelines.",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/onderceylan/pwa-asset-generator.git"
+    "url": "https://github.com/elegantapp/pwa-asset-generator.git"
   },
   "engines": {
     "node": ">=10.12.0"
@@ -54,14 +54,10 @@
   ],
   "author": "Önder Ceylan <onderceylan@gmail.com>",
   "license": "MIT",
-  "funding": {
-    "type": "individual",
-    "url": "https://www.buymeacoffee.com/onder"
-  },
   "bugs": {
-    "url": "https://github.com/onderceylan/pwa-asset-generator/issues"
+    "url": "https://github.com/elegantapp/pwa-asset-generator/issues"
   },
-  "homepage": "https://github.com/onderceylan/pwa-asset-generator#readme",
+  "homepage": "https://github.com/elegantapp/pwa-asset-generator#readme",
   "dependencies": {
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.10",

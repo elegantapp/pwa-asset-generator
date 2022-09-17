@@ -1,13 +1,15 @@
 # pwa-asset-generator ✨
-[![npm](https://img.shields.io/npm/v/pwa-asset-generator?color=brightgreen)](https://www.npmjs.com/package/pwa-asset-generator) [![node](https://img.shields.io/node/v/pwa-asset-generator)](https://www.npmjs.com/package/pwa-asset-generator) [![Build Status](https://github.com/onderceylan/pwa-asset-generator/workflows/CI/badge.svg)](https://github.com/onderceylan/pwa-asset-generator/actions?workflow=CI) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-brightgreen.svg)](https://github.com/semantic-release/semantic-release) [![Buy me a coffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-blueviolet.svg)](https://www.buymeacoffee.com/onder)
+[![npm](https://img.shields.io/npm/v/pwa-asset-generator?color=brightgreen)](https://www.npmjs.com/package/pwa-asset-generator) [![node](https://img.shields.io/node/v/pwa-asset-generator)](https://www.npmjs.com/package/pwa-asset-generator) [![Build Status](https://github.com/elegantapp/pwa-asset-generator/workflows/CI/badge.svg)](https://github.com/elegantapp/pwa-asset-generator/actions?workflow=CI) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-brightgreen.svg)](https://github.com/semantic-release/semantic-release)
 
-> Automates PWA asset generation and image declaration. Automatically generates icon and splash screen images, favicons and mstile images. Updates manifest.json and index.html files with the generated images according to Web App Manifest specs and Apple Human Interface guidelines.
+> 📣 Can you please help with taking the project to the next level by submitting [this 2 minutes short survey](https://forms.gle/ZANyYbsD3mRZFEcD9)?
 
-![Usage demonstration](https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/demo.gif)
+Automates PWA asset generation and image declaration. Automatically generates icon and splash screen images, favicons and mstile images. Updates manifest.json and index.html files with the generated images according to Web App Manifest specs and Apple Human Interface guidelines.
+
+![Usage demonstration](https://raw.githubusercontent.com/elegantapp/pwa-asset-generator/HEAD/static/demo.gif)
 
 ## Motivation — [read the full blog post here](https://itnext.io/pwa-splash-screen-and-icon-generator-a74ebb8a130)
 
-![A PWA on iOS with icons and splash screens](https://onderceylan.github.io/pwa-asset-generator/static/ios-demo-blm.png)
+![A PWA on iOS with icons and splash screens](https://elegantapp.github.io/pwa-asset-generator/static/ios-demo-blm.png)
 
 When you build a PWA with a goal of providing native-like experiences on multiple platforms and stores, you need to meet with the criteria of those platforms and stores with your PWA assets; icon sizes and splash screens. Such criteria are;
 
@@ -30,7 +32,7 @@ PWA Asset Generator automates the image generation in a creative way. Having [Pu
 * Scrapes the latest specs from Apple Human Interface guidelines website via Puppeteer to make your PWA ready for all/recent iOS devices out there 🤖
 
     * Supports offline mode and uses static spec data when things go wrong with scraping 📴
-    * Updates static spec data before each release automatically and [monitors spec changes everyday](https://github.com/onderceylan/pwa-asset-generator/actions?query=workflow%3A%22Sanity+Check%22) 🔄
+    * Updates static spec data before each release automatically and [monitors spec changes everyday](https://github.com/elegantapp/pwa-asset-generator/actions?query=workflow%3A%22Sanity+Check%22) 🔄
 
 * Uses the Chrome browser as it’s a canvas of your fav image editor. It uses a shell HTML on the fly as an art board and centers your logo before taking screenshots for each resolution via Puppeteer 🤖
 
