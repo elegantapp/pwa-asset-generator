@@ -108,6 +108,54 @@
     "scaleFactor": 2
   },
   {
+    "device": "iPhone 14 Pro Max",
+    "portrait": {
+      "width": 1290,
+      "height": 2796
+    },
+    "landscape": {
+      "width": 2796,
+      "height": 1290
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 14 Pro",
+    "portrait": {
+      "width": 1179,
+      "height": 2556
+    },
+    "landscape": {
+      "width": 2556,
+      "height": 1179
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 14 Plus",
+    "portrait": {
+      "width": 1284,
+      "height": 2778
+    },
+    "landscape": {
+      "width": 2778,
+      "height": 1284
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 14",
+    "portrait": {
+      "width": 1170,
+      "height": 2532
+    },
+    "landscape": {
+      "width": 2532,
+      "height": 1170
+    },
+    "scaleFactor": 3
+  },
+  {
     "device": "iPhone 13 Pro Max",
     "portrait": {
       "width": 1284,
