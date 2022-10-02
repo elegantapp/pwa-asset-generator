@@ -13,6 +13,10 @@ Object {
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2224-1668.jpg\\" media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1620-2160.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2160-1620.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1290-2796.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2796-1290.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1179-2556.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2556-1179.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1284-2778.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2778-1284.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1170-2532.jpg\\" media=\\"(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
@@ -141,6 +145,38 @@ Object {
       "path": "temp/apple-splash-2160-1620.jpg",
       "scaleFactor": 2,
       "width": 2160,
+    },
+    Object {
+      "height": 2796,
+      "name": "apple-splash-1290-2796",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1290-2796.jpg",
+      "scaleFactor": 3,
+      "width": 1290,
+    },
+    Object {
+      "height": 1290,
+      "name": "apple-splash-2796-1290",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2796-1290.jpg",
+      "scaleFactor": 3,
+      "width": 2796,
+    },
+    Object {
+      "height": 2556,
+      "name": "apple-splash-1179-2556",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1179-2556.jpg",
+      "scaleFactor": 3,
+      "width": 1179,
+    },
+    Object {
+      "height": 1179,
+      "name": "apple-splash-2556-1179",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2556-1179.jpg",
+      "scaleFactor": 3,
+      "width": 2556,
     },
     Object {
       "height": 2778,
@@ -369,6 +405,8 @@ Object {
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2048-1536.jpg\\" media=\\"(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2224-1668.jpg\\" media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2160-1620.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2796-1290.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2556-1179.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2778-1284.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2532-1170.jpg\\" media=\\"(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2436-1125.jpg\\" media=\\"(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
@@ -422,6 +460,22 @@ Object {
       "path": "temp/apple-splash-2160-1620.jpg",
       "scaleFactor": 2,
       "width": 2160,
+    },
+    Object {
+      "height": 1290,
+      "name": "apple-splash-2796-1290",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2796-1290.jpg",
+      "scaleFactor": 3,
+      "width": 2796,
+    },
+    Object {
+      "height": 1179,
+      "name": "apple-splash-2556-1179",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2556-1179.jpg",
+      "scaleFactor": 3,
+      "width": 2556,
     },
     Object {
       "height": 1284,
@@ -499,6 +553,8 @@ Object {
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1536-2048.jpg\\" media=\\"(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1668-2224.jpg\\" media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1620-2160.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1290-2796.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1179-2556.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1284-2778.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1170-2532.jpg\\" media=\\"(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1125-2436.jpg\\" media=\\"(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
@@ -552,6 +608,22 @@ Object {
       "path": "temp/apple-splash-1620-2160.jpg",
       "scaleFactor": 2,
       "width": 1620,
+    },
+    Object {
+      "height": 2796,
+      "name": "apple-splash-1290-2796",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1290-2796.jpg",
+      "scaleFactor": 3,
+      "width": 1290,
+    },
+    Object {
+      "height": 2556,
+      "name": "apple-splash-1179-2556",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1179-2556.jpg",
+      "scaleFactor": 3,
+      "width": 1179,
     },
     Object {
       "height": 2778,
@@ -634,6 +706,10 @@ Object {
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2224-1668.jpg\\" media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1620-2160.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2160-1620.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1290-2796.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2796-1290.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1179-2556.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2556-1179.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1284-2778.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2778-1284.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1170-2532.jpg\\" media=\\"(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
@@ -735,6 +811,38 @@ Object {
       "path": "temp/apple-splash-2160-1620.jpg",
       "scaleFactor": 2,
       "width": 2160,
+    },
+    Object {
+      "height": 2796,
+      "name": "apple-splash-1290-2796",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1290-2796.jpg",
+      "scaleFactor": 3,
+      "width": 1290,
+    },
+    Object {
+      "height": 1290,
+      "name": "apple-splash-2796-1290",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2796-1290.jpg",
+      "scaleFactor": 3,
+      "width": 2796,
+    },
+    Object {
+      "height": 2556,
+      "name": "apple-splash-1179-2556",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1179-2556.jpg",
+      "scaleFactor": 3,
+      "width": 1179,
+    },
+    Object {
+      "height": 1179,
+      "name": "apple-splash-2556-1179",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2556-1179.jpg",
+      "scaleFactor": 3,
+      "width": 2556,
     },
     Object {
       "height": 2778,
@@ -881,6 +989,10 @@ Object {
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-dark-2224-1668.jpg\\" media=\\"(prefers-color-scheme: dark) and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-dark-1620-2160.jpg\\" media=\\"(prefers-color-scheme: dark) and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-dark-2160-1620.jpg\\" media=\\"(prefers-color-scheme: dark) and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-dark-1290-2796.jpg\\" media=\\"(prefers-color-scheme: dark) and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-dark-2796-1290.jpg\\" media=\\"(prefers-color-scheme: dark) and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-dark-1179-2556.jpg\\" media=\\"(prefers-color-scheme: dark) and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-dark-2556-1179.jpg\\" media=\\"(prefers-color-scheme: dark) and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-dark-1284-2778.jpg\\" media=\\"(prefers-color-scheme: dark) and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-dark-2778-1284.jpg\\" media=\\"(prefers-color-scheme: dark) and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-dark-1170-2532.jpg\\" media=\\"(prefers-color-scheme: dark) and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
@@ -982,6 +1094,38 @@ Object {
       "path": "temp/apple-splash-dark-2160-1620.jpg",
       "scaleFactor": 2,
       "width": 2160,
+    },
+    Object {
+      "height": 2796,
+      "name": "apple-splash-dark-1290-2796",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-dark-1290-2796.jpg",
+      "scaleFactor": 3,
+      "width": 1290,
+    },
+    Object {
+      "height": 1290,
+      "name": "apple-splash-dark-2796-1290",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-dark-2796-1290.jpg",
+      "scaleFactor": 3,
+      "width": 2796,
+    },
+    Object {
+      "height": 2556,
+      "name": "apple-splash-dark-1179-2556",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-dark-1179-2556.jpg",
+      "scaleFactor": 3,
+      "width": 1179,
+    },
+    Object {
+      "height": 1179,
+      "name": "apple-splash-dark-2556-1179",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-dark-2556-1179.jpg",
+      "scaleFactor": 3,
+      "width": 2556,
     },
     Object {
       "height": 2778,
@@ -1201,6 +1345,10 @@ Object {
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2224-1668.jpg\\" media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1620-2160.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2160-1620.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1290-2796.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2796-1290.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1179-2556.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2556-1179.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1284-2778.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2778-1284.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1170-2532.jpg\\" media=\\"(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
@@ -1331,6 +1479,38 @@ Object {
       "path": "temp/apple-splash-2160-1620.jpg",
       "scaleFactor": 2,
       "width": 2160,
+    },
+    Object {
+      "height": 2796,
+      "name": "apple-splash-1290-2796",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1290-2796.jpg",
+      "scaleFactor": 3,
+      "width": 1290,
+    },
+    Object {
+      "height": 1290,
+      "name": "apple-splash-2796-1290",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2796-1290.jpg",
+      "scaleFactor": 3,
+      "width": 2796,
+    },
+    Object {
+      "height": 2556,
+      "name": "apple-splash-1179-2556",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1179-2556.jpg",
+      "scaleFactor": 3,
+      "width": 1179,
+    },
+    Object {
+      "height": 1179,
+      "name": "apple-splash-2556-1179",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2556-1179.jpg",
+      "scaleFactor": 3,
+      "width": 2556,
     },
     Object {
       "height": 2778,
@@ -1609,6 +1789,10 @@ Object {
 <link rel=\\"apple-touch-startup-image\\" href=\\"%PUBLIC_URL%/temp/apple-splash-2224-1668.jpg\\" media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"%PUBLIC_URL%/temp/apple-splash-1620-2160.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"%PUBLIC_URL%/temp/apple-splash-2160-1620.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"%PUBLIC_URL%/temp/apple-splash-1290-2796.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"%PUBLIC_URL%/temp/apple-splash-2796-1290.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"%PUBLIC_URL%/temp/apple-splash-1179-2556.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"%PUBLIC_URL%/temp/apple-splash-2556-1179.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"%PUBLIC_URL%/temp/apple-splash-1284-2778.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"%PUBLIC_URL%/temp/apple-splash-2778-1284.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"%PUBLIC_URL%/temp/apple-splash-1170-2532.jpg\\" media=\\"(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
@@ -1737,6 +1921,38 @@ Object {
       "path": "temp/apple-splash-2160-1620.jpg",
       "scaleFactor": 2,
       "width": 2160,
+    },
+    Object {
+      "height": 2796,
+      "name": "apple-splash-1290-2796",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1290-2796.jpg",
+      "scaleFactor": 3,
+      "width": 1290,
+    },
+    Object {
+      "height": 1290,
+      "name": "apple-splash-2796-1290",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2796-1290.jpg",
+      "scaleFactor": 3,
+      "width": 2796,
+    },
+    Object {
+      "height": 2556,
+      "name": "apple-splash-1179-2556",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1179-2556.jpg",
+      "scaleFactor": 3,
+      "width": 1179,
+    },
+    Object {
+      "height": 1179,
+      "name": "apple-splash-2556-1179",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2556-1179.jpg",
+      "scaleFactor": 3,
+      "width": 2556,
     },
     Object {
       "height": 2778,
@@ -2043,6 +2259,10 @@ Object {
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2224-1668.jpg\\" media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\" />
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1620-2160.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\" />
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2160-1620.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\" />
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1290-2796.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\" />
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2796-1290.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\" />
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1179-2556.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\" />
+<link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2556-1179.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\" />
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1284-2778.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\" />
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-2778-1284.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\" />
 <link rel=\\"apple-touch-startup-image\\" href=\\"temp/apple-splash-1170-2532.jpg\\" media=\\"(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\" />
@@ -2144,6 +2364,38 @@ Object {
       "path": "temp/apple-splash-2160-1620.jpg",
       "scaleFactor": 2,
       "width": 2160,
+    },
+    Object {
+      "height": 2796,
+      "name": "apple-splash-1290-2796",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1290-2796.jpg",
+      "scaleFactor": 3,
+      "width": 1290,
+    },
+    Object {
+      "height": 1290,
+      "name": "apple-splash-2796-1290",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2796-1290.jpg",
+      "scaleFactor": 3,
+      "width": 2796,
+    },
+    Object {
+      "height": 2556,
+      "name": "apple-splash-1179-2556",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1179-2556.jpg",
+      "scaleFactor": 3,
+      "width": 1179,
+    },
+    Object {
+      "height": 1179,
+      "name": "apple-splash-2556-1179",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2556-1179.jpg",
+      "scaleFactor": 3,
+      "width": 2556,
     },
     Object {
       "height": 2778,
@@ -2290,6 +2542,10 @@ Object {
 <link rel=\\"apple-touch-startup-image\\" href=\\"./my-custom-path-override/apple-splash-2224-1668.jpg\\" media=\\"(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"./my-custom-path-override/apple-splash-1620-2160.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"./my-custom-path-override/apple-splash-2160-1620.jpg\\" media=\\"(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"./my-custom-path-override/apple-splash-1290-2796.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"./my-custom-path-override/apple-splash-2796-1290.jpg\\" media=\\"(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"./my-custom-path-override/apple-splash-1179-2556.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
+<link rel=\\"apple-touch-startup-image\\" href=\\"./my-custom-path-override/apple-splash-2556-1179.jpg\\" media=\\"(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"./my-custom-path-override/apple-splash-1284-2778.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"./my-custom-path-override/apple-splash-2778-1284.jpg\\" media=\\"(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)\\">
 <link rel=\\"apple-touch-startup-image\\" href=\\"./my-custom-path-override/apple-splash-1170-2532.jpg\\" media=\\"(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)\\">
@@ -2420,6 +2676,38 @@ Object {
       "path": "temp/apple-splash-2160-1620.jpg",
       "scaleFactor": 2,
       "width": 2160,
+    },
+    Object {
+      "height": 2796,
+      "name": "apple-splash-1290-2796",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1290-2796.jpg",
+      "scaleFactor": 3,
+      "width": 1290,
+    },
+    Object {
+      "height": 1290,
+      "name": "apple-splash-2796-1290",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2796-1290.jpg",
+      "scaleFactor": 3,
+      "width": 2796,
+    },
+    Object {
+      "height": 2556,
+      "name": "apple-splash-1179-2556",
+      "orientation": "portrait",
+      "path": "temp/apple-splash-1179-2556.jpg",
+      "scaleFactor": 3,
+      "width": 1179,
+    },
+    Object {
+      "height": 1179,
+      "name": "apple-splash-2556-1179",
+      "orientation": "landscape",
+      "path": "temp/apple-splash-2556-1179.jpg",
+      "scaleFactor": 3,
+      "width": 2556,
     },
     Object {
       "height": 2778,
