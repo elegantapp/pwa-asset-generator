@@ -58,6 +58,13 @@
     "url": "https://github.com/elegantapp/pwa-asset-generator/issues"
   },
   "homepage": "https://github.com/elegantapp/pwa-asset-generator#readme",
+  "collective": {
+    "url": "https://opencollective.com/pwa-asset-generator"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/pwa-asset-generator"
+  },
   "dependencies": {
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.10",
