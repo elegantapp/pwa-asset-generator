@@ -1,7 +1,5 @@
 # pwa-asset-generator ✨
-[![npm](https://img.shields.io/npm/v/pwa-asset-generator?color=brightgreen)](https://www.npmjs.com/package/pwa-asset-generator) [![node](https://img.shields.io/node/v/pwa-asset-generator)](https://www.npmjs.com/package/pwa-asset-generator) [![Build Status](https://github.com/elegantapp/pwa-asset-generator/workflows/CI/badge.svg)](https://github.com/elegantapp/pwa-asset-generator/actions?workflow=CI) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-brightgreen.svg)](https://github.com/semantic-release/semantic-release)
-
-> 📣 Can you please help with taking the project to the next level by submitting [this 2 minutes short survey](https://forms.gle/ZANyYbsD3mRZFEcD9)?
+[![npm](https://img.shields.io/npm/v/pwa-asset-generator?color=brightgreen)](https://www.npmjs.com/package/pwa-asset-generator) [![node](https://img.shields.io/node/v/pwa-asset-generator)](https://www.npmjs.com/package/pwa-asset-generator) [![Build Status](https://github.com/elegantapp/pwa-asset-generator/workflows/CI/badge.svg)](https://github.com/elegantapp/pwa-asset-generator/actions?workflow=CI) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-brightgreen.svg)](https://github.com/semantic-release/semantic-release) [![open-collective](https://opencollective.com/pwa-asset-generator/tiers/sponsor/badge.svg?label=sponsor&color=brightgreen)](https://opencollective.com/pwa-asset-generator/donate)
 
 Automates PWA asset generation and image declaration. Automatically generates icon and splash screen images, favicons and mstile images. Updates manifest.json and index.html files with the generated images according to Web App Manifest specs and Apple Human Interface guidelines.
 
@@ -54,7 +52,7 @@ PWA Asset Generator automates the image generation in a creative way. Having [Pu
 ## Install
 
 ```
-$ npm install --global pwa-asset-generator
+$ npm install pwa-asset-generator
 ```
 
 ## One-off execution
@@ -108,8 +106,8 @@ $ pwa-asset-generator --help
     $ pwa-asset-generator logo.svg ./assets --icon-only --favicon --opaque false --maskable false --type png
     $ pwa-asset-generator logo.svg ./assets --dark-mode --background dimgrey --splash-only --quality 80
     $ pwa-asset-generator logo.svg ./assets --padding "calc(50vh - 5%) calc(50vw - 10%)" --path-override "./your-custom-image-folder-path"
-    $ pwa-asset-generator https://onderceylan.github.io/pwa-asset-generator/static/logo.png ./temp -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
-    $ pwa-asset-generator https://onderceylan.github.io/pwa-asset-generator/static/blm.png ./blm -p "15%" -b "linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1)"
+    $ pwa-asset-generator https://elegantapp.github.io/pwa-asset-generator/static/logo.png ./temp -p "15%" -b "linear-gradient(to right, #fa709a 0%, #fee140 100%)"
+    $ pwa-asset-generator https://elegantapp.github.io/pwa-asset-generator/static/blm.png ./blm -p "15%" -b "linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1)"
 
   Flag examples
     --background "rgba(255, 255, 255, .5)"
@@ -145,7 +143,7 @@ const pwaAssetGenerator = require('pwa-asset-generator');
 // Generate images over a module function call, instead of using CLI commands
 (async () => {
   const { savedImages, htmlMeta, manifestJsonContent } = await pwaAssetGenerator.generateImages(
-    'https://onderceylan.github.io/pwa-asset-generator/static/logo.png',
+    'https://elegantapp.github.io/pwa-asset-generator/static/logo.png',
     './temp',
     {
       scrape: false,
@@ -287,4 +285,4 @@ PAG provides users the `--no-sandbox` option to tackle this issue. Note that the
 
 ### You saved me hours of work with pwa-asset-generator. How can I support this project?
 
-I'm happy to hear you enjoy my work, and it saved you your precious time. Let's call it even! [Make a donation](https://www.buymeacoffee.com/onder) and help me support students in developing countries!
+We're glad you enjoy PWA Asset Generator, and it saved you your precious time. [Make a donation](https://opencollective.com/pwa-asset-generator/donate) and help us maintain this project!
