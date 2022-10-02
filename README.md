@@ -285,4 +285,4 @@ PAG provides users the `--no-sandbox` option to tackle this issue. Note that the
 
 ### You saved me hours of work with pwa-asset-generator. How can I support this project?
 
-We're glad you enjoy PWA Asset Generator, and it saved you your precious time. [Make a donation](https://opencollective.com/pwa-asset-generator/donate) and help us maintain this project!
+We're glad you enjoy PWA Asset Generator, and it saved you your precious time. [Become one of the backers](https://opencollective.com/pwa-asset-generator/donate) and help us maintain this project!
