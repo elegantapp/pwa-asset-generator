@@ -15,7 +15,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "listEmittedFiles": true
+    "listEmittedFiles": true,
+    "skipLibCheck": true
   },
   "exclude": [
     "node_modules",
