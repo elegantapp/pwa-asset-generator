@@ -77,7 +77,7 @@
     "pretty": "^2.0.0",
     "progress": "^2.0.3",
     "puppeteer-core": "^13.5.2",
-    "slash": "^3.0.0"
+    "slash": "^5.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
