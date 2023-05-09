@@ -42,7 +42,7 @@ const getAppleSplashScreenData = async (
       return Array.from(
         document
           .querySelectorAll(
-            '#device-screen-sizes-and-orientations + table',
+            '#Device-screen-sizes-and-orientations + .table-wrapper > table',
           )?.[0]
           .querySelectorAll('tbody tr'),
       ).map((tr) => {
