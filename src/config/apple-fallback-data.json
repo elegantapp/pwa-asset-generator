@@ -1,6 +1,6 @@
 [
   {
-    "device": "12.9\" iPad Pro",
+    "device": "12.9” iPad Pro",
     "portrait": {
       "width": 2048,
       "height": 2732
@@ -12,7 +12,7 @@
     "scaleFactor": 2
   },
   {
-    "device": "11\" iPad Pro",
+    "device": "11” iPad Pro",
     "portrait": {
       "width": 1668,
       "height": 2388
@@ -24,7 +24,7 @@
     "scaleFactor": 2
   },
   {
-    "device": "10.5\" iPad Pro",
+    "device": "10.5” iPad Pro",
     "portrait": {
       "width": 1668,
       "height": 2388
@@ -36,7 +36,7 @@
     "scaleFactor": 2
   },
   {
-    "device": "9.7\" iPad Pro",
+    "device": "9.7” iPad Pro",
     "portrait": {
       "width": 1536,
       "height": 2048
@@ -48,7 +48,7 @@
     "scaleFactor": 2
   },
   {
-    "device": "7.9\" iPad mini",
+    "device": "7.9” iPad mini",
     "portrait": {
       "width": 1536,
       "height": 2048
@@ -60,7 +60,7 @@
     "scaleFactor": 2
   },
   {
-    "device": "10.5\" iPad Air",
+    "device": "10.5” iPad Air",
     "portrait": {
       "width": 1668,
       "height": 2224
@@ -72,7 +72,7 @@
     "scaleFactor": 2
   },
   {
-    "device": "9.7\" iPad Air",
+    "device": "9.7” iPad Air",
     "portrait": {
       "width": 1536,
       "height": 2048
@@ -84,7 +84,7 @@
     "scaleFactor": 2
   },
   {
-    "device": "10.2\" iPad",
+    "device": "10.2” iPad",
     "portrait": {
       "width": 1620,
       "height": 2160
@@ -96,7 +96,7 @@
     "scaleFactor": 2
   },
   {
-    "device": "9.7\" iPad",
+    "device": "9.7” iPad",
     "portrait": {
       "width": 1536,
       "height": 2048
@@ -432,7 +432,7 @@
     "scaleFactor": 2
   },
   {
-    "device": "4.7\" iPhone SE",
+    "device": "4.7” iPhone SE",
     "portrait": {
       "width": 750,
       "height": 1334
@@ -444,7 +444,7 @@
     "scaleFactor": 2
   },
   {
-    "device": "4\" iPhone SE",
+    "device": "4” iPhone SE",
     "portrait": {
       "width": 640,
       "height": 1136
