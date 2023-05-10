@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.3.0](https://github.com/elegantapp/pwa-asset-generator/compare/v6.2.1...v6.3.0) (2023-05-10)
+
+
+### Bug Fixes
+
+* **puppets:** update apple specs selector ([8f00387](https://github.com/elegantapp/pwa-asset-generator/commit/8f00387b76c2ceb15ab50d48a1d7369901b22b16))
+
+
+### Features
+
+* **main:** update fallback data ([8fddb3f](https://github.com/elegantapp/pwa-asset-generator/commit/8fddb3f1cad1ec8cca2182f2cae963e446d216e9))
+
 ## [6.2.1](https://github.com/elegantapp/pwa-asset-generator/compare/v6.2.0...v6.2.1) (2023-01-13)
 
 # [6.2.0](https://github.com/elegantapp/pwa-asset-generator/compare/v6.1.3...v6.2.0) (2022-10-02)
