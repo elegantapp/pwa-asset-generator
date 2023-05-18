@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.1](https://github.com/elegantapp/pwa-asset-generator/compare/v6.3.0...v6.3.1) (2023-05-18)
+
+
+### Bug Fixes
+
+* **core:** remove extra margin in viewport ([f78baf8](https://github.com/elegantapp/pwa-asset-generator/commit/f78baf8bd43829d9a62e7ad9c6e424f0d632f7d2))
+
 # [6.3.0](https://github.com/elegantapp/pwa-asset-generator/compare/v6.2.1...v6.3.0) (2023-05-10)
 
 
