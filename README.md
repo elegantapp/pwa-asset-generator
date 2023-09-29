@@ -241,12 +241,12 @@ render() {
               }) and (orientation: portrait)`}
             />
             <link
-              key={`apple-splash-${spec.portrait.width}-${spec.portrait.height}`}
+              key={`apple-splash-${spec.landscape.width}-${spec.landscape.height}`}
               rel="apple-touch-startup-image"
-              href={`apple-splash-${spec.portrait.width}-${spec.portrait.height}.png`}
-              media={`(device-width: ${spec.portrait.height /
-                spec.scaleFactor}px) and (device-height: ${spec.portrait
-                .width /
+              href={`apple-splash-${spec.landscape.width}-${spec.landscape.height}.png`}
+              media={`(device-width: ${spec.landscape.width /
+                spec.scaleFactor}px) and (device-height: ${spec.landscape
+                .height /
                 spec.scaleFactor}px) and (-webkit-device-pixel-ratio: ${
                 spec.scaleFactor
               }) and (orientation: landscape)`}
