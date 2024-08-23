@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.2](https://github.com/elegantapp/pwa-asset-generator/compare/v6.3.1...v6.3.2) (2024-08-23)
+
+
+### Bug Fixes
+
+* **deps:** pin cheerio ([2a0414c](https://github.com/elegantapp/pwa-asset-generator/commit/2a0414c37d33bb1b87cf9ab0f9d03110130faa2c))
+
 ## [6.3.1](https://github.com/elegantapp/pwa-asset-generator/compare/v6.3.0...v6.3.1) (2023-05-18)
 
 
