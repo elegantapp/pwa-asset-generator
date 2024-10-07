@@ -54,21 +54,25 @@ const getDefaultOptions = (): Options => {
 };
 
 const normalizeSandboxOption = (
-  noSandbox: boolean | undefined,
+  options: CLIOptions,
   logger: LoggerFunction,
 ): Partial<Options> => {
   let sandboxDisabled = false;
-  if (noSandbox) {
-    if (os.platform() !== 'linux') {
-      logger.warn(
-        'Disabling sandbox is only relevant on Linux platforms, request declined!',
-      );
-    } else {
-      sandboxDisabled = true;
-    }
+  if (options.noSandbox === true) {
+    sandboxDisabled = true;
+  }
+  if (options.sandbox === false) {
+    sandboxDisabled = true;
+  }
+  if (sandboxDisabled && os.platform() !== 'linux') {
+    logger.warn(
+      'Disabling sandbox is only relevant on Linux platforms, request declined!',
+    );
+    sandboxDisabled = false;
   }
   return {
     noSandbox: sandboxDisabled,
+    sandbox: !sandboxDisabled,
   };
 };
 
