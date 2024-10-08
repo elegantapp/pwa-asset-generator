@@ -48,6 +48,18 @@
     "scaleFactor": 2
   },
   {
+    "device": "8.3” iPad mini",
+    "portrait": {
+      "width": 1488,
+      "height": 2266
+    },
+    "landscape": {
+      "width": 2266,
+      "height": 1488
+    },
+    "scaleFactor": 2
+  },
+  {
     "device": "7.9” iPad mini",
     "portrait": {
       "width": 1536,
@@ -56,6 +68,18 @@
     "landscape": {
       "width": 2048,
       "height": 1536
+    },
+    "scaleFactor": 2
+  },
+  {
+    "device": "10.9” iPad Air",
+    "portrait": {
+      "width": 1640,
+      "height": 2360
+    },
+    "landscape": {
+      "width": 2360,
+      "height": 1640
     },
     "scaleFactor": 2
   },
@@ -106,6 +130,102 @@
       "height": 1536
     },
     "scaleFactor": 2
+  },
+  {
+    "device": "iPhone 16 Pro Max",
+    "portrait": {
+      "width": 1320,
+      "height": 2868
+    },
+    "landscape": {
+      "width": 2868,
+      "height": 1320
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 16 Pro",
+    "portrait": {
+      "width": 1206,
+      "height": 2622
+    },
+    "landscape": {
+      "width": 2622,
+      "height": 1206
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 16 Plus",
+    "portrait": {
+      "width": 1290,
+      "height": 2796
+    },
+    "landscape": {
+      "width": 2796,
+      "height": 1290
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 16",
+    "portrait": {
+      "width": 1179,
+      "height": 2556
+    },
+    "landscape": {
+      "width": 2556,
+      "height": 1179
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 15 Pro Max",
+    "portrait": {
+      "width": 1290,
+      "height": 2796
+    },
+    "landscape": {
+      "width": 2796,
+      "height": 1290
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 15 Pro",
+    "portrait": {
+      "width": 1179,
+      "height": 2556
+    },
+    "landscape": {
+      "width": 2556,
+      "height": 1179
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 15 Plus",
+    "portrait": {
+      "width": 1290,
+      "height": 2796
+    },
+    "landscape": {
+      "width": 2796,
+      "height": 1290
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 15",
+    "portrait": {
+      "width": 1179,
+      "height": 2556
+    },
+    "landscape": {
+      "width": 2556,
+      "height": 1179
+    },
+    "scaleFactor": 3
   },
   {
     "device": "iPhone 14 Pro Max",
