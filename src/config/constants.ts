@@ -172,7 +172,7 @@ export default {
   CHROME_LAUNCHER_DEBUG_PORT: 9222,
   CHROME_LAUNCHER_MAX_CONN_RETRIES: 10,
   EMULATED_USER_AGENT:
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3641.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15',
   APPLE_HIG_SPLASH_SCR_SPECS_URL:
     'https://developer.apple.com/design/human-interface-guidelines/layout/',
 
