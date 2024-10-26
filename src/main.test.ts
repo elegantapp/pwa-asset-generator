@@ -546,11 +546,26 @@ describe('visually compares generated images with', () => {
           path.parse(snapshot).name === path.parse(savedImage.path).name,
       );
 
-      const looksSame = doFilesLookSimilar(
-        savedImage.path,
-        path.join(SNAPSHOT_PATH, testSuite, matchedSnapshot as string),
-        testSuite,
-      );
+      let looksSame = true;
+
+      try {
+        looksSame = doFilesLookSimilar(
+          savedImage.path,
+          path.join(SNAPSHOT_PATH, testSuite, matchedSnapshot as string),
+          testSuite,
+        );
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(
+          'looksSame check failed on',
+          savedImage.path,
+          SNAPSHOT_PATH,
+          testSuite,
+          matchedSnapshot as string,
+          testSuite,
+        );
+        throw error;
+      }
 
       if (!looksSame) {
         // eslint-disable-next-line no-console
