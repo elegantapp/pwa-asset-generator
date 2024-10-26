@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.4.0](https://github.com/elegantapp/pwa-asset-generator/compare/v6.3.2...v6.4.0) (2024-10-26)
+
+
+### Bug Fixes
+
+* **config:** update Apple HIG splash screen specs URL ([6e8e9c9](https://github.com/elegantapp/pwa-asset-generator/commit/6e8e9c9daf40f2b6e0187f291cd28a0b99050890))
+
+
+### Features
+
+* add 2024 apple specs ([e240eca](https://github.com/elegantapp/pwa-asset-generator/commit/e240ecaa3b7632b6df42b2840c177529415ed546))
+
 ## [6.3.2](https://github.com/elegantapp/pwa-asset-generator/compare/v6.3.1...v6.3.2) (2024-08-23)
 
 
