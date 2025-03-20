@@ -46,7 +46,7 @@ jobs:
         env:
           FORCE_EXIT: true
       - name: upload visual diff
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: visual-test-diff-${{ runner.os }}-${{ matrix.node }}
