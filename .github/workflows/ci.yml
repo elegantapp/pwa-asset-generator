@@ -19,21 +19,15 @@ jobs:
         os: [ubuntu-latest, macOS-latest, windows-latest]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Use node ${{ matrix.node }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
           registry-url: https://registry.npmjs.org
-      - name: Cache npm
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: npm
       - name: Cache jest
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: .jest-cache
           key: ${{ runner.os }}-${{ matrix.node-version }}-jest
