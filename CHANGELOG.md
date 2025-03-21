@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0](https://github.com/elegantapp/pwa-asset-generator/compare/v6.4.0...v7.0.0) (2025-03-21)
+
+
+### Bug Fixes
+
+* **ci:** update broken actions ([785ba94](https://github.com/elegantapp/pwa-asset-generator/commit/785ba946b168bea7e0b4cb4fd4884f34a52702b2))
+* **ci:** update more broken actions ([ae6dde1](https://github.com/elegantapp/pwa-asset-generator/commit/ae6dde14a200d4d615aa46d910442292c156327f))
+* **ci:** update node versions ([4a6d092](https://github.com/elegantapp/pwa-asset-generator/commit/4a6d0925f151175e60de110e987e0d3b277360bb))
+* **ci:** update release workflow ([53af39d](https://github.com/elegantapp/pwa-asset-generator/commit/53af39d6d27de80c5f1dcf26c084e7dc921ef28c))
+* **ci:** use no-sandbox the sanity check ([a213839](https://github.com/elegantapp/pwa-asset-generator/commit/a2138391794168b262f9b7e6d565c620a826ce73))
+* **deps:** update to non-vulnerable versions ([e3363a5](https://github.com/elegantapp/pwa-asset-generator/commit/e3363a52650798eb949b9e386a9205ae05621267))
+
+
+### Features
+
+* **core:** update min node requirement ([389c35f](https://github.com/elegantapp/pwa-asset-generator/commit/389c35fbecbfa0e6d11bfa52ec3e639f99efb735))
+
+
+### BREAKING CHANGES
+
+* **core:** Min node requirement is updated according to puppeteer requirements.
+
 # [6.4.0](https://github.com/elegantapp/pwa-asset-generator/compare/v6.3.2...v6.4.0) (2024-10-26)
 
 
