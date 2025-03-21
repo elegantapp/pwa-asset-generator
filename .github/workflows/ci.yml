@@ -46,6 +46,8 @@ jobs:
         env:
           FORCE_EXIT: true
           PAG_USE_LOCAL_REV: 1
+          PAG_TEST_MODE: 1
+          PAG_USE_NO_SANDBOX: ${{ runner.os == 'Linux' && '1' || '' }}
       - name: upload visual diff
         uses: actions/upload-artifact@v4
         if: failure()
