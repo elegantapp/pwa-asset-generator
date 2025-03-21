@@ -1,7 +1,7 @@
 import puppeteer, {
   Browser,
-  PuppeteerNodeLaunchOptions,
-  BrowserFetcherRevisionInfo,
+  type LaunchOptions,
+  type ConnectOptions,
 } from 'puppeteer-core';
 import {
   launch,
@@ -14,6 +14,9 @@ import preLogger from './logger';
 import constants from '../config/constants';
 import installer from './installer';
 
+// Used for both launch and connect options
+type PuppeteerOptions = LaunchOptions & ConnectOptions;
+
 interface BrowserVersionInfo {
   Browser: string;
   webSocketDebuggerUrl: string;
@@ -23,37 +26,28 @@ interface BrowserVersionInfo {
   'Webkit-Version': string;
 }
 
-const isPreferredBrowserRevisionInstalled = (): boolean => {
-  const revisionInfo = installer.getPreferredBrowserRevisionInfo();
-  return revisionInfo.local;
-};
-
-const getLocalRevisionList = (): Promise<string[]> => {
-  return installer.getBrowserFetcher().localRevisions();
-};
-
 const getLocalRevisionInfo = async (): Promise<
-  BrowserFetcherRevisionInfo | undefined
+  | {
+      folderPath: string;
+      executablePath: string;
+      local: boolean;
+      revision: string;
+    }
+  | undefined
 > => {
-  if (isPreferredBrowserRevisionInstalled()) {
-    return installer.getPreferredBrowserRevisionInfo();
-  }
-
-  const localRevisions = await getLocalRevisionList();
-
-  if (localRevisions.length > 0) {
-    const lastRevision = localRevisions.pop() as string;
-    return installer.getBrowserFetcher().revisionInfo(lastRevision);
+  const revisionInfo = await installer.getPreferredBrowserRevisionInfo();
+  if (revisionInfo.local) {
+    return revisionInfo;
   }
 
   return undefined;
 };
 
 const getLocalBrowserInstance = async (
-  launchArgs: PuppeteerNodeLaunchOptions,
+  launchArgs: PuppeteerOptions,
   noSandbox: boolean,
 ): Promise<Browser> => {
-  let revisionInfo: BrowserFetcherRevisionInfo;
+  let revisionInfo;
   const localRevisionInfo = await getLocalRevisionInfo();
 
   if (localRevisionInfo) {
@@ -72,6 +66,7 @@ const getLocalBrowserInstance = async (
       ],
     }),
     executablePath: revisionInfo.executablePath,
+    protocolTimeout: 2 * 60 * 1000,
   });
 };
 
@@ -106,7 +101,7 @@ const getLaunchedChromeVersionInfo = (
 
 const getSystemBrowserInstance = async (
   chrome: LaunchedChrome,
-  launchArgs?: PuppeteerNodeLaunchOptions,
+  launchArgs?: PuppeteerOptions,
 ): Promise<Browser> => {
   const chromeVersionInfo = await getLaunchedChromeVersionInfo(chrome);
 
@@ -117,7 +112,7 @@ const getSystemBrowserInstance = async (
 };
 
 const getBrowserInstance = async (
-  launchArgs: PuppeteerNodeLaunchOptions,
+  launchArgs: PuppeteerOptions,
   noSandbox: boolean,
 ): Promise<{ chrome: LaunchedChrome | undefined; browser: Browser }> => {
   const LAUNCHER_CONNECTION_REFUSED_ERROR_CODE = 'ECONNREFUSED';
@@ -127,6 +122,19 @@ const getBrowserInstance = async (
   let browser: Browser;
   let chrome: LaunchedChrome | undefined;
 
+  // Check if user wants to force using the local Chromium revision
+  const useLocalRev = process.env.PAG_USE_LOCAL_REV === '1';
+
+  if (useLocalRev) {
+    logger.log(
+      'Using local Chromium revision as requested via PAG_USE_LOCAL_REV',
+    );
+    browser = await getLocalBrowserInstance(launchArgs, noSandbox);
+    return { browser, chrome };
+  }
+
+  // First try to use system Chrome browser
+  // If that fails, we'll fall back to the puppeteer-core compatible version
   try {
     chrome = await launchSystemBrowser();
     browser = await getSystemBrowserInstance(chrome, launchArgs);
@@ -151,6 +159,8 @@ const getBrowserInstance = async (
       logger.warn('Looks like Chrome is not installed on your system');
     }
 
+    // Fall back to local Chromium version via installer
+    // This will either use an already installed local version or download the required one
     browser = await getLocalBrowserInstance(launchArgs, noSandbox);
   }
 
