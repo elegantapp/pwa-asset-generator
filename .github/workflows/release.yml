@@ -23,6 +23,9 @@ jobs:
         run: npm run chromium
       - name: update
         run: npm run update
+        env:
+          PAG_USE_LOCAL_REV: 1
+          PAG_USE_NO_SANDBOX: 1
       # Actual build with updated fallback data
       - name: build
         run: npm run build
