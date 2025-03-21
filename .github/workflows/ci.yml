@@ -45,6 +45,7 @@ jobs:
         run: npm test
         env:
           FORCE_EXIT: true
+          PAG_USE_LOCAL_REV: 1
       - name: upload visual diff
         uses: actions/upload-artifact@v4
         if: failure()
