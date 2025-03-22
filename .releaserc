@@ -9,6 +9,7 @@
         { "revert": true, "release": "patch" },
         { "type": "build", "scope": "deps", "release": "patch" },
         { "type": "chore", "scope": "deps", "release": "patch" },
+        { "type": "chore", "scope": "ci", "release": false },
         { "type": "docs", "release": "patch" },
         { "type": "fix", "release": "patch" },
         { "type": "perf", "release": "patch" },

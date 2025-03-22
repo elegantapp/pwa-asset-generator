@@ -58,7 +58,9 @@ jobs:
   commit-lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: ahmadnassri/action-commit-lint@v1
+      - uses: ahmadnassri/action-commit-lint@v2
+        with:
+          config: ./commitlint.config.js
 
   auto-merge:
     if: ${{ false }}
