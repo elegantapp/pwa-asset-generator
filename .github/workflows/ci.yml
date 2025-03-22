@@ -58,6 +58,7 @@ jobs:
   commit-lint:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ahmadnassri/action-commit-lint@v2
         with:
           config: ./commitlint.config.js
