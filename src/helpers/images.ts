@@ -1,5 +1,5 @@
 import uniqWith from 'lodash.uniqwith';
-import isEqual from 'lodash.isequal';
+import { isDeepStrictEqual as isEqual } from 'node:util';
 import constants from '../config/constants';
 import { Image, Orientation } from '../models/image';
 import { LaunchScreenSpec } from '../models/spec';
