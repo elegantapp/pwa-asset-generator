@@ -1,11 +1,12 @@
 import path from 'path';
-import { generateImages } from './main';
-import file from './helpers/file';
-import constants from './config/constants';
-import { ManifestJsonIcon, Result } from './models/result';
-import { CLIOptions } from './models/options';
-import { HTMLMetaNames } from './models/meta';
-import { SavedImage } from './models/image';
+import { generateImages } from './main.js';
+import file from './helpers/file.js';
+import constants from './config/constants.js';
+import { ManifestJsonIcon, Result } from './models/result.js';
+import { CLIOptions } from './models/options.js';
+import { HTMLMetaNames } from './models/meta.js';
+import { SavedImage } from './models/image.js';
+import { describe, test, expect, beforeEach } from 'vitest';
 
 const generateTempImages = (
   options: CLIOptions,
@@ -178,7 +179,6 @@ describe('generates meta', () => {
         .then((resp) => JSON.parse(resp as unknown as string));
 
     test('creating icons array', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { icons, ...manifestJsonMock } = MANIFEST_JSON_MOCK;
       await saveManifest(manifestJsonMock);
       await saveImagesToManifest();
@@ -348,7 +348,6 @@ describe('generates meta', () => {
           .split('\n')
           .forEach((entry) => expect(output).toContain(entry.trim()));
 
-      // eslint-disable-next-line jest/expect-expect
       test('with default html output', async () => {
         const result = await generateTempImages({
           scrape: false,
@@ -370,7 +369,6 @@ describe('generates meta', () => {
         );
       });
 
-      // eslint-disable-next-line jest/expect-expect
       test('with dark mode html output', async () => {
         const resultLight = await generateTempImages({
           scrape: false,
@@ -435,14 +433,14 @@ describe('generates meta', () => {
   });
 });
 
-describe('visually compares generated images with', () => {
-  const pixelmatch = require('pixelmatch');
-  const { PNG } = require('pngjs');
-  const JPEG = require('jpeg-js');
+describe('visually compares generated images with', async () => {
+  const pixelmatch = await import('pixelmatch').then((m) => m.default);
+  const { PNG } = await import('pngjs');
+  const JPEG = await import('jpeg-js').then((m) => m.default);
 
   interface VisualDiffResult {
     numDiffPixels: number;
-    diff: boolean;
+    diff: unknown;
     width: number;
     height: number;
   }
@@ -516,16 +514,16 @@ describe('visually compares generated images with', () => {
     const acceptablePixedDiff = 0.25 * visualDiff.width * visualDiff.height;
 
     if (visualDiff.numDiffPixels >= acceptablePixedDiff) {
-      /* eslint-disable no-console */
       console.log(`There's a diff between file ${fileAPath} and ${fileBPath}`);
       console.log(`numDiffPixels: ${visualDiff.numDiffPixels}`);
-      /* eslint-enable no-console */
 
-      saveVisualDiff(
-        fileAPath,
-        PNG.sync.write(visualDiff.diff, { colorType: 6 }),
-        testSuite,
-      );
+      if (visualDiff.diff instanceof PNG) {
+        saveVisualDiff(
+          fileAPath,
+          PNG.sync.write(visualDiff.diff, { colorType: 6 }),
+          testSuite,
+        );
+      }
     }
 
     return visualDiff.numDiffPixels < acceptablePixedDiff;
@@ -555,7 +553,6 @@ describe('visually compares generated images with', () => {
           testSuite,
         );
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.log(
           'looksSame check failed on',
           savedImage.path,
@@ -568,7 +565,6 @@ describe('visually compares generated images with', () => {
       }
 
       if (!looksSame) {
-        // eslint-disable-next-line no-console
         console.log('looksSame failed on', savedImage.path);
       }
 
@@ -677,7 +673,6 @@ describe('visually compares generated images with', () => {
 
   // Somehow flaky tests, occasionally failing on windows-latest
   // TODO: inspect the root cause of the failure
-  // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('using a remote input', () => {
     test('in png format', async () => {
       const testSuite = 'input-png';

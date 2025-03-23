@@ -1,31 +1,53 @@
+import { vi, describe, test, expect, beforeEach } from 'vitest';
 import { Browser } from '@puppeteer/browsers';
-import installer from './installer';
+import type { Mock } from 'vitest';
+import installer from './installer.js';
 
-jest.mock('@puppeteer/browsers');
-jest.mock('./logger', () => {
-  const mockLogger = { log: jest.fn(), warn: jest.fn(), error: jest.fn() };
-  return jest.fn().mockReturnValue(mockLogger);
-});
+vi.mock('@puppeteer/browsers', () => ({
+  Browser: {
+    CHROME: 'chrome',
+    CHROMEHEADLESSSHELL: 'chrome-headless-shell',
+  },
+  getInstalledBrowsers: vi.fn(),
+  computeExecutablePath: vi.fn(),
+  canDownload: vi.fn(),
+  install: vi.fn(),
+}));
 
-jest.mock(
-  'puppeteer-core/lib/cjs/puppeteer/revisions.js',
-  () => ({
-    PUPPETEER_REVISIONS: {
-      chrome: '134.0.6998.35',
-    },
+vi.mock('./logger.js', () => ({
+  default: () => ({
+    log: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
   }),
-  { virtual: true },
-);
+}));
+
+vi.mock('puppeteer-core/lib/cjs/puppeteer/revisions.js', () => ({
+  PUPPETEER_REVISIONS: {
+    chrome: '134.0.6998.35',
+  },
+}));
+
+interface MockedBrowsers {
+  getInstalledBrowsers: Mock;
+  computeExecutablePath: Mock;
+  canDownload: Mock;
+  install: Mock;
+  Browser: typeof Browser;
+}
 
 describe('Installer', () => {
-  const browsers = require('@puppeteer/browsers');
+  let browsers: MockedBrowsers;
 
-  beforeEach(() => {
-    jest.clearAllMocks();
+  beforeEach(async () => {
+    vi.clearAllMocks();
+    browsers = (await import(
+      '@puppeteer/browsers'
+    )) as unknown as MockedBrowsers;
   });
 
   describe('getPreferredBrowserRevisionInfo', () => {
-    it('should return installed browser when matching revision is available', async () => {
+    test('should return installed browser when matching revision is available', async () => {
       browsers.getInstalledBrowsers.mockResolvedValueOnce([
         {
           browser: Browser.CHROMEHEADLESSSHELL,
@@ -45,7 +67,7 @@ describe('Installer', () => {
       });
     });
 
-    it('should not return installed browser with wrong revision', async () => {
+    test('should not return installed browser with wrong revision', async () => {
       browsers.getInstalledBrowsers.mockResolvedValueOnce([
         {
           browser: Browser.CHROME,
@@ -57,7 +79,6 @@ describe('Installer', () => {
 
       const result = await installer.getPreferredBrowserRevisionInfo();
 
-      // Should return non-local info with the puppeteer-core revision
       expect(result).toEqual({
         folderPath: '',
         executablePath: '',
@@ -66,7 +87,7 @@ describe('Installer', () => {
       });
     });
 
-    it('should return puppeteer-core revision info when no matching Chrome is found', async () => {
+    test('should return puppeteer-core revision info when no matching Chrome is found', async () => {
       browsers.getInstalledBrowsers.mockResolvedValueOnce([]);
 
       const result = await installer.getPreferredBrowserRevisionInfo();

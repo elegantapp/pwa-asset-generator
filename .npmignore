@@ -13,8 +13,8 @@ coverage/*
 src/*
 dist/models/*.js
 !dist/models/meta.js
-bin/install
-bin/update-fallback-data
+bin/install.js
+bin/update-fallback-data.js
 
 # Declaration files
 *.d.ts
@@ -23,10 +23,10 @@ bin/update-fallback-data
 
 # Config files
 .github
-commitlint.config.js
 jest.config.js
 jest.setup.js
 tsconfig.json
+.commitlintrc
 .editorconfig
 .eslintrc
 .gitattributes

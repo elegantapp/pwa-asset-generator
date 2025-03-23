@@ -1,6 +1,6 @@
 import chalk from 'chalk';
-import { Logger } from '../models/logger';
-import { CLIOptions } from '../models/options';
+import { Logger } from '../models/logger.js';
+import { CLIOptions } from '../models/options.js';
 
 const testMode = !!+(process.env.PAG_TEST_MODE as string);
 
@@ -8,15 +8,10 @@ const logger: Logger = (prefix: string, options?: CLIOptions) => {
   const isLogEnabled =
     options && options.hasOwnProperty('log') ? options.log : true;
 
-  const getTime = (): string => {
-    return chalk.inverse(new Date().toLocaleTimeString());
-  };
+  const getTime = (): string => chalk.inverse(new Date().toLocaleTimeString());
 
-  const getPrefix = (): string => {
-    return prefix ? chalk.gray(prefix) : '';
-  };
+  const getPrefix = (): string => (prefix ? chalk.gray(prefix) : '');
 
-  /* eslint-disable no-console */
   const raw = (...args: string[]): void => {
     if (!isLogEnabled) return;
     console.log(...args);
@@ -45,7 +40,6 @@ const logger: Logger = (prefix: string, options?: CLIOptions) => {
     if (testMode || !isLogEnabled) return;
     console.log(getTime(), getPrefix(), chalk.green(...args), '🙌');
   };
-  /* eslint-enable no-console */
 
   return {
     raw,

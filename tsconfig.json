@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
+    "target": "ES2020",
+    "module": "NodeNext",
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",
@@ -12,15 +12,19 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "listEmittedFiles": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["node", "vitest"]
   },
   "exclude": [
     "node_modules",
     "src/**/*.test.ts",
+    "vitest.config.ts",
+    "vitest.setup.ts",
     "dist"
   ]
 }

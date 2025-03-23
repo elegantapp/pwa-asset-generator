@@ -1,5 +1,5 @@
-import { SavedImage } from './image';
-import { HTMLMeta } from './meta';
+import { SavedImage } from './image.js';
+import { HTMLMeta } from './meta.js';
 
 export interface ManifestJsonIcon {
   /**

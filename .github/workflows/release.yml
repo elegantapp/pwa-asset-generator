@@ -26,6 +26,8 @@ jobs:
         env:
           PAG_USE_LOCAL_REV: 1
           PAG_USE_NO_SANDBOX: 1
+      - name: format
+        run: npm run prettier:fix
       # Actual build with updated fallback data
       - name: build
         run: npm run build

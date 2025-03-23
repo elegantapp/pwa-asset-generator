@@ -1,13 +1,13 @@
-import cheerio from 'cheerio';
+import { load } from 'cheerio';
 import pretty from 'pretty';
 import { lookup } from 'mime-types';
 import path from 'path';
-import constants from '../config/constants';
-import file from './file';
-import { SavedImage } from '../models/image';
-import { ManifestJsonIcon } from '../models/result';
-import { Options } from '../models/options';
-import { HTMLMeta, HTMLMetaNames, HTMLMetaSelector } from '../models/meta';
+import constants from '../config/constants.js';
+import file from './file.js';
+import { SavedImage } from '../models/image.js';
+import { ManifestJsonIcon } from '../models/result.js';
+import { Options } from '../models/options.js';
+import { HTMLMeta, HTMLMetaNames, HTMLMetaSelector } from '../models/meta.js';
 
 const generateOutputPath = (
   options: Options,
@@ -42,8 +42,8 @@ const generateOutputPath = (
 const generateIconsContentForManifest = (
   savedImages: SavedImage[],
   options: Options,
-): ManifestJsonIcon[] => {
-  return savedImages
+): ManifestJsonIcon[] =>
+  savedImages
     .filter((image) =>
       image.name.startsWith(constants.MANIFEST_ICON_FILENAME_PREFIX),
     )
@@ -61,13 +61,12 @@ const generateIconsContentForManifest = (
         { ...icon, purpose: 'maskable' },
       ]);
     }, [] as ManifestJsonIcon[]);
-};
 
 const generateAppleTouchIconHtml = (
   savedImages: SavedImage[],
   options: Options,
-): string => {
-  return savedImages
+): string =>
+  savedImages
     .filter((image) =>
       image.name.startsWith(constants.APPLE_ICON_FILENAME_PREFIX),
     )
@@ -78,13 +77,12 @@ const generateAppleTouchIconHtml = (
       ),
     )
     .join('');
-};
 
 const generateFaviconHtml = (
   savedImages: SavedImage[],
   options: Options,
-): string => {
-  return savedImages
+): string =>
+  savedImages
     .filter((image) => image.name.startsWith(constants.FAVICON_FILENAME_PREFIX))
     .map(({ width, path: imagePath }) =>
       constants.FAVICON_META_HTML(
@@ -95,13 +93,12 @@ const generateFaviconHtml = (
       ),
     )
     .join('');
-};
 
 const generateMsTileImageHtml = (
   savedImages: SavedImage[],
   options: Options,
-): string => {
-  return savedImages
+): string =>
+  savedImages
     .filter((image) => image.name.startsWith(constants.MS_ICON_FILENAME_PREFIX))
     .map(({ width, height, path: imagePath }) =>
       constants.MSTILE_IMAGE_META_HTML(
@@ -111,14 +108,13 @@ const generateMsTileImageHtml = (
       ),
     )
     .join('');
-};
 
 const generateAppleLaunchImageHtml = (
   savedImages: SavedImage[],
   options: Options,
   darkMode: boolean,
-): string => {
-  return savedImages
+): string =>
+  savedImages
     .filter((image) =>
       image.name.startsWith(constants.APPLE_SPLASH_FILENAME_PREFIX),
     )
@@ -134,7 +130,6 @@ const generateAppleLaunchImageHtml = (
       ),
     )
     .join('');
-};
 
 const generateHtmlForIndexPage = (
   savedImages: SavedImage[],
@@ -163,13 +158,11 @@ const generateHtmlForIndexPage = (
 
   if (!options.iconOnly) {
     if (options.darkMode) {
-      htmlMeta[
-        HTMLMetaNames.appleLaunchImageDarkMode
-      ] = `${generateAppleLaunchImageHtml(savedImages, options, true)}`;
+      htmlMeta[HTMLMetaNames.appleLaunchImageDarkMode] =
+        `${generateAppleLaunchImageHtml(savedImages, options, true)}`;
     } else {
-      htmlMeta[
-        HTMLMetaNames.appleLaunchImage
-      ] = `${generateAppleLaunchImageHtml(savedImages, options, false)}`;
+      htmlMeta[HTMLMetaNames.appleLaunchImage] =
+        `${generateAppleLaunchImageHtml(savedImages, options, false)}`;
     }
   }
 
@@ -226,8 +219,8 @@ const addIconsToManifest = async (
   );
 };
 
-const formatMetaTags = (htmlMeta: HTMLMeta): string => {
-  return constants.HTML_META_ORDERED_SELECTOR_LIST.reduce(
+const formatMetaTags = (htmlMeta: HTMLMeta): string =>
+  constants.HTML_META_ORDERED_SELECTOR_LIST.reduce(
     (acc: string, meta: HTMLMetaSelector) => {
       if (htmlMeta.hasOwnProperty(meta.name)) {
         return `\
@@ -238,7 +231,6 @@ ${htmlMeta[meta.name]}`;
     },
     '',
   );
-};
 
 const addMetaTagsToIndexPage = async (
   htmlMeta: HTMLMeta,
@@ -250,15 +242,12 @@ const addMetaTagsToIndexPage = async (
   }
 
   const indexHtmlFile = await file.readFile(indexHtmlFilePath);
-  const $ = cheerio.load(indexHtmlFile, {
-    decodeEntities: false,
-    xmlMode: xhtml,
+  const $ = load(indexHtmlFile, {
+    xml: xhtml,
   });
 
   const HEAD_SELECTOR = 'head';
-  const hasElement = (selector: string): boolean => {
-    return $(selector).length > 0;
-  };
+  const hasElement = (selector: string): boolean => $(selector).length > 0;
 
   const hasDarkModeElement = (): boolean => {
     const darkModeMeta = constants.HTML_META_ORDERED_SELECTOR_LIST.find(

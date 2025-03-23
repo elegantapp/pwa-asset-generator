@@ -10,9 +10,9 @@ import {
 } from 'chrome-launcher';
 import find from 'find-process';
 import { get } from 'http';
-import preLogger from './logger';
-import constants from '../config/constants';
-import installer from './installer';
+import preLogger from './logger.js';
+import constants from '../config/constants.js';
+import installer from './installer.js';
 
 // Used for both launch and connect options
 type PuppeteerOptions = LaunchOptions & ConnectOptions;
@@ -82,8 +82,8 @@ const launchSystemBrowser = (): Promise<LaunchedChrome> => {
 
 const getLaunchedChromeVersionInfo = (
   chrome: LaunchedChrome,
-): Promise<BrowserVersionInfo> => {
-  return new Promise((resolve, reject) => {
+): Promise<BrowserVersionInfo> =>
+  new Promise((resolve, reject) => {
     get(`http://localhost:${chrome.port}/json/version`, (res) => {
       let data = '';
       res.setEncoding('utf8');
@@ -97,7 +97,6 @@ const getLaunchedChromeVersionInfo = (
       });
     }).on('error', (err) => reject(err));
   });
-};
 
 const getSystemBrowserInstance = async (
   chrome: LaunchedChrome,

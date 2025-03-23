@@ -1,4 +1,5 @@
-import url from './url';
+import { describe, it, expect } from 'vitest';
+import url from './url.js';
 
 const exampleUrl =
   'https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png';

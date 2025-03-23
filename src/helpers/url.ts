@@ -1,19 +1,23 @@
-import url, { Url } from 'url';
 import dns from 'dns';
-import file from './file';
-import preLogger from './logger';
-import { Options } from '../models/options';
+import file from './file.js';
+import preLogger from './logger.js';
+import { Options } from '../models/options.js';
 
 const isUrl = (val: string): boolean => {
-  const parsedUrl: Url = url.parse(val);
-  return ['http:', 'https:'].includes(parsedUrl.protocol as string);
+  try {
+    const parsedUrl = new URL(val);
+    return ['http:', 'https:'].includes(parsedUrl.protocol);
+  } catch (e) {
+    return false;
+  }
 };
 
 // TODO: Find a better way to check url existence
-const isUrlExists = (source: string): Promise<boolean> => {
-  return new Promise((resolve, reject): void => {
+const isUrlExists = (source: string): Promise<boolean> =>
+  new Promise((resolve, reject): void => {
     try {
-      dns.resolve(url.parse(source).hostname as string, (err) => {
+      const parsedUrl = new URL(source);
+      dns.resolve(parsedUrl.hostname, (err) => {
         if (err) {
           return resolve(false);
         }
@@ -23,7 +27,6 @@ const isUrlExists = (source: string): Promise<boolean> => {
       reject(e);
     }
   });
-};
 
 const getAddress = async (
   source: string,

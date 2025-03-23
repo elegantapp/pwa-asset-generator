@@ -6,7 +6,7 @@ import {
 } from '@puppeteer/browsers';
 import path from 'path';
 import os from 'os';
-import preLogger from './logger';
+import preLogger from './logger.js';
 
 // Override current environment proxy settings with npm configuration, if any.
 const NPM_HTTPS_PROXY =
@@ -34,15 +34,13 @@ interface RevisionInfo {
  * Get Chrome buildId from puppeteer-core's revisions.js
  * This ensures we use the exact version that is compatible with the installed puppeteer-core
  */
-const getChromeBuildIdFromPuppeteer = (): string => {
+const getChromeBuildIdFromPuppeteer = async (): Promise<string> => {
   const logger = preLogger('installer');
 
   try {
-    // Try to load PUPPETEER_REVISIONS from puppeteer-core
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const {
-      PUPPETEER_REVISIONS,
-    } = require('puppeteer-core/lib/cjs/puppeteer/revisions.js');
+    const { PUPPETEER_REVISIONS } = await import(
+      'puppeteer-core/lib/cjs/puppeteer/revisions.js'
+    );
 
     if (!PUPPETEER_REVISIONS || !PUPPETEER_REVISIONS.chrome) {
       throw new Error('Could not find chrome revision in puppeteer-core');
@@ -63,7 +61,7 @@ const getChromeBuildIdFromPuppeteer = (): string => {
 
 const getPreferredBrowserRevisionInfo = async (): Promise<RevisionInfo> => {
   const logger = preLogger('installer');
-  const buildId = getChromeBuildIdFromPuppeteer();
+  const buildId = await getChromeBuildIdFromPuppeteer();
 
   // Check if we already have this version installed locally
   try {

@@ -1,17 +1,15 @@
-import fs from 'fs';
+import * as fs from 'node:fs';
 import path from 'path';
 import slash from 'slash';
 import { lookup } from 'mime-types';
-import { promisify } from 'util';
-import constants from '../config/constants';
-import { Extension, Options } from '../models/options';
+import constants from '../config/constants.js';
+import { Extension, Options } from '../models/options.js';
 
-const getExtension = (file: string): string => {
-  return path.extname(file).replace('.', '');
-};
+const getExtension = (file: string): string =>
+  path.extname(file).replace('.', '');
 
-const isImageFile = (file: string): boolean => {
-  return [
+const isImageFile = (file: string): boolean =>
+  [
     'apng',
     'bmp',
     'gif',
@@ -26,29 +24,26 @@ const isImageFile = (file: string): boolean => {
     'svg',
     'webp',
   ].includes(getExtension(file));
-};
 
-const isHtmlFile = (file: string): boolean => {
-  return ['html', 'htm'].includes(getExtension(file));
-};
+const isHtmlFile = (file: string): boolean =>
+  ['html', 'htm'].includes(getExtension(file));
 
-const convertBackslashPathToSlashPath = (backSlashPath: string): string => {
-  return slash(backSlashPath);
-};
+const convertBackslashPathToSlashPath = (backSlashPath: string): string =>
+  slash(backSlashPath);
 
 const getAppDir = (): string => {
   let appPath;
   try {
     appPath = require.resolve('pwa-asset-generator');
   } catch (e) {
-    appPath = (require.main as NodeModule).filename;
+    if (require.main !== undefined) {
+      appPath = require.main.filename;
+    }
   }
-  return path.join(path.dirname(appPath), '..');
+  return path.join(path.dirname(appPath ?? ''), '..');
 };
 
-const getShellHtmlFilePath = (): string => {
-  return `${getAppDir()}/static/shell.html`;
-};
+const getShellHtmlFilePath = (): string => `${getAppDir()}/static/shell.html`;
 
 const getImageSavePath = (
   imageName: string,
@@ -83,19 +78,17 @@ const fileUrl = (filePath: string): string => {
   return encodeURI(`file://${pathName}`).replace(/[?#]/g, encodeURIComponent);
 };
 
-const getFileUrlOfPath = (source: string): string => {
-  return fileUrl(path.resolve(source));
-};
+const getFileUrlOfPath = (source: string): string =>
+  fileUrl(path.resolve(source));
 
 const getRelativeFilePath = (
   referenceFilePath: string,
   filePath: string,
-): string => {
-  return path.relative(
+): string =>
+  path.relative(
     path.dirname(path.resolve(referenceFilePath)),
     path.resolve(filePath),
   );
-};
 
 const getRelativeImagePath = (
   outputFilePath: string,
@@ -109,11 +102,10 @@ const getRelativeImagePath = (
   return convertBackslashPathToSlashPath(imagePath);
 };
 
-const getImageBase64Url = (imagePath: string): string => {
-  return `data:${lookup(imagePath)};base64,${fs.readFileSync(imagePath, {
+const getImageBase64Url = (imagePath: string): string =>
+  `data:${lookup(imagePath)};base64,${fs.readFileSync(imagePath, {
     encoding: 'base64',
   })}`;
-};
 
 const getHtmlShell = (
   imagePath: string,
@@ -132,7 +124,11 @@ const getHtmlShell = (
 const isPathAccessible = (
   filePath: string,
   mode?: number | undefined,
-): Promise<boolean> => promisify(fs.access)(filePath, mode).then(() => true);
+): Promise<boolean> =>
+  fs.promises
+    .access(filePath, mode)
+    .then(() => true)
+    .catch(() => false);
 
 const makeDirRecursiveSync = (dirPath: string): string => {
   fs.mkdirSync(dirPath, { recursive: true });
@@ -153,16 +149,17 @@ export default {
   getRelativeFilePath,
   getAppDir,
   getExtension,
-  getFilesInDir: promisify(fs.readdir),
-  readFile: promisify(fs.readFile),
+  getFilesInDir: fs.promises.readdir,
+  readFile: fs.promises.readFile,
   readFileSync: fs.readFileSync,
-  writeFile: promisify(fs.writeFile),
+  writeFile: fs.promises.writeFile,
   writeFileSync: fs.writeFileSync,
-  makeDir: promisify(fs.mkdir),
+  makeDir: fs.promises.mkdir,
   makeDirSync: fs.mkdirSync,
   copyFileSync: fs.copyFileSync,
-  exists: promisify(fs.exists),
+  existsSync: fs.existsSync,
   makeDirRecursiveSync,
+  normalizePath: path.normalize,
   READ_ACCESS: fs.constants.R_OK,
   WRITE_ACCESS: fs.constants.W_OK,
 };

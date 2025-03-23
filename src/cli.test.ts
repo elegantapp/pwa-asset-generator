@@ -1,16 +1,53 @@
-import execa from 'execa';
-import constants from './config/constants';
+import { execa, execaSync } from 'execa';
+import constants from './config/constants.js';
+import { vi, describe, test, expect, beforeEach, afterEach } from 'vitest';
+
+// Mock modules for browser tests
+const mockInstaller = {
+  getPreferredBrowserRevisionInfo: vi.fn().mockResolvedValue({
+    folderPath: '/mock/chrome',
+    executablePath: '/mock/chrome/chrome',
+    local: true,
+    revision: '134.0.6998.35',
+  }),
+  installPreferredBrowserRevision: vi.fn().mockResolvedValue({
+    folderPath: '/mock/chrome',
+    executablePath: '/mock/chrome/chrome',
+    local: true,
+    revision: '134.0.6998.35',
+  }),
+};
+
+const mockBrowser = {
+  getBrowserInstance: vi.fn().mockResolvedValue({
+    browser: { close: vi.fn() },
+    chrome: undefined,
+  }),
+  killBrowser: vi.fn(),
+};
+
+vi.mock('./helpers/installer.js', () => {
+  return {
+    default: mockInstaller,
+  };
+});
+
+vi.mock('./helpers/browser.js', () => {
+  return {
+    default: mockBrowser,
+  };
+});
 
 describe('CLI', () => {
   test('does not throw when there is not any arg', async () => {
-    expect(() => execa.sync('./bin/cli', [])).not.toThrow();
+    expect(() => execaSync('./bin/cli.js', [])).not.toThrow();
   });
 
   test('integrates with main API and creates an output with generated meta', async () => {
     let response = { stdout: '', stderr: '' };
     try {
       response = await execa(
-        './bin/cli',
+        './bin/cli.js',
         [
           './static/logo.png',
           './temp',
@@ -26,17 +63,16 @@ describe('CLI', () => {
         { env: { PAG_TEST_MODE: '1' } },
       );
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(e);
     }
     expect(response.stdout).toMatchSnapshot();
   });
 
   test('does not have any conflicting shorthand options', () => {
-    const flagShorthands = Object.values(constants.FLAGS).map(
-      (flag) => flag.alias,
+    const shortFlags = Object.values(constants.FLAGS).map(
+      (flag) => flag.shortFlag,
     );
-    expect(new Set(flagShorthands).size).toBe(flagShorthands.length);
+    expect(new Set(shortFlags).size).toBe(shortFlags.length);
   });
 
   test('integrates with npx', async () => {
@@ -61,7 +97,6 @@ describe('CLI', () => {
         { env: { PAG_TEST_MODE: '1' } },
       );
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(e);
     }
     expect(response.stdout).toMatchSnapshot();
@@ -70,73 +105,45 @@ describe('CLI', () => {
 
 describe('CLI with local chromium revision', () => {
   beforeEach(() => {
-    jest.resetModules();
-
-    jest.mock('./helpers/installer', () => ({
-      getPreferredBrowserRevisionInfo: jest.fn().mockResolvedValue({
-        folderPath: '/mock/chrome',
-        executablePath: '/mock/chrome/chrome',
-        local: true,
-        revision: '134.0.6998.35',
-      }),
-      installPreferredBrowserRevision: jest.fn().mockResolvedValue({
-        folderPath: '/mock/chrome',
-        executablePath: '/mock/chrome/chrome',
-        local: true,
-        revision: '134.0.6998.35',
-      }),
-    }));
-
-    jest.mock('./helpers/browser', () => ({
-      getBrowserInstance: jest.fn().mockResolvedValue({
-        browser: { close: jest.fn() },
-        chrome: undefined,
-      }),
-      killBrowser: jest.fn(),
-    }));
+    vi.resetModules();
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   test('should use browser.getBrowserInstance when PAG_USE_LOCAL_REV is set', async () => {
     const originalValue = process.env.PAG_USE_LOCAL_REV;
     process.env.PAG_USE_LOCAL_REV = '1';
 
-    const browser = require('./helpers/browser');
-    await browser.getBrowserInstance({}, false);
-    expect(browser.getBrowserInstance).toHaveBeenCalledTimes(1);
+    await mockBrowser.getBrowserInstance({}, false);
+    expect(mockBrowser.getBrowserInstance).toHaveBeenCalledTimes(1);
 
     process.env.PAG_USE_LOCAL_REV = originalValue;
   });
 
   test('should handle system browser fallback', async () => {
-    const browser = require('./helpers/browser');
-    const installer = require('./helpers/installer');
-
-    browser.getBrowserInstance.mockImplementationOnce(async () => {
+    mockBrowser.getBrowserInstance.mockImplementationOnce(async () => {
       // Simulate that system browser launch failed
       // This would trigger fallback to local Chromium
-      await installer.installPreferredBrowserRevision();
+      await mockInstaller.installPreferredBrowserRevision();
 
       return {
-        browser: { close: jest.fn() },
+        browser: { close: vi.fn() },
         chrome: undefined,
       };
     });
 
-    await browser.getBrowserInstance({}, false);
-    expect(installer.installPreferredBrowserRevision).toHaveBeenCalled();
+    await mockBrowser.getBrowserInstance({}, false);
+    expect(mockInstaller.installPreferredBrowserRevision).toHaveBeenCalled();
   });
 
   test('should download Chrome when needed', async () => {
-    const installer = require('./helpers/installer');
-    const logSpy = jest.spyOn(console, 'log').mockImplementation();
+    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
-    await installer.installPreferredBrowserRevision();
+    await mockInstaller.installPreferredBrowserRevision();
 
-    expect(installer.installPreferredBrowserRevision).toHaveBeenCalled();
+    expect(mockInstaller.installPreferredBrowserRevision).toHaveBeenCalled();
     logSpy.mockRestore();
   });
 
@@ -144,11 +151,10 @@ describe('CLI with local chromium revision', () => {
     const originalValue = process.env.PAG_USE_LOCAL_REV;
     process.env.PAG_USE_LOCAL_REV = '1';
 
-    const browser = require('./helpers/browser');
-    const logSpy = jest.spyOn(console, 'log').mockImplementation();
+    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
-    await browser.getBrowserInstance({}, false);
-    expect(browser.getBrowserInstance).toHaveBeenCalledWith({}, false);
+    await mockBrowser.getBrowserInstance({}, false);
+    expect(mockBrowser.getBrowserInstance).toHaveBeenCalledWith({}, false);
 
     process.env.PAG_USE_LOCAL_REV = originalValue;
     logSpy.mockRestore();

@@ -1,31 +1,15 @@
 version: 2
 updates:
-- package-ecosystem: npm
-  directory: "/"
-  schedule:
-    interval: daily
-    time: "04:00"
-  open-pull-requests-limit: 10
-  reviewers:
-  - onderceylan
-  assignees:
-  - onderceylan
-  labels:
-  - dep-upgrade
-  versioning-strategy: widen
-  ignore:
-  - dependency-name: puppeteer-core
-    versions:
-    - 6.0.0
-    - 7.0.0
-    - 7.0.4
-    - 7.1.0
-    - 8.0.0
-  - dependency-name: "@commitlint/config-conventional"
-    versions:
-    - 12.0.0
-    - 12.0.1
-  - dependency-name: "@commitlint/cli"
-    versions:
-    - 12.0.0
-    - 12.0.1
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: daily
+      time: '04:00'
+    open-pull-requests-limit: 10
+    reviewers:
+      - onderceylan
+    assignees:
+      - onderceylan
+    labels:
+      - dep-upgrade
+    versioning-strategy: widen
