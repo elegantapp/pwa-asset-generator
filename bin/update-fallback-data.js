@@ -1,17 +1,16 @@
-#!/usr/bin/env node
-
 /*
 Library keeps fallback data of Apple Human Interface guidelines specs on apple-fallback-data.json
 This script fetches new specs with puppeteer and updates that static json file
  */
 
-const {
-  getBrowserInstance,
-  killBrowser,
-} = require('../dist/helpers/browser').default;
-const { getSplashScreenMetaData } = require('../dist/helpers/puppets').default;
-const { writeFile } = require('../dist/helpers/file').default;
-const constants = require('../dist/config/constants').default;
+import browser from '../dist/helpers/browser.js';
+import puppets from '../dist/helpers/puppets.js';
+import file from '../dist/helpers/file.js';
+import constants from '../dist/config/constants.js';
+
+const { getBrowserInstance, killBrowser } = browser;
+const { getSplashScreenMetaData } = puppets;
+const { writeFile } = file;
 
 (async () => {
   try {
@@ -31,7 +30,7 @@ const constants = require('../dist/config/constants').default;
     });
     try {
       await killBrowser(browser, chrome);
-    } catch (e) {
+    } catch (_e) {
       // Silently try killing chrome as Chrome launcher might have already killed it
     }
   } catch (e) {

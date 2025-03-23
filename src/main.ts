@@ -1,11 +1,11 @@
-import meta from './helpers/meta';
-import puppets from './helpers/puppets';
-import flags from './helpers/flags';
-import preLogger from './helpers/logger';
-import { CLIOptions, Options } from './models/options';
-import { Result } from './models/result';
-import { LoggerFunction } from './models/logger';
-import constants from './config/constants';
+import meta from './helpers/meta.js';
+import puppets from './helpers/puppets.js';
+import flags from './helpers/flags.js';
+import preLogger from './helpers/logger.js';
+import { CLIOptions, Options } from './models/options.js';
+import { Result } from './models/result.js';
+import { LoggerFunction } from './models/logger.js';
+import constants from './config/constants.js';
 
 /**
  Generates PWA assets based on a source input and saves generated images in the output folder provided
@@ -21,17 +21,17 @@ import constants from './config/constants';
  import pwaAssetGenerator = require('pwa-asset-generator');
 
  (async () => {
-		const { savedImages, htmlMeta, manifestJsonContent } = await pwaAssetGenerator.generateImages(
-		  'https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png',
-		  './temp',
-		   {
+    const { savedImages, htmlMeta, manifestJsonContent } = await pwaAssetGenerator.generateImages(
+      'https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png',
+      './temp',
+       {
           scrape: false,
           background: "linear-gradient(to right, #fa709a 0%, #fee140 100%)",
           splashOnly: true,
           portraitOnly: true,
           log: false
-		   });
-	})();
+       });
+  })();
  ```
  */
 async function generateImages(

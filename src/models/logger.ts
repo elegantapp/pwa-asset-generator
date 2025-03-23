@@ -1,4 +1,4 @@
-import { CLIOptions } from './options';
+import { CLIOptions } from './options.js';
 
 export interface LoggerFunction {
   raw(...args: string[]): void;

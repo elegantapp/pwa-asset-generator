@@ -33,10 +33,12 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.node-version }}-jest
       - name: install
         run: npm ci
-      - name: lint
-        run: npm run lint
       - name: build
         run: npm run build
+      - name: prettier
+        run: npm run prettier
+      - name: lint
+        run: npm run lint
       - name: install chromium
         run: npm run chromium
       - name: install package revision
@@ -61,14 +63,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ahmadnassri/action-commit-lint@v2
         with:
-          config: ./commitlint.config.js
-
-  auto-merge:
-    if: ${{ false }}
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: fastify/github-action-merge-dependabot@v2.1.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: rebase
+          config: ./.commitlintrc

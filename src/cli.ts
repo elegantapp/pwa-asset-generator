@@ -1,13 +1,11 @@
 import meow from 'meow';
-import preLogger from './helpers/logger';
-import { generateImages } from './main';
-import constants from './config/constants';
-import { CLIOptions } from './models/options';
+import preLogger from './helpers/logger.js';
+import { generateImages } from './main.js';
+import { CLIOptions } from './models/options.js';
+import constants from './config/constants.js';
 
 const cli = meow(
   `
-$ pwa-asset-generator --help
-
   Usage
     $ pwa-asset-generator [source-file] [output-folder]
 
@@ -73,8 +71,9 @@ $ pwa-asset-generator --help
     --log false
 `,
   {
+    importMeta: import.meta,
     flags: constants.FLAGS,
-  } as meow.Options<meow.AnyFlags>,
+  },
 );
 const flags = cli.flags as CLIOptions;
 const logger = preLogger('cli', flags);
@@ -85,9 +84,8 @@ const logger = preLogger('cli', flags);
       cli.showHelp(0);
     }
     await generateImages(cli.input[0], cli.input[1], flags, logger);
-    process.exit(0);
   } catch (e) {
     logger.error(e as Error);
-    process.exit(1);
+    throw e;
   }
 })();

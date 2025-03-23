@@ -1,9 +1,9 @@
 import uniqWith from 'lodash.uniqwith';
-import isEqual from 'lodash.isequal';
-import constants from '../config/constants';
-import { Image, Orientation } from '../models/image';
-import { LaunchScreenSpec } from '../models/spec';
-import { Options } from '../models/options';
+import { isDeepStrictEqual } from 'node:util';
+import constants from '../config/constants.js';
+import { Image, Orientation } from '../models/image.js';
+import { LaunchScreenSpec } from '../models/spec.js';
+import { Options } from '../models/options.js';
 
 const mapToIconImageFileObj = (
   fileNamePrefix: string,
@@ -67,7 +67,7 @@ const getIconImages = (options: Options): Image[] => {
     ];
   }
 
-  return uniqWith(icons, isEqual);
+  return uniqWith(icons, isDeepStrictEqual);
 };
 
 const getSplashScreenImages = (
@@ -110,7 +110,7 @@ const getSplashScreenImages = (
       }
       return images;
     }, []),
-    isEqual,
+    isDeepStrictEqual,
   );
 };
 

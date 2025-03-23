@@ -1,6 +1,16 @@
-import { Orientation } from '../models/image';
-import { HTMLMetaNames, HTMLMetaSelector } from '../models/meta';
-import APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA from './apple-fallback-data.json';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { HTMLMetaNames, HTMLMetaSelector } from '../models/meta.js';
+import { Orientation } from '../models/image.js';
+import { Flag } from 'meow';
+import { Extension } from '../models/options.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA = JSON.parse(
+  fs.readFileSync(path.join(__dirname, './apple-fallback-data.json'), 'utf8'),
+);
 
 const HTML_META_ORDERED_SELECTOR_LIST: HTMLMetaSelector[] = [
   {
@@ -33,110 +43,110 @@ const HTML_META_ORDERED_SELECTOR_LIST: HTMLMetaSelector[] = [
 
 export default {
   FLAGS: {
-    background: {
+    background: <Flag<'string', string>>{
       type: 'string',
-      alias: 'b',
+      shortFlag: 'b',
       default: 'transparent',
     },
-    manifest: {
+    manifest: <Flag<'string', string>>{
       type: 'string',
-      alias: 'm',
+      shortFlag: 'm',
     },
-    index: {
+    index: <Flag<'string', string>>{
       type: 'string',
-      alias: 'i',
+      shortFlag: 'i',
     },
-    path: {
+    path: <Flag<'string', string>>{
       type: 'string',
-      alias: 'a',
+      shortFlag: 'a',
     },
-    pathOverride: {
+    pathOverride: <Flag<'string', string>>{
       type: 'string',
-      alias: 'v',
+      shortFlag: 'v',
     },
-    opaque: {
+    opaque: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 'o',
+      shortFlag: 'o',
       default: true,
     },
-    scrape: {
+    scrape: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 's',
+      shortFlag: 's',
       default: true,
     },
-    padding: {
+    padding: <Flag<'string', string>>{
       type: 'string',
-      alias: 'p',
+      shortFlag: 'p',
       default: '10%',
     },
-    type: {
+    type: <Flag<'string', Extension>>{
       type: 'string',
-      alias: 't',
+      shortFlag: 't',
       default: 'jpg',
     },
-    quality: {
+    quality: <Flag<'number', number>>{
       type: 'number',
-      alias: 'q',
+      shortFlag: 'q',
       default: 70,
     },
-    splashOnly: {
+    splashOnly: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 'h',
+      shortFlag: 'h',
       default: false,
     },
-    iconOnly: {
+    iconOnly: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 'c',
+      shortFlag: 'c',
       default: false,
     },
-    landscapeOnly: {
+    landscapeOnly: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 'l',
+      shortFlag: 'l',
       default: false,
     },
-    portraitOnly: {
+    portraitOnly: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 'r',
+      shortFlag: 'r',
       default: false,
     },
-    log: {
+    log: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 'g',
+      shortFlag: 'g',
       default: true,
     },
-    singleQuotes: {
+    singleQuotes: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 'u',
+      shortFlag: 'u',
       default: false,
     },
-    xhtml: {
+    xhtml: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 'x',
+      shortFlag: 'x',
       default: false,
     },
-    favicon: {
+    favicon: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 'f',
+      shortFlag: 'f',
       default: false,
     },
-    mstile: {
+    mstile: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 'w',
+      shortFlag: 'w',
       default: false,
     },
-    maskable: {
+    maskable: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 'e',
+      shortFlag: 'e',
       default: true,
     },
-    darkMode: {
+    darkMode: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 'd',
+      shortFlag: 'd',
       default: false,
     },
-    noSandbox: {
+    noSandbox: <Flag<'boolean', boolean>>{
       type: 'boolean',
-      alias: 'n',
+      shortFlag: 'n',
       default: false,
     },
   },
@@ -273,7 +283,6 @@ export default {
     darkMode: boolean,
     xhtml: boolean,
   ): string => {
-    /* eslint-disable */
     if (orientation === 'portrait') {
       return `\
 <link rel="apple-touch-startup-image" href="${url}" media="${
@@ -296,7 +305,6 @@ export default {
       xhtml ? ' /' : ''
     }>
 `;
-    /* eslint-enable */
   },
 
   APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA,

@@ -1,13 +1,13 @@
 import { Browser } from 'puppeteer-core';
-import constants from '../config/constants';
-import url from './url';
-import file from './file';
-import images from './images';
-import browserHelper from './browser';
-import preLogger from './logger';
-import { Options } from '../models/options';
-import { LaunchScreenSpec } from '../models/spec';
-import { Image, SavedImage } from '../models/image';
+import constants from '../config/constants.js';
+import url from './url.js';
+import file from './file.js';
+import images from './images.js';
+import browserHelper from './browser.js';
+import preLogger from './logger.js';
+import { Options } from '../models/options.js';
+import { LaunchScreenSpec } from '../models/spec.js';
+import { Image, SavedImage } from '../models/image.js';
 
 const getAppleSplashScreenData = async (
   browser: Browser,
@@ -38,8 +38,8 @@ const getAppleSplashScreenData = async (
   }
 
   const splashScreenData = await page.evaluate(() => {
-    const scrapeSplashScreenDataFromHIGPage = (): LaunchScreenSpec[] => {
-      return Array.from(
+    const scrapeSplashScreenDataFromHIGPage = (): LaunchScreenSpec[] =>
+      Array.from(
         document
           .querySelectorAll(
             `#iOS-iPadOS-device-screen-dimensions + .table-wrapper > table`,
@@ -115,7 +115,6 @@ const getAppleSplashScreenData = async (
           },
         ) as LaunchScreenSpec;
       });
-    };
     return scrapeSplashScreenDataFromHIGPage();
   });
 
@@ -288,7 +287,7 @@ const generateImages = async (
 
   if (
     !(
-      (await file.exists(output)) &&
+      file.existsSync(output) &&
       (await file.isPathAccessible(output, file.WRITE_ACCESS))
     )
   ) {
