@@ -172,8 +172,8 @@ const saveImages = async (
   options: Options,
   browser: Browser,
 ): Promise<SavedImage[]> => {
-  let address: string;
-  let shellHtml: string;
+  let address: string | undefined = undefined;
+  let shellHtml: string | undefined = undefined;
 
   const logger = preLogger(saveImages.name, options);
   logger.log('Initialising puppeteer to take screenshots', '🤖');
@@ -199,7 +199,8 @@ const saveImages = async (
       );
 
       try {
-        const page = await browser.newPage();
+        const browserContext = await browser.createBrowserContext();
+        const page = await browserContext.newPage();
         await page.emulate({
           userAgent: constants.EMULATED_USER_AGENT,
           viewport: {
@@ -221,10 +222,11 @@ const saveImages = async (
             ]);
           }
           await page.goto(address, { waitUntil: 'networkidle0' });
-        } else {
+        } else if (shellHtml) {
           await page.setContent(shellHtml);
         }
 
+        await page.bringToFront();
         await page.screenshot({
           path,
           omitBackground: !options.opaque,
@@ -232,6 +234,7 @@ const saveImages = async (
         });
 
         await page.close();
+        await browserContext.close();
 
         logger.success(`Saved image ${name}`);
 
@@ -297,18 +300,14 @@ const generateImages = async (
     );
   }
 
-  const savedImages = await saveImages(
-    allImages,
-    source,
-    output,
-    options,
-    browser,
-  );
+  let savedImages: SavedImage[] = [];
 
   try {
-    await browserHelper.killBrowser(browser, chrome);
-  } catch (e) {
-    // Silently try killing chrome as Chrome launcher might have already killed it
+    savedImages = await saveImages(allImages, source, output, options, browser);
+  } finally {
+    await browserHelper.killBrowser(browser, chrome).catch(() => {
+      // Silently try killing chrome as Chrome launcher might have already killed it
+    });
   }
 
   return savedImages;

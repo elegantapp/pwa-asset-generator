@@ -39,7 +39,7 @@ const getChromeBuildIdFromPuppeteer = async (): Promise<string> => {
 
   try {
     const { PUPPETEER_REVISIONS } = await import(
-      'puppeteer-core/lib/cjs/puppeteer/revisions.js'
+      'puppeteer-core/lib/esm/puppeteer/revisions.js'
     );
 
     if (!PUPPETEER_REVISIONS || !PUPPETEER_REVISIONS.chrome) {
@@ -77,7 +77,9 @@ const getPreferredBrowserRevisionInfo = async (): Promise<RevisionInfo> => {
     );
 
     if (preferredBrowser) {
-      logger.log(`Using already installed Chrome: ${preferredBrowser.buildId}`);
+      logger.log(
+        `Using already installed local Chrome build ${preferredBrowser.buildId}`,
+      );
       return {
         folderPath: preferredBrowser.path,
         executablePath: preferredBrowser.executablePath,
@@ -111,7 +113,7 @@ const installPreferredBrowserRevision = async (): Promise<RevisionInfo> => {
 
   try {
     logger.warn(
-      `Chrome version ${browserInfo.revision} is not found, going to download it for you`,
+      `Chrome build ${browserInfo.revision} will be downloaded for you`,
     );
 
     const canInstall = await canDownload({
