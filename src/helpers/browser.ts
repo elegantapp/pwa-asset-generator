@@ -73,6 +73,7 @@ const getLocalBrowserInstance = async (
 const launchSystemBrowser = (): Promise<LaunchedChrome> => {
   const launchOptions: ChromeLauncherOptions = {
     chromeFlags: constants.CHROME_LAUNCH_ARGS,
+    userDataDir: false,
     logLevel: 'silent',
     maxConnectionRetries: constants.CHROME_LAUNCHER_MAX_CONN_RETRIES,
   };
@@ -176,7 +177,8 @@ export const killBrowser = async (
 ): Promise<void> => {
   if (chrome) {
     await browser.disconnect();
-    await chrome.kill();
+    await browser.close();
+    chrome.kill();
   } else {
     await browser.close();
   }
