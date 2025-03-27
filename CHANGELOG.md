@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.1](https://github.com/elegantapp/pwa-asset-generator/compare/v8.0.0...v8.0.1) (2025-03-27)
+
+
+### Bug Fixes
+
+* **core:** pptr screenshot window activation issue ([f453d97](https://github.com/elegantapp/pwa-asset-generator/commit/f453d979e8e876033b0d4f80b0bc68b7937f599c))
+
 # [8.0.0](https://github.com/elegantapp/pwa-asset-generator/compare/v7.0.0...v8.0.0) (2025-03-24)
 
 

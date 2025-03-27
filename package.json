@@ -1,6 +1,6 @@
 {
   "name": "pwa-asset-generator",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "Automates PWA asset generation and image declaration. Automatically generates icon and splash screen images, favicons and mstile images. Updates manifest.json and index.html files with the generated images according to Web App Manifest specs and Apple Human Interface guidelines.",
   "type": "module",
   "main": "dist/main.js",
