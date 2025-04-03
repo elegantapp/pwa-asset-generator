@@ -22,7 +22,7 @@ vi.mock('./logger.js', () => ({
   }),
 }));
 
-vi.mock('puppeteer-core/lib/cjs/puppeteer/revisions.js', () => ({
+vi.mock('puppeteer-core/lib/esm/puppeteer/revisions.js', () => ({
   PUPPETEER_REVISIONS: {
     chrome: '134.0.6998.35',
   },
