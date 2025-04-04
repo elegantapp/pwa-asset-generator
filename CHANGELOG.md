@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.4](https://github.com/elegantapp/pwa-asset-generator/compare/v8.0.3...v8.0.4) (2025-04-04)
+
 ## [8.0.3](https://github.com/elegantapp/pwa-asset-generator/compare/v8.0.2...v8.0.3) (2025-04-03)
 
 ## [8.0.2](https://github.com/elegantapp/pwa-asset-generator/compare/v8.0.1...v8.0.2) (2025-03-27)
