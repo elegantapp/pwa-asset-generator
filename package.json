@@ -69,13 +69,13 @@
     "url": "https://opencollective.com/pwa-asset-generator"
   },
   "dependencies": {
-    "chalk": "^5.4.1",
     "cheerio": "^1.0.0",
     "chrome-launcher": "^1.1.2",
     "find-process": "^1.4.10",
     "lodash.uniqwith": "^4.5.0",
     "meow": "^13.2.0",
     "mime-types": "^3.0.1",
+    "picocolors": "^1.1.1",
     "pretty": "^2.0.0",
     "puppeteer-core": "^24.4.0",
     "slash": "^5.1.0"
