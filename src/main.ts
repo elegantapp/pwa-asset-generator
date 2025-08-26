@@ -2,10 +2,10 @@ import meta from './helpers/meta.js';
 import puppets from './helpers/puppets.js';
 import flags from './helpers/flags.js';
 import preLogger from './helpers/logger.js';
-import { CLIOptions, Options } from './models/options.js';
-import { Result } from './models/result.js';
-import { LoggerFunction } from './models/logger.js';
 import constants from './config/constants.js';
+import type { CLIOptions, Options } from './models/options.js';
+import type { Result } from './models/result.js';
+import type { LoggerFunction } from './models/logger.js';
 
 /**
  Generates PWA assets based on a source input and saves generated images in the output folder provided

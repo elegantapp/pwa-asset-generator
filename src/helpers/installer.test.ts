@@ -1,7 +1,7 @@
 import { vi, describe, test, expect, beforeEach } from 'vitest';
 import { Browser } from '@puppeteer/browsers';
-import type { Mock } from 'vitest';
 import installer from './installer.js';
+import type { Mock } from 'vitest';
 
 vi.mock('@puppeteer/browsers', () => ({
   Browser: {

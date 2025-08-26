@@ -1,18 +1,15 @@
-import puppeteer, {
-  Browser,
-  type LaunchOptions,
-  type ConnectOptions,
-} from 'puppeteer-core';
-import {
-  launch,
-  LaunchedChrome,
-  Options as ChromeLauncherOptions,
-} from 'chrome-launcher';
+import puppeteer from 'puppeteer-core';
+import { launch } from 'chrome-launcher';
 import find from 'find-process';
-import { get } from 'http';
+import { get } from 'node:http';
 import preLogger from './logger.js';
 import constants from '../config/constants.js';
 import installer from './installer.js';
+import type { Browser, LaunchOptions, ConnectOptions } from 'puppeteer-core';
+import type {
+  LaunchedChrome,
+  Options as ChromeLauncherOptions,
+} from 'chrome-launcher';
 
 // Used for both launch and connect options
 type PuppeteerOptions = LaunchOptions & ConnectOptions;

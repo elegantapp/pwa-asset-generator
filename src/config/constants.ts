@@ -1,10 +1,11 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { HTMLMetaNames, HTMLMetaSelector } from '../models/meta.js';
-import { Orientation } from '../models/image.js';
-import { Flag } from 'meow';
-import { Extension } from '../models/options.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { HTMLMetaNames } from '../models/meta.js';
+import type { HTMLMetaSelector } from '../models/meta.js';
+import type { Orientation } from '../models/image.js';
+import type { Flag } from 'meow';
+import type { Extension } from '../models/options.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

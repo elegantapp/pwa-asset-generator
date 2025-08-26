@@ -1,6 +1,6 @@
 import chalk from 'chalk';
-import { Logger } from '../models/logger.js';
-import { CLIOptions } from '../models/options.js';
+import type { Logger } from '../models/logger.js';
+import type { CLIOptions } from '../models/options.js';
 
 const testMode = !!+(process.env.PAG_TEST_MODE as string);
 

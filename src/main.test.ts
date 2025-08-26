@@ -1,12 +1,12 @@
-import path from 'path';
+import path from 'node:path';
 import { generateImages } from './main.js';
 import file from './helpers/file.js';
 import constants from './config/constants.js';
-import { ManifestJsonIcon, Result } from './models/result.js';
-import { CLIOptions } from './models/options.js';
 import { HTMLMetaNames } from './models/meta.js';
-import { SavedImage } from './models/image.js';
 import { describe, test, expect, beforeEach } from 'vitest';
+import type { ManifestJsonIcon, Result } from './models/result.js';
+import type { CLIOptions } from './models/options.js';
+import type { SavedImage } from './models/image.js';
 
 const generateTempImages = (
   options: CLIOptions,

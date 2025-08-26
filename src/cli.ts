@@ -1,8 +1,8 @@
 import meow from 'meow';
 import preLogger from './helpers/logger.js';
 import { generateImages } from './main.js';
-import { CLIOptions } from './models/options.js';
 import constants from './config/constants.js';
+import type { CLIOptions } from './models/options.js';
 
 const cli = meow(
   `

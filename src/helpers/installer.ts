@@ -4,8 +4,8 @@ import {
   getInstalledBrowsers,
   Browser,
 } from '@puppeteer/browsers';
-import path from 'path';
-import os from 'os';
+import path from 'node:path';
+import os from 'node:os';
 import preLogger from './logger.js';
 
 // Override current environment proxy settings with npm configuration, if any.

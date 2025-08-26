@@ -1,13 +1,14 @@
 import { load } from 'cheerio';
 import pretty from 'pretty';
 import { lookup } from 'mime-types';
-import path from 'path';
+import path from 'node:path';
 import constants from '../config/constants.js';
 import file from './file.js';
-import { SavedImage } from '../models/image.js';
-import { ManifestJsonIcon } from '../models/result.js';
-import { Options } from '../models/options.js';
-import { HTMLMeta, HTMLMetaNames, HTMLMetaSelector } from '../models/meta.js';
+import { HTMLMetaNames } from '../models/meta.js';
+import type { SavedImage } from '../models/image.js';
+import type { ManifestJsonIcon } from '../models/result.js';
+import type { Options } from '../models/options.js';
+import type { HTMLMeta, HTMLMetaSelector } from '../models/meta.js';
 
 const generateOutputPath = (
   options: Options,

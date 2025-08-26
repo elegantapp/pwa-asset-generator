@@ -1,9 +1,9 @@
 import * as fs from 'node:fs';
-import path from 'path';
+import path from 'node:path';
 import slash from 'slash';
 import { lookup } from 'mime-types';
 import constants from '../config/constants.js';
-import { Extension, Options } from '../models/options.js';
+import type { Extension, Options } from '../models/options.js';
 
 const getExtension = (file: string): string =>
   path.extname(file).replace('.', '');
