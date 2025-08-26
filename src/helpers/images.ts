@@ -1,9 +1,9 @@
 import uniqWith from 'lodash.uniqwith';
 import { isDeepStrictEqual } from 'node:util';
 import constants from '../config/constants.js';
-import { Image, Orientation } from '../models/image.js';
-import { LaunchScreenSpec } from '../models/spec.js';
-import { Options } from '../models/options.js';
+import type { Image, Orientation } from '../models/image.js';
+import type { LaunchScreenSpec } from '../models/spec.js';
+import type { Options } from '../models/options.js';
 
 const mapToIconImageFileObj = (
   fileNamePrefix: string,

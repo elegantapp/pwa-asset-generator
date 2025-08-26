@@ -1,7 +1,7 @@
-import os from 'os';
+import os from 'node:os';
 import constants from '../config/constants.js';
-import { CLIOptions, Options } from '../models/options.js';
-import { LoggerFunction } from '../models/logger.js';
+import type { CLIOptions, Options } from '../models/options.js';
+import type { LoggerFunction } from '../models/logger.js';
 
 const normalizeOnlyFlagPairs = (
   flag1Key: keyof Options,

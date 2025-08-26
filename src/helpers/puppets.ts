@@ -1,13 +1,13 @@
-import { Browser } from 'puppeteer-core';
 import constants from '../config/constants.js';
 import url from './url.js';
 import file from './file.js';
 import images from './images.js';
 import browserHelper from './browser.js';
 import preLogger from './logger.js';
-import { Options } from '../models/options.js';
-import { LaunchScreenSpec } from '../models/spec.js';
-import { Image, SavedImage } from '../models/image.js';
+import type { Browser } from 'puppeteer-core';
+import type { Options } from '../models/options.js';
+import type { LaunchScreenSpec } from '../models/spec.js';
+import type { Image, SavedImage } from '../models/image.js';
 
 const getAppleSplashScreenData = async (
   browser: Browser,

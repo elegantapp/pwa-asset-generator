@@ -1,7 +1,7 @@
-import dns from 'dns';
+import dns from 'node:dns';
 import file from './file.js';
 import preLogger from './logger.js';
-import { Options } from '../models/options.js';
+import type { Options } from '../models/options.js';
 
 const isUrl = (val: string): boolean => {
   try {
