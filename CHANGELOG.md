@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.1.0](https://github.com/elegantapp/pwa-asset-generator/compare/v8.0.5...v8.1.0) (2025-08-26)
+
+
+### Features
+
+* **core:** replace chalk with picocolors ([0745be3](https://github.com/elegantapp/pwa-asset-generator/commit/0745be321baac6ffa49ab07b0b7f8c3c310e1f2f))
+
 ## [8.0.5](https://github.com/elegantapp/pwa-asset-generator/compare/v8.0.4...v8.0.5) (2025-05-19)
 
 ## [8.0.4](https://github.com/elegantapp/pwa-asset-generator/compare/v8.0.3...v8.0.4) (2025-04-04)
