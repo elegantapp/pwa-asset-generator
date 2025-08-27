@@ -92,20 +92,16 @@ const getAppleSplashScreenData = async (
         return columns.reduce(
           (acc, curr: HTMLElement, index) => {
             if (index === 0) {
-              return {
-                ...acc,
-                device: curr.innerText,
-              };
+              acc.device = curr.innerText;
+              return acc;
             }
 
             const specs = getParsedSpecs(curr.innerText.trim());
 
-            return {
-              ...acc,
-              portrait: { width: specs.width, height: specs.height },
-              landscape: { width: specs.height, height: specs.width },
-              scaleFactor: specs.scaleFactor,
-            };
+            acc.portrait = { width: specs.width, height: specs.height };
+            acc.landscape = { width: specs.height, height: specs.width };
+            acc.scaleFactor = specs.scaleFactor;
+            return acc;
           },
           {
             device: '',
@@ -145,7 +141,7 @@ const getSplashScreenMetaData = async (
     '🤖',
   );
 
-  let splashScreenMetaData;
+  let splashScreenMetaData: LaunchScreenSpec[];
 
   try {
     splashScreenMetaData = await getAppleSplashScreenData(browser, options);
@@ -270,7 +266,7 @@ const generateImages = async (
     isHtmlInput ? false : options.noSandbox,
   );
 
-  let splashScreenMetaData;
+  let splashScreenMetaData: LaunchScreenSpec[];
 
   try {
     splashScreenMetaData = await getSplashScreenMetaData(options, browser);

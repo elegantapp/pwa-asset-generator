@@ -39,18 +39,22 @@ const getDefaultOptions = (): Options => {
     { type: string; alias: string; default?: string | number | boolean }
   >;
 
-  // TODO: replace Object.keys typecasting when it can be derived as a type
-  // https://github.com/microsoft/TypeScript/pull/12253#issuecomment-263132208
-  return Object.keys(flags)
-    .filter((flagKey) =>
-      flags[flagKey as keyof Options].hasOwnProperty('default'),
-    )
-    .reduce((acc: Options, curr: string | keyof Options) => {
-      return {
-        ...acc,
-        [curr]: flags[curr as keyof Options].default,
-      };
-    }, {} as Options);
+  return Object.keys(flags).reduce(
+    (acc, curr) => {
+      const flagKey = curr as keyof Options;
+
+      if (flags[flagKey].hasOwnProperty('default')) {
+        const val = flags[flagKey].default;
+
+        if (val) {
+          acc[flagKey] = val;
+        }
+      }
+
+      return acc;
+    },
+    {} as Record<keyof Options, Options[keyof Options]>,
+  ) as Options;
 };
 
 const normalizeSandboxOption = (
