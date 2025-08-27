@@ -14,6 +14,14 @@ import type {
 // Used for both launch and connect options
 type PuppeteerOptions = LaunchOptions & ConnectOptions;
 
+interface RevisionInfo {
+  folderPath: string;
+  executablePath: string;
+  local: boolean;
+  revision: string;
+  url?: string;
+}
+
 interface BrowserVersionInfo {
   Browser: string;
   webSocketDebuggerUrl: string;
@@ -44,7 +52,7 @@ const getLocalBrowserInstance = async (
   launchArgs: PuppeteerOptions,
   noSandbox: boolean,
 ): Promise<Browser> => {
-  let revisionInfo;
+  let revisionInfo: RevisionInfo;
   const localRevisionInfo = await getLocalRevisionInfo();
 
   if (localRevisionInfo) {
