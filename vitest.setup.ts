@@ -1,3 +1,5 @@
+import { vi } from 'vitest';
+
 // Set a longer timeout for tests
 const TEST_TIMEOUT_IN_MILLIS = 120000;
 
