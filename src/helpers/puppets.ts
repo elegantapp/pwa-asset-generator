@@ -141,7 +141,7 @@ const getSplashScreenMetaData = async (
     '🤖',
   );
 
-  let splashScreenMetaData;
+  let splashScreenMetaData: LaunchScreenSpec[];
 
   try {
     splashScreenMetaData = await getAppleSplashScreenData(browser, options);
@@ -266,7 +266,7 @@ const generateImages = async (
     isHtmlInput ? false : options.noSandbox,
   );
 
-  let splashScreenMetaData;
+  let splashScreenMetaData: LaunchScreenSpec[];
 
   try {
     splashScreenMetaData = await getSplashScreenMetaData(options, browser);
