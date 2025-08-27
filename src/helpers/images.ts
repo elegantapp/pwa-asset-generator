@@ -1,9 +1,14 @@
-import uniqWith from 'lodash.uniqwith';
 import { isDeepStrictEqual } from 'node:util';
 import constants from '../config/constants.js';
 import type { Image, Orientation } from '../models/image.js';
 import type { LaunchScreenSpec } from '../models/spec.js';
 import type { Options } from '../models/options.js';
+
+const uniqWithDeepStrictEqual = <T>(arr: T[]) =>
+  arr.filter(
+    (item, idx) =>
+      arr.findIndex((other) => isDeepStrictEqual(item, other)) === idx,
+  );
 
 const mapToIconImageFileObj = (
   fileNamePrefix: string,
@@ -67,7 +72,7 @@ const getIconImages = (options: Options): Image[] => {
     ];
   }
 
-  return uniqWith(icons, isDeepStrictEqual);
+  return uniqWithDeepStrictEqual(icons);
 };
 
 const getSplashScreenImages = (
@@ -80,7 +85,7 @@ const getSplashScreenImages = (
       constants.APPLE_SPLASH_FILENAME_DARK_MODE_POSTFIX;
   }
 
-  return uniqWith(
+  return uniqWithDeepStrictEqual(
     splashScreenData.reduce((acc: Image[], curr: LaunchScreenSpec) => {
       let images: Image[] = acc;
 
@@ -110,7 +115,6 @@ const getSplashScreenImages = (
       }
       return images;
     }, []),
-    isDeepStrictEqual,
   );
 };
 
