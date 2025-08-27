@@ -32,7 +32,7 @@ const convertBackslashPathToSlashPath = (backSlashPath: string): string =>
   slash(backSlashPath);
 
 const getAppDir = (): string => {
-  let appPath;
+  let appPath: string | undefined;
   try {
     appPath = require.resolve('pwa-asset-generator');
   } catch (e) {
