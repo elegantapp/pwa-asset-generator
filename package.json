@@ -28,7 +28,8 @@
     "lint:fix": "eslint . --fix",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "tsc": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
