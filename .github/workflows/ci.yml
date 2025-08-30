@@ -7,8 +7,84 @@ on:
   pull_request:
 
 jobs:
+  commit-lint:
+    name: Commit message linting
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Commit lint
+        uses: ahmadnassri/action-commit-lint@v2
+        with:
+          config: ./.commitlintrc
+
+  lint:
+    name: Linting
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: npm
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run build
+        run: npm run build
+
+      - name: Run tests
+        run: npm run lint
+
+  typescript:
+    name: Type checking
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: npm
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run type checking
+        run: npm run tsc
+
+  format:
+    name: Formatting
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: npm
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run formatting
+        run: npm run prettier
+
   test:
-    name: Test on node ${{ matrix.node }} and ${{ matrix.os }}
+    name: Test (Node ${{ matrix.node }} on ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
 
@@ -19,48 +95,38 @@ jobs:
         os: [ubuntu-latest, macOS-latest, windows-latest]
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Use node ${{ matrix.node }}
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
-          registry-url: https://registry.npmjs.org
           cache: npm
-      - name: Cache jest
-        uses: actions/cache@v4
-        with:
-          path: .jest-cache
-          key: ${{ runner.os }}-${{ matrix.node-version }}-jest
-      - name: install
+          node-version: ${{ matrix.node }}
+
+      - name: Install dependencies
         run: npm ci
-      - name: build
+
+      - name: Run build
         run: npm run build
-      - name: prettier
-        run: npm run prettier
-      - name: lint
-        run: npm run lint
-      - name: install chromium
+
+      - name: Install Chromium
         run: npm run chromium
-      - name: install package revision
+
+      - name: Install package revision
         run: npm i . -g
-      - name: test
+
+      - name: Run tests
         run: npm test
         env:
           FORCE_EXIT: true
           PAG_USE_LOCAL_REV: 1
           PAG_TEST_MODE: 1
           PAG_USE_NO_SANDBOX: ${{ runner.os == 'Linux' && '1' || '' }}
-      - name: upload visual diff
+
+      - name: Upload visual diff
         uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: visual-test-diff-${{ runner.os }}-${{ matrix.node }}
           path: temp/diff/*
-
-  commit-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ahmadnassri/action-commit-lint@v2
-        with:
-          config: ./.commitlintrc

@@ -7,6 +7,8 @@ import { describe, test, expect, beforeEach } from 'vitest';
 import type { ManifestJsonIcon, Result } from './models/result.js';
 import type { CLIOptions } from './models/options.js';
 import type { SavedImage } from './models/image.js';
+import type { PNGWithMetadata } from 'pngjs';
+import type { BufferRet } from 'jpeg-js';
 
 const generateTempImages = (
   options: CLIOptions,
@@ -455,8 +457,8 @@ describe('visually compares generated images with', async () => {
     fileBPath: string,
   ): VisualDiffResult => {
     const isPNG = fileAPath.endsWith('.png');
-    let imgA;
-    let imgB;
+    let imgA: PNGWithMetadata | BufferRet;
+    let imgB: PNGWithMetadata | BufferRet;
 
     if (isPNG) {
       imgA = PNG.sync.read(file.readFileSync(fileAPath));
