@@ -13,10 +13,7 @@ export default [
     files: ['**/*.js'],
     ignores: ['dist/**', 'node_modules/**'],
     languageOptions: {
-      globals: {
-        ...globals.node,
-        ...globals.browser,
-      },
+      globals: globals.node,
     },
     rules: {
       // Error prevention
@@ -97,7 +94,6 @@ export default [
       },
       globals: {
         ...globals.node,
-        ...globals.browser,
         NodeModule: 'readonly',
       },
     },
@@ -132,18 +128,7 @@ export default [
     },
     languageOptions: {
       parser: tsParser,
-      globals: {
-        ...globals.node,
-        ...globals.browser,
-        vi: 'readonly',
-        describe: 'readonly',
-        it: 'readonly',
-        expect: 'readonly',
-        beforeEach: 'readonly',
-        afterEach: 'readonly',
-        beforeAll: 'readonly',
-        afterAll: 'readonly',
-      },
+      globals: globals.node,
     },
     rules: {
       ...tseslint.configs.recommended.rules,
