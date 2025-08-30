@@ -156,6 +156,13 @@ export interface Options {
    @default false
    */
   readonly noSandbox: boolean;
+
+  /**
+   Enable sandbox on bundled Chromium on Linux platforms - recommended
+
+   @default true
+   */
+  readonly sandbox: boolean;
 }
 
 export type CLIOptions = Partial<Options>;
