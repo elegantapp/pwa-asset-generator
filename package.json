@@ -91,7 +91,7 @@
     "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^14.0.3",
     "@types/mime-types": "^2.1.4",
-    "@types/node": "^22.13.11",
+    "@types/node": "^24.5.2",
     "@types/pngjs": "^6.0.5",
     "@types/pretty": "^2.0.3",
     "@typescript-eslint/eslint-plugin": "^8.27.0",
