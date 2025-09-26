@@ -24,12 +24,7 @@ const logger: Logger = (prefix: string, options?: CLIOptions) => {
 
   const warn = (...args: string[]): void => {
     if (testMode || !isLogEnabled) return;
-    console.warn(
-      getTime(),
-      getPrefix(),
-      args.map((arg) => pc.yellow(arg)),
-      '🤔',
-    );
+    console.warn(getTime(), getPrefix(), pc.yellow(args.join(' ')), '🤔');
   };
 
   const trace = (...args: string[]): void => {
@@ -38,22 +33,12 @@ const logger: Logger = (prefix: string, options?: CLIOptions) => {
   };
 
   const error = (...args: string[]): void => {
-    console.error(
-      getTime(),
-      getPrefix(),
-      args.map((arg) => pc.red(arg)),
-      '😭',
-    );
+    console.error(getTime(), getPrefix(), pc.red(args.join(' ')), '😭');
   };
 
   const success = (...args: string[]): void => {
     if (testMode || !isLogEnabled) return;
-    console.log(
-      getTime(),
-      getPrefix(),
-      args.map((arg) => pc.green(arg)),
-      '🙌',
-    );
+    console.log(getTime(), getPrefix(), pc.green(args.join(' ')), '🙌');
   };
 
   return {

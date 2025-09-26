@@ -154,8 +154,8 @@ const getBrowserInstance = async (
       logger.warn(
         `Chrome launcher could not connect to your system browser. Is your port ${error.port} accessible?`,
       );
-      const prc = await find('port', error.port);
-      prc.forEach((pr) => {
+      const prc = await find.default('port', error.port);
+      prc.forEach((pr: { pid: number }) => {
         logger.log(
           `Killing incompletely launched system chrome instance on pid ${pr.pid}`,
         );
