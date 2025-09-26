@@ -192,7 +192,7 @@ const saveImages = async (
         type,
         options.maskable,
         isManifestIcon,
-      );
+      ) as `${string}.${'png' | 'jpeg' | 'webp'}`;
 
       try {
         const browserContext = await browser.createBrowserContext();
@@ -224,7 +224,7 @@ const saveImages = async (
 
         await page.bringToFront();
         await page.screenshot({
-          path,
+          path: path,
           omitBackground: !options.opaque,
           ...(type !== 'png' ? { quality } : {}),
         });
