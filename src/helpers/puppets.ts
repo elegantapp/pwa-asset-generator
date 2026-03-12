@@ -1,3 +1,4 @@
+import os from 'node:os';
 import constants from '../config/constants.js';
 import url from './url.js';
 import file from './file.js';
@@ -161,6 +162,23 @@ const getSplashScreenMetaData = async (
 const canNavigateTo = (source: string): boolean =>
   (url.isUrl(source) && !file.isImageFile(source)) || file.isHtmlFile(source);
 
+// Each Chrome renderer context uses ~150MB for rendering large splash screen images
+const MEMORY_PER_CONTEXT_BYTES = 150 * 1024 * 1024;
+
+const getOptimalConcurrency = (imageCount: number): number => {
+  const cpuCount =
+    Number(process.env.PAG_SIMULATE_CPU_COUNT) || os.cpus().length;
+  const freeMem =
+    Number(process.env.PAG_SIMULATE_FREE_MEM_MB) * 1024 * 1024 || os.freemem();
+  // Cap by memory: use at most 80% of currently free memory across all contexts
+  const memoryBasedLimit = Math.floor(
+    (freeMem * 0.8) / MEMORY_PER_CONTEXT_BYTES,
+  );
+  // CPU count is the primary driver; memory caps it on constrained machines
+  const concurrency = Math.max(1, Math.min(cpuCount, memoryBasedLimit));
+  return Math.min(concurrency, imageCount);
+};
+
 const saveImages = async (
   imageList: Image[],
   source: string,
@@ -180,23 +198,30 @@ const saveImages = async (
     shellHtml = await url.getShellHtml(source, options);
   }
 
-  return Promise.all(
-    imageList.map(async ({ name, width, height, scaleFactor, orientation }) => {
-      const { quality } = options;
-      const isIcon = name.includes('icon');
-      const isManifestIcon = name.includes('manifest-icon');
-      const type = isIcon ? 'png' : options.type;
-      const path = file.getImageSavePath(
-        name,
-        output,
-        type,
-        options.maskable,
-        isManifestIcon,
-      ) as `${string}.${'png' | 'jpeg' | 'webp'}`;
+  const results: SavedImage[] = new Array(imageList.length);
+  let nextIndex = 0;
+  const concurrency = getOptimalConcurrency(imageList.length);
 
-      try {
-        const browserContext = await browser.createBrowserContext();
-        const page = await browserContext.newPage();
+  const workers = Array.from({ length: concurrency }, async () => {
+    const browserContext = await browser.createBrowserContext();
+    const page = await browserContext.newPage();
+
+    try {
+      while (nextIndex < imageList.length) {
+        const i = nextIndex++;
+        const { name, width, height, scaleFactor, orientation } = imageList[i];
+        const { quality } = options;
+        const isIcon = name.includes('icon');
+        const isManifestIcon = name.includes('manifest-icon');
+        const type = isIcon ? 'png' : options.type;
+        const path = file.getImageSavePath(
+          name,
+          output,
+          type,
+          options.maskable,
+          isManifestIcon,
+        ) as `${string}.${'png' | 'jpeg' | 'webp'}`;
+
         await page.emulate({
           userAgent: constants.EMULATED_USER_AGENT,
           viewport: {
@@ -224,24 +249,26 @@ const saveImages = async (
 
         await page.bringToFront();
         await page.screenshot({
-          path: path,
+          path,
           omitBackground: !options.opaque,
           ...(type !== 'png' ? { quality } : {}),
         });
 
-        await page.close();
-        await browserContext.close();
-
         logger.success(`Saved image ${name}`);
-
-        return { name, width, height, scaleFactor, path, orientation };
-      } catch (e) {
-        const error = e as Error;
-        logger.error(error.message);
-        throw Error(`Failed to save image ${name}`);
+        results[i] = { name, width, height, scaleFactor, path, orientation };
       }
-    }),
-  );
+    } catch (e) {
+      const error = e as Error;
+      logger.error(error.message);
+      throw error;
+    } finally {
+      await page.close();
+      await browserContext.close();
+    }
+  });
+
+  await Promise.all(workers);
+  return results;
 };
 
 const generateImages = async (
