@@ -166,10 +166,11 @@ const canNavigateTo = (source: string): boolean =>
 const MEMORY_PER_CONTEXT_BYTES = 150 * 1024 * 1024;
 
 const getOptimalConcurrency = (imageCount: number): number => {
-  const cpuCount =
-    Number(process.env.PAG_SIMULATE_CPU_COUNT) || os.cpus().length;
+  const rawCpu = process.env.PAG_SIMULATE_CPU_COUNT;
+  const cpuCount = rawCpu !== undefined ? Number(rawCpu) : os.cpus().length;
+  const rawMem = process.env.PAG_SIMULATE_FREE_MEM_MB;
   const freeMem =
-    Number(process.env.PAG_SIMULATE_FREE_MEM_MB) * 1024 * 1024 || os.freemem();
+    rawMem !== undefined ? Number(rawMem) * 1024 * 1024 : os.freemem();
   // Cap by memory: use at most 80% of currently free memory across all contexts
   const memoryBasedLimit = Math.floor(
     (freeMem * 0.8) / MEMORY_PER_CONTEXT_BYTES,
@@ -206,10 +207,12 @@ const saveImages = async (
     const browserContext = await browser.createBrowserContext();
     const page = await browserContext.newPage();
 
+    let currentImageName = '';
     try {
       while (nextIndex < imageList.length) {
         const i = nextIndex++;
         const { name, width, height, scaleFactor, orientation } = imageList[i];
+        currentImageName = name;
         const { quality } = options;
         const isIcon = name.includes('icon');
         const isManifestIcon = name.includes('manifest-icon');
@@ -259,7 +262,9 @@ const saveImages = async (
       }
     } catch (e) {
       const error = e as Error;
-      logger.error(error.message);
+      logger.error(
+        `Failed processing image "${currentImageName}": ${error.message}`,
+      );
       throw error;
     } finally {
       await page.close();
@@ -340,4 +345,5 @@ export default {
   getSplashScreenMetaData,
   saveImages,
   generateImages,
+  getOptimalConcurrency,
 };

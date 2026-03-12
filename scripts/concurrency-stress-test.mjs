@@ -77,32 +77,43 @@ const profiles = [
   { label: 'Worst case (1c/256MB)', cpus: 1, freeMb: 256 },
 ];
 
-const MEMORY_PER_CONTEXT_MB = 150;
-const simulateConcurrency = (cpus, freeMb, imageCount) => {
-  const memoryBasedLimit = Math.floor((freeMb * 0.8) / MEMORY_PER_CONTEXT_MB);
-  return Math.min(Math.max(1, Math.min(cpus, memoryBasedLimit)), imageCount);
-};
+// Save user-supplied env vars before the profile loop mutates them
+const origCpu = process.env.PAG_SIMULATE_CPU_COUNT;
+const origMem = process.env.PAG_SIMULATE_FREE_MEM_MB;
 
 console.log(`\nImage list size: ${inflatedImages.length}\n`);
 console.log('Simulated concurrency across hardware profiles:');
 console.log('─'.repeat(60));
 for (const { label, cpus, freeMb } of profiles) {
-  const c = simulateConcurrency(cpus, freeMb, inflatedImages.length);
+  process.env.PAG_SIMULATE_CPU_COUNT = String(cpus);
+  process.env.PAG_SIMULATE_FREE_MEM_MB = String(freeMb);
+  const c = puppets.getOptimalConcurrency(inflatedImages.length);
   console.log(
     `  ${label.padEnd(34)} → ${c} worker(s)  (${cpus} CPUs, ${freeMb}MB free)`,
   );
 }
 console.log('─'.repeat(60));
 
-// Run a real end-to-end test using the current machine's resources
+// Restore user-supplied env vars (or remove if they weren't set)
+if (origCpu !== undefined) {
+  process.env.PAG_SIMULATE_CPU_COUNT = origCpu;
+} else {
+  delete process.env.PAG_SIMULATE_CPU_COUNT;
+}
+if (origMem !== undefined) {
+  process.env.PAG_SIMULATE_FREE_MEM_MB = origMem;
+} else {
+  delete process.env.PAG_SIMULATE_FREE_MEM_MB;
+}
+
+// Determine effective hardware settings for the end-to-end run
 const simulatedCpus =
-  Number(process.env.PAG_SIMULATE_CPU_COUNT) || os.cpus().length;
+  origCpu !== undefined ? Number(origCpu) : os.cpus().length;
 const simulatedFreeMb =
-  Number(process.env.PAG_SIMULATE_FREE_MEM_MB) ||
-  Math.round(os.freemem() / 1024 / 1024);
-const expectedConcurrency = simulateConcurrency(
-  simulatedCpus,
-  simulatedFreeMb,
+  origMem !== undefined
+    ? Number(origMem)
+    : Math.round(os.freemem() / 1024 / 1024);
+const expectedConcurrency = puppets.getOptimalConcurrency(
   inflatedImages.length,
 );
 
@@ -117,8 +128,6 @@ const { browser, chrome } = await browserHelper.getBrowserInstance(
 );
 
 try {
-  process.env.PAG_SIMULATE_CPU_COUNT = String(simulatedCpus);
-  process.env.PAG_SIMULATE_FREE_MEM_MB = String(simulatedFreeMb);
   await puppets.saveImages(inflatedImages, source, output, options, browser);
   console.log(`✅ Completed ${inflatedImages.length} images without errors.`);
 } catch (e) {
