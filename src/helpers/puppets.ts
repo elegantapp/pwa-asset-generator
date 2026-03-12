@@ -162,7 +162,8 @@ const getSplashScreenMetaData = async (
 const canNavigateTo = (source: string): boolean =>
   (url.isUrl(source) && !file.isImageFile(source)) || file.isHtmlFile(source);
 
-// Each Chrome renderer context uses ~150MB for rendering large splash screen images
+// Each Chrome renderer context uses ~150MB for rendering large splash screen images.
+// This is a heuristic — actual usage varies by image size (higher for retina/4x, lower for small icons).
 const MEMORY_PER_CONTEXT_BYTES = 150 * 1024 * 1024;
 
 const getOptimalConcurrency = (imageCount: number): number => {
@@ -209,6 +210,8 @@ const saveImages = async (
     shellHtml = await url.getShellHtml(source, options);
   }
 
+  // Pre-allocated by index so each worker can write its slot without coordination.
+  // All slots are guaranteed to be filled if Promise.all resolves successfully.
   const results: SavedImage[] = new Array(imageList.length);
   let nextIndex = 0;
   const concurrency = getOptimalConcurrency(imageList.length);
@@ -260,6 +263,7 @@ const saveImages = async (
           await page.setContent(shellHtml);
         }
 
+        await page.bringToFront();
         await page.screenshot({
           path,
           omitBackground: !options.opaque,
@@ -282,8 +286,11 @@ const saveImages = async (
   });
 
   // Note: when one worker throws, Promise.all rejects immediately, but the
-  // remaining in-flight workers continue running until they finish their current
-  // image. Any partial results they write to disk are not cleaned up.
+  // remaining workers keep running — both finishing their current image AND
+  // continuing to pull new items from the queue (nextIndex is still incrementing).
+  // On a 5-worker setup with an error at image #10, workers 2–5 will process
+  // images #11–N to completion before the rejection propagates to the caller.
+  // Partial results written to disk are not cleaned up on failure.
   await Promise.all(workers);
   return results;
 };
