@@ -5,9 +5,6 @@ const TEST_TIMEOUT_IN_MILLIS = 120000;
 
 import { beforeAll } from 'vitest';
 
-beforeAll(
-  () => {
-    setTimeout.clear = vi.clearAllTimers;
-  },
-  { timeout: TEST_TIMEOUT_IN_MILLIS },
-);
+beforeAll(() => {
+  setTimeout.clear = vi.clearAllTimers;
+}, TEST_TIMEOUT_IN_MILLIS);

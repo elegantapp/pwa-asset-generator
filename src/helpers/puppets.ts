@@ -167,8 +167,18 @@ const MEMORY_PER_CONTEXT_BYTES = 150 * 1024 * 1024;
 
 const getOptimalConcurrency = (imageCount: number): number => {
   const rawCpu = process.env.PAG_SIMULATE_CPU_COUNT;
+  if (rawCpu !== undefined && !Number.isFinite(Number(rawCpu))) {
+    throw new Error(
+      `PAG_SIMULATE_CPU_COUNT must be a valid number, got: "${rawCpu}"`,
+    );
+  }
   const cpuCount = rawCpu !== undefined ? Number(rawCpu) : os.cpus().length;
   const rawMem = process.env.PAG_SIMULATE_FREE_MEM_MB;
+  if (rawMem !== undefined && !Number.isFinite(Number(rawMem))) {
+    throw new Error(
+      `PAG_SIMULATE_FREE_MEM_MB must be a valid number, got: "${rawMem}"`,
+    );
+  }
   const freeMem =
     rawMem !== undefined ? Number(rawMem) * 1024 * 1024 : os.freemem();
   // Cap by memory: use at most 80% of currently free memory across all contexts
@@ -250,7 +260,6 @@ const saveImages = async (
           await page.setContent(shellHtml);
         }
 
-        await page.bringToFront();
         await page.screenshot({
           path,
           omitBackground: !options.opaque,
@@ -272,6 +281,9 @@ const saveImages = async (
     }
   });
 
+  // Note: when one worker throws, Promise.all rejects immediately, but the
+  // remaining in-flight workers continue running until they finish their current
+  // image. Any partial results they write to disk are not cleaned up.
   await Promise.all(workers);
   return results;
 };
