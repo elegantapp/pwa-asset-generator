@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.3](https://github.com/elegantapp/pwa-asset-generator/compare/v8.1.2...v8.1.3) (2026-03-12)
+
+
+### Bug Fixes
+
+* **ci:** update release workflow ([f555c34](https://github.com/elegantapp/pwa-asset-generator/commit/f555c3462188844eabf2e6b04960c3b673e2c8bf))
+* **ci:** update release workflow ([c145c4c](https://github.com/elegantapp/pwa-asset-generator/commit/c145c4c9ab695784b8e6e0413d2a4f2e9bce351a))
+* **ci:** update release workflow ([7867001](https://github.com/elegantapp/pwa-asset-generator/commit/78670014ac67a257ae8cd50e80718448d208548a))
+* **core:** concurrency overload and vulnerable pkgs ([3ffed03](https://github.com/elegantapp/pwa-asset-generator/commit/3ffed030f66a23814f6b1f811081a8a552cdbb52)), closes [#1268](https://github.com/elegantapp/pwa-asset-generator/issues/1268) [#1269](https://github.com/elegantapp/pwa-asset-generator/issues/1269)
+
 ## [8.1.2](https://github.com/elegantapp/pwa-asset-generator/compare/v8.1.1...v8.1.2) (2025-09-26)
 
 ## [8.1.1](https://github.com/elegantapp/pwa-asset-generator/compare/v8.1.0...v8.1.1) (2025-08-27)
