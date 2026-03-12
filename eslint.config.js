@@ -195,6 +195,19 @@ export default [
     },
   },
 
+  // Node.js globals and rules for ESM scripts
+  {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: {
+      globals: globals.node,
+      sourceType: 'module',
+      ecmaVersion: 2022,
+    },
+    rules: {
+      'no-console': 'off',
+    },
+  },
+
   // Ignore patterns
   {
     ignores: ['dist/**', 'node_modules/**'],
