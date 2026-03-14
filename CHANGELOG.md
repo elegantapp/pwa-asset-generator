@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.4](https://github.com/elegantapp/pwa-asset-generator/compare/v8.1.3...v8.1.4) (2026-03-14)
+
+
+### Bug Fixes
+
+* **deps:** update vulnerable packages ([3522a66](https://github.com/elegantapp/pwa-asset-generator/commit/3522a667e24fbceec00fb243cf5da358b2ef43b1))
+
 ## [8.1.3](https://github.com/elegantapp/pwa-asset-generator/compare/v8.1.2...v8.1.3) (2026-03-12)
 
 
