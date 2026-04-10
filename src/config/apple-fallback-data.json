@@ -168,6 +168,54 @@
     "scaleFactor": 2
   },
   {
+    "device": "iPhone 17 Pro Max",
+    "portrait": {
+      "width": 1320,
+      "height": 2868
+    },
+    "landscape": {
+      "width": 2868,
+      "height": 1320
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 17 Pro",
+    "portrait": {
+      "width": 1206,
+      "height": 2622
+    },
+    "landscape": {
+      "width": 2622,
+      "height": 1206
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 17 Air",
+    "portrait": {
+      "width": 1260,
+      "height": 2736
+    },
+    "landscape": {
+      "width": 2736,
+      "height": 1260
+    },
+    "scaleFactor": 3
+  },
+  {
+    "device": "iPhone 17",
+    "portrait": {
+      "width": 1206,
+      "height": 2622
+    },
+    "landscape": {
+      "width": 2622,
+      "height": 1206
+    },
+    "scaleFactor": 3
+  },
+  {
     "device": "iPhone 16 Pro Max",
     "portrait": {
       "width": 1320,
