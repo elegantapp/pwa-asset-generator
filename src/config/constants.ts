@@ -208,8 +208,16 @@ export default {
   APPLE_SPLASH_FILENAME_DARK_MODE_POSTFIX: '-dark',
   MANIFEST_ICON_FILENAME_PREFIX: 'manifest-icon',
   MS_ICON_FILENAME_PREFIX: 'mstile-icon',
-  APPLE_HIG_SPLASH_SCR_SPECS_DATA_GRID_SELECTOR: 'table tbody tr',
-  WAIT_FOR_SELECTOR_TIMEOUT: 1000,
+  APPLE_HIG_SPLASH_SCR_SPECS_TABLE_SELECTOR:
+    '#iOS-iPadOS-device-screen-dimensions + .table-wrapper > table',
+  // Sanity floor: Apple's HIG iOS/iPadOS dimensions table lists ~35 devices as of
+  // 2025; a successful scrape returning fewer than this signals a parsing problem.
+  APPLE_HIG_MIN_EXPECTED_DEVICES: 30,
+  // Total budget for polling Apple's client-rendered HIG page until the dimensions
+  // table appears (see getAppleSplashScreenData). Independent of BROWSER_TIMEOUT.
+  APPLE_HIG_SCRAPE_TIMEOUT: 30000,
+  // Max time for puppeteer to launch/connect to the browser — not a navigation or
+  // scrape-polling timeout.
   BROWSER_TIMEOUT: 10000,
 
   FAVICON_META_HTML: (

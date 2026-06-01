@@ -10,6 +10,15 @@ import type { Options } from '../models/options.js';
 import type { LaunchScreenSpec } from '../models/spec.js';
 import type { Image, SavedImage } from '../models/image.js';
 
+interface ScrapeDiagnostics {
+  headings: string[];
+  tables: { headers: string[]; firstRow: string[] }[];
+}
+
+type ScrapeResult =
+  | { ok: true; data: LaunchScreenSpec[] }
+  | { ok: false; reason: string; diagnostics: ScrapeDiagnostics };
+
 const getAppleSplashScreenData = async (
   browser: Browser,
   options: Options,
@@ -21,104 +30,195 @@ const getAppleSplashScreenData = async (
     `Navigating to Apple Human Interface Guidelines website - ${constants.APPLE_HIG_SPLASH_SCR_SPECS_URL}`,
   );
 
+  // The HIG page is a client-side rendered SPA
   await page.goto(constants.APPLE_HIG_SPLASH_SCR_SPECS_URL, {
-    waitUntil: 'networkidle0',
+    waitUntil: 'domcontentloaded',
   });
 
   logger.log('Waiting for the data table to be loaded');
 
-  try {
-    await page.waitForSelector('table', {
-      timeout: constants.WAIT_FOR_SELECTOR_TIMEOUT,
+  const tableSelector = constants.APPLE_HIG_SPLASH_SCR_SPECS_TABLE_SELECTOR;
+
+  const scrapeDimensionsTable = (selector: string): ScrapeResult => {
+    // Locate the table by progressively looser strategies, so a single id or
+    // DOM change on Apple's side does not break scraping:
+    //   1. the known anchor + structure (fast path)
+    //   2. the heading text -> first table that follows it (survives id/nesting changes)
+    //   3. the cell value shape -> any table whose cells look like device specs
+    const locateTable = (): HTMLTableElement | null => {
+      const direct = document.querySelector<HTMLTableElement>(selector);
+      if (direct) {
+        return direct;
+      }
+
+      const heading = Array.from(
+        document.querySelectorAll('h1, h2, h3, h4'),
+      ).find((h) =>
+        /ios.*ipados.*device screen dimensions/i.test(h.textContent ?? ''),
+      );
+      if (heading) {
+        const following = Array.from(document.querySelectorAll('table')).find(
+          (t) =>
+            (heading.compareDocumentPosition(t) &
+              Node.DOCUMENT_POSITION_FOLLOWING) !==
+            0,
+        );
+        if (following) {
+          return following;
+        }
+      }
+
+      const looksLikeDimensions =
+        /\d+\s*x\s*\d+\s*pt\s*\(\s*\d+\s*x\s*\d+\s*px/i;
+      return (
+        Array.from(document.querySelectorAll('table')).find((t) =>
+          Array.from(t.querySelectorAll('tbody td')).some((td) =>
+            looksLikeDimensions.test(td.textContent ?? ''),
+          ),
+        ) ?? null
+      );
+    };
+
+    const collectDiagnostics = (): ScrapeDiagnostics => ({
+      headings: Array.from(document.querySelectorAll('h1, h2, h3, h4'))
+        .slice(0, 40)
+        .map(
+          (h) =>
+            `<${h.tagName.toLowerCase()} id="${h.id}"> ${(h.textContent ?? '')
+              .trim()
+              .slice(0, 80)}`,
+        ),
+      tables: Array.from(document.querySelectorAll('table'))
+        .slice(0, 20)
+        .map((t) => ({
+          headers: Array.from(t.querySelectorAll('thead th, thead td')).map(
+            (c) => (c.textContent ?? '').trim(),
+          ),
+          firstRow: Array.from(t.querySelectorAll('tbody tr'))
+            .slice(0, 1)
+            .flatMap((tr) =>
+              Array.from(tr.querySelectorAll('td')).map((td) =>
+                (td.textContent ?? '').trim(),
+              ),
+            ),
+        })),
     });
-  } catch (e) {
-    logger.error(
-      `Could not find the table on the page within timeout ${constants.WAIT_FOR_SELECTOR_TIMEOUT}ms`,
+
+    const table = locateTable();
+    if (!table) {
+      return {
+        ok: false,
+        reason:
+          'Could not locate the iOS/iPadOS device screen dimensions table',
+        diagnostics: collectDiagnostics(),
+      };
+    }
+
+    // Tolerant of spacing, wording and multi-digit scale factors (e.g. @2x, @3x).
+    const dimensionRegex =
+      /(\d+)\s*x\s*(\d+)\s*pt\s*\(\s*(\d+)\s*x\s*(\d+)\s*px\s*@\s*(\d+)\s*x/i;
+
+    const data: LaunchScreenSpec[] = [];
+    Array.from(table.querySelectorAll('tbody tr')).forEach((tr) => {
+      const cells = Array.from(tr.querySelectorAll<HTMLTableCellElement>('td'));
+      // Skip section/sub-header rows instead of failing on a changed column count.
+      if (cells.length < 2) {
+        return;
+      }
+
+      const device = cells[0].innerText.trim();
+      const match = cells
+        .slice(1)
+        .map((cell) => cell.innerText.trim().match(dimensionRegex))
+        .find((m) => m !== null);
+
+      if (!device || !match) {
+        return;
+      }
+
+      const widthInPoints = parseInt(match[1], 10);
+      const heightInPoints = parseInt(match[2], 10);
+      const scaleFactor = parseInt(match[5], 10);
+      if (!widthInPoints || !heightInPoints || !scaleFactor) {
+        return;
+      }
+
+      const width = widthInPoints * scaleFactor;
+      const height = heightInPoints * scaleFactor;
+      data.push({
+        device,
+        portrait: { width, height },
+        landscape: { width: height, height: width },
+        scaleFactor,
+      });
+    });
+
+    if (!data.length) {
+      return {
+        ok: false,
+        reason: 'Located the dimensions table but parsed zero device rows',
+        diagnostics: collectDiagnostics(),
+      };
+    }
+
+    return { ok: true, data };
+  };
+
+  // The data table renders client-side after navigation, so poll until it appears.
+  // This budget is driven solely by the JS-level deadline and each evaluate()'s
+  // protocolTimeout (see browser.ts) — BROWSER_TIMEOUT only bounds browser
+  // launch/connect, so the full window is always available here.
+  const deadline = Date.now() + constants.APPLE_HIG_SCRAPE_TIMEOUT;
+  let result = await page.evaluate(scrapeDimensionsTable, tableSelector);
+  if (!result.ok) {
+    logger.log(
+      `Data table not ready yet; polling for up to ${
+        constants.APPLE_HIG_SCRAPE_TIMEOUT / 1000
+      }s`,
     );
-    throw e;
+  }
+  while (!result.ok && Date.now() < deadline) {
+    await new Promise((resolve) => {
+      setTimeout(resolve, 250);
+    });
+    result = await page.evaluate(scrapeDimensionsTable, tableSelector);
   }
 
-  const splashScreenData = await page.evaluate(() => {
-    const scrapeSplashScreenDataFromHIGPage = (): LaunchScreenSpec[] =>
-      Array.from(
-        document
-          .querySelectorAll(
-            `#iOS-iPadOS-device-screen-dimensions + .table-wrapper > table`,
-          )?.[0]
-          .querySelectorAll('tbody tr'),
-      ).map((tr) => {
-        // https://regex101.com/r/4dwvYf/4
-        const dimensionRegex = /(\d+)x(\d+)\spt\s\((\d+)x(\d+)\spx\s@(\d)x\)/gm;
+  if (!result.ok) {
+    logger.error(result.reason);
+    logger.error(
+      `Apple HIG page structure may have changed. Headings seen: ${JSON.stringify(
+        result.diagnostics.headings,
+      )}`,
+    );
+    logger.error(`Tables seen: ${JSON.stringify(result.diagnostics.tables)}`);
+    throw new Error(
+      `${result.reason} on ${constants.APPLE_HIG_SPLASH_SCR_SPECS_URL}`,
+    );
+  }
 
-        const getParsedSpecs = (
-          val: string,
-        ): { width: number; height: number; scaleFactor: number } => {
-          const regexMatch = dimensionRegex.exec(val);
+  const splashScreenData = result.data;
 
-          if (!regexMatch?.length) {
-            throw Error('Regex match failed while scraping the specs');
-          }
+  const hasIphone = splashScreenData.some((d) => /iphone/i.test(d.device));
+  const hasIpad = splashScreenData.some((d) => /ipad/i.test(d.device));
+  const allDimensionsValid = splashScreenData.every(
+    (d) =>
+      d.portrait.width > 0 &&
+      d.portrait.height > 0 &&
+      d.landscape.width > 0 &&
+      d.landscape.height > 0 &&
+      d.scaleFactor > 0,
+  );
 
-          const widthInPoints = parseInt(regexMatch[1], 10);
-          const heightInPoints = parseInt(regexMatch[2], 10);
-          const scaleFactor = parseInt(regexMatch[5], 10);
-
-          if (
-            widthInPoints === 0 ||
-            Number.isNaN(widthInPoints) ||
-            heightInPoints === 0 ||
-            Number.isNaN(heightInPoints) ||
-            scaleFactor === 0 ||
-            Number.isNaN(scaleFactor)
-          ) {
-            throw Error('Got unexpected dimensions while scraping the specs');
-          }
-
-          return {
-            width: widthInPoints * scaleFactor,
-            height: heightInPoints * scaleFactor,
-            scaleFactor,
-          };
-        };
-
-        const tableColumns = ['device', 'portrait'];
-        const columns = Array.from(tr.querySelectorAll('td'));
-
-        if (columns.length !== tableColumns.length) {
-          throw Error(
-            'Table columns on the page do not match with the scraper',
-          );
-        }
-
-        return columns.reduce(
-          (acc, curr: HTMLElement, index) => {
-            if (index === 0) {
-              acc.device = curr.innerText;
-              return acc;
-            }
-
-            const specs = getParsedSpecs(curr.innerText.trim());
-
-            acc.portrait = { width: specs.width, height: specs.height };
-            acc.landscape = { width: specs.height, height: specs.width };
-            acc.scaleFactor = specs.scaleFactor;
-            return acc;
-          },
-          {
-            device: '',
-            portrait: { width: 0, height: 0 },
-            landscape: { width: 0, height: 0 },
-            scaleFactor: 0,
-          },
-        ) as LaunchScreenSpec;
-      });
-    return scrapeSplashScreenDataFromHIGPage();
-  });
-
-  if (!splashScreenData.length) {
-    const err = `Failed scraping the data on web page ${constants.APPLE_HIG_SPLASH_SCR_SPECS_URL}`;
+  if (
+    splashScreenData.length < constants.APPLE_HIG_MIN_EXPECTED_DEVICES ||
+    !hasIphone ||
+    !hasIpad ||
+    !allDimensionsValid
+  ) {
+    const err = `Scraped data failed validation (got ${splashScreenData.length} devices, iPhone: ${hasIphone}, iPad: ${hasIpad}, dimensions valid: ${allDimensionsValid}) on ${constants.APPLE_HIG_SPLASH_SCR_SPECS_URL}`;
     logger.error(err);
-    throw Error(err);
+    throw new Error(err);
   }
 
   logger.log('Retrieved splash screen data');
