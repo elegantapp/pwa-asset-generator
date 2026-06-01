@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.5](https://github.com/elegantapp/pwa-asset-generator/compare/v8.1.4...v8.1.5) (2026-06-01)
+
+
+### Bug Fixes
+
+* **puppets:** update apple scraper ([#1275](https://github.com/elegantapp/pwa-asset-generator/issues/1275)) ([4d40171](https://github.com/elegantapp/pwa-asset-generator/commit/4d40171ec9b23344817bfc296fb4656f987da310))
+
 ## [8.1.4](https://github.com/elegantapp/pwa-asset-generator/compare/v8.1.3...v8.1.4) (2026-03-14)
 
 
