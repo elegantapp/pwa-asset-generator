@@ -164,8 +164,19 @@ const getAppleSplashScreenData = async (
     return { ok: true, data };
   };
 
-  const deadline = Date.now() + constants.WAIT_FOR_SELECTOR_TIMEOUT;
+  // The data table renders client-side after navigation, so poll until it appears.
+  // This budget is driven solely by the JS-level deadline and each evaluate()'s
+  // protocolTimeout (see browser.ts) — BROWSER_TIMEOUT only bounds browser
+  // launch/connect, so the full window is always available here.
+  const deadline = Date.now() + constants.APPLE_HIG_SCRAPE_TIMEOUT;
   let result = await page.evaluate(scrapeDimensionsTable, tableSelector);
+  if (!result.ok) {
+    logger.log(
+      `Data table not ready yet; polling for up to ${
+        constants.APPLE_HIG_SCRAPE_TIMEOUT / 1000
+      }s`,
+    );
+  }
   while (!result.ok && Date.now() < deadline) {
     await new Promise((resolve) => {
       setTimeout(resolve, 250);
