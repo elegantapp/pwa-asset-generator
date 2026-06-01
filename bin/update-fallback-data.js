@@ -23,7 +23,8 @@ const { writeFile } = file;
       browser,
     );
     console.log(splashScreenMetaData);
-    const jsonData = JSON.stringify(splashScreenMetaData, null, 2);
+    // Trailing newline keeps the generated file Prettier-compliant
+    const jsonData = `${JSON.stringify(splashScreenMetaData, null, 2)}\n`;
 
     await writeFile('./src/config/apple-fallback-data.json', jsonData, {
       encoding: 'utf8',
