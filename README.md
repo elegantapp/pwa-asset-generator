@@ -49,6 +49,11 @@ PWA Asset Generator automates the image generation in a creative way. Having [Pu
 
 * Supports generating classic web app icons such as favicons `--favicon` and Windows static tiles `--mstile` ⏪
 
+## Requirements
+
+- **Node.js** >= 22.12.0 (required by [puppeteer-core](https://www.npmjs.com/package/puppeteer-core) v25)
+- A compatible Chrome or Chromium browser — installed automatically on first use when needed
+
 ## Install
 
 ```

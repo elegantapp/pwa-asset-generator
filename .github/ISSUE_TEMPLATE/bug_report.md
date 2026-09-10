@@ -21,7 +21,7 @@ A clear and concise description of what you expected to happen.
 
 **System (please complete the following information):**
  - OS: [e.g. macOS high sierra, windows 10, linux]
- - node version [e.g. v10.10.0 `node --version`]
+ - node version [e.g. v22.12.0 `node --version`]
  - npm version [e.g. 6.10.0 `npm --version`]
  - cli version [e.g. 1.1.5 `npx pwa-asset-generator --version`]
 
