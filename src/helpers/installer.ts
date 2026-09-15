@@ -39,7 +39,7 @@ const getChromeBuildIdFromPuppeteer = async (): Promise<string> => {
 
   try {
     const { PUPPETEER_REVISIONS } = await import(
-      'puppeteer-core/lib/esm/puppeteer/revisions.js'
+      'puppeteer-core/lib/puppeteer/revisions.js'
     );
 
     if (!PUPPETEER_REVISIONS || !PUPPETEER_REVISIONS.chrome) {

@@ -12,6 +12,12 @@ You can contribute to this project in many aspects. Some are; reporting bugs, su
 
 Please note that if any of the issues have an assignee or is `In Progress` within projects, it means it's assigned to a specific contributor and it's in progress already. You can see the milestones and road map under [projects](https://github.com/elegantapp/pwa-asset-generator/projects) section.
 
+## Prerequisites
+
+- **Node.js** >= 22.12.0
+- Run `npm install` to install dependencies and enable git hooks
+- Run `npm run chromium` before running tests (installs the Chrome revision required by puppeteer-core)
+
 ## Code style
 
 * This project uses an opinionated code style via [prettier](https://github.com/prettier/prettier).
@@ -69,13 +75,15 @@ If you'd like to manually test the library, you can follow the steps below;
 2. Test the functionality with `pwa-asset-generator` command
 
 ### Automated tests
-The project uses [jest](https://jestjs.io) for automated integration and e2e testing with snapshot and visual regression testing approaches. e2e tests are encouraged over unit tests in this project.
+The project uses [Vitest](https://vitest.dev) for automated integration and e2e testing with snapshot and visual regression testing approaches. e2e tests are encouraged over unit tests in this project.
 
 Tests can be executed with `npm test` command.
 Both snapshots and visual samples can be updated with `npm run test:update` when necessary.
 
+On Linux CI, tests run with `PAG_USE_NO_SANDBOX=1` to avoid Chromium sandbox errors.
+
 #### Snapshot testing
-* Utilizing jest's handy [snapshot testing](https://jestjs.io/docs/en/snapshot-testing) feature while testing feature integration is recommended. Please see [main.test.ts](https://github.com/elegantapp/pwa-asset-generator/blob/master/src/main.test.ts) file and [snapshots](https://github.com/elegantapp/pwa-asset-generator/tree/master/src/__snapshots__) folder for examples.
+* Utilizing Vitest's [snapshot testing](https://vitest.dev/guide/snapshot) feature while testing feature integration is recommended. Please see [main.test.ts](https://github.com/elegantapp/pwa-asset-generator/blob/master/src/main.test.ts) file and [snapshots](https://github.com/elegantapp/pwa-asset-generator/tree/master/src/__snapshots__) folder for examples.
 * You can update the snapshots with `npm run test:update:snapshots` command when necessary.
 
 #### Visual regression testing

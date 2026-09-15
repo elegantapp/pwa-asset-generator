@@ -8,6 +8,10 @@ pwa-asset-generator is a CLI tool and JavaScript module that automates PWA asset
 
 The tool uses Puppeteer to control a Chrome browser as a canvas, rendering images at various resolutions for different devices. It can scrape Apple's Human Interface guidelines website to get the latest device specifications or fall back to static data.
 
+## Requirements
+
+- **Node.js** >= 22.12.0 (required by puppeteer-core v25)
+
 ## Essential Commands
 
 ### Development workflow
