@@ -18,14 +18,16 @@ get:
 npm ci
 npm run chromium      # installs the Chromium the CLI drives; skip and it fails
 npm run build         # rimraf ./dist && tsc && copy config JSON into dist
-node ./bin/cli.js ./static/logo.svg /tmp/pag-out -s false -t png -b coral
+node ./bin/cli.js --help
 ```
 
-Assert on what the command produced: its exit code, the files under the output
-directory, and the manifest/HTML it printed. `-s false` keeps it off the live
-Apple HIG page, which is exactly what the `--scrape` default change is about —
-add `-s true` only when the criterion is specifically about scraping, and treat
-a network failure there as an environment fault rather than a defect.
+`--help` is the source of truth for the flags — read it rather than carrying
+assumptions about option names or defaults, both of which change between
+versions. Then compose the smallest invocation that exercises the acceptance
+criteria, using the fixtures already in `static/` for input.
+
+Assert on what the command actually produced: its exit code, the files under the
+output directory, and whatever it printed to stdout.
 
 ## Do not run the whole test suite
 
