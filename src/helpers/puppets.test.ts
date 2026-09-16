@@ -1,5 +1,8 @@
 import { vi, describe, test, expect, afterEach } from 'vitest';
 import puppets from './puppets.js';
+import constants from '../config/constants.js';
+import type { Browser } from 'puppeteer-core';
+import type { Options } from '../models/options.js';
 
 vi.mock('node:os', () => ({
   default: {
@@ -69,5 +72,40 @@ describe('getOptimalConcurrency', () => {
     process.env.PAG_SIMULATE_CPU_COUNT = '0';
     process.env.PAG_SIMULATE_FREE_MEM_MB = '8192';
     expect(puppets.getOptimalConcurrency(10)).toBe(1);
+  });
+});
+
+describe('getSplashScreenMetaData', () => {
+  test('returns static fallback data without scraping when scrape is false', async () => {
+    const browser = {
+      newPage: vi.fn(),
+    } as unknown as Browser;
+
+    const result = await puppets.getSplashScreenMetaData(
+      { scrape: false } as Options,
+      browser,
+    );
+
+    expect(result).toEqual(constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA);
+    expect(browser.newPage).not.toHaveBeenCalled();
+  });
+
+  test('falls back to static data when scrape is true but scraping fails', async () => {
+    const browser = {
+      newPage: vi
+        .fn()
+        .mockRejectedValue(
+          new Error(
+            'Could not locate the iOS/iPadOS device screen dimensions table',
+          ),
+        ),
+    } as unknown as Browser;
+
+    const result = await puppets.getSplashScreenMetaData(
+      { scrape: true } as Options,
+      browser,
+    );
+
+    expect(result).toEqual(constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA);
   });
 });

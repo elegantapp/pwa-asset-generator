@@ -73,7 +73,7 @@ export default {
     scrape: <Flag<'boolean', boolean>>{
       type: 'boolean',
       shortFlag: 's',
-      default: true,
+      default: false,
     },
     padding: <Flag<'string', string>>{
       type: 'string',

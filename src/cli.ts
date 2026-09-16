@@ -15,7 +15,7 @@ const cli = meow(
     -b --background             Page background to use when image source is provided: css value  [default: transparent]
     -o --opaque                 Shows white as canvas background and generates images without transparency  [default: true]
     -p --padding                Padding to use when image source provided: css value  [default: "10%"]
-    -s --scrape                 Scraping Apple Human Interface guidelines to fetch splash screen specs  [default: true]
+    -s --scrape                 Scraping Apple Human Interface guidelines to fetch splash screen specs  [default: false]
     -m --manifest               Web app manifest file path to automatically update manifest file with the generated icons
     -i --index                  Index HTML file path to automatically put splash screen and icon meta tags in
     -a --path                   Path prefix to prepend for href links generated for meta tags

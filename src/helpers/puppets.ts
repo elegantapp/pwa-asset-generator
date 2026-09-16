@@ -253,7 +253,7 @@ const getSplashScreenMetaData = async (
     logger.warn(
       `Failed to fetch latest specs from Apple Human Interface guidelines - using static fallback data`,
     );
-    throw error;
+    return constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA as LaunchScreenSpec[];
   }
 
   return splashScreenMetaData;
