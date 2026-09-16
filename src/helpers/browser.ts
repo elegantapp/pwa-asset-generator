@@ -154,8 +154,13 @@ const getBrowserInstance = async (
       logger.warn(
         `Chrome launcher could not connect to your system browser. Is your port ${error.port} accessible?`,
       );
-      const findProcessesByPort =
-        (find as unknown as { default?: typeof find }).default ?? find;
+      // find-process's CJS/ESM interop shape varies between the compiled
+      // dist output (find.default) and Vitest's esbuild transform (find
+      // itself is already unwrapped) — handle both at runtime.
+      type FindByPort = typeof find.default;
+      const maybeFind = find as unknown as FindByPort | { default: FindByPort };
+      const findProcessesByPort: FindByPort =
+        typeof maybeFind === 'function' ? maybeFind : maybeFind.default;
       const prc = await findProcessesByPort('port', error.port);
       prc.forEach((pr: { pid: number }) => {
         logger.log(
@@ -172,7 +177,7 @@ const getBrowserInstance = async (
 
     // Fall back to local Chromium version via installer
     // This will either use an already installed local version or download the required one
-    browser = await getLocalBrowserInstance(launchArgs, noSandbox);
+    browser = await getLocalBrowserInstance(launchArgs, useNoSandbox || noSandbox);
   }
 
   return { browser, chrome };
