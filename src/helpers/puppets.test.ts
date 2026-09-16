@@ -154,21 +154,23 @@ describe('getSplashScreenMetaData', () => {
       newPage: vi.fn().mockResolvedValue(page),
     } as unknown as Browser;
 
-    const result = await puppets.getSplashScreenMetaData(
-      { scrape: true } as Options,
-      browser,
-    );
+    try {
+      const result = await puppets.getSplashScreenMetaData(
+        { scrape: true } as Options,
+        browser,
+      );
 
-    expect(result).toHaveLength(32);
-    expect(result.some((d) => /iphone/i.test(d.device))).toBe(true);
-    expect(result.some((d) => /ipad/i.test(d.device))).toBe(true);
-    expect(result[0]).toMatchObject({
-      device: 'iPhone Test 0',
-      portrait: { width: 600, height: 1200 },
-      landscape: { width: 1200, height: 600 },
-      scaleFactor: 2,
-    });
-
-    vi.unstubAllGlobals();
+      expect(result).toHaveLength(32);
+      expect(result.some((d) => /iphone/i.test(d.device))).toBe(true);
+      expect(result.some((d) => /ipad/i.test(d.device))).toBe(true);
+      expect(result[0]).toMatchObject({
+        device: 'iPhone Test 0',
+        portrait: { width: 600, height: 1200 },
+        landscape: { width: 1200, height: 600 },
+        scaleFactor: 2,
+      });
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 });

@@ -452,6 +452,7 @@ const generateImages = async (
 };
 
 export default {
+  getAppleSplashScreenData,
   getSplashScreenMetaData,
   saveImages,
   generateImages,

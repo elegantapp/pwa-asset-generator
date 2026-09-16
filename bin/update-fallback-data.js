@@ -9,7 +9,13 @@ import file from '../dist/helpers/file.js';
 import constants from '../dist/config/constants.js';
 
 const { getBrowserInstance, killBrowser } = browser;
-const { getSplashScreenMetaData } = puppets;
+// Deliberately use getAppleSplashScreenData (not getSplashScreenMetaData) here:
+// the latter swallows scrape failures and returns the existing static fallback
+// data so runtime callers degrade gracefully. This script's entire purpose is
+// refreshing that fallback data, so a scrape failure must throw and fail the
+// run loudly instead of silently rewriting the file with data that was never
+// actually re-scraped.
+const { getAppleSplashScreenData } = puppets;
 const { writeFile } = file;
 
 (async () => {
@@ -18,10 +24,9 @@ const { writeFile } = file;
       timeout: constants.BROWSER_TIMEOUT,
     });
 
-    const splashScreenMetaData = await getSplashScreenMetaData(
-      { scrape: true },
-      browser,
-    );
+    const splashScreenMetaData = await getAppleSplashScreenData(browser, {
+      scrape: true,
+    });
     console.log(splashScreenMetaData);
     // Trailing newline keeps the generated file Prettier-compliant
     const jsonData = `${JSON.stringify(splashScreenMetaData, null, 2)}\n`;
