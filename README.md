@@ -27,7 +27,9 @@ PWA Asset Generator automates the image generation in a creative way. Having [Pu
 
 * Updates your `manifest.json` and `index.html` files automatically for declaring generated image assets 🙌
 
-* Scrapes the latest specs from Apple Human Interface guidelines website via Puppeteer to make your PWA ready for all/recent iOS devices out there 🤖
+* Scrapes the latest specs from Apple Human Interface guidelines website via Puppeteer to make your PWA ready for all/recent iOS devices out there 🤖 — opt in with `--scrape true`
+
+    * Scraping tries every known Apple page that can host the device dimensions table and keeps the first one that yields a valid device set, so a page being restructured doesn't break it 🧭
 
     * Supports offline mode and uses static spec data when things go wrong with scraping 📴
     * Updates static spec data before each release automatically and [monitors spec changes everyday](https://github.com/elegantapp/pwa-asset-generator/actions?query=workflow%3A%22Sanity+Check%22) 🔄

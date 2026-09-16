@@ -17,7 +17,14 @@ interface ScrapeDiagnostics {
 
 type ScrapeResult =
   | { ok: true; data: LaunchScreenSpec[] }
-  | { ok: false; reason: string; diagnostics: ScrapeDiagnostics };
+  | {
+      ok: false;
+      reason: string;
+      // Whether the client-side render has painted the article, which tells the
+      // poller apart "not loaded yet" from "this page doesn't carry the data".
+      rendered: boolean;
+      diagnostics: ScrapeDiagnostics;
+    };
 
 const getAppleSplashScreenData = async (
   browser: Browser,
@@ -26,16 +33,6 @@ const getAppleSplashScreenData = async (
   const logger = preLogger(getAppleSplashScreenData.name, options);
   const page = await browser.newPage();
   await page.setUserAgent(constants.EMULATED_USER_AGENT);
-  logger.log(
-    `Navigating to Apple Human Interface Guidelines website - ${constants.APPLE_HIG_SPLASH_SCR_SPECS_URL}`,
-  );
-
-  // The HIG page is a client-side rendered SPA
-  await page.goto(constants.APPLE_HIG_SPLASH_SCR_SPECS_URL, {
-    waitUntil: 'domcontentloaded',
-  });
-
-  logger.log('Waiting for the data table to be loaded');
 
   const tableSelector = constants.APPLE_HIG_SPLASH_SCR_SPECS_TABLE_SELECTOR;
 
@@ -104,14 +101,23 @@ const getAppleSplashScreenData = async (
         })),
     });
 
+    // The SPA shell ships the site chrome (including its h2s) before the
+    // article renders; the article's own <h1> and its tables only exist once
+    // the render has run, so either is a reliable "this page has painted" flag.
+    const fail = (reason: string): ScrapeResult => ({
+      ok: false,
+      reason,
+      rendered:
+        document.querySelectorAll('table').length > 0 ||
+        document.querySelector('h1') !== null,
+      diagnostics: collectDiagnostics(),
+    });
+
     const table = locateTable();
     if (!table) {
-      return {
-        ok: false,
-        reason:
-          'Could not locate the iOS/iPadOS device screen dimensions table',
-        diagnostics: collectDiagnostics(),
-      };
+      return fail(
+        'Could not locate the iOS/iPadOS device screen dimensions table',
+      );
     }
 
     // Tolerant of spacing, wording and multi-digit scale factors (e.g. @2x, @3x).
@@ -154,76 +160,122 @@ const getAppleSplashScreenData = async (
     });
 
     if (!data.length) {
-      return {
-        ok: false,
-        reason: 'Located the dimensions table but parsed zero device rows',
-        diagnostics: collectDiagnostics(),
-      };
+      return fail('Located the dimensions table but parsed zero device rows');
     }
 
     return { ok: true, data };
   };
 
-  // The data table renders client-side after navigation, so poll until it appears.
-  // This budget is driven solely by the JS-level deadline and each evaluate()'s
+  // Poll one source until its client-rendered dimensions table shows up. Once
+  // the page reports itself as painted, a still-missing dimensions table means
+  // this source simply doesn't carry the data — give the render a short settle
+  // window, then let the caller move on to the next source instead of burning
+  // the whole budget waiting for something that is never going to appear.
+  // The budget is driven solely by the JS-level deadline and each evaluate()'s
   // protocolTimeout (see browser.ts) — BROWSER_TIMEOUT only bounds browser
   // launch/connect, so the full window is always available here.
-  const deadline = Date.now() + constants.APPLE_HIG_SCRAPE_TIMEOUT;
-  let result = await page.evaluate(scrapeDimensionsTable, tableSelector);
-  if (!result.ok) {
-    logger.log(
-      `Data table not ready yet; polling for up to ${
-        constants.APPLE_HIG_SCRAPE_TIMEOUT / 1000
-      }s`,
-    );
-  }
-  while (!result.ok && Date.now() < deadline) {
-    await new Promise((resolve) => {
-      setTimeout(resolve, 250);
-    });
-    result = await page.evaluate(scrapeDimensionsTable, tableSelector);
-  }
+  const pollSourceForTable = async (): Promise<ScrapeResult> => {
+    const deadline = Date.now() + constants.APPLE_HIG_SCRAPE_TIMEOUT;
+    let settleDeadline = Infinity;
+    let result = await page.evaluate(scrapeDimensionsTable, tableSelector);
+    if (!result.ok) {
+      logger.log(
+        `Data table not ready yet; polling for up to ${
+          constants.APPLE_HIG_SCRAPE_TIMEOUT / 1000
+        }s`,
+      );
+    }
+    while (!result.ok && Date.now() < Math.min(deadline, settleDeadline)) {
+      if (result.rendered && settleDeadline === Infinity) {
+        settleDeadline = Date.now() + constants.APPLE_HIG_SCRAPE_SETTLE_TIMEOUT;
+      }
+      await new Promise((resolve) => {
+        setTimeout(resolve, 250);
+      });
+      result = await page.evaluate(scrapeDimensionsTable, tableSelector);
+    }
+    return result;
+  };
 
-  if (!result.ok) {
-    logger.error(result.reason);
-    logger.error(
-      `Apple HIG page structure may have changed. Headings seen: ${JSON.stringify(
-        result.diagnostics.headings,
-      )}`,
+  // A located table is only usable if it actually yields the full device set —
+  // a partial or unrelated table must be rejected so the next source gets a go.
+  const validate = (data: LaunchScreenSpec[]): string | null => {
+    const hasIphone = data.some((d) => /iphone/i.test(d.device));
+    const hasIpad = data.some((d) => /ipad/i.test(d.device));
+    const allDimensionsValid = data.every(
+      (d) =>
+        d.portrait.width > 0 &&
+        d.portrait.height > 0 &&
+        d.landscape.width > 0 &&
+        d.landscape.height > 0 &&
+        d.scaleFactor > 0,
     );
-    logger.error(`Tables seen: ${JSON.stringify(result.diagnostics.tables)}`);
+
+    if (
+      data.length < constants.APPLE_HIG_MIN_EXPECTED_DEVICES ||
+      !hasIphone ||
+      !hasIpad ||
+      !allDimensionsValid
+    ) {
+      return `Scraped data failed validation (got ${data.length} devices, iPhone: ${hasIphone}, iPad: ${hasIpad}, dimensions valid: ${allDimensionsValid})`;
+    }
+
+    return null;
+  };
+
+  const sources = constants.APPLE_HIG_SPLASH_SCR_SPECS_URLS;
+  const failures: string[] = [];
+
+  try {
+    for (const source of sources) {
+      logger.log(
+        `Navigating to Apple Human Interface Guidelines website - ${source}`,
+      );
+
+      // The HIG pages are client-side rendered SPAs
+      await page.goto(source, { waitUntil: 'domcontentloaded' });
+
+      logger.log('Waiting for the data table to be loaded');
+
+      const result = await pollSourceForTable();
+
+      if (!result.ok) {
+        logger.error(`${result.reason} on ${source}`);
+        logger.error(
+          `Apple HIG page structure may have changed. Headings seen: ${JSON.stringify(
+            result.diagnostics.headings,
+          )}`,
+        );
+        logger.error(
+          `Tables seen: ${JSON.stringify(result.diagnostics.tables)}`,
+        );
+        failures.push(`${source}: ${result.reason}`);
+        continue;
+      }
+
+      const validationError = validate(result.data);
+      if (validationError) {
+        logger.error(`${validationError} on ${source}`);
+        failures.push(`${source}: ${validationError}`);
+        continue;
+      }
+
+      logger.log(`Retrieved splash screen data from ${source}`);
+      return result.data;
+    }
+
     throw new Error(
-      `${result.reason} on ${constants.APPLE_HIG_SPLASH_SCR_SPECS_URL}`,
+      `Could not locate the iOS/iPadOS device screen dimensions table on any known Apple source. Tried ${
+        sources.length
+      } source(s) - ${failures.join(' | ')}`,
     );
+  } finally {
+    try {
+      await page.close();
+    } catch {
+      // The browser may already be tearing down; closing the page is best-effort
+    }
   }
-
-  const splashScreenData = result.data;
-
-  const hasIphone = splashScreenData.some((d) => /iphone/i.test(d.device));
-  const hasIpad = splashScreenData.some((d) => /ipad/i.test(d.device));
-  const allDimensionsValid = splashScreenData.every(
-    (d) =>
-      d.portrait.width > 0 &&
-      d.portrait.height > 0 &&
-      d.landscape.width > 0 &&
-      d.landscape.height > 0 &&
-      d.scaleFactor > 0,
-  );
-
-  if (
-    splashScreenData.length < constants.APPLE_HIG_MIN_EXPECTED_DEVICES ||
-    !hasIphone ||
-    !hasIpad ||
-    !allDimensionsValid
-  ) {
-    const err = `Scraped data failed validation (got ${splashScreenData.length} devices, iPhone: ${hasIphone}, iPad: ${hasIpad}, dimensions valid: ${allDimensionsValid}) on ${constants.APPLE_HIG_SPLASH_SCR_SPECS_URL}`;
-    logger.error(err);
-    throw new Error(err);
-  }
-
-  logger.log('Retrieved splash screen data');
-  await page.close();
-  return splashScreenData;
 };
 
 const getSplashScreenMetaData = async (
