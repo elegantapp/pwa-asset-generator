@@ -1,13 +1,19 @@
-# SHIP agent configuration for pwa-asset-generator.
-#
-# Read by the SHIP pipeline from the BASE branch (never a PR head), so a PR
-# cannot change the rules applied to itself. Per-role prose lives in
-# .ship/agents/<role>.md alongside this file.
 version: 1
 
-# This repo publishes a CLI to npm; it has no deployable environment. An empty
-# map is the explicit no-op: the deploy stage reports "no preview entry" and
-# skips, instead of the pipeline inferring anything.
 deployments: {}
 
 baseBranch: master
+
+agents:
+  planner:
+    harness: claude-code
+    model: claude-opus-5
+  builder:
+    harness: claude-code
+    model: claude-sonnet-5
+  reviewer:
+    harness: claude-code
+    model: claude-opus-5
+  qa:
+    harness: claude-code
+    model: claude-opus-5
