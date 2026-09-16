@@ -177,7 +177,10 @@ const getBrowserInstance = async (
 
     // Fall back to local Chromium version via installer
     // This will either use an already installed local version or download the required one
-    browser = await getLocalBrowserInstance(launchArgs, useNoSandbox || noSandbox);
+    browser = await getLocalBrowserInstance(
+      launchArgs,
+      useNoSandbox || noSandbox,
+    );
   }
 
   return { browser, chrome };
