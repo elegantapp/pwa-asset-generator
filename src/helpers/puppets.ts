@@ -417,20 +417,11 @@ const generateImages = async (
     isHtmlInput ? false : options.noSandbox,
   );
 
-  let splashScreenMetaData: LaunchScreenSpec[];
-
-  try {
-    splashScreenMetaData = await getSplashScreenMetaData(options, browser);
-  } catch (e) {
-    splashScreenMetaData = constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA;
-  }
+  const splashScreenMetaData = await getSplashScreenMetaData(options, browser);
 
   const allImages = [
     ...(!options.iconOnly
-      ? images.getSplashScreenImages(
-          splashScreenMetaData as LaunchScreenSpec[],
-          options,
-        )
+      ? images.getSplashScreenImages(splashScreenMetaData, options)
       : []),
     ...(!options.splashOnly ? images.getIconImages(options) : []),
   ];
