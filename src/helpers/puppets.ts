@@ -10,253 +10,26 @@ import type { Options } from '../models/options.js';
 import type { LaunchScreenSpec } from '../models/spec.js';
 import type { Image, SavedImage } from '../models/image.js';
 
-interface ScrapeDiagnostics {
-  headings: string[];
-  tables: { headers: string[]; firstRow: string[] }[];
-}
-
-type ScrapeResult =
-  | { ok: true; data: LaunchScreenSpec[] }
-  | { ok: false; reason: string; diagnostics: ScrapeDiagnostics };
-
-const getAppleSplashScreenData = async (
-  browser: Browser,
-  options: Options,
-): Promise<LaunchScreenSpec[]> => {
-  const logger = preLogger(getAppleSplashScreenData.name, options);
-  const page = await browser.newPage();
-  await page.setUserAgent(constants.EMULATED_USER_AGENT);
-  logger.log(
-    `Navigating to Apple Human Interface Guidelines website - ${constants.APPLE_HIG_SPLASH_SCR_SPECS_URL}`,
-  );
-
-  // The HIG page is a client-side rendered SPA
-  await page.goto(constants.APPLE_HIG_SPLASH_SCR_SPECS_URL, {
-    waitUntil: 'domcontentloaded',
-  });
-
-  logger.log('Waiting for the data table to be loaded');
-
-  const tableSelector = constants.APPLE_HIG_SPLASH_SCR_SPECS_TABLE_SELECTOR;
-
-  const scrapeDimensionsTable = (selector: string): ScrapeResult => {
-    // Locate the table by progressively looser strategies, so a single id or
-    // DOM change on Apple's side does not break scraping:
-    //   1. the known anchor + structure (fast path)
-    //   2. the heading text -> first table that follows it (survives id/nesting changes)
-    //   3. the cell value shape -> any table whose cells look like device specs
-    const locateTable = (): HTMLTableElement | null => {
-      const direct = document.querySelector<HTMLTableElement>(selector);
-      if (direct) {
-        return direct;
-      }
-
-      const heading = Array.from(
-        document.querySelectorAll('h1, h2, h3, h4'),
-      ).find((h) =>
-        /ios.*ipados.*device screen dimensions/i.test(h.textContent ?? ''),
-      );
-      if (heading) {
-        const following = Array.from(document.querySelectorAll('table')).find(
-          (t) =>
-            (heading.compareDocumentPosition(t) &
-              Node.DOCUMENT_POSITION_FOLLOWING) !==
-            0,
-        );
-        if (following) {
-          return following;
-        }
-      }
-
-      const looksLikeDimensions =
-        /\d+\s*x\s*\d+\s*pt\s*\(\s*\d+\s*x\s*\d+\s*px/i;
-      return (
-        Array.from(document.querySelectorAll('table')).find((t) =>
-          Array.from(t.querySelectorAll('tbody td')).some((td) =>
-            looksLikeDimensions.test(td.textContent ?? ''),
-          ),
-        ) ?? null
-      );
-    };
-
-    const collectDiagnostics = (): ScrapeDiagnostics => ({
-      headings: Array.from(document.querySelectorAll('h1, h2, h3, h4'))
-        .slice(0, 40)
-        .map(
-          (h) =>
-            `<${h.tagName.toLowerCase()} id="${h.id}"> ${(h.textContent ?? '')
-              .trim()
-              .slice(0, 80)}`,
-        ),
-      tables: Array.from(document.querySelectorAll('table'))
-        .slice(0, 20)
-        .map((t) => ({
-          headers: Array.from(t.querySelectorAll('thead th, thead td')).map(
-            (c) => (c.textContent ?? '').trim(),
-          ),
-          firstRow: Array.from(t.querySelectorAll('tbody tr'))
-            .slice(0, 1)
-            .flatMap((tr) =>
-              Array.from(tr.querySelectorAll('td')).map((td) =>
-                (td.textContent ?? '').trim(),
-              ),
-            ),
-        })),
-    });
-
-    const table = locateTable();
-    if (!table) {
-      return {
-        ok: false,
-        reason:
-          'Could not locate the iOS/iPadOS device screen dimensions table',
-        diagnostics: collectDiagnostics(),
-      };
-    }
-
-    // Tolerant of spacing, wording and multi-digit scale factors (e.g. @2x, @3x).
-    const dimensionRegex =
-      /(\d+)\s*x\s*(\d+)\s*pt\s*\(\s*(\d+)\s*x\s*(\d+)\s*px\s*@\s*(\d+)\s*x/i;
-
-    const data: LaunchScreenSpec[] = [];
-    Array.from(table.querySelectorAll('tbody tr')).forEach((tr) => {
-      const cells = Array.from(tr.querySelectorAll<HTMLTableCellElement>('td'));
-      // Skip section/sub-header rows instead of failing on a changed column count.
-      if (cells.length < 2) {
-        return;
-      }
-
-      const device = cells[0].innerText.trim();
-      const match = cells
-        .slice(1)
-        .map((cell) => cell.innerText.trim().match(dimensionRegex))
-        .find((m) => m !== null);
-
-      if (!device || !match) {
-        return;
-      }
-
-      const widthInPoints = parseInt(match[1], 10);
-      const heightInPoints = parseInt(match[2], 10);
-      const scaleFactor = parseInt(match[5], 10);
-      if (!widthInPoints || !heightInPoints || !scaleFactor) {
-        return;
-      }
-
-      const width = widthInPoints * scaleFactor;
-      const height = heightInPoints * scaleFactor;
-      data.push({
-        device,
-        portrait: { width, height },
-        landscape: { width: height, height: width },
-        scaleFactor,
-      });
-    });
-
-    if (!data.length) {
-      return {
-        ok: false,
-        reason: 'Located the dimensions table but parsed zero device rows',
-        diagnostics: collectDiagnostics(),
-      };
-    }
-
-    return { ok: true, data };
-  };
-
-  // The data table renders client-side after navigation, so poll until it appears.
-  // This budget is driven solely by the JS-level deadline and each evaluate()'s
-  // protocolTimeout (see browser.ts) — BROWSER_TIMEOUT only bounds browser
-  // launch/connect, so the full window is always available here.
-  const deadline = Date.now() + constants.APPLE_HIG_SCRAPE_TIMEOUT;
-  let result = await page.evaluate(scrapeDimensionsTable, tableSelector);
-  if (!result.ok) {
-    logger.log(
-      `Data table not ready yet; polling for up to ${
-        constants.APPLE_HIG_SCRAPE_TIMEOUT / 1000
-      }s`,
-    );
-  }
-  while (!result.ok && Date.now() < deadline) {
-    await new Promise((resolve) => {
-      setTimeout(resolve, 250);
-    });
-    result = await page.evaluate(scrapeDimensionsTable, tableSelector);
-  }
-
-  if (!result.ok) {
-    logger.error(result.reason);
-    logger.error(
-      `Apple HIG page structure may have changed. Headings seen: ${JSON.stringify(
-        result.diagnostics.headings,
-      )}`,
-    );
-    logger.error(`Tables seen: ${JSON.stringify(result.diagnostics.tables)}`);
-    throw new Error(
-      `${result.reason} on ${constants.APPLE_HIG_SPLASH_SCR_SPECS_URL}`,
-    );
-  }
-
-  const splashScreenData = result.data;
-
-  const hasIphone = splashScreenData.some((d) => /iphone/i.test(d.device));
-  const hasIpad = splashScreenData.some((d) => /ipad/i.test(d.device));
-  const allDimensionsValid = splashScreenData.every(
-    (d) =>
-      d.portrait.width > 0 &&
-      d.portrait.height > 0 &&
-      d.landscape.width > 0 &&
-      d.landscape.height > 0 &&
-      d.scaleFactor > 0,
-  );
-
-  if (
-    splashScreenData.length < constants.APPLE_HIG_MIN_EXPECTED_DEVICES ||
-    !hasIphone ||
-    !hasIpad ||
-    !allDimensionsValid
-  ) {
-    const err = `Scraped data failed validation (got ${splashScreenData.length} devices, iPhone: ${hasIphone}, iPad: ${hasIpad}, dimensions valid: ${allDimensionsValid}) on ${constants.APPLE_HIG_SPLASH_SCR_SPECS_URL}`;
-    logger.error(err);
-    throw new Error(err);
-  }
-
-  logger.log('Retrieved splash screen data');
-  await page.close();
-  return splashScreenData;
-};
-
-const getSplashScreenMetaData = async (
-  options: Options,
-  browser: Browser,
-): Promise<LaunchScreenSpec[]> => {
+// Apple removed the "iOS, iPadOS device screen dimensions" table from its Human
+// Interface Guidelines in September 2026 (GH-1276). The data is not published
+// anywhere else on the site, so there is no live source left to scrape and the
+// bundled apple-fallback-data.json - refreshed from the last successful scrape -
+// is now the single source of truth for launch image specs.
+//
+// The `scrape` option is kept so existing CLI invocations and module callers
+// keep working, but it is a deprecated no-op: this never reaches the network.
+const getSplashScreenMetaData = (options: Options): LaunchScreenSpec[] => {
   const logger = preLogger(getSplashScreenMetaData.name, options);
 
-  if (!options.scrape) {
-    logger.log(`Skipped scraping - using static data`);
-    return constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA as LaunchScreenSpec[];
-  }
-
-  logger.log(
-    'Initialising puppeteer to load latest splash screen metadata',
-    '🤖',
-  );
-
-  let splashScreenMetaData: LaunchScreenSpec[];
-
-  try {
-    splashScreenMetaData = await getAppleSplashScreenData(browser, options);
-    logger.success('Loaded metadata for iOS platform');
-  } catch (e) {
-    const error = e as Error;
-    logger.error(error);
+  if (options.scrape) {
     logger.warn(
-      `Failed to fetch latest specs from Apple Human Interface guidelines - using static fallback data`,
+      'The scrape option is deprecated and has no effect - Apple no longer publishes the iOS/iPadOS device screen dimensions table, so the bundled static specs are always used',
     );
-    throw error;
   }
 
-  return splashScreenMetaData;
+  logger.log('Using bundled Apple device specs for splash screens');
+
+  return constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA as LaunchScreenSpec[];
 };
 
 const canNavigateTo = (source: string): boolean =>
@@ -403,9 +176,20 @@ const generateImages = async (
   const logger = preLogger(generateImages.name, options);
   const isHtmlInput = canNavigateTo(source);
 
+  // PAG_USE_NO_SANDBOX is an environment-level escape hatch for hosts where
+  // Chromium cannot sandbox at all (CI containers, running as root). It is
+  // resolved here, next to the HTML-input guard, so that the warning below
+  // describes what actually happens rather than what the option asked for.
+  const sandboxDisabledViaEnv = process.env.PAG_USE_NO_SANDBOX === '1';
+  const noSandbox = isHtmlInput
+    ? sandboxDisabledViaEnv
+    : options.noSandbox || sandboxDisabledViaEnv;
+
   if (isHtmlInput) {
     logger.warn(
-      'noSandbox option is disabled for HTML inputs, use an image input instead',
+      sandboxDisabledViaEnv
+        ? 'noSandbox option is disabled for HTML inputs, but PAG_USE_NO_SANDBOX is set in the environment so Chromium still runs without a sandbox'
+        : 'noSandbox option is disabled for HTML inputs, use an image input instead',
     );
   }
 
@@ -414,23 +198,14 @@ const generateImages = async (
       timeout: constants.BROWSER_TIMEOUT,
       args: constants.CHROME_LAUNCH_ARGS,
     },
-    isHtmlInput ? false : options.noSandbox,
+    noSandbox,
   );
 
-  let splashScreenMetaData: LaunchScreenSpec[];
-
-  try {
-    splashScreenMetaData = await getSplashScreenMetaData(options, browser);
-  } catch (e) {
-    splashScreenMetaData = constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA;
-  }
+  const splashScreenMetaData = getSplashScreenMetaData(options);
 
   const allImages = [
     ...(!options.iconOnly
-      ? images.getSplashScreenImages(
-          splashScreenMetaData as LaunchScreenSpec[],
-          options,
-        )
+      ? images.getSplashScreenImages(splashScreenMetaData, options)
       : []),
     ...(!options.splashOnly ? images.getIconImages(options) : []),
   ];

@@ -75,6 +75,10 @@ describe('CLI', () => {
     expect(new Set(shortFlags).size).toBe(shortFlags.length);
   });
 
+  test('defaults the scrape flag to false so the CLI does not scrape by default', () => {
+    expect(constants.FLAGS.scrape.default).toBe(false);
+  });
+
   test('integrates with npx', async () => {
     let response = { stdout: '', stderr: '' };
     try {

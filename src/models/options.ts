@@ -28,7 +28,11 @@ export interface Options {
   /**
    Scraping Apple Human Interface guidelines to fetch splash screen specs
 
-   @default true
+   @deprecated No-op since Apple removed the iOS/iPadOS device screen
+   dimensions table from its Human Interface Guidelines. The bundled static
+   device specs are always used, whatever this option is set to.
+
+   @default false
    */
   readonly scrape: boolean;
 

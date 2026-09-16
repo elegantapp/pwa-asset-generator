@@ -129,16 +129,12 @@ const getBrowserInstance = async (
 
   // Check if user wants to force using the local Chromium revision
   const useLocalRev = process.env.PAG_USE_LOCAL_REV === '1';
-  const useNoSandbox = process.env.PAG_USE_NO_SANDBOX === '1';
 
   if (useLocalRev) {
     logger.log(
       'Using local Chromium revision as requested via PAG_USE_LOCAL_REV',
     );
-    browser = await getLocalBrowserInstance(
-      launchArgs,
-      useNoSandbox || noSandbox,
-    );
+    browser = await getLocalBrowserInstance(launchArgs, noSandbox);
     return { browser, chrome };
   }
 
@@ -154,7 +150,14 @@ const getBrowserInstance = async (
       logger.warn(
         `Chrome launcher could not connect to your system browser. Is your port ${error.port} accessible?`,
       );
-      const prc = await find.default('port', error.port);
+      // find-process's CJS/ESM interop shape varies between the compiled
+      // dist output (find.default) and Vitest's esbuild transform (find
+      // itself is already unwrapped) — handle both at runtime.
+      type FindByPort = typeof find.default;
+      const maybeFind = find as unknown as FindByPort | { default: FindByPort };
+      const findProcessesByPort: FindByPort =
+        typeof maybeFind === 'function' ? maybeFind : maybeFind.default;
+      const prc = await findProcessesByPort('port', error.port);
       prc.forEach((pr: { pid: number }) => {
         logger.log(
           `Killing incompletely launched system chrome instance on pid ${pr.pid}`,

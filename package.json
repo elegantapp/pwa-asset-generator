@@ -22,7 +22,6 @@
     "visuals:input-html": "rimraf ./src/__snapshots__/visual/input-html && node ./bin/cli.js ./static/logo.html ./src/__snapshots__/visual/input-html -s false",
     "visuals:input-html-dark": "rimraf ./src/__snapshots__/visual/input-html-dark && node ./bin/cli.js ./static/logo.html ./src/__snapshots__/visual/input-html-dark -s false -d true",
     "chromium": "cross-env PAG_TEST_MODE=1 node bin/install.js",
-    "update": "node bin/update-fallback-data.js",
     "build": "rimraf ./dist && tsc && cp -R src/config/*.json dist/config/",
     "start": "tsc -w",
     "lint": "eslint .",

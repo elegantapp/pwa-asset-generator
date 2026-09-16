@@ -25,7 +25,6 @@ import type { LoggerFunction } from './models/logger.js';
       'https://raw.githubusercontent.com/onderceylan/pwa-asset-generator/HEAD/static/logo.png',
       './temp',
        {
-          scrape: false,
           background: "linear-gradient(to right, #fa709a 0%, #fee140 100%)",
           splashOnly: true,
           portraitOnly: true,

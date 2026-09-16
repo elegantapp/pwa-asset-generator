@@ -14,7 +14,6 @@ src/*
 dist/models/*.js
 !dist/models/meta.js
 bin/install.js
-bin/update-fallback-data.js
 
 # Declaration files
 *.d.ts

@@ -9,6 +9,11 @@ import type { Extension } from '../models/options.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+// Single source of truth for iOS/iPadOS launch image specs. Apple removed the
+// device screen dimensions table from the Human Interface Guidelines in
+// September 2026 (GH-1276) and does not publish it anywhere else, so this file
+// - captured from the last successful scrape - is maintained by hand from here
+// on and is no longer a "fallback" for a live lookup.
 const APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA = JSON.parse(
   fs.readFileSync(path.join(__dirname, './apple-fallback-data.json'), 'utf8'),
 );
@@ -70,10 +75,13 @@ export default {
       shortFlag: 'o',
       default: true,
     },
+    // Deprecated no-op, kept so existing invocations keep parsing: Apple no
+    // longer publishes the device screen dimensions table, so the bundled
+    // apple-fallback-data.json is always used. See GH-1276.
     scrape: <Flag<'boolean', boolean>>{
       type: 'boolean',
       shortFlag: 's',
-      default: true,
+      default: false,
     },
     padding: <Flag<'string', string>>{
       type: 'string',
@@ -184,9 +192,6 @@ export default {
   CHROME_LAUNCHER_MAX_CONN_RETRIES: 10,
   EMULATED_USER_AGENT:
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15',
-  APPLE_HIG_SPLASH_SCR_SPECS_URL:
-    'https://developer.apple.com/design/human-interface-guidelines/layout/',
-
   // Apple platform specs: https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/app-icon/
   // https://web.dev/apple-touch-icon/
   APPLE_ICON_SIZES: [180],
@@ -208,16 +213,7 @@ export default {
   APPLE_SPLASH_FILENAME_DARK_MODE_POSTFIX: '-dark',
   MANIFEST_ICON_FILENAME_PREFIX: 'manifest-icon',
   MS_ICON_FILENAME_PREFIX: 'mstile-icon',
-  APPLE_HIG_SPLASH_SCR_SPECS_TABLE_SELECTOR:
-    '#iOS-iPadOS-device-screen-dimensions + .table-wrapper > table',
-  // Sanity floor: Apple's HIG iOS/iPadOS dimensions table lists ~35 devices as of
-  // 2025; a successful scrape returning fewer than this signals a parsing problem.
-  APPLE_HIG_MIN_EXPECTED_DEVICES: 30,
-  // Total budget for polling Apple's client-rendered HIG page until the dimensions
-  // table appears (see getAppleSplashScreenData). Independent of BROWSER_TIMEOUT.
-  APPLE_HIG_SCRAPE_TIMEOUT: 30000,
-  // Max time for puppeteer to launch/connect to the browser — not a navigation or
-  // scrape-polling timeout.
+  // Max time for puppeteer to launch/connect to the browser.
   BROWSER_TIMEOUT: 10000,
 
   FAVICON_META_HTML: (

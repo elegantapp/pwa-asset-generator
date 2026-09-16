@@ -1,5 +1,8 @@
 import { vi, describe, test, expect, afterEach } from 'vitest';
 import puppets from './puppets.js';
+import constants from '../config/constants.js';
+import type { LaunchScreenSpec } from '../models/spec.js';
+import type { Options } from '../models/options.js';
 
 vi.mock('node:os', () => ({
   default: {
@@ -9,18 +12,21 @@ vi.mock('node:os', () => ({
   },
 }));
 
+const logger = vi.hoisted(() => ({
+  log: vi.fn(),
+  warn: vi.fn(),
+  error: vi.fn(),
+  success: vi.fn(),
+}));
+
 vi.mock('./logger.js', () => ({
-  default: () => ({
-    log: vi.fn(),
-    warn: vi.fn(),
-    error: vi.fn(),
-    success: vi.fn(),
-  }),
+  default: () => logger,
 }));
 
 afterEach(() => {
   delete process.env.PAG_SIMULATE_CPU_COUNT;
   delete process.env.PAG_SIMULATE_FREE_MEM_MB;
+  vi.clearAllMocks();
 });
 
 describe('getOptimalConcurrency', () => {
@@ -69,5 +75,50 @@ describe('getOptimalConcurrency', () => {
     process.env.PAG_SIMULATE_CPU_COUNT = '0';
     process.env.PAG_SIMULATE_FREE_MEM_MB = '8192';
     expect(puppets.getOptimalConcurrency(10)).toBe(1);
+  });
+});
+
+describe('getSplashScreenMetaData', () => {
+  const specs =
+    constants.APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA as LaunchScreenSpec[];
+
+  test('returns the bundled Apple device specs when scrape is false', () => {
+    const result = puppets.getSplashScreenMetaData({
+      scrape: false,
+    } as Options);
+
+    expect(result).toEqual(specs);
+    expect(logger.warn).not.toHaveBeenCalled();
+  });
+
+  test('scrape: true is a deprecated no-op that still returns the bundled specs', () => {
+    // GH-1276: Apple removed the iOS/iPadOS device screen dimensions table from
+    // its Human Interface Guidelines, so there is nothing left to scrape. The
+    // option is still accepted for backwards compatibility, but it must never
+    // hit the network - hence no browser is passed in or used at all.
+    const result = puppets.getSplashScreenMetaData({ scrape: true } as Options);
+
+    expect(result).toEqual(specs);
+    expect(logger.warn).toHaveBeenCalledWith(
+      expect.stringContaining('scrape option is deprecated'),
+    );
+  });
+
+  test('bundled specs cover both iPhone and iPad with usable dimensions', () => {
+    // Guards the hand-maintained apple-fallback-data.json: it is now the single
+    // source of truth, so a truncated or malformed edit must fail loudly here.
+    expect(specs.length).toBeGreaterThanOrEqual(30);
+    expect(specs.some((d) => /iphone/i.test(d.device))).toBe(true);
+    expect(specs.some((d) => /ipad/i.test(d.device))).toBe(true);
+    expect(
+      specs.every(
+        (d) =>
+          d.portrait.width > 0 &&
+          d.portrait.height > 0 &&
+          d.landscape.width === d.portrait.height &&
+          d.landscape.height === d.portrait.width &&
+          d.scaleFactor > 0,
+      ),
+    ).toBe(true);
   });
 });

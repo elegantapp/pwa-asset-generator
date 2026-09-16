@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 pwa-asset-generator is a CLI tool and JavaScript module that automates PWA asset generation. It generates icon and splash screen images for Progressive Web Apps, automatically updating manifest.json and index.html files according to Web App Manifest specs and Apple Human Interface guidelines.
 
-The tool uses Puppeteer to control a Chrome browser as a canvas, rendering images at various resolutions for different devices. It can scrape Apple's Human Interface guidelines website to get the latest device specifications or fall back to static data.
+The tool uses Puppeteer to control a Chrome browser as a canvas, rendering images at various resolutions for different devices. Device specifications come from the bundled `src/config/apple-fallback-data.json`.
 
 ## Requirements
 
@@ -62,12 +62,13 @@ npm i . -g
 pwa-asset-generator <source> <output>
 ```
 
-### Updating fallback data
-```bash
-npm run update           # Scrape Apple HIG and update apple-fallback-data.json
-```
+### Updating device data
 
-This scrapes the latest device specs from Apple's website and updates `src/config/apple-fallback-data.json`.
+`src/config/apple-fallback-data.json` is maintained by hand. Apple removed the
+iOS/iPadOS device screen dimensions table from its Human Interface Guidelines
+(GH-1276) and does not publish it anywhere else, so the scraping script and its
+daily sanity-check workflow were removed. Add new devices to that JSON file
+directly; `src/helpers/puppets.test.ts` guards its shape.
 
 ## Architecture
 
@@ -82,7 +83,7 @@ This scrapes the latest device specs from Apple's website and updates `src/confi
 
 **Puppets helper** (`src/helpers/puppets.ts`):
 - Launches Puppeteer browser
-- Scrapes Apple HIG website for device specs (or uses fallback data)
+- Reads bundled Apple device specs for splash screen sizes
 - Creates a shell HTML page as an "art board" for image rendering
 - Takes screenshots at various resolutions
 - Generates icons (manifest, apple-touch, favicon, mstile) and splash screens
@@ -132,7 +133,7 @@ src/
 
 ### Important design decisions
 
-**Scraping vs static data**: The tool attempts to scrape Apple's HIG website to get the latest device specs. If scraping fails or is disabled (`--scrape false`), it falls back to static JSON data in `src/config/apple-fallback-data.json`.
+**Static device data**: Device specs are read from `src/config/apple-fallback-data.json` — the single source of truth. The tool used to scrape Apple's HIG website for them, but Apple removed the table (GH-1276), so the live lookup was retired and `--scrape` is a deprecated no-op kept only for backwards compatibility.
 
 **Puppeteer-core**: Uses `puppeteer-core` instead of full `puppeteer` to avoid bundling Chromium (~110-150MB). Chromium is installed separately via `bin/install.js` only when needed.
 
@@ -166,7 +167,7 @@ import { generateImages, appleDeviceSpecsForLaunchImages } from 'pwa-asset-gener
 const { savedImages, htmlMeta, manifestJsonContent } = await generateImages(
   'logo.svg',
   './output',
-  { scrape: false, background: 'coral', splashOnly: true }
+  { background: 'coral', splashOnly: true }
 );
 ```
 
