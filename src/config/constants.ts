@@ -9,15 +9,14 @@ import type { Extension } from '../models/options.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+// Single source of truth for iOS/iPadOS launch image specs. Apple removed the
+// device screen dimensions table from the Human Interface Guidelines in
+// September 2026 (GH-1276) and does not publish it anywhere else, so this file
+// - captured from the last successful scrape - is maintained by hand from here
+// on and is no longer a "fallback" for a live lookup.
 const APPLE_HIG_SPLASH_SCREEN_FALLBACK_DATA = JSON.parse(
   fs.readFileSync(path.join(__dirname, './apple-fallback-data.json'), 'utf8'),
 );
-
-const APPLE_HIG_SPLASH_SCR_SPECS_URLS = [
-  'https://developer.apple.com/design/human-interface-guidelines/layout/',
-  'https://developer.apple.com/design/human-interface-guidelines/designing-for-ios',
-  'https://developer.apple.com/design/human-interface-guidelines/designing-for-ipados',
-];
 
 const HTML_META_ORDERED_SELECTOR_LIST: HTMLMetaSelector[] = [
   {
@@ -76,6 +75,9 @@ export default {
       shortFlag: 'o',
       default: true,
     },
+    // Deprecated no-op, kept so existing invocations keep parsing: Apple no
+    // longer publishes the device screen dimensions table, so the bundled
+    // apple-fallback-data.json is always used. See GH-1276.
     scrape: <Flag<'boolean', boolean>>{
       type: 'boolean',
       shortFlag: 's',
@@ -190,17 +192,6 @@ export default {
   CHROME_LAUNCHER_MAX_CONN_RETRIES: 10,
   EMULATED_USER_AGENT:
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15',
-  APPLE_HIG_SPLASH_SCR_SPECS_URL: APPLE_HIG_SPLASH_SCR_SPECS_URLS[0],
-
-  // Ordered list of Apple pages that may host the iOS/iPadOS device screen
-  // dimensions table. Apple removed that table from the canonical `layout`
-  // page in September 2026 (GH-1276), so pinning scraping to a single URL is
-  // what broke the tool. Scraping now walks this list and keeps the first
-  // source that yields a valid device table, which means the tool recovers on
-  // its own if Apple republishes the data on any of these pages - adding a new
-  // candidate is a one-line change here, with no scraping-logic change.
-  APPLE_HIG_SPLASH_SCR_SPECS_URLS,
-
   // Apple platform specs: https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/app-icon/
   // https://web.dev/apple-touch-icon/
   APPLE_ICON_SIZES: [180],
@@ -222,22 +213,7 @@ export default {
   APPLE_SPLASH_FILENAME_DARK_MODE_POSTFIX: '-dark',
   MANIFEST_ICON_FILENAME_PREFIX: 'manifest-icon',
   MS_ICON_FILENAME_PREFIX: 'mstile-icon',
-  APPLE_HIG_SPLASH_SCR_SPECS_TABLE_SELECTOR:
-    '#iOS-iPadOS-device-screen-dimensions + .table-wrapper > table',
-  // Sanity floor: Apple's HIG iOS/iPadOS dimensions table lists ~35 devices as of
-  // 2025; a successful scrape returning fewer than this signals a parsing problem.
-  APPLE_HIG_MIN_EXPECTED_DEVICES: 30,
-  // Per-source budget for polling Apple's client-rendered HIG page until the
-  // dimensions table appears (see getAppleSplashScreenData). Independent of
-  // BROWSER_TIMEOUT.
-  APPLE_HIG_SCRAPE_TIMEOUT: 30000,
-  // Once a source has painted its article we know the client-side render has
-  // run, so a missing dimensions table means the data is not on that page
-  // rather than not loaded yet. Rather than burn the whole per-source budget,
-  // give the render this much time to settle and then move to the next source.
-  APPLE_HIG_SCRAPE_SETTLE_TIMEOUT: 2000,
-  // Max time for puppeteer to launch/connect to the browser — not a navigation or
-  // scrape-polling timeout.
+  // Max time for puppeteer to launch/connect to the browser.
   BROWSER_TIMEOUT: 10000,
 
   FAVICON_META_HTML: (

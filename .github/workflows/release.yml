@@ -29,19 +29,8 @@ jobs:
         run: npm ci
       - name: audit signatures
         run: npm audit signatures
-      # Building for the first time to make dep libs available for update
-      - name: update prep
-        run: npm run build
-      - name: install chromium
-        run: npm run chromium
-      - name: update
-        run: npm run update
-        env:
-          PAG_USE_LOCAL_REV: 1
-          PAG_USE_NO_SANDBOX: 1
-      - name: format
-        run: npm run prettier:fix
-      # Actual build with updated fallback data
+      # Device specs ship as static data in src/config/apple-fallback-data.json,
+      # so there is no pre-publish scrape step to refresh them anymore (GH-1276)
       - name: build
         run: npm run build
       - name: publish

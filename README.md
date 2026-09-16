@@ -27,12 +27,10 @@ PWA Asset Generator automates the image generation in a creative way. Having [Pu
 
 * Updates your `manifest.json` and `index.html` files automatically for declaring generated image assets 🙌
 
-* Scrapes the latest specs from Apple Human Interface guidelines website via Puppeteer to make your PWA ready for all/recent iOS devices out there 🤖 — opt in with `--scrape true`
+* Ships the iOS/iPadOS device specs it needs, so your PWA is ready for all/recent iOS devices out there without touching the network 🤖
 
-    * Scraping tries every known Apple page that can host the device dimensions table and keeps the first one that yields a valid device set, so a page being restructured doesn't break it 🧭
-
-    * Supports offline mode and uses static spec data when things go wrong with scraping 📴
-    * Updates static spec data before each release automatically and [monitors spec changes everyday](https://github.com/elegantapp/pwa-asset-generator/actions?query=workflow%3A%22Sanity+Check%22) 🔄
+    * Works fully offline - device specs are bundled with the package 📴
+    * Apple removed the device screen dimensions table from its Human Interface Guidelines, so the bundled specs are the single source of truth and the `--scrape` flag is a deprecated no-op 🔄
 
 * Uses the Chrome browser as it’s a canvas of your fav image editor. It uses a shell HTML on the fly as an art board and centers your logo before taking screenshots for each resolution via Puppeteer 🤖
 
@@ -84,7 +82,7 @@ $ pwa-asset-generator --help
     -b --background             Page background to use when image source is provided: css value  [default: transparent]
     -o --opaque                 Shows white as canvas background and generates images without transparency  [default: true]
     -p --padding                Padding to use when image source provided: css value  [default: "10%"]
-    -s --scrape                 Scraping Apple Human Interface guidelines to fetch splash screen specs  [default: false]
+    -s --scrape                 Deprecated, has no effect - bundled Apple device specs are always used  [default: false]
     -m --manifest               Web app manifest file path to automatically update manifest file with the generated icons
     -i --index                  Index HTML file path to automatically put splash screen and icon meta tags in
     -a --path                   Path prefix to prepend for href links generated for meta tags
@@ -109,7 +107,7 @@ $ pwa-asset-generator --help
     $ pwa-asset-generator logo.svg -i ./index.html -m ./manifest.json
     $ pwa-asset-generator https://your-cdn-server.com/assets/logo.png ./ -t jpg -q 90 --splash-only --portrait-only
     $ pwa-asset-generator logo.svg ./assets --splash-only --xhtml --single-quotes
-    $ pwa-asset-generator logo.svg ./assets --scrape false --icon-only --path "%PUBLIC_URL%"
+    $ pwa-asset-generator logo.svg ./assets --icon-only --path "%PUBLIC_URL%"
     $ pwa-asset-generator logo.svg ./assets --icon-only --favicon --opaque false --maskable false --type png
     $ pwa-asset-generator logo.svg ./assets --dark-mode --background dimgrey --splash-only --quality 80
     $ pwa-asset-generator logo.svg ./assets --padding "calc(50vh - 5%) calc(50vw - 10%)" --path-override "./your-custom-image-folder-path"
@@ -120,7 +118,6 @@ $ pwa-asset-generator --help
     --background "rgba(255, 255, 255, .5)"
     --opaque false
     --padding "10px"
-    --scrape false
     --manifest ./src/manifest.json
     --index ./src/index.html
     --path "%PUBLIC_URL%"
@@ -153,7 +150,6 @@ const pwaAssetGenerator = require('pwa-asset-generator');
     'https://elegantapp.github.io/pwa-asset-generator/static/logo.png',
     './temp',
     {
-      scrape: false,
       background: "linear-gradient(to right, #fa709a 0%, #fee140 100%)",
       splashOnly: true,
       portraitOnly: true,
