@@ -3,32 +3,32 @@ name: builder
 description: Repo-specific build discipline for pwa-asset-generator.
 ---
 
-## Before you push
+## What CI will judge
 
-CI runs Type checking, Linting, Formatting and Tests as separate jobs, and any
-one of them red is a failed run. All four are runnable here in seconds, so a
-push that fails them costs a full CI round trip for nothing:
+CI runs Type checking, Linting, Formatting, Commit message linting and Tests as
+separate jobs; any one red is a failed run. Linting and Formatting largely take
+care of themselves — `.husky/pre-commit` runs `lint-staged`, which applies
+`eslint --fix` and `prettier --write` to staged `.js`/`.ts` files as you commit.
+
+That leaves the two CI checks nothing fixes for you:
 
 ```
-npm run tsc          # tsc --noEmit
-npm run lint:fix     # eslint . --fix   (then `npm run lint` to confirm)
-npm run prettier:fix # prettier . --write
+npm run tsc     # tsc --noEmit — type errors are yours to resolve
+npm run lint    # eslint . — reports what --fix could not repair
 ```
 
-Run all three and re-run `npm run tsc` and `npm run lint` until clean. Treat
-formatting as part of the change, not a follow-up: a commit that only fixes
-formatting is a wasted cycle.
+Run both before pushing. A type error or an unfixable lint rule is worth a local
+minute; through CI it is a round trip of push, wait for the matrix, read the log,
+push again.
 
-Each of these failing in CI instead of locally costs a full round trip — push,
-wait for the matrix, read the log, push again — to learn something the repo will
-tell you in seconds.
+Commit messages are linted too, so keep the conventional-commit form
+(`fix(scope): summary`).
 
 ## Tests
 
 `npm test` is `vitest run` over the WHOLE suite, and `src/main.test.ts` drives a
-real Chromium through Puppeteer. It is slow and needs a browser present
-(`npm run chromium` installs it). When you only need to prove your own change,
-scope the run:
+real Chromium through Puppeteer — slow, and it needs the browser present
+(`npm run chromium` installs it). To prove your own change, scope the run:
 
 ```
 npx vitest run src/helpers/puppets.test.ts src/cli.test.ts
