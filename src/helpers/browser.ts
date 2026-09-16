@@ -129,16 +129,12 @@ const getBrowserInstance = async (
 
   // Check if user wants to force using the local Chromium revision
   const useLocalRev = process.env.PAG_USE_LOCAL_REV === '1';
-  const useNoSandbox = process.env.PAG_USE_NO_SANDBOX === '1';
 
   if (useLocalRev) {
     logger.log(
       'Using local Chromium revision as requested via PAG_USE_LOCAL_REV',
     );
-    browser = await getLocalBrowserInstance(
-      launchArgs,
-      useNoSandbox || noSandbox,
-    );
+    browser = await getLocalBrowserInstance(launchArgs, noSandbox);
     return { browser, chrome };
   }
 
@@ -177,10 +173,7 @@ const getBrowserInstance = async (
 
     // Fall back to local Chromium version via installer
     // This will either use an already installed local version or download the required one
-    browser = await getLocalBrowserInstance(
-      launchArgs,
-      useNoSandbox || noSandbox,
-    );
+    browser = await getLocalBrowserInstance(launchArgs, noSandbox);
   }
 
   return { browser, chrome };

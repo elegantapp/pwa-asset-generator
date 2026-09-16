@@ -176,9 +176,20 @@ const generateImages = async (
   const logger = preLogger(generateImages.name, options);
   const isHtmlInput = canNavigateTo(source);
 
+  // PAG_USE_NO_SANDBOX is an environment-level escape hatch for hosts where
+  // Chromium cannot sandbox at all (CI containers, running as root). It is
+  // resolved here, next to the HTML-input guard, so that the warning below
+  // describes what actually happens rather than what the option asked for.
+  const sandboxDisabledViaEnv = process.env.PAG_USE_NO_SANDBOX === '1';
+  const noSandbox = isHtmlInput
+    ? sandboxDisabledViaEnv
+    : options.noSandbox || sandboxDisabledViaEnv;
+
   if (isHtmlInput) {
     logger.warn(
-      'noSandbox option is disabled for HTML inputs, use an image input instead',
+      sandboxDisabledViaEnv
+        ? 'noSandbox option is disabled for HTML inputs, but PAG_USE_NO_SANDBOX is set in the environment so Chromium still runs without a sandbox'
+        : 'noSandbox option is disabled for HTML inputs, use an image input instead',
     );
   }
 
@@ -187,7 +198,7 @@ const generateImages = async (
       timeout: constants.BROWSER_TIMEOUT,
       args: constants.CHROME_LAUNCH_ARGS,
     },
-    isHtmlInput ? false : options.noSandbox,
+    noSandbox,
   );
 
   const splashScreenMetaData = getSplashScreenMetaData(options);
