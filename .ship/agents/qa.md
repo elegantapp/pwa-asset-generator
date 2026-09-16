@@ -32,10 +32,9 @@ output directory, and whatever it printed to stdout.
 ## Do not run the whole test suite
 
 `npm test` is `vitest run` across everything, and `src/main.test.ts` drives real
-Puppeteer/Chromium flows that take minutes. On the GH-1276 mission QA started
-the full suite, the sandbox stopped before it finished, and an acceptance
-criterion was reported unverified with no pass/fail counts — the run proved
-nothing and cost the time anyway.
+Puppeteer/Chromium flows that take minutes — long enough that the sandbox can
+end before the run does, leaving no pass/fail counts and a criterion you cannot
+honestly call verified.
 
 Scope the run to the files your criteria actually touch:
 

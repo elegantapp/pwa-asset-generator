@@ -19,11 +19,9 @@ Run all three and re-run `npm run tsc` and `npm run lint` until clean. Treat
 formatting as part of the change, not a follow-up: a commit that only fixes
 formatting is a wasted cycle.
 
-This is not hypothetical. On the GH-1276 mission the first push passed CI
-outright; the three pushes after it failed on Type checking + Linting, then on
-Formatting, then finally passed — three round trips, roughly 45 minutes, for
-problems every one of which `tsc`, `lint:fix` and `prettier:fix` would have
-caught locally.
+Each of these failing in CI instead of locally costs a full round trip — push,
+wait for the matrix, read the log, push again — to learn something the repo will
+tell you in seconds.
 
 ## Tests
 
