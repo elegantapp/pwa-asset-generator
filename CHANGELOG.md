@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.6](https://github.com/elegantapp/pwa-asset-generator/compare/v8.1.5...v8.1.6) (2026-09-16)
+
+
+### Bug Fixes
+
+* **core:** default scrape to false and fall back to static data ([#1278](https://github.com/elegantapp/pwa-asset-generator/issues/1278)) ([a24d8fb](https://github.com/elegantapp/pwa-asset-generator/commit/a24d8fb1a826249dea16f4a0e796a0ef74b6938e))
+* **deps:** resolve high and critical npm audit vulnerabilities ([#1277](https://github.com/elegantapp/pwa-asset-generator/issues/1277)) ([0f9c5e3](https://github.com/elegantapp/pwa-asset-generator/commit/0f9c5e334c899a442eb7cecbdc37766e47617740))
+
 ## [8.1.5](https://github.com/elegantapp/pwa-asset-generator/compare/v8.1.4...v8.1.5) (2026-06-01)
 
 
