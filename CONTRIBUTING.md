@@ -14,7 +14,7 @@ Please note that if any of the issues have an assignee or is `In Progress` withi
 
 ## Prerequisites
 
-- **Node.js** >= 22.12.0
+- **Node.js** `^22.22.2 || ^24.15.0 || >=26.0.0`
 - Run `npm install` to install dependencies and enable git hooks
 - Run `npm run chromium` before running tests (installs the Chrome revision required by puppeteer-core)
 

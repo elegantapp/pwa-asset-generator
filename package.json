@@ -29,14 +29,15 @@
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write",
     "semantic-release": "semantic-release",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "check:deps": "node scripts/check-dependency-health.mjs"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/elegantapp/pwa-asset-generator.git"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "keywords": [
     "pwa",
@@ -70,13 +71,19 @@
     "url": "https://opencollective.com/pwa-asset-generator"
   },
   "dependencies": {
-    "cheerio": "^1.2.0",
     "chrome-launcher": "^1.2.1",
+    "css-select": "^5.1.0",
+    "dom-serializer": "^2.0.0",
+    "domhandler": "^5.0.3",
+    "domutils": "^3.2.2",
     "find-process": "^2.0.0",
+    "htmlparser2": "^10.1.0",
+    "js-beautify": "^2.0.3",
     "meow": "^14.0.0",
     "mime-types": "^3.0.1",
+    "parse5": "^7.3.0",
+    "parse5-htmlparser2-tree-adapter": "^7.1.0",
     "picocolors": "^1.1.1",
-    "pretty": "^2.0.0",
     "puppeteer-core": "^25.10.0",
     "slash": "^5.1.0"
   },
@@ -93,7 +100,6 @@
     "@types/mime-types": "^3.0.1",
     "@types/node": "^24.5.2",
     "@types/pngjs": "^6.0.5",
-    "@types/pretty": "^2.0.3",
     "@typescript-eslint/eslint-plugin": "^8.57.0",
     "@typescript-eslint/parser": "^8.57.0",
     "cross-env": "^10.0.0",
@@ -113,7 +119,6 @@
   },
   "overrides": {
     "basic-ftp": ">=5.2.0",
-    "js-beautify": ">=1.15.4",
     "minimatch@9": "10.2.4",
     "lodash": "^4.18.1",
     "lodash-es": "^4.18.1",
