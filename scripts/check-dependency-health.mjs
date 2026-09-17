@@ -10,6 +10,15 @@
  * registry after the lockfile was last regenerated will not be caught until
  * the next `npm install`/`npm update` refreshes that entry.
  *
+ * Note: this only reflects what THIS repo's own install resolves to. If
+ * package.json's `overrides` field bumps a transitive package away from a
+ * deprecated version, this check goes clean here even though downstream
+ * consumers of the published package still get the deprecated version —
+ * `overrides` only apply to the project that declares them, never to
+ * installs where this package is itself a dependency. Verify with a real
+ * `npm pack` + tarball install into a scratch project before trusting a
+ * clean result here as proof the shipped tree is deprecation-free.
+ *
  * Usage:
  *   node scripts/check-dependency-health.mjs [--json] [--audit]
  *

@@ -37,7 +37,7 @@
     "url": "https://github.com/elegantapp/pwa-asset-generator.git"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "keywords": [
     "pwa",
@@ -91,7 +91,6 @@
     "@semantic-release/github": "^11.0.6",
     "@semantic-release/npm": "^13.1.0",
     "@semantic-release/release-notes-generator": "^14.1.0",
-    "@types/js-beautify": "^1.14.3",
     "@types/mime-types": "^3.0.1",
     "@types/node": "^24.5.2",
     "@types/pngjs": "^6.0.5",
@@ -125,10 +124,7 @@
     "fast-uri": ">=3.1.6",
     "nanoid": ">=3.3.18",
     "undici": ">=7.29.0",
-    "ip-address": ">=10.7.0",
-    "js-beautify": {
-      "nopt": "^9.0.0"
-    }
+    "ip-address": ">=10.7.0"
   },
   "lint-staged": {
     "**/*.{js,ts}": [
