@@ -1,14 +1,49 @@
-import { load } from 'cheerio';
+import { parse, parseFragment, serialize } from 'parse5';
+import { adapter as parse5HtmlParser2Adapter } from 'parse5-htmlparser2-tree-adapter';
+import { parseDocument as parseXmlDocument } from 'htmlparser2';
+import serializeXmlDocument from 'dom-serializer';
+import { selectAll } from 'css-select';
+import { appendChild, prependChild, removeElement } from 'domutils';
 import { lookup } from 'mime-types';
 import path from 'node:path';
 import constants from '../config/constants.js';
 import file from './file.js';
 import htmlFormat from './html-format.js';
 import { HTMLMetaNames } from '../models/meta.js';
+import type { Document, Element, ChildNode } from 'domhandler';
+import type { Htmlparser2TreeAdapterMap } from 'parse5-htmlparser2-tree-adapter';
 import type { SavedImage } from '../models/image.js';
 import type { ManifestJsonIcon } from '../models/result.js';
 import type { Options } from '../models/options.js';
 import type { HTMLMeta, HTMLMetaSelector } from '../models/meta.js';
+
+// Cheerio depended on `encoding-sniffer` -> deprecated `whatwg-encoding` purely
+// for its unused `fromURL`/`loadBuffer` helpers (GH-1280). This repo only ever
+// used `load()`/`remove()`/`append()`/`prepend()`/`html()` on an in-memory
+// string, so we drive cheerio's own underlying parser/serializer stack
+// directly instead - same behavior, no deprecated transitive dependency.
+const parseHtmlDocument = (html: string, xhtml: boolean): Document =>
+  xhtml
+    ? parseXmlDocument(html, { xmlMode: true })
+    : parse<Htmlparser2TreeAdapterMap>(html, {
+        treeAdapter: parse5HtmlParser2Adapter,
+        scriptingEnabled: true,
+      });
+
+const parseHtmlFragment = (html: string, xhtml: boolean): ChildNode[] =>
+  xhtml
+    ? parseXmlDocument(html, { xmlMode: true }).children
+    : parseFragment<Htmlparser2TreeAdapterMap>(null, html, {
+        treeAdapter: parse5HtmlParser2Adapter,
+        scriptingEnabled: true,
+      }).children;
+
+const serializeHtmlDocument = (document: Document, xhtml: boolean): string =>
+  xhtml
+    ? serializeXmlDocument(document, { xmlMode: true })
+    : serialize<Htmlparser2TreeAdapterMap>(document, {
+        treeAdapter: parse5HtmlParser2Adapter,
+      });
 
 const generateOutputPath = (
   options: Options,
@@ -242,13 +277,12 @@ const addMetaTagsToIndexPage = async (
     throw Error(`Cannot write to index html file ${indexHtmlFilePath}`);
   }
 
-  const indexHtmlFile = await file.readFile(indexHtmlFilePath);
-  const $ = load(indexHtmlFile, {
-    xml: xhtml,
-  });
+  const indexHtmlFile = (await file.readFile(indexHtmlFilePath)).toString();
+  const document = parseHtmlDocument(indexHtmlFile, xhtml);
 
   const HEAD_SELECTOR = 'head';
-  const hasElement = (selector: string): boolean => $(selector).length > 0;
+  const hasElement = (selector: string): boolean =>
+    selectAll(selector, document).length > 0;
 
   const hasDarkModeElement = (): boolean => {
     const darkModeMeta = constants.HTML_META_ORDERED_SELECTOR_LIST.find(
@@ -256,10 +290,15 @@ const addMetaTagsToIndexPage = async (
         m.name === HTMLMetaNames.appleLaunchImageDarkMode,
     );
     if (darkModeMeta) {
-      return $(darkModeMeta.selector).length > 0;
+      return hasElement(darkModeMeta.selector);
     }
     return false;
   };
+
+  const [headElement] = selectAll<Document | Element, Element>(
+    HEAD_SELECTOR,
+    document,
+  );
 
   // TODO: Find a way to remove tags without leaving newlines behind
   constants.HTML_META_ORDERED_SELECTOR_LIST.forEach(
@@ -268,7 +307,14 @@ const addMetaTagsToIndexPage = async (
         const content = `${htmlMeta[meta.name]}`;
 
         if (hasElement(meta.selector)) {
-          $(meta.selector).remove();
+          selectAll<Document | Element, Element>(
+            meta.selector,
+            document,
+          ).forEach(removeElement);
+        }
+
+        if (!headElement) {
+          return;
         }
 
         // Because meta tags with dark mode media attr has to be declared after the regular splash screen meta tags
@@ -276,15 +322,22 @@ const addMetaTagsToIndexPage = async (
           meta.name === HTMLMetaNames.appleLaunchImage &&
           hasDarkModeElement()
         ) {
-          $(HEAD_SELECTOR).prepend(`\n${content}`);
+          [...parseHtmlFragment(`\n${content}`, xhtml)]
+            .reverse()
+            .forEach((node) => prependChild(headElement, node));
         } else {
-          $(HEAD_SELECTOR).append(`${content}\n`);
+          parseHtmlFragment(`${content}\n`, xhtml).forEach((node) =>
+            appendChild(headElement, node),
+          );
         }
       }
     },
   );
 
-  return file.writeFile(indexHtmlFilePath, htmlFormat.formatHtml($.html()));
+  return file.writeFile(
+    indexHtmlFilePath,
+    htmlFormat.formatHtml(serializeHtmlDocument(document, xhtml)),
+  );
 };
 
 export default {
