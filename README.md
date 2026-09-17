@@ -51,7 +51,7 @@ PWA Asset Generator automates the image generation in a creative way. Having [Pu
 
 ## Requirements
 
-- **Node.js** >= 22.12.0 (required by [puppeteer-core](https://www.npmjs.com/package/puppeteer-core) v25)
+- **Node.js** `^22.22.2 || ^24.15.0 || >=26.0.0` (the range required by `js-beautify`'s `nopt`/`abbrev` dependencies; a superset of [puppeteer-core](https://www.npmjs.com/package/puppeteer-core) v25's >=22.12.0 floor)
 - A compatible Chrome or Chromium browser — installed automatically on first use when needed
 
 ## Install

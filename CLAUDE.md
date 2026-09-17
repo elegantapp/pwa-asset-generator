@@ -10,7 +10,7 @@ The tool uses Puppeteer to control a Chrome browser as a canvas, rendering image
 
 ## Requirements
 
-- **Node.js** >= 22.12.0 (required by puppeteer-core v25)
+- **Node.js** `^22.22.2 || ^24.15.0 || >=26.0.0` (the range required by `js-beautify`'s `nopt`/`abbrev` dependencies; a superset of puppeteer-core v25's >=22.12.0 floor)
 
 ## Essential Commands
 
@@ -91,7 +91,7 @@ directly; `src/helpers/puppets.test.ts` guards its shape.
 **Meta helper** (`src/helpers/meta.ts`):
 - Generates HTML meta tags for iOS splash screens and icons
 - Generates manifest.json icon entries
-- Updates existing manifest.json and index.html files by parsing/serializing HTML directly with `parse5`/`htmlparser2`/`css-select`/`domutils`/`dom-serializer` (the same stack Cheerio is built on, used directly to avoid Cheerio's deprecated `encoding-sniffer` transitive dependency - GH-1280)
+- Updates existing manifest.json and index.html files using Cheerio
 - Formats output using the local `src/helpers/html-format.ts` helper (built on `js-beautify`)
 
 **Browser helper** (`src/helpers/browser.ts`):

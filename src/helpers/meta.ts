@@ -326,7 +326,7 @@ const addMetaTagsToIndexPage = async (
             .reverse()
             .forEach((node) => prependChild(headElement, node));
         } else {
-          parseHtmlFragment(`${content}\n`, xhtml).forEach((node) =>
+          [...parseHtmlFragment(`${content}\n`, xhtml)].forEach((node) =>
             appendChild(headElement, node),
           );
         }
