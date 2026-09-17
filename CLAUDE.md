@@ -10,7 +10,7 @@ The tool uses Puppeteer to control a Chrome browser as a canvas, rendering image
 
 ## Requirements
 
-- **Node.js** `^22.22.2 || ^24.15.0 || >=26.0.0` — puppeteer-core v25 only needs >=22.12.0, but js-beautify's `nopt` dependency pins a stricter engines range; `package.json`'s `engines.node` tracks the tighter of the two so a compliant install never hits an EBADENGINE warning.
+- **Node.js** >= 22.12.0 (required by puppeteer-core v25)
 
 ## Essential Commands
 
@@ -91,7 +91,7 @@ directly; `src/helpers/puppets.test.ts` guards its shape.
 **Meta helper** (`src/helpers/meta.ts`):
 - Generates HTML meta tags for iOS splash screens and icons
 - Generates manifest.json icon entries
-- Updates existing manifest.json and index.html files using Cheerio
+- Updates existing manifest.json and index.html files by parsing/serializing HTML directly with `parse5`/`htmlparser2`/`css-select`/`domutils`/`dom-serializer` (the same stack Cheerio is built on, used directly to avoid Cheerio's deprecated `encoding-sniffer` transitive dependency - GH-1280)
 - Formats output using the local `src/helpers/html-format.ts` helper (built on `js-beautify`)
 
 **Browser helper** (`src/helpers/browser.ts`):
@@ -146,8 +146,6 @@ src/
 - Automatic relative path calculation between manifest/index and images
 
 **Sandbox option**: On Linux CI servers, `--no-sandbox` disables Chromium sandboxing to avoid "No usable sandbox!" errors. HTML inputs are disabled when sandbox is off for security.
-
-**Residual `whatwg-encoding` deprecation warning (GH-1280)**: `cheerio` (all published 1.x releases, including latest) depends on `encoding-sniffer@^0.2.x`, which pulls in the deprecated `whatwg-encoding@3.1.1`. `package.json`'s `overrides` field bumps `encoding-sniffer` to `>=1.0.2` for this repo's own install/audit, but npm `overrides` only apply to the project that declares them — they have no effect once this package is installed as someone else's dependency, so the warning still surfaces on a real `npm install -g pwa-asset-generator`. There is no cheerio release that avoids this; fixing it requires an upstream cheerio/encoding-sniffer release.
 
 ## Testing Strategy
 
