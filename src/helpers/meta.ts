@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
-import pretty from 'pretty';
 import { lookup } from 'mime-types';
 import path from 'node:path';
 import constants from '../config/constants.js';
 import file from './file.js';
+import htmlFormat from './html-format.js';
 import { HTMLMetaNames } from '../models/meta.js';
 import type { SavedImage } from '../models/image.js';
 import type { ManifestJsonIcon } from '../models/result.js';
@@ -284,7 +284,7 @@ const addMetaTagsToIndexPage = async (
     },
   );
 
-  return file.writeFile(indexHtmlFilePath, pretty($.html(), { ocd: true }));
+  return file.writeFile(indexHtmlFilePath, htmlFormat.formatHtml($.html()));
 };
 
 export default {
