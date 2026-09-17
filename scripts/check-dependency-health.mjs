@@ -1,7 +1,14 @@
 /**
  * Scans the committed package-lock.json for production-tree packages that
- * npm has flagged as deprecated, so a bad transitive bump shows up in CI
- * instead of a user's `npm install` log (see GH-1280).
+ * npm has flagged as deprecated, so a maintainer can catch a bad transitive
+ * bump by running this locally before it reaches a user's `npm install` log
+ * (see GH-1280). This is a manual/local check — it is not wired into CI, so
+ * it only helps if someone runs it before a release.
+ *
+ * Note: a package only shows up here if npm recorded a `deprecated` field
+ * for it in the lockfile at resolve time. A deprecation issued by the
+ * registry after the lockfile was last regenerated will not be caught until
+ * the next `npm install`/`npm update` refreshes that entry.
  *
  * Usage:
  *   node scripts/check-dependency-health.mjs [--json] [--audit]

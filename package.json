@@ -125,7 +125,10 @@
     "fast-uri": ">=3.1.6",
     "nanoid": ">=3.3.18",
     "undici": ">=7.29.0",
-    "ip-address": ">=10.7.0"
+    "ip-address": ">=10.7.0",
+    "js-beautify": {
+      "nopt": "^9.0.0"
+    }
   },
   "lint-staged": {
     "**/*.{js,ts}": [

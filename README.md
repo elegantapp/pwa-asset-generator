@@ -264,7 +264,7 @@ render() {
 
 ### My index.html file's format has been changed after an automated update. Is there any way to re-format it?
 
-pwa-asset-generator uses [pretty](https://www.npmjs.com/package/pretty) for formatting your index.html file with a simple, opinionated output.
+pwa-asset-generator uses [js-beautify](https://www.npmjs.com/package/js-beautify) (via its own `html-format` helper) for formatting your index.html file with a simple, opinionated output.
 
 A recommended way to maintain the same format for your index.html file would be using [Prettier](https://prettier.io/) and adding the following script to your project's package.json file.
 

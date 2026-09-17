@@ -92,7 +92,7 @@ directly; `src/helpers/puppets.test.ts` guards its shape.
 - Generates HTML meta tags for iOS splash screens and icons
 - Generates manifest.json icon entries
 - Updates existing manifest.json and index.html files using Cheerio
-- Formats output using the `pretty` library
+- Formats output using the local `src/helpers/html-format.ts` helper (built on `js-beautify`)
 
 **Browser helper** (`src/helpers/browser.ts`):
 - Manages Puppeteer browser lifecycle
@@ -122,6 +122,7 @@ src/
 └── helpers/                  # Core logic modules
     ├── puppets.ts           # Puppeteer orchestration
     ├── meta.ts              # HTML/manifest generation
+    ├── html-format.ts       # index.html formatting (js-beautify based)
     ├── browser.ts           # Browser management
     ├── file.ts              # File operations
     ├── url.ts               # URL handling
