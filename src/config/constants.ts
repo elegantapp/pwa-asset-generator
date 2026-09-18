@@ -158,6 +158,11 @@ export default {
       shortFlag: 'n',
       default: false,
     },
+    sandbox: {
+      type: 'boolean',
+      alias: 'y',
+      default: true,
+    },
   },
 
   CHROME_LAUNCH_ARGS: [
