@@ -42,4 +42,23 @@ describe('addMetaTagsToIndexPage', () => {
     );
     expect(savedIndex).toContain('No head here');
   });
+
+  test('keeps a pre-existing managed tag when there is no <head> to re-insert it into', async () => {
+    // Regression coverage: the no-<head> guard used to sit after the tag
+    // removal step, so a previously generated tag would be deleted (to be
+    // replaced) and then never re-added, silently stripping it.
+    const existingFavicon =
+      '<link rel="icon" type="image/png" sizes="16x16" href="favicon.png">';
+    const bodyOnlyHtml = `<html><body>${existingFavicon}<h1>No head here</h1></body></html>`;
+    fs.writeFileSync(indexHtmlFilePath, bodyOnlyHtml);
+
+    await meta.addMetaTagsToIndexPage(htmlMeta, indexHtmlFilePath, true);
+
+    const savedIndex = fs.readFileSync(indexHtmlFilePath, {
+      encoding: 'utf8',
+    });
+
+    expect(savedIndex).toContain(existingFavicon);
+    expect(savedIndex).toContain('No head here');
+  });
 });

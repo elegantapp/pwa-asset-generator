@@ -300,6 +300,14 @@ const addMetaTagsToIndexPage = async (
     document,
   );
 
+  // No <head> to insert into: leave the document untouched rather than
+  // guessing where to inject meta tags, and rather than deleting any
+  // pre-existing managed tags with nowhere to put their replacements
+  // (see meta.test.ts for the pinned behavior).
+  if (!headElement) {
+    return;
+  }
+
   // TODO: Find a way to remove tags without leaving newlines behind
   constants.HTML_META_ORDERED_SELECTOR_LIST.forEach(
     (meta: HTMLMetaSelector) => {
@@ -311,12 +319,6 @@ const addMetaTagsToIndexPage = async (
             meta.selector,
             document,
           ).forEach(removeElement);
-        }
-
-        // No <head> to insert into: leave the document untouched rather than
-        // guessing where to inject meta tags (see meta.test.ts for the pinned behavior).
-        if (!headElement) {
-          return;
         }
 
         // Because meta tags with dark mode media attr has to be declared after the regular splash screen meta tags

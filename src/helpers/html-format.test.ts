@@ -57,4 +57,28 @@ describe('HTML format helper', () => {
 </html>`,
     );
   });
+
+  it('restores unformatted blocks containing literal $-patterns verbatim', () => {
+    const input = `<html>
+<head>
+<title>Test</title>
+</head>
+<body>
+<pre>price: $$5 total, $&amp;nbsp;9.99, $\`prefix, $'suffix</pre>
+<span>$&amp;nbsp;9.99</span>
+</body>
+</html>`;
+
+    expect(htmlFormat.formatHtml(input)).toBe(
+      `<html>
+  <head>
+    <title>Test</title>
+  </head>
+  <body>
+    <pre>price: $$5 total, $&amp;nbsp;9.99, $\`prefix, $'suffix</pre>
+    <span>$&amp;nbsp;9.99</span>
+  </body>
+</html>`,
+    );
+  });
 });

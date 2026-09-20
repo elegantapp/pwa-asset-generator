@@ -41,7 +41,10 @@ const protectUnformattedBlocks = (
 const restoreUnformattedBlocks = (html: string, blocks: string[]): string =>
   blocks.reduce(
     (result, block, index) =>
-      result.replace(`${PLACEHOLDER_MARKER}${index}_END_`, block),
+      // Use a function replacement so `$`-substitution patterns (`$$`, `$&`,
+      // `` $` ``, `$'`) inside the restored block are never interpreted by
+      // String.prototype.replace - the block must come back byte-for-byte.
+      result.replace(`${PLACEHOLDER_MARKER}${index}_END_`, () => block),
     html,
   );
 
