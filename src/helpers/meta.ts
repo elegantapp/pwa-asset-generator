@@ -313,6 +313,8 @@ const addMetaTagsToIndexPage = async (
           ).forEach(removeElement);
         }
 
+        // No <head> to insert into: leave the document untouched rather than
+        // guessing where to inject meta tags (see meta.test.ts for the pinned behavior).
         if (!headElement) {
           return;
         }

@@ -35,4 +35,26 @@ describe('HTML format helper', () => {
 </html>`,
     );
   });
+
+  it('does not inject a newline before a comment nested inside a <pre>', () => {
+    const input = `<html>
+<head>
+<title>Test</title>
+</head>
+<body>
+<pre>line one<!-- inline note -->line two</pre>
+</body>
+</html>`;
+
+    expect(htmlFormat.formatHtml(input)).toBe(
+      `<html>
+  <head>
+    <title>Test</title>
+  </head>
+  <body>
+    <pre>line one<!-- inline note -->line two</pre>
+  </body>
+</html>`,
+    );
+  });
 });

@@ -29,6 +29,8 @@ jobs:
         run: npm ci
       - name: audit signatures
         run: npm audit signatures
+      - name: check dependency health
+        run: npm run check:deps -- --audit
       # Device specs ship as static data in src/config/apple-fallback-data.json,
       # so there is no pre-publish scrape step to refresh them anymore (GH-1276)
       - name: build

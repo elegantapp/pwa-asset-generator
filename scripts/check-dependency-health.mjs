@@ -2,8 +2,9 @@
  * Scans the committed package-lock.json for production-tree packages that
  * npm has flagged as deprecated, so a maintainer can catch a bad transitive
  * bump by running this locally before it reaches a user's `npm install` log
- * (see GH-1280). This is a manual/local check — it is not wired into CI, so
- * it only helps if someone runs it before a release.
+ * (see GH-1280). Wired into the "Dependency health" CI job and the release
+ * workflow (both run `npm run check:deps -- --audit`), and can also be run
+ * locally at any time.
  *
  * Note: a package only shows up here if npm recorded a `deprecated` field
  * for it in the lockfile at resolve time. A deprecation issued by the

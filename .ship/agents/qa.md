@@ -47,5 +47,5 @@ so in the verdict rather than starting a run you cannot finish.
 
 ## Node
 
-`engines.node` is `^22.22.2 || ^24.15.0 || >=26.0.0`. A version outside that
-range fails in ways unrelated to the change under test.
+`engines.node` is `>=22.12.0`. A version outside that range fails in ways
+unrelated to the change under test.
