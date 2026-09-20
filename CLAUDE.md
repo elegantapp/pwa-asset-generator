@@ -10,7 +10,7 @@ The tool uses Puppeteer to control a Chrome browser as a canvas, rendering image
 
 ## Requirements
 
-- **Node.js** `>=22.12.0` (puppeteer-core v25's floor; `js-beautify`'s `nopt`/`abbrev` dependencies are pinned via `overrides` to versions that support this range)
+- **Node.js** `>=22.12.0` (puppeteer-core v25's floor)
 
 ## Essential Commands
 
@@ -92,7 +92,7 @@ directly; `src/helpers/puppets.test.ts` guards its shape.
 - Generates HTML meta tags for iOS splash screens and icons
 - Generates manifest.json icon entries
 - Updates existing manifest.json and index.html files using `parse5`/`htmlparser2` (via `parse5-htmlparser2-tree-adapter`), with `css-select`/`domutils` for querying and mutating the DOM
-- Formats output using the local `src/helpers/html-format.ts` helper (built on `js-beautify`)
+- Formats output using the local `src/helpers/html-format.ts` helper (built on the vendored HTML beautifier in `src/vendor/js-beautify`)
 
 **Browser helper** (`src/helpers/browser.ts`):
 - Manages Puppeteer browser lifecycle
@@ -122,7 +122,7 @@ src/
 └── helpers/                  # Core logic modules
     ├── puppets.ts           # Puppeteer orchestration
     ├── meta.ts              # HTML/manifest generation
-    ├── html-format.ts       # index.html formatting (js-beautify based)
+    ├── html-format.ts       # index.html formatting (vendored js-beautify based)
     ├── browser.ts           # Browser management
     ├── file.ts              # File operations
     ├── url.ts               # URL handling
@@ -137,6 +137,8 @@ src/
 **Static device data**: Device specs are read from `src/config/apple-fallback-data.json` — the single source of truth. The tool used to scrape Apple's HIG website for them, but Apple removed the table (GH-1276), so the live lookup was retired and `--scrape` is a deprecated no-op kept only for backwards compatibility.
 
 **Puppeteer-core**: Uses `puppeteer-core` instead of full `puppeteer` to avoid bundling Chromium (~110-150MB). Chromium is installed separately via `bin/install.js` only when needed.
+
+**Vendored HTML beautifier**: `src/vendor/js-beautify/*.cjs` is js-beautify@2.0.3's HTML/CSS/JS beautifier source, copied in verbatim rather than depended on as an npm package. The published `js-beautify` package declares `nopt@^10.0.1` as a hard dependency for its CLI, and every version in that range requires Node `^22.22.2 || ^24.15.0 || >=26.0.0` — narrower than this project's own `>=22.12.0` floor, and unfixable via `overrides` since npm only applies a package's own `overrides` when it is the install root, not when it's installed as someone else's dependency (GH-1280). Vendoring the beautifier files (which have no dependencies of their own) removes `js-beautify`/`nopt`/`abbrev`/`glob`/`config-chain`/`editorconfig`/`js-cookie` from the install tree entirely. Re-vendor by copying the three `js/lib/*.js` files from a newer `js-beautify` and re-pointing `beautify-html.cjs`'s two `require()` calls at the local `.cjs` siblings.
 
 **HTML as input**: Users can provide HTML files (not just images) as input, allowing creative splash screens with CSS, gradients, SVG filters, media queries, etc. The HTML is rendered in Chrome before taking screenshots.
 

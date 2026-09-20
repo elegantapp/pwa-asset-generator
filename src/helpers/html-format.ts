@@ -1,4 +1,4 @@
-import beautify from 'js-beautify';
+import { html_beautify } from '../vendor/js-beautify/beautify-html.cjs';
 
 // Condenses runs of 2+ newlines down to a single newline, trimming
 // whitespace-only lines first so they don't count as content.
@@ -49,10 +49,12 @@ const restoreUnformattedBlocks = (html: string, blocks: string[]): string =>
   );
 
 // Re-implements `pretty(html, { ocd: true })`'s output on top of the
-// underlying js-beautify HTML beautifier, since `pretty` was dropped for
-// pulling in a deprecated, vulnerable `glob` transitively (GH-1280).
+// vendored js-beautify HTML beautifier (see ../vendor/js-beautify), since
+// `pretty` was dropped for pulling in a deprecated, vulnerable `glob`
+// transitively, and the js-beautify npm package for pulling in an
+// engine-incompatible `nopt` the same way (GH-1280).
 const formatHtml = (html: string): string => {
-  const beautified = beautify.html(html, {
+  const beautified = html_beautify(html, {
     unformatted: UNFORMATTED_TAGS,
     indent_inner_html: true,
     indent_char: ' ',

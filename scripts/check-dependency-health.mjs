@@ -72,6 +72,7 @@ for (const [key, entry] of Object.entries(packages)) {
 
 let auditExitCode = null;
 let auditOutput = '';
+let auditSpawnError = null;
 if (runAudit) {
   try {
     auditOutput = execFileSync(
@@ -81,17 +82,34 @@ if (runAudit) {
     );
     auditExitCode = 0;
   } catch (error) {
-    auditExitCode = typeof error.status === 'number' ? error.status : 1;
-    auditOutput = `${error.stdout ?? ''}${error.stderr ?? ''}`;
+    if (typeof error.status !== 'number') {
+      // npm exited with a real audit failure (vulnerabilities found) reports
+      // a numeric `status`. Anything else (e.g. ENOENT because `npm` isn't on
+      // PATH, or `npm.cmd` refused without a shell) means audit never ran at
+      // all, which must not be reported as "vulnerabilities found".
+      auditSpawnError = error;
+    } else {
+      auditExitCode = error.status;
+      auditOutput = `${error.stdout ?? ''}${error.stderr ?? ''}`;
+    }
   }
 }
 
 const hasFindings = findings.length > 0;
-const auditFailed = runAudit && auditExitCode !== 0;
+const auditFailed = runAudit && auditExitCode !== null && auditExitCode !== 0;
 
 if (jsonOutput) {
   console.log(
-    JSON.stringify({ findings, auditExitCode, auditOutput }, null, 2),
+    JSON.stringify(
+      {
+        findings,
+        auditExitCode,
+        auditOutput,
+        auditSpawnError: auditSpawnError?.message ?? null,
+      },
+      null,
+      2,
+    ),
   );
 } else if (hasFindings) {
   console.log(`Found ${findings.length} deprecated production package(s):\n`);
@@ -107,12 +125,16 @@ if (jsonOutput) {
 }
 
 if (runAudit && !jsonOutput) {
-  console.log(auditOutput.trim());
-  console.log(
-    auditFailed
-      ? '\nnpm audit reported production vulnerabilities.'
-      : '\nnpm audit reported no production vulnerabilities.',
-  );
+  if (auditSpawnError) {
+    console.error(`npm audit could not be run: ${auditSpawnError.message}`);
+  } else {
+    console.log(auditOutput.trim());
+    console.log(
+      auditFailed
+        ? '\nnpm audit reported production vulnerabilities.'
+        : '\nnpm audit reported no production vulnerabilities.',
+    );
+  }
 }
 
-process.exit(hasFindings || auditFailed ? 1 : 0);
+process.exit(hasFindings || auditFailed || Boolean(auditSpawnError) ? 1 : 0);
