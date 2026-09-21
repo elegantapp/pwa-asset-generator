@@ -22,7 +22,7 @@
     "visuals:input-html": "rimraf ./src/__snapshots__/visual/input-html && node ./bin/cli.js ./static/logo.html ./src/__snapshots__/visual/input-html -s false",
     "visuals:input-html-dark": "rimraf ./src/__snapshots__/visual/input-html-dark && node ./bin/cli.js ./static/logo.html ./src/__snapshots__/visual/input-html-dark -s false -d true",
     "chromium": "cross-env PAG_TEST_MODE=1 node bin/install.js",
-    "build": "rimraf ./dist && tsc && cp -R src/config/*.json dist/config/ && mkdir -p dist/vendor/js-beautify && cp src/vendor/js-beautify/*.cjs src/vendor/js-beautify/LICENSE dist/vendor/js-beautify/",
+    "build": "rimraf ./dist && tsc && node scripts/copy-build-assets.mjs",
     "start": "tsc -w",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
