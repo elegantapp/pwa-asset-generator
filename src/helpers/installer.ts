@@ -38,9 +38,8 @@ const getChromeBuildIdFromPuppeteer = async (): Promise<string> => {
   const logger = preLogger('installer');
 
   try {
-    const { PUPPETEER_REVISIONS } = await import(
-      'puppeteer-core/lib/puppeteer/revisions.js'
-    );
+    const { PUPPETEER_REVISIONS } =
+      await import('puppeteer-core/lib/puppeteer/revisions.js');
 
     if (!PUPPETEER_REVISIONS || !PUPPETEER_REVISIONS.chrome) {
       throw new Error('Could not find chrome revision in puppeteer-core');

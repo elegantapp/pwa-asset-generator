@@ -92,7 +92,7 @@ directly; `src/helpers/puppets.test.ts` guards its shape.
 - Generates HTML meta tags for iOS splash screens and icons
 - Generates manifest.json icon entries
 - Updates existing manifest.json and index.html files using `parse5`/`htmlparser2` (via `parse5-htmlparser2-tree-adapter`), with `css-select`/`domutils` for querying and mutating the DOM
-- Formats output using the local `src/helpers/html-format.ts` helper (built on the vendored HTML beautifier in `src/vendor/js-beautify`)
+- Formats output using the local `src/helpers/html-format.ts` helper (built on `prettier`'s HTML formatter)
 
 **Browser helper** (`src/helpers/browser.ts`):
 - Manages Puppeteer browser lifecycle
@@ -122,7 +122,7 @@ src/
 └── helpers/                  # Core logic modules
     ├── puppets.ts           # Puppeteer orchestration
     ├── meta.ts              # HTML/manifest generation
-    ├── html-format.ts       # index.html formatting (vendored js-beautify based)
+    ├── html-format.ts       # index.html formatting (prettier based)
     ├── browser.ts           # Browser management
     ├── file.ts              # File operations
     ├── url.ts               # URL handling
@@ -138,7 +138,7 @@ src/
 
 **Puppeteer-core**: Uses `puppeteer-core` instead of full `puppeteer` to avoid bundling Chromium (~110-150MB). Chromium is installed separately via `bin/install.js` only when needed.
 
-**Vendored HTML beautifier**: `src/vendor/js-beautify/*.cjs` is js-beautify@2.0.3's HTML/CSS/JS beautifier source, copied in verbatim rather than depended on as an npm package. The published `js-beautify` package declares `nopt@^10.0.1` as a hard dependency for its CLI, and every version in that range requires Node `^22.22.2 || ^24.15.0 || >=26.0.0` — narrower than this project's own `>=22.12.0` floor, and unfixable via `overrides` since npm only applies a package's own `overrides` when it is the install root, not when it's installed as someone else's dependency (GH-1280). Vendoring the beautifier files (which have no dependencies of their own) removes `js-beautify`/`nopt`/`abbrev`/`glob`/`config-chain`/`editorconfig`/`js-cookie` from the install tree entirely. Re-vendor by copying the three `js/lib/*.js` files from a newer `js-beautify` and re-pointing `beautify-html.cjs`'s two `require()` calls at the local `.cjs` siblings.
+**HTML formatting via `prettier`**: `src/helpers/html-format.ts` formats generated `index.html` output with `prettier`'s bundled HTML parser instead of `js-beautify`. `js-beautify@2.0.3` (the version needed to drop the deprecated `glob@10.x` it used to pull in) hard-depends on `nopt@^10.0.1`, whose declared `engines` (`^22.22.2 || ^24.15.0 || >=26.0.0`) is narrower than this project's `>=22.12.0` floor; `js-beautify@1.x` avoids that but depends on the deprecated `glob@10.x` instead — neither version of the package satisfies both constraints, and an earlier attempt to vendor js-beautify's source directly to sidestep the dependency was reverted because embedding third-party code invisible to `npm audit`/`check:deps` isn't acceptable here (GH-1280). `prettier` has zero runtime dependencies of its own and a `>=14` floor, so it carries neither problem, and it was already a devDependency for this repo's own code formatting. Because prettier's HTML printer always self-closes void elements (`<link>`, `<meta>`, etc.) regardless of input, `formatHtml` strips that back out for non-xhtml output so generated tag strings still match what callers expect (see `VOID_SELF_CLOSING_PATTERN` in `src/helpers/html-format.ts`); `printWidth` is set to `Infinity` since generated splash-screen `<link>` tags carry long single-attribute media queries that must stay on one line for `meta.ts`'s substring matching to work.
 
 **HTML as input**: Users can provide HTML files (not just images) as input, allowing creative splash screens with CSS, gradients, SVG filters, media queries, etc. The HTML is rendered in Chrome before taking screenshots.
 

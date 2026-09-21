@@ -338,10 +338,12 @@ const addMetaTagsToIndexPage = async (
     },
   );
 
-  return file.writeFile(
-    indexHtmlFilePath,
-    htmlFormat.formatHtml(serializeHtmlDocument(document, xhtml)),
+  const formattedHtml = await htmlFormat.formatHtml(
+    serializeHtmlDocument(document, xhtml),
+    xhtml,
   );
+
+  return file.writeFile(indexHtmlFilePath, formattedHtml);
 };
 
 export default {

@@ -41,9 +41,8 @@ describe('Installer', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    browsers = (await import(
-      '@puppeteer/browsers'
-    )) as unknown as MockedBrowsers;
+    browsers =
+      (await import('@puppeteer/browsers')) as unknown as MockedBrowsers;
   });
 
   describe('getPreferredBrowserRevisionInfo', () => {

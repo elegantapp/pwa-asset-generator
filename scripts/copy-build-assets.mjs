@@ -14,8 +14,3 @@ const copyMatching = (srcDir, destDir, pattern) => {
 };
 
 copyMatching('src/config', 'dist/config', /\.json$/);
-copyMatching(
-  'src/vendor/js-beautify',
-  'dist/vendor/js-beautify',
-  /\.cjs$|^LICENSE$/,
-);

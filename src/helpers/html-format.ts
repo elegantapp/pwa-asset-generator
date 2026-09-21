@@ -1,77 +1,69 @@
-import { html_beautify } from '../vendor/js-beautify/beautify-html.cjs';
+import { format } from 'prettier';
 
-// Condenses runs of 2+ newlines down to a single newline, trimming
-// whitespace-only lines first so they don't count as content.
-const condenseNewlines = (str: string): string => {
-  const trimmedBlankLines = str
-    .split('\n')
-    .map((line) => (/^\s*$/.test(line) ? line.trim() : line))
-    .join('\n');
+const VOID_ELEMENTS = [
+  'area',
+  'base',
+  'br',
+  'col',
+  'embed',
+  'hr',
+  'img',
+  'input',
+  'link',
+  'meta',
+  'param',
+  'source',
+  'track',
+  'wbr',
+];
 
-  return trimmedBlankLines
-    .replace(/\s+$/, '\n')
-    .replace(/(\r\n|\n|␤){2,}/g, '\n');
-};
-
-const UNFORMATTED_TAGS = ['code', 'pre', 'em', 'strong', 'span'];
-
-// The comment-spacing regexes below run over the whole serialized document,
-// but `UNFORMATTED_TAGS` content (e.g. a comment node inside a <pre>) is
-// meant to be preserved byte-for-byte - injecting a newline there would
-// corrupt significant whitespace. Swap those blocks out for placeholders
-// before the regexes run, then restore them verbatim afterwards.
-const UNFORMATTED_BLOCK_PATTERN = new RegExp(
-  `<(${UNFORMATTED_TAGS.join('|')})\\b[^>]*>[\\s\\S]*?<\\/\\1>`,
+// Prettier's HTML printer always emits a self-closing `/>` on void elements,
+// regardless of how they were written in the input. That's at odds with this
+// project's `xhtml` option, which callers use to decide for themselves
+// whether generated tags are self-closed (see `serializeHtmlDocument` in
+// meta.ts). Undo it for non-xhtml output so a caller's own tag strings still
+// match verbatim inside the formatted document. Scoped to the void element
+// tag names only, so it can't touch unrelated `/>`-shaped text elsewhere in
+// the document.
+const VOID_SELF_CLOSING_PATTERN = new RegExp(
+  `<(${VOID_ELEMENTS.join('|')})((?:\\s+[^<>]*)?)\\s*/>`,
   'gi',
 );
-const PLACEHOLDER_MARKER = 'PAG_UNFORMATTED_BLOCK_';
 
-const protectUnformattedBlocks = (
-  html: string,
-): { html: string; blocks: string[] } => {
-  const blocks: string[] = [];
-  const protectedHtml = html.replace(UNFORMATTED_BLOCK_PATTERN, (match) => {
-    const placeholder = `${PLACEHOLDER_MARKER}${blocks.length}_END_`;
-    blocks.push(match);
-    return placeholder;
-  });
-  return { html: protectedHtml, blocks };
-};
-
-const restoreUnformattedBlocks = (html: string, blocks: string[]): string =>
-  blocks.reduce(
-    (result, block, index) =>
-      // Use a function replacement so `$`-substitution patterns (`$$`, `$&`,
-      // `` $` ``, `$'`) inside the restored block are never interpreted by
-      // String.prototype.replace - the block must come back byte-for-byte.
-      result.replace(`${PLACEHOLDER_MARKER}${index}_END_`, () => block),
-    html,
+// Normalizes any already-self-closed void element to this project's chosen
+// style for the given mode (` />` for xhtml, `>` otherwise), regardless of
+// whether Prettier or a fallback serializer produced the self-closing slash.
+// Scoped to the void element tag names only, so it can't touch unrelated
+// `/>`-shaped text elsewhere in the document.
+const normalizeVoidElements = (html: string, xhtml: boolean): string =>
+  html.replace(
+    VOID_SELF_CLOSING_PATTERN,
+    (_match, tag: string, attrs: string) => {
+      const trimmedAttrs = attrs.replace(/\s+$/, '');
+      return xhtml ? `<${tag}${trimmedAttrs} />` : `<${tag}${trimmedAttrs}>`;
+    },
   );
 
-// Re-implements `pretty(html, { ocd: true })`'s output on top of the
-// vendored js-beautify HTML beautifier (see ../vendor/js-beautify), since
-// `pretty` was dropped for pulling in a deprecated, vulnerable `glob`
-// transitively, and the js-beautify npm package for pulling in an
-// engine-incompatible `nopt` the same way (GH-1280).
-const formatHtml = (html: string): string => {
-  const beautified = html_beautify(html, {
-    unformatted: UNFORMATTED_TAGS,
-    indent_inner_html: true,
-    indent_char: ' ',
-    indent_size: 2,
-  });
+// Formats an HTML document with Prettier. `printWidth` is set to `Infinity`
+// because several generated tags (e.g. Apple splash screen `<link>` media
+// queries) are single, long attribute lists that callers match against
+// verbatim - wrapping them across lines would both look odd for a single
+// attribute and break those lookups.
+const formatHtml = async (html: string, xhtml = false): Promise<string> => {
+  let formatted: string;
+  try {
+    formatted = await format(html, { parser: 'html', printWidth: Infinity });
+  } catch {
+    // Prettier's HTML parser is strict about markup that upstream parsing in
+    // this codebase can still hand it - e.g. a stray closing tag on a void
+    // element, which htmlparser2's xmlMode (used for `xhtml` documents) can
+    // produce from a pre-existing non-xhtml index.html. Fall back to the
+    // unformatted markup (still normalized below) rather than failing the
+    // whole generation over a cosmetic step.
+    formatted = html;
+  }
 
-  const trimmed = condenseNewlines(beautified)
-    .replace(/^\s+/g, '')
-    .replace(/\s+$/g, '\n');
-
-  const { html: protectedHtml, blocks } = protectUnformattedBlocks(trimmed);
-
-  const commentSpaced = protectedHtml
-    .replace(/(\s*<!--)/g, '\n$1')
-    .replace(/>(\s*)(?=<!--\s*\/)/g, '> ');
-
-  return restoreUnformattedBlocks(commentSpaced, blocks);
+  return normalizeVoidElements(formatted, xhtml);
 };
 
 export default {
