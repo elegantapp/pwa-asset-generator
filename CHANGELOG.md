@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.7](https://github.com/elegantapp/pwa-asset-generator/compare/v8.1.6...v8.1.7) (2026-09-21)
+
+
+### Bug Fixes
+
+* **core:** missing direct dependency on @puppeteer/browsers ([#1283](https://github.com/elegantapp/pwa-asset-generator/issues/1283)) ([3848b06](https://github.com/elegantapp/pwa-asset-generator/commit/3848b060fe4934182debd96f356d1e2db240c95f))
+
 ## [8.1.6](https://github.com/elegantapp/pwa-asset-generator/compare/v8.1.5...v8.1.6) (2026-09-16)
 
 
