@@ -12,6 +12,7 @@
     "prepare": "husky",
     "test": "vitest run",
     "test:concurrency": "npm run build && node scripts/concurrency-stress-test.mjs",
+    "test:package": "node scripts/verify-packaged-install.mjs",
     "test:update": "npm run test:update:visuals && npm run test:update:snapshots",
     "test:update:snapshots": "vitest run -u",
     "test:update:visuals": "npm run visuals:input-svg && npm run visuals:input-png && npm run visuals:input-html && npm run visuals:input-html-dark && npm run visuals:output-transparent && npm run visuals:output-png",
@@ -70,6 +71,7 @@
     "url": "https://opencollective.com/pwa-asset-generator"
   },
   "dependencies": {
+    "@puppeteer/browsers": "^3.2.2",
     "cheerio": "^1.2.0",
     "chrome-launcher": "^1.2.1",
     "find-process": "^2.0.0",
@@ -105,6 +107,7 @@
     "jpeg-js": "^0.4.4",
     "lint-staged": "^16.2.1",
     "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
     "prettier": "^3.6.2",
     "rimraf": "^6.1.3",
     "semantic-release": "^25.0.0",
