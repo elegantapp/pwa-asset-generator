@@ -34,9 +34,30 @@ npm run test:update:snapshots             # Update regular snapshots only
 npm run test:update:visuals               # Update all visual test snapshots
 npm run chromium                          # Install Chromium (required for tests)
 npm run test:concurrency                  # Concurrency stress test (see below)
+npm run test:package                      # Packaged-install smoke test (see below)
 ```
 
 Note: Visual tests generate actual images in `src/__snapshots__/visual/` and compare them. When updating visual tests, ensure you're not accidentally breaking existing behavior.
+
+`src/dependency-declarations.test.ts` runs as part of `npm test` and guards
+against undeclared dependencies (GH-1282): it walks every `.ts` file under
+`src/`, extracts imported package names, and fails if a non-test file imports
+a package that isn't listed in `package.json` `dependencies` (test files may
+use either `dependencies` or `devDependencies`). This catches packages that
+only happen to resolve because a sibling dependency hoists them transitively.
+
+### Packaged-install smoke test
+
+`scripts/verify-packaged-install.mjs` reproduces GH-1282 end-to-end: it packs
+the package, installs the tarball into an empty temp project with
+`--install-strategy=nested` (no hoisting), and imports it as an ES module,
+failing on `ERR_MODULE_NOT_FOUND` or a non-zero exit code. It needs npm
+registry access and takes tens of seconds, so it's excluded from `npm test`
+and run explicitly:
+
+```bash
+npm run build && npm run test:package
+```
 
 ### Concurrency stress test
 
