@@ -11,7 +11,7 @@ export default [
   // JavaScript specific rules
   {
     files: ['**/*.js'],
-    ignores: ['dist/**', 'node_modules/**', 'src/vendor/**'],
+    ignores: ['dist/**', 'node_modules/**'],
     languageOptions: {
       globals: globals.node,
     },
@@ -210,6 +210,6 @@ export default [
 
   // Ignore patterns
   {
-    ignores: ['dist/**', 'node_modules/**', 'src/vendor/**'],
+    ignores: ['dist/**', 'node_modules/**'],
   },
 ];
