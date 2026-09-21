@@ -87,6 +87,26 @@ jobs:
       - name: Run formatting
         run: npm run prettier
 
+  dependency-health:
+    name: Dependency health
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: npm
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check for deprecated/vulnerable production dependencies
+        run: npm run check:deps -- --audit
+
   test:
     name: Test (Node ${{ matrix.node }} on ${{ matrix.os }})
     runs-on: ${{ matrix.os }}

@@ -415,6 +415,30 @@ describe('generates meta', () => {
 
         expect(result).toMatchSnapshot();
       });
+
+      test('with xhtml index output', async () => {
+        const result = await generateTempImages({
+          scrape: false,
+          splashOnly: true,
+          log: false,
+          xhtml: true,
+          index: './temp/index.html',
+        });
+
+        const savedIndex = (await readIndex()) as string;
+
+        assertEntriesInHTMLOutput(
+          savedIndex,
+          result.htmlMeta[HTMLMetaNames.appleMobileWebAppCapable],
+        );
+
+        assertEntriesInHTMLOutput(
+          savedIndex,
+          result.htmlMeta[HTMLMetaNames.appleLaunchImage] as string,
+        );
+
+        expect(savedIndex).toContain(' />');
+      });
     });
 
     test('using a path override', async () => {

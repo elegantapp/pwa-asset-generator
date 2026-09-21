@@ -10,7 +10,7 @@ The tool uses Puppeteer to control a Chrome browser as a canvas, rendering image
 
 ## Requirements
 
-- **Node.js** >= 22.12.0 (required by puppeteer-core v25)
+- **Node.js** `>=22.12.0` (puppeteer-core v25's floor)
 
 ## Essential Commands
 
@@ -91,8 +91,8 @@ directly; `src/helpers/puppets.test.ts` guards its shape.
 **Meta helper** (`src/helpers/meta.ts`):
 - Generates HTML meta tags for iOS splash screens and icons
 - Generates manifest.json icon entries
-- Updates existing manifest.json and index.html files using Cheerio
-- Formats output using the `pretty` library
+- Updates existing manifest.json and index.html files using `parse5`/`htmlparser2` (via `parse5-htmlparser2-tree-adapter`), with `css-select`/`domutils` for querying and mutating the DOM
+- Formats output using the local `src/helpers/html-format.ts` helper (built on `prettier`'s HTML formatter)
 
 **Browser helper** (`src/helpers/browser.ts`):
 - Manages Puppeteer browser lifecycle
@@ -122,6 +122,7 @@ src/
 └── helpers/                  # Core logic modules
     ├── puppets.ts           # Puppeteer orchestration
     ├── meta.ts              # HTML/manifest generation
+    ├── html-format.ts       # index.html formatting (prettier based)
     ├── browser.ts           # Browser management
     ├── file.ts              # File operations
     ├── url.ts               # URL handling
@@ -136,6 +137,8 @@ src/
 **Static device data**: Device specs are read from `src/config/apple-fallback-data.json` — the single source of truth. The tool used to scrape Apple's HIG website for them, but Apple removed the table (GH-1276), so the live lookup was retired and `--scrape` is a deprecated no-op kept only for backwards compatibility.
 
 **Puppeteer-core**: Uses `puppeteer-core` instead of full `puppeteer` to avoid bundling Chromium (~110-150MB). Chromium is installed separately via `bin/install.js` only when needed.
+
+**HTML formatting via `prettier`**: `src/helpers/html-format.ts` formats generated `index.html` output with `prettier`'s bundled HTML parser instead of `js-beautify`. `js-beautify@2.0.3` (the version needed to drop the deprecated `glob@10.x` it used to pull in) hard-depends on `nopt@^10.0.1`, whose declared `engines` (`^22.22.2 || ^24.15.0 || >=26.0.0`) is narrower than this project's `>=22.12.0` floor; `js-beautify@1.x` avoids that but depends on the deprecated `glob@10.x` instead — neither version of the package satisfies both constraints, and an earlier attempt to vendor js-beautify's source directly to sidestep the dependency was reverted because embedding third-party code invisible to `npm audit`/`check:deps` isn't acceptable here (GH-1280). `prettier` has zero runtime dependencies of its own and a `>=14` floor, so it carries neither problem, and it was already a devDependency for this repo's own code formatting. Because prettier's HTML printer always self-closes void elements (`<link>`, `<meta>`, etc.) regardless of input, `formatHtml` strips that back out for non-xhtml output so generated tag strings still match what callers expect (see `VOID_SELF_CLOSING_PATTERN` in `src/helpers/html-format.ts`); `printWidth` is set to `Infinity` since generated splash-screen `<link>` tags carry long single-attribute media queries that must stay on one line for `meta.ts`'s substring matching to work.
 
 **HTML as input**: Users can provide HTML files (not just images) as input, allowing creative splash screens with CSS, gradients, SVG filters, media queries, etc. The HTML is rendered in Chrome before taking screenshots.
 
