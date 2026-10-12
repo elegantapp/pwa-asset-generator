@@ -16,6 +16,7 @@ vi.mock('@puppeteer/browsers', () => ({
   computeExecutablePath: vi.fn(),
   canDownload: vi.fn(),
   install: vi.fn(),
+  uninstall: vi.fn(),
 }));
 
 vi.mock('./logger.js', () => ({

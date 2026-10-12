@@ -1,5 +1,6 @@
 import {
   install,
+  uninstall,
   canDownload,
   getInstalledBrowsers,
   Browser,
@@ -130,6 +131,18 @@ const installPreferredBrowserRevision = async (): Promise<RevisionInfo> => {
     if (!canInstall) {
       throw new Error(`Cannot download Chrome ${browserInfo.revision}`);
     }
+
+    // A previous install of this exact build may have been interrupted,
+    // leaving behind a cache folder without the executable inside it.
+    // @puppeteer/browsers' install() treats that folder's mere presence as
+    // "already installed" and refuses to proceed (IncompleteInstallationError),
+    // telling the caller to delete it and retry. Do that proactively so a
+    // stale/partial download doesn't require manual cache cleanup.
+    await uninstall({
+      browser: Browser.CHROMEHEADLESSSHELL,
+      buildId: browserInfo.revision,
+      cacheDir: DEFAULT_CACHE_DIR,
+    }).catch(() => undefined);
 
     const installedBrowser = await install({
       browser: Browser.CHROMEHEADLESSSHELL,
