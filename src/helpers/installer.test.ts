@@ -3,6 +3,10 @@ import { Browser } from '@puppeteer/browsers';
 import installer from './installer.js';
 import type { Mock } from 'vitest';
 
+vi.mock('node:fs', () => ({
+  existsSync: vi.fn(() => true),
+}));
+
 vi.mock('@puppeteer/browsers', () => ({
   Browser: {
     CHROME: 'chrome',
