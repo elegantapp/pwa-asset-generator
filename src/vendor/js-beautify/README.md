@@ -24,3 +24,22 @@ these files use `require`/`module.exports` and the rest of this project is
 
 Do not hand-edit these files; if js-beautify's HTML beautifier needs an
 upstream fix, pull the new file(s) from the matching js-beautify release.
+
+### Why there's no npm-shrinkwrap.json
+
+This repo pins its lockfile as `package-lock.json`, which npm excludes from
+the published tarball — consumers resolve their own tree from `dependencies`
+in `package.json`. An earlier revision of this fix shipped `npm-shrinkwrap.json`
+instead (which npm *does* publish, pinning the resolved subtree for
+consumers) on the assumption that `overrides` here needed to reach
+installs of this package. That's unnecessary: none of the packages listed in
+this `package.json`'s `overrides` (basic-ftp, lodash/lodash-es, npm, rollup,
+postcss, js-yaml, fast-uri, nanoid, undici, ip-address, minimatch) appear
+anywhere in the production dependency tree (`npm ls <pkg> --omit=dev`) — they
+all exist only to patch devDependencies (semantic-release, vitest, eslint)
+used to build and release this package, never installed by a consumer. If a
+future override is added to patch something inside the *production* tree
+(e.g. a puppeteer-core/@puppeteer/browsers transitive), shrinkwrap is the only
+way to make that override reach consumers — see the npm docs on
+`npm-shrinkwrap.json` vs `overrides` — and `scripts/verify-packaged-install.mjs`
+(`npm run test:package`) should be used to confirm it actually does.
