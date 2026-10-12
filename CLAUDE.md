@@ -132,7 +132,9 @@ directly; `src/helpers/puppets.test.ts` guards its shape.
   (HTML mode) or `htmlparser2` (xhtml mode), querying/mutating the tree with
   `css-select`/`domutils`, and serializing with `dom-serializer`
 - Formats output using the in-repo formatter `src/helpers/html-format.ts`
-  (wraps `js-beautify`)
+  (wraps the vendored js-beautify HTML beautifier core in
+  `src/vendor/js-beautify/`, kept out of `dependencies` to avoid its CLI's
+  `nopt`/`glob` chain — see that directory's README)
 
 **Browser helper** (`src/helpers/browser.ts`):
 - Manages Puppeteer browser lifecycle

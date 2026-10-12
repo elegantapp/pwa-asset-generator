@@ -9,6 +9,17 @@
  * package-lock.json by hand), then queries the npm registry for each
  * unique name@version pair's `deprecated` field.
  *
+ * Caveat: this reads the *repo's own* resolved tree, which has this
+ * package.json's `overrides` applied. A real consumer install of the
+ * published tarball doesn't get those overrides (npm only honors a
+ * package's own `overrides` for its own installs), so a dependency that
+ * only passes here because of an override could still warn for consumers.
+ * `scripts/verify-packaged-install.mjs` (`npm run test:package`) closes
+ * that gap by installing the actual packed tarball and failing on `npm warn
+ * deprecated`/EBADENGINE output — prefer fixing the dependency itself (or
+ * dropping it, as done for GH-1280/js-beautify — see
+ * src/vendor/js-beautify/README.md) over relying on an override.
+ *
  * Usage:
  *   npm run check:deps              # deprecation check only
  *   npm run check:deps -- --audit   # also runs `npm audit --omit=dev`

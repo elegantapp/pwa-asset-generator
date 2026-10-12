@@ -264,7 +264,10 @@ const insertNodesIntoHead = (
     // order keeps the nodes' original relative order in the result.
     [...nodes].reverse().forEach((node) => prependChild(head, node));
   } else {
-    nodes.forEach((node) => appendChild(head, node));
+    // domutils' appendChild removes the node from its old parent, which is
+    // `nodes` itself here (fragment.children) — mutating the array a
+    // forEach is iterating over skips every other element. Iterate a copy.
+    [...nodes].forEach((node) => appendChild(head, node));
   }
 };
 
