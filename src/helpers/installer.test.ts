@@ -3,6 +3,10 @@ import { Browser } from '@puppeteer/browsers';
 import installer from './installer.js';
 import type { Mock } from 'vitest';
 
+vi.mock('node:fs', () => ({
+  existsSync: vi.fn(() => true),
+}));
+
 vi.mock('@puppeteer/browsers', () => ({
   Browser: {
     CHROME: 'chrome',
@@ -12,6 +16,7 @@ vi.mock('@puppeteer/browsers', () => ({
   computeExecutablePath: vi.fn(),
   canDownload: vi.fn(),
   install: vi.fn(),
+  uninstall: vi.fn(),
 }));
 
 vi.mock('./logger.js', () => ({
@@ -41,9 +46,8 @@ describe('Installer', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    browsers = (await import(
-      '@puppeteer/browsers'
-    )) as unknown as MockedBrowsers;
+    browsers =
+      (await import('@puppeteer/browsers')) as unknown as MockedBrowsers;
   });
 
   describe('getPreferredBrowserRevisionInfo', () => {

@@ -2,6 +2,17 @@
  * Reproduces GH-1282: import 'pwa-asset-generator' after a hoisting-free
  * install must not throw ERR_MODULE_NOT_FOUND for an undeclared dependency.
  *
+ * Also reproduces GH-1280: installing the packed tarball must not print
+ * `npm warn deprecated` or EBADENGINE lines. check:deps (scripts/check-
+ * dependency-health.mjs) can't catch this on its own because it reads
+ * `npm ls`/`npm audit` for the *repo's own* tree, which has package.json's
+ * `overrides` applied — a real consumer install of the published tarball
+ * doesn't get those overrides (npm only honors a package's own `overrides`
+ * for its own installs), so a dependency whose narrow `engines` range only
+ * passed locally because of an override would still warn for consumers.
+ * Installing the actual tarball here, the same way `npm install -g
+ * pwa-asset-generator` does, is what actually proves the fix.
+ *
  * Packs the current package, installs the tarball into an empty temp
  * project with --install-strategy=nested (no hoisting to the root
  * node_modules), then imports the package as an ES module and asserts the
@@ -51,7 +62,7 @@ async function main() {
     );
 
     console.log('Installing packed tarball with --install-strategy=nested...');
-    await execa(
+    const installResult = await execa(
       'npm',
       [
         'install',
@@ -61,8 +72,28 @@ async function main() {
         '--no-audit',
         '--no-fund',
       ],
-      { cwd: projectDir, stdio: 'inherit' },
+      { cwd: projectDir, reject: false },
     );
+    console.log(installResult.stdout);
+    console.error(installResult.stderr);
+
+    if (installResult.exitCode !== 0) {
+      throw new Error(
+        `Installing the packed tarball failed with exit code ${installResult.exitCode}`,
+      );
+    }
+
+    const installOutput = `${installResult.stdout}\n${installResult.stderr}`;
+    if (/npm warn deprecated/i.test(installOutput)) {
+      throw new Error(
+        'Installing the packed tarball printed an `npm warn deprecated` line (GH-1280) — see output above.',
+      );
+    }
+    if (/EBADENGINE/.test(installOutput)) {
+      throw new Error(
+        'Installing the packed tarball printed an EBADENGINE warning (GH-1280) — see output above.',
+      );
+    }
 
     console.log("Importing 'pwa-asset-generator' as an ES module...");
     const result = await execa(

@@ -35,6 +35,7 @@ npm run test:update:visuals               # Update all visual test snapshots
 npm run chromium                          # Install Chromium (required for tests)
 npm run test:concurrency                  # Concurrency stress test (see below)
 npm run test:package                      # Packaged-install smoke test (see below)
+npm run check:deps -- --audit             # Dependency health check (see below)
 ```
 
 Note: Visual tests generate actual images in `src/__snapshots__/visual/` and compare them. When updating visual tests, ensure you're not accidentally breaking existing behavior.
@@ -57,6 +58,21 @@ and run explicitly:
 
 ```bash
 npm run build && npm run test:package
+```
+
+### Dependency health check
+
+`scripts/check-dependency-health.mjs` guards against GH-1280-style regressions: a
+production dependency the registry has marked deprecated (the source of `npm warn
+deprecated` lines on every consumer install), or one `npm audit` flags as
+vulnerable. It walks the resolved production dependency tree (`npm ls --all
+--omit=dev --json`) and queries the npm registry for each package's `deprecated`
+field; passing `--audit` additionally runs `npm audit --omit=dev`. It needs npm
+registry access, so it's excluded from `npm test` and instead runs as a
+`dependency-health` job in CI and as a pre-publish step in the release workflow:
+
+```bash
+npm run check:deps -- --audit
 ```
 
 ### Concurrency stress test
@@ -112,8 +128,13 @@ directly; `src/helpers/puppets.test.ts` guards its shape.
 **Meta helper** (`src/helpers/meta.ts`):
 - Generates HTML meta tags for iOS splash screens and icons
 - Generates manifest.json icon entries
-- Updates existing manifest.json and index.html files using Cheerio
-- Formats output using the `pretty` library
+- Updates existing manifest.json and index.html files by parsing with `parse5`
+  (HTML mode) or `htmlparser2` (xhtml mode), querying/mutating the tree with
+  `css-select`/`domutils`, and serializing with `dom-serializer`
+- Formats output using the in-repo formatter `src/helpers/html-format.ts`
+  (wraps the vendored js-beautify HTML beautifier core in
+  `src/vendor/js-beautify/`, kept out of `dependencies` to avoid its CLI's
+  `nopt`/`glob` chain — see that directory's README)
 
 **Browser helper** (`src/helpers/browser.ts`):
 - Manages Puppeteer browser lifecycle

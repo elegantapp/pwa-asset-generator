@@ -1,9 +1,15 @@
-import { load } from 'cheerio';
-import pretty from 'pretty';
+import { parse, parseFragment } from 'parse5';
+import { adapter as htmlparser2TreeAdapter } from 'parse5-htmlparser2-tree-adapter';
+import { parseDocument } from 'htmlparser2';
+import { selectOne, selectAll } from 'css-select';
+import { removeElement, appendChild, prependChild } from 'domutils';
+import render from 'dom-serializer';
+import type { AnyNode, ChildNode, Document, Element } from 'domhandler';
 import { lookup } from 'mime-types';
 import path from 'node:path';
 import constants from '../config/constants.js';
 import file from './file.js';
+import htmlFormat from './html-format.js';
 import { HTMLMetaNames } from '../models/meta.js';
 import type { SavedImage } from '../models/image.js';
 import type { ManifestJsonIcon } from '../models/result.js';
@@ -233,6 +239,38 @@ ${htmlMeta[meta.name]}`;
     '',
   );
 
+const HEAD_SELECTOR = 'head';
+
+// htmlparser2 (used in xhtml mode) parses markup as-is with no tree
+// correction, while parse5 implements the full HTML5 parsing algorithm and
+// synthesizes a <head>/<body> for any document that is missing one.
+const parseHtmlDocument = (html: string, xhtml: boolean): Document =>
+  xhtml
+    ? parseDocument(html, { xmlMode: true })
+    : parse(html, { treeAdapter: htmlparser2TreeAdapter });
+
+const parseHtmlFragment = (html: string, xhtml: boolean): Document =>
+  xhtml
+    ? parseDocument(html, { xmlMode: true })
+    : parseFragment(html, { treeAdapter: htmlparser2TreeAdapter });
+
+const insertNodesIntoHead = (
+  head: Element,
+  nodes: ChildNode[],
+  atStart: boolean,
+): void => {
+  if (atStart) {
+    // prependChild always inserts at index 0, so prepending in reverse
+    // order keeps the nodes' original relative order in the result.
+    [...nodes].reverse().forEach((node) => prependChild(head, node));
+  } else {
+    // domutils' appendChild removes the node from its old parent, which is
+    // `nodes` itself here (fragment.children) — mutating the array a
+    // forEach is iterating over skips every other element. Iterate a copy.
+    [...nodes].forEach((node) => appendChild(head, node));
+  }
+};
+
 const addMetaTagsToIndexPage = async (
   htmlMeta: HTMLMeta,
   indexHtmlFilePath: string,
@@ -242,13 +280,15 @@ const addMetaTagsToIndexPage = async (
     throw Error(`Cannot write to index html file ${indexHtmlFilePath}`);
   }
 
-  const indexHtmlFile = await file.readFile(indexHtmlFilePath);
-  const $ = load(indexHtmlFile, {
-    xml: xhtml,
-  });
+  const indexHtmlFile = (await file.readFile(indexHtmlFilePath)).toString();
+  const document = parseHtmlDocument(indexHtmlFile, xhtml);
 
-  const HEAD_SELECTOR = 'head';
-  const hasElement = (selector: string): boolean => $(selector).length > 0;
+  const head = selectOne<AnyNode, Element>(HEAD_SELECTOR, document);
+  if (!head) {
+    throw Error(
+      `Cannot find <head> element in index html file ${indexHtmlFilePath}`,
+    );
+  }
 
   const hasDarkModeElement = (): boolean => {
     const darkModeMeta = constants.HTML_META_ORDERED_SELECTOR_LIST.find(
@@ -256,7 +296,7 @@ const addMetaTagsToIndexPage = async (
         m.name === HTMLMetaNames.appleLaunchImageDarkMode,
     );
     if (darkModeMeta) {
-      return $(darkModeMeta.selector).length > 0;
+      return !!selectOne<AnyNode, Element>(darkModeMeta.selector, document);
     }
     return false;
   };
@@ -267,24 +307,29 @@ const addMetaTagsToIndexPage = async (
       if (htmlMeta.hasOwnProperty(meta.name) && htmlMeta[meta.name] !== '') {
         const content = `${htmlMeta[meta.name]}`;
 
-        if (hasElement(meta.selector)) {
-          $(meta.selector).remove();
-        }
+        selectAll<AnyNode, Element>(meta.selector, document).forEach(
+          removeElement,
+        );
+
+        const nodes = parseHtmlFragment(content, xhtml).children;
 
         // Because meta tags with dark mode media attr has to be declared after the regular splash screen meta tags
         if (
           meta.name === HTMLMetaNames.appleLaunchImage &&
           hasDarkModeElement()
         ) {
-          $(HEAD_SELECTOR).prepend(`\n${content}`);
+          insertNodesIntoHead(head, nodes, true);
         } else {
-          $(HEAD_SELECTOR).append(`${content}\n`);
+          insertNodesIntoHead(head, nodes, false);
         }
       }
     },
   );
 
-  return file.writeFile(indexHtmlFilePath, pretty($.html(), { ocd: true }));
+  return file.writeFile(
+    indexHtmlFilePath,
+    htmlFormat.formatHtml(render(document)),
+  );
 };
 
 export default {

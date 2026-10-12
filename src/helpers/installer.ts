@@ -1,9 +1,11 @@
 import {
   install,
+  uninstall,
   canDownload,
   getInstalledBrowsers,
   Browser,
 } from '@puppeteer/browsers';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import preLogger from './logger.js';
@@ -38,9 +40,8 @@ const getChromeBuildIdFromPuppeteer = async (): Promise<string> => {
   const logger = preLogger('installer');
 
   try {
-    const { PUPPETEER_REVISIONS } = await import(
-      'puppeteer-core/lib/puppeteer/revisions.js'
-    );
+    const { PUPPETEER_REVISIONS } =
+      await import('puppeteer-core/lib/puppeteer/revisions.js');
 
     if (!PUPPETEER_REVISIONS || !PUPPETEER_REVISIONS.chrome) {
       throw new Error('Could not find chrome revision in puppeteer-core');
@@ -70,10 +71,15 @@ const getPreferredBrowserRevisionInfo = async (): Promise<RevisionInfo> => {
     });
 
     // Find a Chrome with the specific buildId from puppeteer-core
+    // Also verify the executable actually exists on disk: a leftover
+    // incomplete/interrupted download can leave behind a cache folder
+    // that getInstalledBrowsers() reports as installed even though the
+    // browser binary itself is missing.
     const preferredBrowser = installedBrowsers.find(
       (browser) =>
         browser.browser === Browser.CHROMEHEADLESSSHELL &&
-        browser.buildId === buildId,
+        browser.buildId === buildId &&
+        existsSync(browser.executablePath),
     );
 
     if (preferredBrowser) {
@@ -125,6 +131,18 @@ const installPreferredBrowserRevision = async (): Promise<RevisionInfo> => {
     if (!canInstall) {
       throw new Error(`Cannot download Chrome ${browserInfo.revision}`);
     }
+
+    // A previous install of this exact build may have been interrupted,
+    // leaving behind a cache folder without the executable inside it.
+    // @puppeteer/browsers' install() treats that folder's mere presence as
+    // "already installed" and refuses to proceed (IncompleteInstallationError),
+    // telling the caller to delete it and retry. Do that proactively so a
+    // stale/partial download doesn't require manual cache cleanup.
+    await uninstall({
+      browser: Browser.CHROMEHEADLESSSHELL,
+      buildId: browserInfo.revision,
+      cacheDir: DEFAULT_CACHE_DIR,
+    }).catch(() => undefined);
 
     const installedBrowser = await install({
       browser: Browser.CHROMEHEADLESSSHELL,

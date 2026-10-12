@@ -25,9 +25,10 @@
       }
     ],
     [
-      "@semantic-release/npm",
+      "@semantic-release/exec",
       {
-        "tarballDir": "pack"
+        "prepareCmd": "mkdir -p pack && npm version ${nextRelease.version} --no-git-tag-version --allow-same-version && npm pack --pack-destination pack",
+        "publishCmd": "npm publish --provenance"
       }
     ],
     [
