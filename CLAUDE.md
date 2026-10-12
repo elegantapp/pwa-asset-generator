@@ -112,8 +112,11 @@ directly; `src/helpers/puppets.test.ts` guards its shape.
 **Meta helper** (`src/helpers/meta.ts`):
 - Generates HTML meta tags for iOS splash screens and icons
 - Generates manifest.json icon entries
-- Updates existing manifest.json and index.html files using Cheerio
-- Formats output using the `pretty` library
+- Updates existing manifest.json and index.html files by parsing with `parse5`
+  (HTML mode) or `htmlparser2` (xhtml mode), querying/mutating the tree with
+  `css-select`/`domutils`, and serializing with `dom-serializer`
+- Formats output using the in-repo formatter `src/helpers/html-format.ts`
+  (wraps `js-beautify`)
 
 **Browser helper** (`src/helpers/browser.ts`):
 - Manages Puppeteer browser lifecycle

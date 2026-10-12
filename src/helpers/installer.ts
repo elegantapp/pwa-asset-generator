@@ -4,6 +4,7 @@ import {
   getInstalledBrowsers,
   Browser,
 } from '@puppeteer/browsers';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import preLogger from './logger.js';
@@ -70,10 +71,15 @@ const getPreferredBrowserRevisionInfo = async (): Promise<RevisionInfo> => {
     });
 
     // Find a Chrome with the specific buildId from puppeteer-core
+    // Also verify the executable actually exists on disk: a leftover
+    // incomplete/interrupted download can leave behind a cache folder
+    // that getInstalledBrowsers() reports as installed even though the
+    // browser binary itself is missing.
     const preferredBrowser = installedBrowsers.find(
       (browser) =>
         browser.browser === Browser.CHROMEHEADLESSSHELL &&
-        browser.buildId === buildId,
+        browser.buildId === buildId &&
+        existsSync(browser.executablePath),
     );
 
     if (preferredBrowser) {
